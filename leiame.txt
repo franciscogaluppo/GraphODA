@@ -1,0 +1,29 @@
+O que eu preciso instalar??
+
+	- SFML: A biblioteca multimidia
+		
+		sudo apt-get install libsfml-dev
+	
+
+	- Tgui: uma "extensão" para a biblioteca para ter GUI
+
+		sudo add-apt-repository ppa:texus/tgui-0.8
+		sudo apt-get update
+		sudo apt-get install libtgui-dev
+
+
+
+
+Como compilar?
+
+	- Basta rodar
+		
+		make linux
+
+
+
+Como rodar?
+
+	- Basta rodar
+		
+		./infoGraph
