@@ -5,12 +5,15 @@
 #include <bits/stdc++.h> // por agora nao quero preocupar com isso
 using namespace std;
 
+vector<int> vertices;
+vector<pair<int, int> > ares;
+
 // TODO: Receber e plotar um grafo qualquer
 
 // TODO: Receber um grafo na classe bonitinha
-void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte,
-		vector<int> &vertices, vector<pair<int, int> > &ares)
+void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte)
 {
+
 	int n = vertices.size(), m = ares.size();
 
 	const float raio = 15;
@@ -71,74 +74,20 @@ void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte,
 
 }
 
-// Função que plota um grafo
-void printGrafoExemplo(sf::RenderWindow &janela, sf::Font &fonte)
+void lerGrafoArquivo(tgui::EditBox::Ptr arq)
 {
-	// Grafo fixo por enquanto
-	const float raio = 15;
-	const int n = 5, m = 6;	
-
-	int ares[m][2] = 
-	{
-		{0, 1},
-		{0, 4},
-		{1, 2},
-		{1, 4},
-		{2, 4},
-		{3, 4}
-	};
-
-	string nomes[n] = {"1", "2", "3", "4", "5"};
-
-	// Precisamos automatizar as coordenadas
-	float pos[n][2] =
-	{
-		{200.f,150.f},
-		{200.f,450.f},
-		{600.f,450.f},
-		{600.f,150.f},
-		{400.f,300.f}
-	};
-
-	// Cria as arestas
-	for(int i = 0; i < m; i++)
-	{
-		// Arestas sem largura, por isso vetores
-		sf::Vertex linha[] =
-		{
-			sf::Vertex(sf::Vector2f(
-						pos[ares[i][0]][0], pos[ares[i][0]][1]),
-					sf::Color::Black),
-
-			sf::Vertex(sf::Vector2f(
-						pos[ares[i][1]][0], pos[ares[i][1]][1]),
-					sf::Color::Black)
-		};
-
-		janela.draw(linha, 2, sf::Lines);
+	ifstream inFile(arq->getText().toAnsiString());
+	if (!inFile) {
+		cout << "Erro: arquivo zoado" << endl;
+		return;
 	}
 
-	// Cria os vértices
-	for(int i = 0; i < n; i++)
-	{
-		// Cria um círculo
-		sf::CircleShape v(raio);
-		v.setFillColor(sf::Color::Red);
-		v.setOutlineThickness(3.f);
-		v.setOutlineColor(sf::Color::Black);
-		v.setPosition(pos[i][0]-raio+1, pos[i][1]-raio+1);
-		janela.draw(v);
-
-		// Coloca texto dentro da bola
-		sf::Text label;
-		label.setFont(fonte);
-		label.setString(nomes[i]);
-		label.setCharacterSize(24);
-		label.setFillColor(sf::Color::Black);
-		label.setPosition(pos[i][0]+9-15, pos[i][1]-15);
-		janela.draw(label);
-	}
-
+	int n, m;
+	inFile >> n >> m;
+	vertices.resize(n), ares.resize(m);
+	for (int &i : vertices) inFile >> i;
+	for (auto &i : ares) inFile >> i.first >> i.second;
+	inFile.close();
 }
 
 void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckBox::Ptr check)
@@ -195,6 +144,8 @@ void loadWidgets(tgui::Gui &gui)
 	botaoArquivo->connect(
 			"pressed", printArquivo, textoArquivo,
 			lista, check);
+	botaoArquivo->connect(
+			"pressed", lerGrafoArquivo, textoArquivo);
 }
 
 
@@ -233,6 +184,8 @@ int main()
 
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
+	
+
 	while(janela.isOpen())
 	{
 		// Checa se algum evento aconteceu
@@ -306,11 +259,7 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		vector<int> vertices = {1, 2, 3, 4, 5};
-		vector<pair<int, int> > arestas =
-			{{0, 3}, {1, 2}, {0, 4}, {2, 4}, {1, 4}};
-
-		printGrafoPoligono(janela, fonte, vertices, arestas);
+		printGrafoPoligono(janela, fonte);
 
 		gui.draw();
 
