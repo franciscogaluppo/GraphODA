@@ -2,49 +2,43 @@
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 
+#include "Graph.hpp"
+
 #include <bits/stdc++.h> // por agora nao quero preocupar com isso
 using namespace std;
 
-vector<int> vertices;
-vector<pair<int, int> > ares;
-
-// TODO: Receber e plotar um grafo qualquer
-
-// TODO: Receber um grafo na classe bonitinha
-void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte)
+// TODO: Algoritmo de plotar
+void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 {
-
-	int n = vertices.size(), m = ares.size();
-
 	const float raio = 15;
 	const float raioGrafo = 250;
 	pair<float, float> centro = {400, 300};
 	// angulo = 360/n
-	const double theta = 2*acos(-1.0)/n;
+	const double theta = 2*acos(-1.0)/G.n;
 
 	// numero impar de vertices tem que arredar um pouco
-	if (n % 2 == 1) {
+	if (G.n % 2 == 1) {
 		float falta = raioGrafo - raioGrafo*cos(theta/2);
 		centro.second += falta/2;
 	}
 
-	vector<pair<int, int> > pos(n);
-	for (int i = 0; i < n; i++)
+	vector<pair<int, int> > pos(G.n);
+	for (int i = 0; i < G.n; i++)
 		pos[i] = {centro.first+sin(i*theta+theta/2)*raioGrafo,
 			centro.second+cos(i*theta+theta/2)*raioGrafo};
 
 	// Cria as arestas
-	for(int i = 0; i < m; i++)
+	for(int i = 0; i < G.m; i++)
 	{
 		// Arestas sem largura, por isso vetores
 		sf::Vertex linha[] =
 		{
 			sf::Vertex(sf::Vector2f(
-				pos[ares[i].first].first, pos[ares[i].first].second),
+				pos[G.edges[i].first].first, pos[G.edges[i].first].second),
 					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(
-				pos[ares[i].second].first, pos[ares[i].second].second),
+				pos[G.edges[i].second].first, pos[G.edges[i].second].second),
 					sf::Color::Black)
 		};
 
@@ -52,7 +46,7 @@ void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte)
 	}
 
 	// Cria os vértices
-	for(int i = 0; i < n; i++)
+	for(int i = 0; i < G.n; i++)
 	{
 		// Cria um círculo
 		sf::CircleShape v(raio);
@@ -65,16 +59,15 @@ void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte)
 		// Coloca texto dentro da bola
 		sf::Text label;
 		label.setFont(fonte);
-		label.setString(to_string(vertices[i]));
+		label.setString(G.label[i]);
 		label.setCharacterSize(24);
 		label.setFillColor(sf::Color::Black);
 		label.setPosition(pos[i].first+9-15, pos[i].second-15);
 		janela.draw(label);
 	}
-
 }
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq)
+void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G)
 {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
@@ -84,9 +77,16 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq)
 
 	int n, m;
 	inFile >> n >> m;
-	vertices.resize(n), ares.resize(m);
-	for (int &i : vertices) inFile >> i;
-	for (auto &i : ares) inFile >> i.first >> i.second;
+	vector<string> label(n);
+	for (auto &i : label) inFile >> i;
+
+	*G = Graph(n, label);
+
+	for (int i = 0; i < m; i++) {
+		int a, b; inFile >> a >> b;
+		G->addEdge(a, b);
+	}
+
 	inFile.close();
 }
 
@@ -105,7 +105,7 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 }
 
 
-void loadWidgets(tgui::Gui &gui)
+void loadWidgets(tgui::Gui &gui, Graph *G)
 {
 	tgui::Theme tema{"temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
@@ -145,7 +145,7 @@ void loadWidgets(tgui::Gui &gui)
 			"pressed", printArquivo, textoArquivo,
 			lista, check);
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo);
+			"pressed", lerGrafoArquivo, textoArquivo, G);
 }
 
 
@@ -171,10 +171,12 @@ int main()
 			sf::VideoMode(1200, 600), "InfoGraph");
 	tgui::Gui gui(janela);
 
+	Graph G = Graph(0);
+
 	// Tenta importar os widgets da gui
 	try
 	{
-		loadWidgets(gui);
+		loadWidgets(gui, &G);
 	}
 	catch (const tgui::Exception &e)
 	{
@@ -259,7 +261,7 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		printGrafoPoligono(janela, fonte);
+		printGrafoPoligono(janela, fonte, G);
 
 		gui.draw();
 
