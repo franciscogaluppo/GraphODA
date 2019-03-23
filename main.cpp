@@ -93,7 +93,7 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 
 void loadWidgets(tgui::Gui &gui)
 {
-	tgui::Theme tema{"temaGUI/TransparentGrey.txt"};
+	tgui::Theme tema{"temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
 	
@@ -165,7 +165,7 @@ int main()
 		// TODO: mensagem de erro
 		return 1;
 	}
-	
+
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
 	while(janela.isOpen())
