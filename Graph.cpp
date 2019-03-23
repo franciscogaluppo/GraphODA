@@ -24,7 +24,6 @@ void Graph::addEdge(int i, int j) {
 		return;
 	}
 	adj[i].push_back(j);
-	adj[j].push_back(i);
 	edges.push_back({i, j});
 	m++;
 }
