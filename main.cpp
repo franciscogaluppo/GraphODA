@@ -2,17 +2,82 @@
 #include <SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h> // por agora nao quero preocupar com isso
+using namespace std;
 
 // TODO: Receber e plotar um grafo qualquer
+
+// TODO: Receber um grafo na classe bonitinha
+void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte,
+		vector<int> &vertices, vector<pair<int, int> > &ares)
+{
+	int n = vertices.size(), m = ares.size();
+
+	const float raio = 15;
+	const float raioGrafo = 250;
+	pair<float, float> centro = {400, 300};
+	// angulo = 360/n
+	const double theta = 2*acos(-1.0)/n;
+
+	// numero impar de vertices tem que arredar um pouco
+	if (n % 2 == 1) {
+		float falta = raioGrafo - raioGrafo*cos(theta/2);
+		centro.second -= falta/2;
+	}
+
+	vector<pair<int, int> > pos(n);
+	for (int i = 0; i < n; i++)
+		pos[i] = {centro.first+sin(i*theta)*raioGrafo,
+			centro.second+cos(i*theta)*raioGrafo};
+
+	// Cria as arestas
+	for(int i = 0; i < m; i++)
+	{
+		// Arestas sem largura, por isso vetores
+		sf::Vertex linha[] =
+		{
+			sf::Vertex(sf::Vector2f(
+				pos[ares[i].first].first, pos[ares[i].first].second),
+					sf::Color::Black),
+
+			sf::Vertex(sf::Vector2f(
+				pos[ares[i].second].first, pos[ares[i].second].second),
+					sf::Color::Black)
+		};
+
+		janela.draw(linha, 2, sf::Lines);
+	}
+
+	// Cria os vértices
+	for(int i = 0; i < n; i++)
+	{
+		// Cria um círculo
+		sf::CircleShape v(raio);
+		v.setFillColor(sf::Color::Red);
+		v.setOutlineThickness(3.f);
+		v.setOutlineColor(sf::Color::Black);
+		v.setPosition(pos[i].first-raio+1, pos[i].second-raio+1);
+		janela.draw(v);
+
+		// Coloca texto dentro da bola
+		sf::Text label;
+		label.setFont(fonte);
+		label.setString(to_string(vertices[i]));
+		label.setCharacterSize(24);
+		label.setFillColor(sf::Color::Black);
+		label.setPosition(pos[i].first+9-15, pos[i].second-15);
+		janela.draw(label);
+	}
+
+}
+
 // Função que plota um grafo
-void printGrafo(sf::RenderWindow &janela, sf::Font &fonte)
+void printGrafoExemplo(sf::RenderWindow &janela, sf::Font &fonte)
 {
 	// Grafo fixo por enquanto
 	const float raio = 15;
 	const int n = 5, m = 6;	
-	
+
 	int ares[m][2] = 
 	{
 		{0, 1},
@@ -22,8 +87,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte)
 		{2, 4},
 		{3, 4}
 	};
-	
-	std::string nomes[n] = {"1", "2", "3", "4", "5"};
+
+	string nomes[n] = {"1", "2", "3", "4", "5"};
 
 	// Precisamos automatizar as coordenadas
 	float pos[n][2] =
@@ -34,7 +99,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte)
 		{600.f,150.f},
 		{400.f,300.f}
 	};
-	
+
 	// Cria as arestas
 	for(int i = 0; i < m; i++)
 	{
@@ -42,11 +107,11 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte)
 		sf::Vertex linha[] =
 		{
 			sf::Vertex(sf::Vector2f(
-				pos[ares[i][0]][0], pos[ares[i][0]][1]),
+						pos[ares[i][0]][0], pos[ares[i][0]][1]),
 					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(
-				pos[ares[i][1]][0], pos[ares[i][1]][1]),
+						pos[ares[i][1]][0], pos[ares[i][1]][1]),
 					sf::Color::Black)
 		};
 
@@ -78,16 +143,16 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte)
 
 void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckBox::Ptr check)
 {
-	std::cout << "Nome do arquivo: " << arq->getText().toAnsiString() << std::endl;
-	
-	std::cout << lista->getSelectedItem().toAnsiString();
-	
-	if(check->isChecked())
-		std::cout << " com peso." << std::endl;
-	else
-		std::cout << "." << std::endl;
+	cout << "Nome do arquivo: " << arq->getText().toAnsiString() << endl;
 
-	std::cout << std::endl;
+	cout << lista->getSelectedItem().toAnsiString();
+
+	if(check->isChecked())
+		cout << " com peso." << endl;
+	else
+		cout << "." << endl;
+
+	cout << endl;
 }
 
 
@@ -96,7 +161,7 @@ void loadWidgets(tgui::Gui &gui)
 	tgui::Theme tema{"temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
-	
+
 	// Caixa de texto para o arquivo
 	auto textoArquivo = tgui::EditBox::create();
 	textoArquivo->setSize(200.f, 20.f);
@@ -128,8 +193,8 @@ void loadWidgets(tgui::Gui &gui)
 
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
-		"pressed", printArquivo, textoArquivo,
-		lista, check);
+			"pressed", printArquivo, textoArquivo,
+			lista, check);
 }
 
 
@@ -152,8 +217,8 @@ int main()
 
 	// Cria a janela
 	sf::RenderWindow janela(
-		sf::VideoMode(1200, 600), "InfoGraph");
-    tgui::Gui gui(janela);
+			sf::VideoMode(1200, 600), "InfoGraph");
+	tgui::Gui gui(janela);
 
 	// Tenta importar os widgets da gui
 	try
@@ -181,13 +246,13 @@ int main()
 			// Cria os widgets da GUI
 			gui.handleEvent(evento);
 		}
-	
+
 		// Limpa tela e coloca branco
 		janela.clear(sf::Color::White);
 
 		// Parte cinza
 		sf::RectangleShape menu(
-			sf::Vector2f(400.f,600.f));
+				sf::Vector2f(400.f,600.f));
 		menu.setFillColor(sf::Color(192,192,192));
 		menu.setPosition(800.f, 0.f);
 		janela.draw(menu);
@@ -196,10 +261,10 @@ int main()
 		sf::Vertex linha1[] =
 		{
 			sf::Vertex(sf::Vector2f(800,0),
-				sf::Color::Black),
+					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(800,600),
-				sf::Color::Black)
+					sf::Color::Black)
 		};
 		janela.draw(linha1, 2, sf::Lines);
 
@@ -207,10 +272,10 @@ int main()
 		sf::Vertex linha2[] =
 		{
 			sf::Vertex(sf::Vector2f(830,170),
-				sf::Color(130,130,130)),
+					sf::Color(130,130,130)),
 
 			sf::Vertex(sf::Vector2f(1170,170),
-				sf::Color(130,130,130))
+					sf::Color(130,130,130))
 		};
 		janela.draw(linha2, 2, sf::Lines);
 
@@ -218,10 +283,10 @@ int main()
 		sf::Vertex linha3[] =
 		{
 			sf::Vertex(sf::Vector2f(830,285),
-				sf::Color(130,130,130)),
+					sf::Color(130,130,130)),
 
 			sf::Vertex(sf::Vector2f(1170,285),
-				sf::Color(130,130,130))
+					sf::Color(130,130,130))
 		};
 		janela.draw(linha3, 2, sf::Lines);
 
@@ -241,8 +306,12 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		printGrafo(janela, fonte);
-		
+		vector<int> vertices = {1, 2, 3, 4, 5};
+		vector<pair<int, int> > arestas =
+			{{0, 3}, {1, 2}, {0, 4}, {2, 4}, {1, 4}};
+
+		printGrafoPoligono(janela, fonte, vertices, arestas);
+
 		gui.draw();
 
 		// Termina iteração e atualiza janela
