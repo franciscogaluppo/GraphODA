@@ -25,13 +25,13 @@ void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte)
 	// numero impar de vertices tem que arredar um pouco
 	if (n % 2 == 1) {
 		float falta = raioGrafo - raioGrafo*cos(theta/2);
-		centro.second -= falta/2;
+		centro.second += falta/2;
 	}
 
 	vector<pair<int, int> > pos(n);
 	for (int i = 0; i < n; i++)
-		pos[i] = {centro.first+sin(i*theta)*raioGrafo,
-			centro.second+cos(i*theta)*raioGrafo};
+		pos[i] = {centro.first+sin(i*theta+theta/2)*raioGrafo,
+			centro.second+cos(i*theta+theta/2)*raioGrafo};
 
 	// Cria as arestas
 	for(int i = 0; i < m; i++)
