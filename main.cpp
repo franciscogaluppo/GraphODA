@@ -162,10 +162,19 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 
 	if(check->isChecked())
 		cout << " com peso." << endl;
-	else
-		cout << "." << endl;
 
 	cout << endl;
+}
+
+void getSpring(tgui::CheckBox::Ptr c, tgui::EditBox::Ptr c1, tgui::EditBox::Ptr c2, tgui::EditBox::Ptr c3, tgui::EditBox::Ptr c4)
+{
+	if(c->isChecked())
+	{
+		std::cout << c1->getText().toAnsiString() << " ";
+		std::cout << c2->getText().toAnsiString() << " ";
+		std::cout << c3->getText().toAnsiString() << " ";
+		std::cout << c4->getText().toAnsiString() << std::endl;
+	}
 }
 
 
@@ -210,6 +219,47 @@ void loadWidgets(tgui::Gui &gui, Graph *G)
 			lista, check);
 	botaoArquivo->connect(
 			"pressed", lerGrafoArquivo, textoArquivo, G);
+
+
+
+
+
+	// Coisas pro cabra testar
+	auto c = tgui::CheckBox::create("Mola");
+	c->setSize(20.f, 20.f);
+	c->setPosition(820.f, 500.f);
+	gui.add(c);
+
+	auto t1 = tgui::EditBox::create();
+	t1->setSize(50.f, 20.f);
+	t1->setPosition(820.f, 520.f);
+	t1->setDefaultText("c1");
+	gui.add(t1);
+
+	auto t2 = tgui::EditBox::create();
+	t2->setSize(50.f, 20.f);
+	t2->setPosition(890.f, 520.f);
+	t2->setDefaultText("c2");
+	gui.add(t2);
+
+	auto t3 = tgui::EditBox::create();
+	t3->setSize(50.f, 20.f);
+	t3->setPosition(820.f, 540.f);
+	t3->setDefaultText("c3");
+	gui.add(t3);
+	
+	auto t4 = tgui::EditBox::create();
+	t4->setSize(50.f, 20.f);
+	t4->setPosition(890.f, 540.f);
+	t4->setDefaultText("c4");
+	gui.add(t4);
+
+	auto b = tgui::Button::create("ativar");
+	b->setSize(70.f, 20.f);
+	b->setPosition(960.f, 520.f);
+	gui.add(b);
+
+	b->connect("pressed", getSpring, c, t1, t2, t3, t4);
 }
 
 
