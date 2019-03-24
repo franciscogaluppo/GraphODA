@@ -7,6 +7,67 @@
 #include <bits/stdc++.h> // por agora nao quero preocupar com isso
 using namespace std;
 
+void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
+	if (pos.size() != G.n) {
+		// TODO: Erro direito
+		cout << "Erro: posicoes zoadas" << endl;
+		return;
+	}
+
+	// funcoes auxiliares
+	auto sq = [](float x){return x*x;};
+	auto dist = [sq](pair<float, float> a, pair<float, float> b) {
+		return sqrt(sq(a.first-b.first) + sq(a.second-b.second));
+	};
+
+	// calcula matriz de adjacencia
+	// TODO: classe Graph calcular isso
+	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
+	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
+
+	// constantes do algoritmo
+	float c1 = 20, c2 = 100, c3 = 10, c4 = 1;
+
+	// numero de iteracoes
+	while (it--) {
+
+		// forca aplicada a cada vertice
+		vector<pair<float, float> > forca;
+
+		for (int i = 0; i < G.n; i++) {
+			pair<float, float> f = {0.0, 0.0};
+
+			for (int j = 0; j < G.n; j++) if (j != i) {
+
+				// vetor unitario na direcao de i para j
+				pair<float, float> unit = {pos[j].first-pos[i].first,
+								pos[j].second-pos[i].second};
+				float norma = dist(make_pair(0.0, 0.0), unit);
+				unit.first /= norma, unit.second /= norma;
+
+				float d = dist(pos[i], pos[j]);
+
+				// computa forca de acordo com o algoritmo
+				if (!adj[i][j]) {
+					f.first -= unit.first*c3/sqrt(d);
+					f.second -= unit.second*c3/sqrt(d);
+				} else {
+					f.first += unit.first*c1*log(d/c2);
+					f.second += unit.second*c1*log(d/c2);
+				}
+			}
+
+			forca.push_back(f);
+		}
+
+		// atualiza posicoes
+		for (int i = 0; i < G.n; i++) {
+			pos[i].first += c4*forca[i].first;
+			pos[i].second += c4*forca[i].second;
+		}
+	}
+}
+
 // TODO: Algoritmo de plotar
 void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 {
@@ -22,10 +83,13 @@ void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 		centro.second += falta/2;
 	}
 
-	vector<pair<int, int> > pos(G.n);
+	vector<pair<float, float> > pos(G.n);
 	for (int i = 0; i < G.n; i++)
 		pos[i] = {centro.first+sin(i*theta+theta/2)*raioGrafo,
 			centro.second+cos(i*theta+theta/2)*raioGrafo};
+
+	// algoritmo de Eades
+	spring(G, pos, 1000);
 
 	// Cria as arestas
 	for(int i = 0; i < G.m; i++)
