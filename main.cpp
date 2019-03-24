@@ -7,6 +7,10 @@
 #include <bits/stdc++.h> // por agora nao quero preocupar com isso
 using namespace std;
 
+float c1 = 20, c2 = 100, c3 = 10, c4 = 1;
+int SPRING = 0;
+vector<pair<float, float> > RND;
+
 void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 	if (pos.size() != G.n) {
 		// TODO: Erro direito
@@ -26,7 +30,7 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
 
 	// constantes do algoritmo
-	float c1 = 20, c2 = 100, c3 = 10, c4 = 1;
+	//float c1 = 20, c2 = 100, c3 = 10, c4 = 1;
 
 	// numero de iteracoes
 	while (it--) {
@@ -68,10 +72,7 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 	}
 }
 
-// TODO: Algoritmo de plotar
-void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
-{
-	const float raio = 15;
+vector<pair<float, float> > getPoligono(Graph &G) {
 	const float raioGrafo = 250;
 	pair<float, float> centro = {400, 300};
 	// angulo = 360/n
@@ -87,9 +88,24 @@ void printGrafoPoligono(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 	for (int i = 0; i < G.n; i++)
 		pos[i] = {centro.first+sin(i*theta+theta/2)*raioGrafo,
 			centro.second+cos(i*theta+theta/2)*raioGrafo};
+	
+	return pos;
+}
 
+void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
+{
+	const float raio = 15;
+
+	vector<pair<float, float> > pos = getPoligono(G);
 	// algoritmo de Eades
-	spring(G, pos, 1000);
+	if (SPRING) {
+		if (!RND.size()) {
+			for (auto &i : pos) i = {rand()%800, rand()%800};
+			RND = pos;
+		}
+		else pos = RND;
+		spring(G, pos, 1000);
+	} else RND.clear();
 
 	// Cria as arestas
 	for(int i = 0; i < G.m; i++)
@@ -166,15 +182,16 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 	cout << endl;
 }
 
-void getSpring(tgui::CheckBox::Ptr c, tgui::EditBox::Ptr c1, tgui::EditBox::Ptr c2, tgui::EditBox::Ptr c3, tgui::EditBox::Ptr c4)
+void getSpring(tgui::CheckBox::Ptr c, tgui::EditBox::Ptr C1, tgui::EditBox::Ptr C2, tgui::EditBox::Ptr C3, tgui::EditBox::Ptr C4)
 {
 	if(c->isChecked())
 	{
-		std::cout << c1->getText().toAnsiString() << " ";
-		std::cout << c2->getText().toAnsiString() << " ";
-		std::cout << c3->getText().toAnsiString() << " ";
-		std::cout << c4->getText().toAnsiString() << std::endl;
-	}
+		SPRING = 1;
+		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
+		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
+		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
+		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
+	} else SPRING = 0;
 }
 
 
@@ -375,7 +392,7 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		printGrafoPoligono(janela, fonte, G);
+		printGrafo(janela, fonte, G);
 
 		gui.draw();
 
