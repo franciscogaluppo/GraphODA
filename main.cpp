@@ -8,12 +8,13 @@
 using namespace std;
 
 float c1 = 20, c2 = 100, c3 = 10, c4 = 0.1;
-bool SPRING;
+int FDP;
 
 // tamanho do retangulo onde renderiza o grafo
 const int MAXX = 800, MAXY = 600;
 
-void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
+// Eades algorithm
+void fdp1(Graph &G, vector<pair<float, float> > &pos, int it) {
 	if (pos.size() != G.n) {
 		// TODO: Erro direito
 		cout << "Erro: posicoes zoadas" << endl;
@@ -56,13 +57,12 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 
 			for (int j = 0; j < G.n; j++) if (j != i) {
 
+				float d = dist(pos[i], pos[j]);
+
 				// vetor unitario na direcao de i para j
 				pair<float, float> unit = {pos[j].first-pos[i].first,
 								pos[j].second-pos[i].second};
-				float norma = dist(make_pair(0.0, 0.0), unit);
-				unit.first /= norma, unit.second /= norma;
-
-				float d = dist(pos[i], pos[j]);
+				unit.first /= d, unit.second /= d;
 
 				// computa forca de acordo com o algoritmo
 				if (!adj[i][j]) {
@@ -79,12 +79,12 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 
 			// forca em relacao as paredes
 			for (auto j : parede) {
-				pair<float, float> unit = {j.first-pos[i].first,
-								j.second-pos[i].second};
-				float norma = dist(make_pair(0.0, 0.0), unit);
-				unit.first /= norma, unit.second /= norma;
 
 				float d = dist(pos[i], j);
+
+				pair<float, float> unit = {j.first-pos[i].first,
+								j.second-pos[i].second};
+				unit.first /= d, unit.second /= d;
 
 				// repulsao
 				f.first -= 100*unit.first*c3/(d*d);
@@ -99,6 +99,103 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 			pos[i].first += c4*forca[i].first;
 			pos[i].second += c4*forca[i].second;
 		}
+	}
+}
+
+// Fruchterman algorith,
+void fdp2(Graph &G, vector<pair<float, float> > &pos, int it) {
+	if (pos.size() != G.n) {
+		// TODO: Erro direito
+		cout << "Erro: posicoes zoadas" << endl;
+		return;
+	}
+
+	// funcoes auxiliares
+	auto sq = [](float x){return x*x;};
+	auto dist = [sq](pair<float, float> a, pair<float, float> b) {
+		return sqrt(sq(a.first-b.first) + sq(a.second-b.second));
+	};
+
+	// calcula matriz de adjacencia
+	// TODO: classe Graph calcular isso
+	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
+	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
+
+	// constante do algoritmo
+	float k = sqrt(MAXX*MAXY/float(G.n))/2;
+	float t = min(MAXX, MAXY)/8;
+	float delta = t/it;
+
+	// paredes como vertices artificiais
+	vector<pair<float, float> > parede;
+	for (int i = 0; i <= MAXX; i += 10) {
+		parede.push_back({i, 0});
+		parede.push_back({i, MAXY});
+	}
+	for (int i = 0; i <= MAXY; i += 10) {
+		parede.push_back({0, i});
+		parede.push_back({MAXX, i});
+	}
+
+	while (it--) {
+
+		// forca aplicada a cada vertice
+		vector<pair<float, float> > forca;
+
+		for (int i = 0; i < G.n; i++) {
+			pair<float, float> f = {0.0, 0.0};
+
+			for (int j = 0; j < G.n; j++) if (j != i) {
+
+				float d = dist(pos[i], pos[j]);
+
+				// vetor unitario na direcao de i para j
+				pair<float, float> unit = {pos[j].first-pos[i].first,
+								pos[j].second-pos[i].second};
+				unit.first /= d, unit.second /= d;
+
+				// computa forca de acordo com o algoritmo
+				if (d < 2*k) {
+					f.first -= unit.first*k*k/d;
+					f.second -= unit.second*k*k/d;
+				}
+				if (adj[i][j]) {
+					f.first += unit.first*d*d/k;
+					f.second += unit.second*d*d/k;
+				}
+			}
+
+			// forca em relacao as paredes
+			for (auto j : parede) {
+
+				float d = dist(pos[i], j);
+
+				pair<float, float> unit = {j.first-pos[i].first,
+								j.second-pos[i].second};
+				unit.first /= d, unit.second /= d;
+
+				// repulsao
+				if (d < k) {
+					f.first -= unit.first*k*k/d;
+					f.second -= unit.second*k*k/d;
+				}
+			}
+
+			// limitante das forcas
+			float disp = dist(make_pair(0.0, 0.0), f);
+			f.first /= disp, f.second /= disp;
+			f.first *= min(disp, t), f.second *= min(disp, t);
+
+			forca.push_back(f);
+		}
+
+		// atualiza posicoes
+		for (int i = 0; i < G.n; i++) {
+			pos[i].first += forca[i].first;
+			pos[i].second += forca[i].second;
+		}
+
+		t = max((float)0, t-delta);
 	}
 }
 
@@ -128,7 +225,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 
 	vector<pair<float, float> > pos = getPoligono(G);
 	// algoritmo de Eades
-	if (SPRING) spring(G, pos, 300);
+	if (FDP == 1) fdp1(G, pos, 300);
+	if (FDP == 2) fdp2(G, pos, 300);
 
 	// Cria as arestas
 	for(int i = 0; i < G.m; i++)
@@ -205,16 +303,21 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 	cout << endl;
 }
 
-void getSpring(tgui::CheckBox::Ptr c, tgui::EditBox::Ptr C1, tgui::EditBox::Ptr C2, tgui::EditBox::Ptr C3, tgui::EditBox::Ptr C4)
-{
-	if(c->isChecked())
-	{
-		SPRING = 1;
+void getSpring(tgui::CheckBox::Ptr c, tgui::CheckBox::Ptr cc, tgui::EditBox::Ptr C1,
+		tgui::EditBox::Ptr C2, tgui::EditBox::Ptr C3, tgui::EditBox::Ptr C4) {
+	if(cc->isChecked()) {
+		FDP = 2;
 		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
 		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
 		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
 		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
-	} else SPRING = 0;
+	} else if(c->isChecked()) {
+		FDP = 1;
+		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
+		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
+		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
+		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
+	} else FDP = 0;
 }
 
 
@@ -265,10 +368,16 @@ void loadWidgets(tgui::Gui &gui, Graph *G)
 
 
 	// Coisas pro cabra testar
-	auto c = tgui::CheckBox::create("Mola");
+	auto c = tgui::CheckBox::create("FDP1");
 	c->setSize(20.f, 20.f);
 	c->setPosition(820.f, 500.f);
 	gui.add(c);
+
+
+	auto cc = tgui::CheckBox::create("FDP2");
+	cc->setSize(20.f, 20.f);
+	cc->setPosition(900.f, 500.f);
+	gui.add(cc);
 
 	auto t1 = tgui::EditBox::create();
 	t1->setSize(50.f, 20.f);
@@ -299,7 +408,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G)
 	b->setPosition(960.f, 520.f);
 	gui.add(b);
 
-	b->connect("pressed", getSpring, c, t1, t2, t3, t4);
+	b->connect("pressed", getSpring, c, cc, t1, t2, t3, t4);
 }
 
 
