@@ -7,9 +7,11 @@
 #include <bits/stdc++.h> // por agora nao quero preocupar com isso
 using namespace std;
 
-float c1 = 20, c2 = 100, c3 = 10, c4 = 1;
-int SPRING = 0;
-vector<pair<float, float> > RND;
+float c1 = 20, c2 = 100, c3 = 10, c4 = 0.1;
+bool SPRING;
+
+// tamanho do retangulo onde renderiza o grafo
+const int MAXX = 800, MAXY = 600;
 
 void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 	if (pos.size() != G.n) {
@@ -31,6 +33,17 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 
 	// constantes do algoritmo
 	//float c1 = 20, c2 = 100, c3 = 10, c4 = 1;
+	
+	// paredes como vertices artificiais
+	vector<pair<float, float> > parede;
+	for (int i = 0; i <= MAXX; i += 10) {
+		parede.push_back({i, 0});
+		parede.push_back({i, MAXY});
+	}
+	for (int i = 0; i <= MAXY; i += 10) {
+		parede.push_back({0, i});
+		parede.push_back({MAXX, i});
+	}
 
 	// numero de iteracoes
 	while (it--) {
@@ -53,12 +66,29 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 
 				// computa forca de acordo com o algoritmo
 				if (!adj[i][j]) {
-					f.first -= unit.first*c3/sqrt(d);
-					f.second -= unit.second*c3/sqrt(d);
+//					f.first -= unit.first*c3/sqrt(d);
+//					f.second -= unit.second*c3/sqrt(d);
+
+					f.first -= unit.first*5000*c3/(d*d);
+					f.second -= unit.second*5000*c3/(d*d);
 				} else {
 					f.first += unit.first*c1*log(d/c2);
 					f.second += unit.second*c1*log(d/c2);
 				}
+			}
+
+			// forca em relacao as paredes
+			for (auto j : parede) {
+				pair<float, float> unit = {j.first-pos[i].first,
+								j.second-pos[i].second};
+				float norma = dist(make_pair(0.0, 0.0), unit);
+				unit.first /= norma, unit.second /= norma;
+
+				float d = dist(pos[i], j);
+
+				// repulsao
+				f.first -= 100*unit.first*c3/(d*d);
+				f.second -= 100*unit.second*c3/(d*d);
 			}
 
 			forca.push_back(f);
@@ -73,8 +103,8 @@ void spring(Graph &G, vector<pair<float, float> > &pos, int it) {
 }
 
 vector<pair<float, float> > getPoligono(Graph &G) {
-	const float raioGrafo = 250;
-	pair<float, float> centro = {400, 300};
+	const float raioGrafo = (min(MAXX, MAXY)-100)/2;
+	pair<float, float> centro = {MAXX/2, MAXY/2};
 	// angulo = 360/n
 	const double theta = 2*acos(-1.0)/G.n;
 
@@ -98,14 +128,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 
 	vector<pair<float, float> > pos = getPoligono(G);
 	// algoritmo de Eades
-	if (SPRING) {
-		if (!RND.size()) {
-			for (auto &i : pos) i = {rand()%800, rand()%800};
-			RND = pos;
-		}
-		else pos = RND;
-		spring(G, pos, 1000);
-	} else RND.clear();
+	if (SPRING) spring(G, pos, 300);
 
 	// Cria as arestas
 	for(int i = 0; i < G.m; i++)
