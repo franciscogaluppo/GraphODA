@@ -8,7 +8,7 @@
 using namespace std;
 
 float c1 = 20, c2 = 100, c3 = 10, c4 = 0.1;
-int FDP;
+bool FDP1, FDP2;
 
 // tamanho do retangulo onde renderiza o grafo
 const int MAXX = 800, MAXY = 600;
@@ -225,8 +225,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 
 	vector<pair<float, float> > pos = getPoligono(G);
 	// algoritmo de Eades
-	if (FDP == 1) fdp1(G, pos, 300);
-	if (FDP == 2) fdp2(G, pos, 300);
+	if (FDP1) fdp1(G, pos, 300);
+	if (FDP2) fdp2(G, pos, 300);
 
 	// Cria as arestas
 	for(int i = 0; i < G.m; i++)
@@ -305,19 +305,20 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 
 void getSpring(tgui::CheckBox::Ptr c, tgui::CheckBox::Ptr cc, tgui::EditBox::Ptr C1,
 		tgui::EditBox::Ptr C2, tgui::EditBox::Ptr C3, tgui::EditBox::Ptr C4) {
+	if(c->isChecked()) {
+		FDP1 = 1;
+		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
+		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
+		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
+		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
+	} else FDP1 = 0;
 	if(cc->isChecked()) {
-		FDP = 2;
+		FDP2 = 1;
 		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
 		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
 		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
 		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
-	} else if(c->isChecked()) {
-		FDP = 1;
-		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
-		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
-		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
-		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
-	} else FDP = 0;
+	} else FDP2 = 0;	
 }
 
 
