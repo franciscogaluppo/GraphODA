@@ -9,6 +9,7 @@ using namespace std;
 
 float c1 = 20, c2 = 100, c3 = 10, c4 = 0.1;
 bool FDP1, FDP2;
+int RANDOM, ITER = 100;
 
 // tamanho do retangulo onde renderiza o grafo
 const int MAXX = 800, MAXY = 600;
@@ -219,14 +220,65 @@ vector<pair<float, float> > getPoligono(Graph &G) {
 	return pos;
 }
 
-void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
+// produto verorial
+float cross(pair<float, float> u, pair<float, float> v) {
+	return u.first*v.second - u.second*v.first;
+}
+
+// -
+pair<float, float> Minus(pair<float, float> a, pair<float, float> b) {
+	a.first -= b.first;
+	a.second -= b.second;
+	return a;
+}
+
+// se os segmentos de reta interceptam
+bool cruza(pair<float, float> a, pair<float, float> b, pair<float, float> c, pair<float, float> d) {
+	if (cross(Minus(b, a), Minus(c, b))*cross(Minus(b, a), Minus(d, b)) > 0) return 0;
+	if (cross(Minus(d, c), Minus(a, d))*cross(Minus(d, c), Minus(b, d)) > 0) return 0;
+	return 1;
+}
+
+// numero de intersecoes de arestas
+int inter(vector<pair<float, float> > &pos, Graph &G) {
+	int ret = 0;
+	for (auto &i : G.edges) for (auto &j : G.edges)
+		if (cruza(pos[i.first], pos[i.second], pos[j.first], pos[j.second])) ret++;
+	return ret;
+}
+
+void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc)
 {
 	const float raio = 15;
 
-	vector<pair<float, float> > pos = getPoligono(G);
-	// algoritmo de Eades
-	if (FDP1) fdp1(G, pos, 300);
-	if (FDP2) fdp2(G, pos, 300);
+	static vector<pair<float, float> > pos;
+	if (calc) {
+		// gera um monte de seed aleatoria e ver qual sai melhor
+		if (RANDOM) {
+			auto pos_best = pos;
+			int best = 1000000000;
+			for (int i = 0; i < RANDOM; i++) {
+				pos.clear();
+				for (int i = 0; i < G.n; i++)
+					pos.push_back(make_pair((rand()%(MAXX-100))+50,
+								(rand()%(MAXY-100)+50)));
+				if (FDP1) fdp1(G, pos, ITER);
+				if (FDP2) fdp2(G, pos, ITER);
+
+				int intersecoes = inter(pos, G);
+				if (intersecoes < best) {
+					pos_best = pos;
+					best = intersecoes;
+				}
+			}
+			pos = pos_best;
+		} else {
+			pos = getPoligono(G);
+			if (FDP1) fdp1(G, pos, ITER);
+			if (FDP2) fdp2(G, pos, ITER);
+		}
+		calc = 0;
+	}
 
 	// Cria as arestas
 	for(int i = 0; i < G.m; i++)
@@ -268,7 +320,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G)
 	}
 }
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G)
+void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, int *calc)
 {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
@@ -276,6 +328,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G)
 		return;
 	}
 
+	*calc = 1;
 	int n, m;
 	inFile >> n >> m;
 	vector<string> label(n);
@@ -303,26 +356,25 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 	cout << endl;
 }
 
-void getSpring(tgui::CheckBox::Ptr c, tgui::CheckBox::Ptr cc, tgui::EditBox::Ptr C1,
-		tgui::EditBox::Ptr C2, tgui::EditBox::Ptr C3, tgui::EditBox::Ptr C4) {
-	if(c->isChecked()) {
-		FDP1 = 1;
-		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
-		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
-		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
-		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
-	} else FDP1 = 0;
-	if(cc->isChecked()) {
-		FDP2 = 1;
-		if (C1->getText().toAnsiString().size()) c1 = stoi(C1->getText().toAnsiString());
-		if (C2->getText().toAnsiString().size()) c2 = stoi(C2->getText().toAnsiString());
-		if (C3->getText().toAnsiString().size()) c3 = stoi(C3->getText().toAnsiString());
-		if (C4->getText().toAnsiString().size()) c4 = stoi(C4->getText().toAnsiString());
-	} else FDP2 = 0;	
+void getSpring(tgui::CheckBox::Ptr c, tgui::CheckBox::Ptr cc, tgui::CheckBox::Ptr rnd,
+		tgui::EditBox::Ptr t1, tgui::EditBox::Ptr t2, int *calc) {
+	*calc = 1;
+
+	if (rnd->isChecked() and t2->getText().toAnsiString().size()) RANDOM = stoi(t2->getText().toAnsiString());
+	else RANDOM = 0;
+
+	if (t1->getText().toAnsiString().size()) ITER = stoi(t1->getText().toAnsiString());
+	else ITER = 300;
+
+	if(c->isChecked()) FDP1 = 1;
+	else FDP1 = 0;
+
+	if(cc->isChecked()) FDP2 = 1;
+	else FDP2 = 0;	
 }
 
 
-void loadWidgets(tgui::Gui &gui, Graph *G)
+void loadWidgets(tgui::Gui &gui, Graph *G, int *calc)
 {
 	tgui::Theme tema{"temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
@@ -362,7 +414,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G)
 			"pressed", printArquivo, textoArquivo,
 			lista, check);
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, G);
+			"pressed", lerGrafoArquivo, textoArquivo, G, calc);
 
 
 
@@ -380,36 +432,30 @@ void loadWidgets(tgui::Gui &gui, Graph *G)
 	cc->setPosition(900.f, 500.f);
 	gui.add(cc);
 
+
+	auto rnd = tgui::CheckBox::create("RANDOM");
+	rnd->setSize(20.f, 20.f);
+	rnd->setPosition(980.f, 500.f);
+	gui.add(rnd);
+
 	auto t1 = tgui::EditBox::create();
-	t1->setSize(50.f, 20.f);
+	t1->setSize(100.f, 20.f);
 	t1->setPosition(820.f, 520.f);
-	t1->setDefaultText("c1");
+	t1->setDefaultText("Iteracoes");
 	gui.add(t1);
 
 	auto t2 = tgui::EditBox::create();
-	t2->setSize(50.f, 20.f);
-	t2->setPosition(890.f, 520.f);
-	t2->setDefaultText("c2");
+	t2->setSize(100.f, 20.f);
+	t2->setPosition(820.f, 540.f);
+	t2->setDefaultText("Random it");
 	gui.add(t2);
-
-	auto t3 = tgui::EditBox::create();
-	t3->setSize(50.f, 20.f);
-	t3->setPosition(820.f, 540.f);
-	t3->setDefaultText("c3");
-	gui.add(t3);
 	
-	auto t4 = tgui::EditBox::create();
-	t4->setSize(50.f, 20.f);
-	t4->setPosition(890.f, 540.f);
-	t4->setDefaultText("c4");
-	gui.add(t4);
-
 	auto b = tgui::Button::create("ativar");
 	b->setSize(70.f, 20.f);
 	b->setPosition(960.f, 520.f);
 	gui.add(b);
 
-	b->connect("pressed", getSpring, c, cc, t1, t2, t3, t4);
+	b->connect("pressed", getSpring, c, cc, rnd, t1, t2, calc);
 }
 
 
@@ -436,11 +482,13 @@ int main()
 	tgui::Gui gui(janela);
 
 	Graph G = Graph(0);
+	
+	int calc = 1;
 
 	// Tenta importar os widgets da gui
 	try
 	{
-		loadWidgets(gui, &G);
+		loadWidgets(gui, &G, &calc);
 	}
 	catch (const tgui::Exception &e)
 	{
@@ -450,7 +498,6 @@ int main()
 
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
-	
 
 	while(janela.isOpen())
 	{
@@ -525,7 +572,7 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		printGrafo(janela, fonte, G);
+		printGrafo(janela, fonte, G, calc);
 
 		gui.draw();
 
