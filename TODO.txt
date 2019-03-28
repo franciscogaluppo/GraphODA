@@ -1,0 +1,19 @@
+coisas a corrigir:
+
+- centralizar os nomes dos vértices dependendo da qtd de numeros
+- Modularizar main
+	- Criar classe vetor
+	- Recheiar classe grafo
+	- Modularizar canvas
+	- Modularizar menu
+- Mandar e-mail para gerenciar dependências
+- Testar: Normalizar coordenadas vs Vertices artificiais
+
+
+
+- Next:
+	- user stories
+	- diagrama de classe
+	- makefile
+	- colocar referências no README
+
