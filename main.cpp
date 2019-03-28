@@ -247,7 +247,18 @@ int inter(vector<pair<float, float> > &pos, Graph &G) {
 	return ret;
 }
 
-void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc)
+int FindFontSize(int n, int font_size){	//acha o tamanho da fonte
+	if (n<10){
+		return font_size;
+	}
+	else if(n<100){
+		return font_size-4;
+	}
+	else
+		return font_size-6;
+}
+
+void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, int n)
 {
 	const float raio = 15;
 
@@ -313,14 +324,15 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc)
 		sf::Text label;
 		label.setFont(fonte);
 		label.setString(G.label[i]);
-		label.setCharacterSize(24);
+		int font_size = FindFontSize(n, 24);	// font_size default = 24
+		label.setCharacterSize(font_size); //tamanho fonte
 		label.setFillColor(sf::Color::Black);
 		label.setPosition(pos[i].first+9-15, pos[i].second-15);
 		janela.draw(label);
 	}
 }
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, int *calc)
+void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, int *calc, int *n)
 {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
@@ -329,12 +341,12 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, int *calc)
 	}
 
 	*calc = 1;
-	int n, m;
-	inFile >> n >> m;
-	vector<string> label(n);
+	int m;
+	inFile >> *n >> m;
+	vector<string> label(*n);
 	for (auto &i : label) inFile >> i;
 
-	*G = Graph(n, label);
+	*G = Graph(*n, label);
 
 	for (int i = 0; i < m; i++) {
 		int a, b; inFile >> a >> b;
@@ -374,7 +386,7 @@ void getSpring(tgui::CheckBox::Ptr c, tgui::CheckBox::Ptr cc, tgui::CheckBox::Pt
 }
 
 
-void loadWidgets(tgui::Gui &gui, Graph *G, int *calc)
+void loadWidgets(tgui::Gui &gui, Graph *G, int *calc, int *n)
 {
 	tgui::Theme tema{"temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
@@ -414,7 +426,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G, int *calc)
 			"pressed", printArquivo, textoArquivo,
 			lista, check);
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, G, calc);
+			"pressed", lerGrafoArquivo, textoArquivo, G, calc, n);
 
 
 
@@ -484,11 +496,12 @@ int main()
 	Graph G = Graph(0);
 	
 	int calc = 1;
+	int n = 0; //qtd de vértices
 
 	// Tenta importar os widgets da gui
 	try
 	{
-		loadWidgets(gui, &G, &calc);
+		loadWidgets(gui, &G, &calc, &n);
 	}
 	catch (const tgui::Exception &e)
 	{
@@ -572,7 +585,7 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		printGrafo(janela, fonte, G, calc);
+		printGrafo(janela, fonte, G, calc, n);
 
 		gui.draw();
 
