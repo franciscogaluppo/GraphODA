@@ -11,7 +11,7 @@ struct Graph {
 	vector<pair<int, int> > edges;
 
 	Graph(int);
-	Graph(int, vector<string>);
+	Graph(int, vector<string>&);
 	void addEdge(int, int);
 };
 

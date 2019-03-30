@@ -7,7 +7,7 @@ Graph::Graph(int n) {
 	for (int i = 0; i < n; i++) label.push_back(to_string(i));
 }
 
-Graph::Graph(int n, vector<string> label) {
+Graph::Graph(int n, vector<string> &label) {
 	this->n = n;
 	m = 0;
 	adj.resize(n);

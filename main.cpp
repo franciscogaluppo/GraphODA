@@ -3,6 +3,7 @@
 #include <TGUI/TGUI.hpp>
 
 #include "Graph.hpp"
+#include "Vector.hpp"
 
 #include <bits/stdc++.h> // por agora nao quero preocupar com isso
 using namespace std;
@@ -15,18 +16,12 @@ int RANDOM, ITER = 100;
 const int MAXX = 800, MAXY = 600;
 
 // Eades algorithm
-void fdp1(Graph &G, vector<pair<float, float> > &pos, int it) {
+void fdp1(Graph &G, vector<Vector> &pos, int it) {
 	if (pos.size() != G.n) {
 		// TODO: Erro direito
 		cout << "Erro: posicoes zoadas" << endl;
 		return;
 	}
-
-	// funcoes auxiliares
-	auto sq = [](float x){return x*x;};
-	auto dist = [sq](pair<float, float> a, pair<float, float> b) {
-		return sqrt(sq(a.first-b.first) + sq(a.second-b.second));
-	};
 
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
@@ -37,85 +32,62 @@ void fdp1(Graph &G, vector<pair<float, float> > &pos, int it) {
 	//float c1 = 20, c2 = 100, c3 = 10, c4 = 1;
 	
 	// paredes como vertices artificiais
-	vector<pair<float, float> > parede;
+	vector<Vector> parede;
 	for (int i = 0; i <= MAXX; i += 10) {
-		parede.push_back({i, 0});
-		parede.push_back({i, MAXY});
+		parede.push_back(Vector(i, 0));
+		parede.push_back(Vector(i, MAXY));
 	}
 	for (int i = 0; i <= MAXY; i += 10) {
-		parede.push_back({0, i});
-		parede.push_back({MAXX, i});
+		parede.push_back(Vector(0, i));
+		parede.push_back(Vector(MAXX, i));
 	}
 
 	// numero de iteracoes
 	while (it--) {
 
 		// forca aplicada a cada vertice
-		vector<pair<float, float> > forca;
+		vector<Vector> forca;
 
 		for (int i = 0; i < G.n; i++) {
-			pair<float, float> f = {0.0, 0.0};
+			Vector f(0, 0);
 
 			for (int j = 0; j < G.n; j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
 
 				// vetor unitario na direcao de i para j
-				pair<float, float> unit = {pos[j].first-pos[i].first,
-								pos[j].second-pos[i].second};
-				unit.first /= d, unit.second /= d;
+				Vector unit = (pos[j] - pos[i])*(1/d);
 
 				// computa forca de acordo com o algoritmo
-				if (!adj[i][j]) {
-//					f.first -= unit.first*c3/sqrt(d);
-//					f.second -= unit.second*c3/sqrt(d);
-
-					f.first -= unit.first*5000*c3/(d*d);
-					f.second -= unit.second*5000*c3/(d*d);
-				} else {
-					f.first += unit.first*c1*log(d/c2);
-					f.second += unit.second*c1*log(d/c2);
-				}
+				if (!adj[i][j])  f = f - unit*(5000*c3/(d*d));
+				else             f = f + unit*(c1*log(d/c2));
 			}
 
 			// forca em relacao as paredes
 			for (auto j : parede) {
 
 				float d = dist(pos[i], j);
-
-				pair<float, float> unit = {j.first-pos[i].first,
-								j.second-pos[i].second};
-				unit.first /= d, unit.second /= d;
+				Vector unit = (j - pos[i])*(1/d);
 
 				// repulsao
-				f.first -= 100*unit.first*c3/(d*d);
-				f.second -= 100*unit.second*c3/(d*d);
+				f = f - unit*(c3/(d*d));
 			}
 
 			forca.push_back(f);
 		}
 
 		// atualiza posicoes
-		for (int i = 0; i < G.n; i++) {
-			pos[i].first += c4*forca[i].first;
-			pos[i].second += c4*forca[i].second;
-		}
+		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i]*c4;
 	}
 }
 
-// Fruchterman algorith,
-void fdp2(Graph &G, vector<pair<float, float> > &pos, int it) {
+// Fruchterman algorithm
+void fdp2(Graph &G, vector<Vector> &pos, int it) {
 	if (pos.size() != G.n) {
 		// TODO: Erro direito
 		cout << "Erro: posicoes zoadas" << endl;
 		return;
 	}
-
-	// funcoes auxiliares
-	auto sq = [](float x){return x*x;};
-	auto dist = [sq](pair<float, float> a, pair<float, float> b) {
-		return sqrt(sq(a.first-b.first) + sq(a.second-b.second));
-	};
 
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
@@ -128,119 +100,90 @@ void fdp2(Graph &G, vector<pair<float, float> > &pos, int it) {
 	float delta = t/it;
 
 	// paredes como vertices artificiais
-	vector<pair<float, float> > parede;
+	vector<Vector> parede;
 	for (int i = 0; i <= MAXX; i += 10) {
-		parede.push_back({i, 0});
-		parede.push_back({i, MAXY});
+		parede.push_back(Vector(i, 0));
+		parede.push_back(Vector(i, MAXY));
 	}
 	for (int i = 0; i <= MAXY; i += 10) {
-		parede.push_back({0, i});
-		parede.push_back({MAXX, i});
+		parede.push_back(Vector(0, i));
+		parede.push_back(Vector(MAXX, i));
 	}
 
 	while (it--) {
 
 		// forca aplicada a cada vertice
-		vector<pair<float, float> > forca;
+		vector<Vector> forca;
 
 		for (int i = 0; i < G.n; i++) {
-			pair<float, float> f = {0.0, 0.0};
+			Vector f(0, 0);
 
 			for (int j = 0; j < G.n; j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
 
 				// vetor unitario na direcao de i para j
-				pair<float, float> unit = {pos[j].first-pos[i].first,
-								pos[j].second-pos[i].second};
-				unit.first /= d, unit.second /= d;
+				Vector unit = (pos[j] - pos[i])*(1/d);
 
 				// computa forca de acordo com o algoritmo
-				if (d < 2*k) {
-					f.first -= unit.first*k*k/d;
-					f.second -= unit.second*k*k/d;
-				}
-				if (adj[i][j]) {
-					f.first += unit.first*d*d/k;
-					f.second += unit.second*d*d/k;
-				}
+				if (d < 2*k)   f = f - unit*(k*k/d);
+				if (adj[i][j]) f = f + unit*(d*d/k);
 			}
 
 			// forca em relacao as paredes
 			for (auto j : parede) {
 
 				float d = dist(pos[i], j);
-
-				pair<float, float> unit = {j.first-pos[i].first,
-								j.second-pos[i].second};
-				unit.first /= d, unit.second /= d;
+				Vector unit = (j - pos[i])*(1/d);
 
 				// repulsao
-				if (d < k) {
-					f.first -= unit.first*k*k/d;
-					f.second -= unit.second*k*k/d;
-				}
+				if (d < k) f = f - unit*(k*k/d);
 			}
 
 			// limitante das forcas
-			float disp = dist(make_pair(0.0, 0.0), f);
-			f.first /= disp, f.second /= disp;
-			f.first *= min(disp, t), f.second *= min(disp, t);
+			float disp = f.norm();
+			f = f*(1/disp);
+			f = f*min(disp, t);
 
 			forca.push_back(f);
 		}
 
 		// atualiza posicoes
-		for (int i = 0; i < G.n; i++) {
-			pos[i].first += forca[i].first;
-			pos[i].second += forca[i].second;
-		}
+		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i];
 
 		t = max((float)0, t-delta);
 	}
 }
 
-vector<pair<float, float> > getPoligono(Graph &G) {
+vector<Vector> getPoligono(Graph &G) {
 	const float raioGrafo = (min(MAXX, MAXY)-100)/2;
-	pair<float, float> centro = {MAXX/2, MAXY/2};
+	Vector centro(MAXX/2, MAXY/2);
 	// angulo = 360/n
 	const double theta = 2*acos(-1.0)/G.n;
 
 	// numero impar de vertices tem que arredar um pouco
 	if (G.n % 2 == 1) {
 		float falta = raioGrafo - raioGrafo*cos(theta/2);
-		centro.second += falta/2;
+		centro = centro + Vector(0, falta/2);
 	}
 
-	vector<pair<float, float> > pos(G.n);
+	vector<Vector> pos(G.n, Vector(0, 0));
 	for (int i = 0; i < G.n; i++)
-		pos[i] = {centro.first+sin(i*theta+theta/2)*raioGrafo,
-			centro.second+cos(i*theta+theta/2)*raioGrafo};
+		pos[i] = Vector(centro.x+sin(i*theta+theta/2)*raioGrafo,
+			centro.y+cos(i*theta+theta/2)*raioGrafo);
 	
 	return pos;
 }
 
-// produto verorial
-float cross(pair<float, float> u, pair<float, float> v) {
-	return u.first*v.second - u.second*v.first;
-}
-
-// -
-pair<float, float> Minus(pair<float, float> a, pair<float, float> b) {
-	a.first -= b.first;
-	a.second -= b.second;
-	return a;
-}
-
 // se os segmentos de reta interceptam
-bool cruza(pair<float, float> a, pair<float, float> b, pair<float, float> c, pair<float, float> d) {
-	if (cross(Minus(b, a), Minus(c, b))*cross(Minus(b, a), Minus(d, b)) > 0) return 0;
-	if (cross(Minus(d, c), Minus(a, d))*cross(Minus(d, c), Minus(b, d)) > 0) return 0;
+bool cruza(Vector a, Vector b, Vector c, Vector d) {
+	if (cross(b-a, c-b)*cross(b-a, d-b) > 0) return 0;
+	if (cross(d-c, a-d)*cross(d-c, b-d) > 0) return 0;
 	return 1;
 }
 
 // numero de intersecoes de arestas
-int inter(vector<pair<float, float> > &pos, Graph &G) {
+int inter(vector<Vector> &pos, Graph &G) {
 	int ret = 0;
 	for (auto &i : G.edges) for (auto &j : G.edges)
 		if (cruza(pos[i.first], pos[i.second], pos[j.first], pos[j.second])) ret++;
@@ -262,7 +205,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 {
 	const float raio = 15;
 
-	static vector<pair<float, float> > pos;
+	static vector<Vector> pos;
 	if (calc) {
 		// gera um monte de seed aleatoria e ver qual sai melhor
 		if (RANDOM) {
@@ -271,7 +214,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 			for (int i = 0; i < RANDOM; i++) {
 				pos.clear();
 				for (int i = 0; i < G.n; i++)
-					pos.push_back(make_pair((rand()%(MAXX-100))+50,
+					pos.push_back(Vector((rand()%(MAXX-100))+50,
 								(rand()%(MAXY-100)+50)));
 				if (FDP1) fdp1(G, pos, ITER);
 				if (FDP2) fdp2(G, pos, ITER);
@@ -298,11 +241,11 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 		sf::Vertex linha[] =
 		{
 			sf::Vertex(sf::Vector2f(
-				pos[G.edges[i].first].first, pos[G.edges[i].first].second),
+				pos[G.edges[i].first].x, pos[G.edges[i].first].y),
 					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(
-				pos[G.edges[i].second].first, pos[G.edges[i].second].second),
+				pos[G.edges[i].second].x, pos[G.edges[i].second].y),
 					sf::Color::Black)
 		};
 
@@ -317,7 +260,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 		v.setFillColor(sf::Color::Red);
 		v.setOutlineThickness(3.f);
 		v.setOutlineColor(sf::Color::Black);
-		v.setPosition(pos[i].first-raio+1, pos[i].second-raio+1);
+		v.setPosition(pos[i].x-raio+1, pos[i].y-raio+1);
 		janela.draw(v);
 
 		// Coloca texto dentro da bola
@@ -327,7 +270,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 		int font_size = FindFontSize(n, 24);	// font_size default = 24
 		label.setCharacterSize(font_size); //tamanho fonte
 		label.setFillColor(sf::Color::Black);
-		label.setPosition(pos[i].first+9-15, pos[i].second-15);
+		label.setPosition(pos[i].x+9-15, pos[i].y-15);
 		janela.draw(label);
 	}
 }
