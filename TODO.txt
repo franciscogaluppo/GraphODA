@@ -2,7 +2,6 @@ coisas a corrigir:
 
 - centralizar os nomes dos vértices dependendo da qtd de numeros
 - Modularizar main
-	- Criar classe vetor
 	- Recheiar classe grafo
 	- Modularizar canvas
 	- Modularizar menu
