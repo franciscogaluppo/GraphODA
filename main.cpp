@@ -9,7 +9,7 @@
 using namespace std;
 
 float c1 = 20, c2 = 100, c3 = 10, c4 = 0.1;
-bool FDP1, FDP2;
+bool FDP1, FDP2, ANIM;
 int RANDOM, ITER = 100;
 
 // tamanho do retangulo onde renderiza o grafo
@@ -70,7 +70,7 @@ void fdp1(Graph &G, vector<Vector> &pos, int it) {
 				Vector unit = (j - pos[i])*(1/d);
 
 				// repulsao
-				f = f - unit*(c3/(d*d));
+				f = f - unit*(100*c3/(d*d));
 			}
 
 			forca.push_back(f);
@@ -206,7 +206,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 	const float raio = 15;
 
 	static vector<Vector> pos;
-	if (calc) {
+	if (calc or ANIM) {
+		if (ANIM and calc) pos = getPoligono(G);
 		// gera um monte de seed aleatoria e ver qual sai melhor
 		if (RANDOM) {
 			auto pos_best = pos;
@@ -227,9 +228,9 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 			}
 			pos = pos_best;
 		} else {
-			pos = getPoligono(G);
-			if (FDP1) fdp1(G, pos, ITER);
-			if (FDP2) fdp2(G, pos, ITER);
+			if (!ANIM) pos = getPoligono(G);
+			if (FDP1) fdp1(G, pos, ANIM ? 10 : ITER);
+			if (FDP2) fdp2(G, pos, ANIM ? 10 : ITER);
 		}
 		calc = 0;
 	}
@@ -312,8 +313,11 @@ void printArquivo(tgui::EditBox::Ptr arq, tgui::ListBox::Ptr lista, tgui::CheckB
 }
 
 void getSpring(tgui::CheckBox::Ptr c, tgui::CheckBox::Ptr cc, tgui::CheckBox::Ptr rnd,
-		tgui::EditBox::Ptr t1, tgui::EditBox::Ptr t2, int *calc) {
+		tgui::EditBox::Ptr t1, tgui::EditBox::Ptr t2, int *calc, tgui::CheckBox::Ptr anim) {
 	*calc = 1;
+
+	if (anim->isChecked()) ANIM = 1;
+	else ANIM = 0;
 
 	if (rnd->isChecked() and t2->getText().toAnsiString().size()) RANDOM = stoi(t2->getText().toAnsiString());
 	else RANDOM = 0;
@@ -393,6 +397,11 @@ void loadWidgets(tgui::Gui &gui, Graph *G, int *calc, int *n)
 	rnd->setPosition(980.f, 500.f);
 	gui.add(rnd);
 
+	auto anim = tgui::CheckBox::create("ANIMACAO");
+	anim->setSize(20.f, 20.f);
+	anim->setPosition(1100.f, 500.f);
+	gui.add(anim);
+
 	auto t1 = tgui::EditBox::create();
 	t1->setSize(100.f, 20.f);
 	t1->setPosition(820.f, 520.f);
@@ -410,7 +419,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G, int *calc, int *n)
 	b->setPosition(960.f, 520.f);
 	gui.add(b);
 
-	b->connect("pressed", getSpring, c, cc, rnd, t1, t2, calc);
+	b->connect("pressed", getSpring, c, cc, rnd, t1, t2, calc, anim);
 }
 
 
@@ -528,6 +537,7 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
+		if (ANIM) sf::sleep(sf::milliseconds(100));
 		printGrafo(janela, fonte, G, calc, n);
 
 		gui.draw();
