@@ -16,7 +16,7 @@ int RANDOM, ITER = 100;
 const int MAXX = 800, MAXY = 600;
 
 // Eades algorithm
-void fdp1(Graph &G, vector<Vector> &pos, int it) {
+void fdp1(Graph &G, vector<Vector> &pos, int it, int clique) {
 	if (pos.size() != G.n) {
 		// TODO: Erro direito
 		cout << "Erro: posicoes zoadas" << endl;
@@ -77,12 +77,13 @@ void fdp1(Graph &G, vector<Vector> &pos, int it) {
 		}
 
 		// atualiza posicoes
+		if (clique > -1) forca[clique] = Vector(0, 0);
 		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i]*c4;
 	}
 }
 
 // Fruchterman algorithm
-void fdp2(Graph &G, vector<Vector> &pos, int it) {
+void fdp2(Graph &G, vector<Vector> &pos, int it, int clique) {
 	if (pos.size() != G.n) {
 		// TODO: Erro direito
 		cout << "Erro: posicoes zoadas" << endl;
@@ -149,6 +150,7 @@ void fdp2(Graph &G, vector<Vector> &pos, int it) {
 		}
 
 		// atualiza posicoes
+		if (clique > -1) forca[clique] = Vector(0, 0);
 		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i];
 
 		t = max((float)0, t-delta);
@@ -201,11 +203,10 @@ int FindFontSize(int n, int font_size){	//acha o tamanho da fonte
 		return font_size-6;
 }
 
-void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, int n)
+void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, int n, vector<Vector> &pos, int clique)
 {
 	const float raio = 15;
 
-	static vector<Vector> pos;
 	if (calc or ANIM) {
 		if (ANIM and calc) pos = getPoligono(G);
 		// gera um monte de seed aleatoria e ver qual sai melhor
@@ -217,8 +218,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 				for (int i = 0; i < G.n; i++)
 					pos.push_back(Vector((rand()%(MAXX-100))+50,
 								(rand()%(MAXY-100)+50)));
-				if (FDP1) fdp1(G, pos, ITER);
-				if (FDP2) fdp2(G, pos, ITER);
+				if (FDP1) fdp1(G, pos, ITER, clique);
+				if (FDP2) fdp2(G, pos, ITER, clique);
 
 				int intersecoes = inter(pos, G);
 				if (intersecoes < best) {
@@ -229,8 +230,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 			pos = pos_best;
 		} else {
 			if (!ANIM) pos = getPoligono(G);
-			if (FDP1) fdp1(G, pos, ANIM ? 10 : ITER);
-			if (FDP2) fdp2(G, pos, ANIM ? 10 : ITER);
+			if (FDP1) fdp1(G, pos, ANIM ? 10 : ITER, clique);
+			if (FDP2) fdp2(G, pos, ANIM ? 10 : ITER, clique);
 		}
 		calc = 0;
 	}
@@ -274,6 +275,12 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 		label.setPosition(pos[i].x+9-15, pos[i].y-15);
 		janela.draw(label);
 	}
+}
+
+// encontra o vertice onde a pessoa clicou
+int achaVertice(Vector at, vector<Vector> pos, float raio) {
+	for (int i = 0; i < pos.size(); i++) if (dist(at, pos[i]) < raio) return i;
+	return -1;
 }
 
 void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, int *calc, int *n)
@@ -422,10 +429,6 @@ void loadWidgets(tgui::Gui &gui, Graph *G, int *calc, int *n)
 	b->connect("pressed", getSpring, c, cc, rnd, t1, t2, calc, anim);
 }
 
-
-
-
-
 int main()
 {
 	// Carrega a fonte Consola Bold (Gosto dela)
@@ -446,9 +449,12 @@ int main()
 	tgui::Gui gui(janela);
 
 	Graph G = Graph(0);
+	vector<Vector> pos;
+	int clique = -1;
+	Vector last(0, 0);
 	
 	int calc = 1;
-	int n = 0; //qtd de vértices
+	int n = 0; // qt de vertices
 
 	// Tenta importar os widgets da gui
 	try
@@ -538,7 +544,26 @@ int main()
 		janela.draw(instr);
 
 		if (ANIM) sf::sleep(sf::milliseconds(100));
-		printGrafo(janela, fonte, G, calc, n);
+		printGrafo(janela, fonte, G, calc, n, pos, clique);
+
+		// testa clique
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (clique == -1) {
+				auto position = sf::Mouse::getPosition(janela);
+				Vector position_vec(position.x, position.y);
+				clique = achaVertice(position_vec, pos, 15);
+				last = position_vec;
+			}
+		} else clique = -1;
+
+		// move vertice
+		if (clique > -1) {
+			auto position = sf::Mouse::getPosition(janela);
+			Vector position_vec(position.x, position.y);
+			pos[clique] = pos[clique] + (position_vec - last);
+			last = position_vec;
+		}
+
 
 		gui.draw();
 
