@@ -207,7 +207,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 {
 	const float raio = 15;
 
-	if (calc or (ANIM and TIME%20 == 0)) {
+	if (calc or (ANIM and TIME%10 == 0)) {
 		if (ANIM and calc) pos = getPoligono(G);
 		// gera um monte de seed aleatoria e ver qual sai melhor
 		if (RANDOM) {
