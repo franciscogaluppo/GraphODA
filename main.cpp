@@ -10,7 +10,7 @@ using namespace std;
 
 float c1 = 20, c2 = 100, c3 = 10, c4 = 0.1;
 bool FDP1, FDP2, ANIM;
-int RANDOM, ITER = 100;
+int RANDOM, ITER = 100, TIME;
 
 // tamanho do retangulo onde renderiza o grafo
 const int MAXX = 800, MAXY = 600;
@@ -207,7 +207,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, int &calc, 
 {
 	const float raio = 15;
 
-	if (calc or ANIM) {
+	if (calc or (ANIM and TIME%20 == 0)) {
 		if (ANIM and calc) pos = getPoligono(G);
 		// gera um monte de seed aleatoria e ver qual sai melhor
 		if (RANDOM) {
@@ -452,6 +452,7 @@ int main()
 	vector<Vector> pos;
 	int clique = -1;
 	Vector last(0, 0);
+	TIME = 0;
 	
 	int calc = 1;
 	int n = 0; // qt de vertices
@@ -472,6 +473,7 @@ int main()
 
 	while(janela.isOpen())
 	{
+		TIME = (TIME+1)%10000000;
 		// Checa se algum evento aconteceu
 		sf::Event evento;
 		while(janela.pollEvent(evento))
@@ -543,7 +545,7 @@ int main()
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		if (ANIM) sf::sleep(sf::milliseconds(100));
+		//if (ANIM) sf::sleep(sf::milliseconds(100));
 		printGrafo(janela, fonte, G, calc, n, pos, clique);
 
 		// testa clique
