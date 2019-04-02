@@ -6,22 +6,18 @@ int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
 	else return fontSize-6;
 }
 
-// acha cara de maior grau
-int maiorGrau(Graph &G) {
-	int ret = -1, maior = -1;
-	vector<int> grau(G.n, 0);
-	for (auto i : G.edges) {
-		grau[i.first]++;
-		grau[i.second]++;
-	}
-	for (int i = 0; i < G.n; i++) if (grau[i] > maior) {
-		maior = grau[i];
-		ret = i;
-	}
-	return ret;
+sf::Color getColor(int x) {
+	if (x == 0) return sf::Color::White;
+	if (x == 1) return sf::Color::Red;
+	if (x == 2) return sf::Color::Green;
+	if (x == 3) return sf::Color::Blue;
+	if (x == 4) return sf::Color::Yellow;
+	if (x == 5) return sf::Color::Magenta;
+	if (x == 6) return sf::Color::Cyan;
+	return sf::Color::Black;
 }
 
-void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, int raio) {
+void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, vector<int> &color, int raio) {
 
 	// Cria as arestas
 	for(int i = 0; i < G.m; i++) {
@@ -44,9 +40,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 	for(int i = 0; i < G.n; i++) {
 		// Cria um círculo
 		sf::CircleShape v(raio);
-		if (i == maiorGrau(G)) v.setFillColor(sf::Color::Green);
-		else v.setFillColor(sf::Color::Red);
-		v.setOutlineThickness(3.f);
+		v.setFillColor(getColor(color[i]));
+		v.setOutlineThickness(2.f);
 		v.setOutlineColor(sf::Color::Black);
 		v.setPosition(pos[i].x-raio+1, pos[i].y-raio+1);
 		janela.draw(v);
@@ -63,7 +58,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 	}
 }
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, int *X, int *Y) {
+void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y) {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
 		cout << "Erro: arquivo zoado" << endl;
@@ -83,8 +78,13 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, int 
 	}
 
 	*pos = getPoligono(*G, (*X)*2/3, *Y);
+	*color = vector<int>(n, 0);
 
 	inFile.close();
+}
+
+void colorirGrafo(Graph *G, vector<int> *color) {
+	*color = G->getColoring();
 }
 
 // encontra o vertice onde a pessoa clicou
@@ -93,7 +93,7 @@ int achaVertice(Vector at, vector<Vector> pos, float raio) {
 	return -1;
 }
 
-void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, int *X, int *Y) {
+void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y) {
 	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
@@ -121,15 +121,25 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, int *X, int *Y) 
 	check->setPosition(820.f, 235.f);
 	gui.add(check);
 
-	// Botão pra ler arquivo
+	// Botao pra ler arquivo
 	auto botaoArquivo = tgui::Button::create("Importar");
 	botaoArquivo->setSize(70.f, 20.f);
 	botaoArquivo->setPosition(930.f, 235.f);
 	gui.add(botaoArquivo);
 
+	// botao que ativa a coloracao
+	auto botaoColorir = tgui::Button::create("Colorir");
+	botaoColorir->setSize(70.f, 20.f);
+	botaoColorir->setPosition(930.f, 260.f);
+	gui.add(botaoColorir);
+
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, G, pos, X, Y);
+			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y);
+
+	botaoColorir->connect(
+			"pressed", colorirGrafo, G, color);
+
 }
 
 void displayTeste(int X, int Y) {
@@ -143,21 +153,22 @@ void displayTeste(int X, int Y) {
 
 	// Antialiasing
 	sf::ContextSettings settings;
-	settings.antialiasingLevel = 16;
+	settings.antialiasingLevel = 8;
 
 	// Cria a janela
-	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA");
+	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Default, settings);
 	tgui::Gui gui(janela);
 
 	// TODO: tem que muder isso ae, talkei
 	Graph G = Graph(0);
 	vector<Vector> pos;
+	vector<int> color;
 	int clique = -1;
 	Vector lastMousePos(0, 0);
 
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &G, &pos, &X, &Y);
+		loadWidgets(gui, &G, &pos, &color, &X, &Y);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return;
@@ -241,9 +252,9 @@ void displayTeste(int X, int Y) {
 		// se nao tiver posicoes, pega poligono
 		if (!pos.size() and G.n) pos = getPoligono(G, X*2/3, Y);
 
-		// faz mais uma iteracao da mola
-		fdp1(G, pos, 1, clique, X*2/3, Y);
-		printGrafo(janela, fonte, G, pos, 15);
+		// faz mais iteracoes da mola
+		fdp1(G, pos, 2, clique, X*2/3, Y);
+		printGrafo(janela, fonte, G, pos, color, 15);
 
 		// testa clique
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {

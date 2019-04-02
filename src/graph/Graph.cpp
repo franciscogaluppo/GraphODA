@@ -27,3 +27,20 @@ void Graph::addEdge(int i, int j) {
 	edges.push_back({i, j});
 	m++;
 }
+
+bool tenta(Graph *G, vector<int> &ans, int k, int p) {
+	if (p == G->n) {
+		for (auto i : G->edges) if (ans[i.first] == ans[i.second]) return 0;
+		return 1;
+	}
+	for (int i = 1; i <= k; i++) {
+		ans[p] = i;
+		if (tenta(G, ans, k, p+1)) return 1;
+	}
+	return 0;
+}
+
+vector<int> Graph::getColoring() {
+	vector<int> ans(n);
+	for (int k = 1; ; k++) if (tenta(this, ans, k, 0)) return ans;
+}

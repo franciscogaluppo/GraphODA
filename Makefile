@@ -1,11 +1,11 @@
 linux: # Pro chico mexer no Locus
-	g++ -std=c++14 src/main.cpp src/display/Interface.cpp src/display/DrawGraph.cpp src/graph/Graph.cpp src/vector/Vector.cpp -ltgui -lsfml-graphics -lsfml-window -lsfml-system -o graphODA.exe
+	g++ -std=c++14 src/main.cpp src/display/Interface.cpp src/display/DrawGraph.cpp src/graph/Graph.cpp src/vector/Vector.cpp -ltgui -lsfml-graphics -lsfml-window -lsfml-system -o graphODA
 
 mac: # Pro chico mexer
-	clang++ -std=c++14 src/main.cpp src/display/Interface.cpp src/display/DrawGraph.cpp src/graph/Graph.cpp src/vector/Vector.cpp -ltgui -lsfml-graphics -lsfml-window -lsfml-system -o graphODA.exe
+	clang++ -std=c++14 src/main.cpp src/display/Interface.cpp src/display/DrawGraph.cpp src/graph/Graph.cpp src/vector/Vector.cpp -ltgui -lsfml-graphics -lsfml-window -lsfml-system -o graphODA
 
 locus_chico:
-	/usr/bin/g++ -std=c++14 src/main.cpp src/display/Interface.cpp src/display/DrawGraph.cpp src/graph/Graph.cpp src/vector/Vector.cpp -ltgui -lsfml-graphics -lsfml-window -lsfml-system -o graphODA.exe
+	/usr/bin/g++ -std=c++14 src/main.cpp src/display/Interface.cpp src/display/DrawGraph.cpp src/graph/Graph.cpp src/vector/Vector.cpp -ltgui -lsfml-graphics -lsfml-window -lsfml-system -o graphODA
 
 clean:
-	rm graphODA.exe
+	rm graphODA

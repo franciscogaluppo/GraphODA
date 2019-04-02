@@ -45,7 +45,7 @@ void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY)
 
 				// computa forca de acordo com o algoritmo
 				if (!adj[i][j])  f = f - unit*(5000*c3/(d*d));
-				else             f = f + unit*(c1*log(d/c2));
+				else             f = f + unit*(c1*log(d/(c2+3*G.n)));
 			}
 
 			// forca em relacao as paredes
