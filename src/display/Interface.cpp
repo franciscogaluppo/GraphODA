@@ -6,6 +6,21 @@ int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
 	else return fontSize-6;
 }
 
+// acha cara de maior grau
+int maiorGrau(Graph &G) {
+	int ret = -1, maior = -1;
+	vector<int> grau(G.n, 0);
+	for (auto i : G.edges) {
+		grau[i.first]++;
+		grau[i.second]++;
+	}
+	for (int i = 0; i < G.n; i++) if (grau[i] > maior) {
+		maior = grau[i];
+		ret = i;
+	}
+	return ret;
+}
+
 void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, int raio) {
 
 	// Cria as arestas
@@ -29,7 +44,8 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 	for(int i = 0; i < G.n; i++) {
 		// Cria um círculo
 		sf::CircleShape v(raio);
-		v.setFillColor(sf::Color::Red);
+		if (i == maiorGrau(G)) v.setFillColor(sf::Color::Green);
+		else v.setFillColor(sf::Color::Red);
 		v.setOutlineThickness(3.f);
 		v.setOutlineColor(sf::Color::Black);
 		v.setPosition(pos[i].x-raio+1, pos[i].y-raio+1);
