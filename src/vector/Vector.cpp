@@ -25,6 +25,14 @@ float Vector::norm() {
 	return sqrt(x*x + y*y);
 }
 
+float Vector::angle() {
+	return atan2(y, x);
+}
+
+Vector Vector::rotate(float th) {
+	return Vector(x*cos(th)-y*sin(th), x*sin(th)+y*cos(th));
+}
+
 // norma do produvo vetorial
 float cross(Vector u, Vector v) {
 	return u.x*v.y - u.y*v.x;

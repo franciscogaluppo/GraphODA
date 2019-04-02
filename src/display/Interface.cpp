@@ -20,7 +20,7 @@ sf::Color getColor(int x) {
 void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, vector<int> &color, int raio) {
 
 	// Cria as arestas
-	for(int i = 0; i < G.m; i++) {
+	for (int i = 0; i < G.m; i++) {
 		// Arestas sem largura, por isso vetores
 		sf::Vertex linha[] =
 		{
@@ -37,7 +37,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 	}
 
 	// Cria os vértices
-	for(int i = 0; i < G.n; i++) {
+	for (int i = 0; i < G.n; i++) {
 		// Cria um círculo
 		sf::CircleShape v(raio);
 		v.setFillColor(getColor(color[i]));
@@ -55,6 +55,31 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 		label.setFillColor(sf::Color::Black);
 		label.setPosition(pos[i].x+9-15, pos[i].y-15);
 		janela.draw(label);
+	}
+}
+
+void printSetas(sf::RenderWindow &janela, Graph &G, vector<Vector> &pos, int raio) {
+	const float pi = acos(-1.0);
+
+	for (int i = 0; i < G.m; i++) {
+		Vector fim = pos[G.edges[i].second];
+		Vector v = fim - pos[G.edges[i].first];
+		Vector unit = v*(1/v.norm());
+
+		Vector pos = fim - unit*raio*1.6;
+
+		// angulo que tem que rodar pra seta ficar certa
+		float angle = v.angle()-pi/6;
+
+		Vector delta = Vector(raio/2-1, raio/2-1).rotate(angle) - Vector(raio/2-1, raio/2-1);
+		//sum = Vector(0, 0);
+
+		// cria triangulo na ponta da aresta
+		sf::CircleShape tri(raio/2, 3);
+		tri.setRotation((angle)*180/pi);
+		tri.setFillColor(sf::Color::Black);
+		tri.setPosition(pos.x-raio/2+1-delta.x, pos.y-raio/2+1-delta.y);
+		janela.draw(tri);
 	}
 }
 
@@ -93,7 +118,11 @@ int achaVertice(Vector at, vector<Vector> pos, float raio) {
 	return -1;
 }
 
-void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y) {
+void mudaDir(int* dir) {
+	(*dir) ^= 1;
+}
+
+void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y, int* dir) {
 	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
@@ -116,7 +145,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *col
 	gui.add(lista);
 
 	// Check box de se tem peso ou não
-	auto check = tgui::CheckBox::create("Com peso");
+	auto check = tgui::CheckBox::create("Direcionado");
 	check->setSize(20.f, 20.f);
 	check->setPosition(820.f, 235.f);
 	gui.add(check);
@@ -140,6 +169,10 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *col
 	botaoColorir->connect(
 			"pressed", colorirGrafo, G, color);
 
+	check->connect(
+			"checked", mudaDir, dir);
+	check->connect(
+			"unchecked", mudaDir, dir);
 }
 
 void displayTeste(int X, int Y) {
@@ -163,12 +196,12 @@ void displayTeste(int X, int Y) {
 	Graph G = Graph(0);
 	vector<Vector> pos;
 	vector<int> color;
-	int clique = -1;
+	int clique = -1, dir = 0;
 	Vector lastMousePos(0, 0);
 
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &G, &pos, &color, &X, &Y);
+		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return;
@@ -255,6 +288,7 @@ void displayTeste(int X, int Y) {
 		// faz mais iteracoes da mola
 		fdp1(G, pos, 2, clique, X*2/3, Y);
 		printGrafo(janela, fonte, G, pos, color, 15);
+		if (dir) printSetas(janela, G, pos, 15);
 
 		// testa clique
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
