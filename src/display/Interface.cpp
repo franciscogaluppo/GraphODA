@@ -207,6 +207,7 @@ void displayTeste(int X, int Y) {
 	vector<int> color;
 	int clique = -1, dir = 0;
 	Vector lastMousePos(0, 0);
+	const float raioG = 15;
 
 	// Tenta importar os widgets da gui
 	try {
@@ -296,15 +297,15 @@ void displayTeste(int X, int Y) {
 
 		// faz mais iteracoes da mola
 		fdp1(G, pos, 2, clique, X*2/3, Y);
-		printGrafo(janela, fonte, G, pos, color, 15);
-		if (dir) printSetas(janela, G, pos, 15);
+		printGrafo(janela, fonte, G, pos, color, raioG);
+		if (dir) printSetas(janela, G, pos, raioG);
 
 		// testa clique
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (clique == -1) {
 				auto position = sf::Mouse::getPosition(janela);
 				Vector position_vec(position.x, position.y);
-				clique = achaVertice(position_vec, pos, 15);
+				clique = achaVertice(position_vec, pos, raioG);
 				lastMousePos = position_vec;
 			}
 		} else clique = -1, color = vector<int>(color.size(), 0);
@@ -314,6 +315,13 @@ void displayTeste(int X, int Y) {
 			auto position = sf::Mouse::getPosition(janela);
 			Vector position_vec(position.x, position.y);
 			pos[clique] = pos[clique] + (position_vec - lastMousePos);
+
+			// delimita para nao sair do canvas
+			pos[clique].x = max(pos[clique].x, raioG+1);
+			pos[clique].y = max(pos[clique].y, raioG+1);
+			pos[clique].x = min(pos[clique].x, X*2/3-raioG-1);
+			pos[clique].y = min(pos[clique].y, Y-raioG-1);
+
 			lastMousePos = position_vec;
 			color = coloreDistancia(G, clique);
 		}
