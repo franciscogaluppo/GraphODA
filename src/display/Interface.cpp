@@ -58,6 +58,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 	}
 }
 
+// eu sou mt bom com vetores
 void printSetas(sf::RenderWindow &janela, Graph &G, vector<Vector> &pos, int raio) {
 	const float pi = acos(-1.0);
 
@@ -72,7 +73,6 @@ void printSetas(sf::RenderWindow &janela, Graph &G, vector<Vector> &pos, int rai
 		float angle = v.angle()-pi/6;
 
 		Vector delta = Vector(raio/2-1, raio/2-1).rotate(angle) - Vector(raio/2-1, raio/2-1);
-		//sum = Vector(0, 0);
 
 		// cria triangulo na ponta da aresta
 		sf::CircleShape tri(raio/2, 3);
@@ -108,10 +108,6 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 	inFile.close();
 }
 
-void colorirGrafo(Graph *G, vector<int> *color) {
-	*color = G->getColoring();
-}
-
 // encontra o vertice onde a pessoa clicou
 int achaVertice(Vector at, vector<Vector> pos, float raio) {
 	for (int i = 0; i < pos.size(); i++) if (dist(at, pos[i]) < raio) return i;
@@ -120,6 +116,28 @@ int achaVertice(Vector at, vector<Vector> pos, float raio) {
 
 void mudaDir(int* dir) {
 	(*dir) ^= 1;
+}
+
+vector<int> coloreDistancia(Graph &G, int at) {
+	vector<int> color(G.n, 0);
+
+	// BFS
+	vector<int> vis(G.n, 0); vis[at] = 1;
+	queue<pair<int, int> > q;
+	q.push({at, 0});
+
+	while (q.size()) {
+		int u = q.front().first, d = q.front().second;
+		q.pop();
+		color[u] = (d%6)+1;
+		
+		for (int i : G.adj[u]) if (!vis[i]) {
+			q.push({i, d+1});
+			vis[i] = 1;
+		}
+	}
+
+	return color;
 }
 
 void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y, int* dir) {
@@ -156,18 +174,9 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *col
 	botaoArquivo->setPosition(930.f, 235.f);
 	gui.add(botaoArquivo);
 
-	// botao que ativa a coloracao
-	auto botaoColorir = tgui::Button::create("Colorir");
-	botaoColorir->setSize(70.f, 20.f);
-	botaoColorir->setPosition(930.f, 260.f);
-	gui.add(botaoColorir);
-
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
 			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y);
-
-	botaoColorir->connect(
-			"pressed", colorirGrafo, G, color);
 
 	check->connect(
 			"checked", mudaDir, dir);
@@ -298,7 +307,7 @@ void displayTeste(int X, int Y) {
 				clique = achaVertice(position_vec, pos, 15);
 				lastMousePos = position_vec;
 			}
-		} else clique = -1;
+		} else clique = -1, color = vector<int>(color.size(), 0);
 
 		// move vertice
 		if (clique > -1) {
@@ -306,6 +315,7 @@ void displayTeste(int X, int Y) {
 			Vector position_vec(position.x, position.y);
 			pos[clique] = pos[clique] + (position_vec - lastMousePos);
 			lastMousePos = position_vec;
+			color = coloreDistancia(G, clique);
 		}
 
 
