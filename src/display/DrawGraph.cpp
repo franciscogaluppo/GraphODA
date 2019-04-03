@@ -1,7 +1,15 @@
 #include "DrawGraph.hpp"
 
+Vector deixaDentro(Vector v, int X, int Y, float raio) {
+	v.x = max(v.x, raio+1);
+	v.y = max(v.y, raio+1);
+	v.x = min(v.x, X-raio-1);
+	v.y = min(v.y, Y-raio-1);
+	return v;
+}
+
 // Eades algorithm
-void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY) {
+void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY, float raio) {
 	if (pos.size() != G.n) {
 		// TODO: Erro direito
 		cout << "Erro: posicoes zoadas" << endl;
@@ -45,7 +53,7 @@ void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY)
 
 				// computa forca de acordo com o algoritmo
 				if (!adj[i][j])  f = f - unit*(5000*c3/(d*d));
-				else             f = f + unit*(c1*log(d/(c2+3*G.n)));
+				else             f = f + unit*(c1*log(d/(c2+G.n+G.m)));
 			}
 
 			// forca em relacao as paredes
@@ -63,7 +71,8 @@ void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY)
 
 		// atualiza posicoes
 		if (clique > -1) forca[clique] = Vector(0, 0);
-		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i]*c4;
+		for (int i = 0; i < G.n; i++)
+			pos[i] = deixaDentro(pos[i] + forca[i]*c4, MAXX, MAXY, raio);
 	}
 }
 

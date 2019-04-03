@@ -296,7 +296,7 @@ void displayTeste(int X, int Y) {
 		if (!pos.size() and G.n) pos = getPoligono(G, X*2/3, Y);
 
 		// faz mais iteracoes da mola
-		fdp1(G, pos, 2, clique, X*2/3, Y);
+		fdp1(G, pos, 2, clique, X*2/3, Y, raioG);
 		printGrafo(janela, fonte, G, pos, color, raioG);
 		if (dir) printSetas(janela, G, pos, raioG);
 
@@ -314,13 +314,7 @@ void displayTeste(int X, int Y) {
 		if (clique > -1) {
 			auto position = sf::Mouse::getPosition(janela);
 			Vector position_vec(position.x, position.y);
-			pos[clique] = pos[clique] + (position_vec - lastMousePos);
-
-			// delimita para nao sair do canvas
-			pos[clique].x = max(pos[clique].x, raioG+1);
-			pos[clique].y = max(pos[clique].y, raioG+1);
-			pos[clique].x = min(pos[clique].x, X*2/3-raioG-1);
-			pos[clique].y = min(pos[clique].y, Y-raioG-1);
+			pos[clique] = deixaDentro(pos[clique] + (position_vec - lastMousePos), X*2/3, Y, raioG);
 
 			lastMousePos = position_vec;
 			color = coloreDistancia(G, clique);

@@ -7,7 +7,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void fdp1(Graph&, vector<Vector>&, int, int, int, int);
+Vector deixaDentro(Vector, int, int, float);
+
+void fdp1(Graph&, vector<Vector>&, int, int, int, int, float);
 
 vector<Vector> getPoligono(Graph&, int, int);
 
