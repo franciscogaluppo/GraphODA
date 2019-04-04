@@ -102,7 +102,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 		G->addEdge(a, b);
 	}
 
-	*pos = getPoligono(*G, (*X)*2/3, *Y);
+	*pos = getGood(*G, (*X)*2/3, *Y, max(10, 50-G->n), max(10, 100-G->m));
 	*color = vector<int>(n, 0);
 
 	inFile.close();

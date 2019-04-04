@@ -13,4 +13,8 @@ void fdp1(Graph&, vector<Vector>&, int, int, int, int, float);
 
 vector<Vector> getPoligono(Graph&, int, int);
 
+vector<Vector> getRandom(Graph&, int, int);
+
+vector<Vector> getGood(Graph&, int, int, int, int);
+
 #endif
