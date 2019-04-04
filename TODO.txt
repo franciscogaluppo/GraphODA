@@ -1,15 +1,11 @@
 coisas a corrigir:
 
+- arrumar o memory leak
 - centralizar os nomes dos vértices dependendo da qtd de numeros
-- Modularizar main
-	- Recheiar classe grafo
-- Testar: Normalizar coordenadas vs Vertices artificiais
-
-
-
-- Next:
-	- user stories
-	- diagrama de classe
-	- makefile
-	- colocar referências no README
-
+- Fazer o GUI
+- Comecar a implementar as coisas mesmo
+- rect.hpp
+- fazer user stories
+- arruamr o makefile
+- arruamr o README
+- diagrama de classe
