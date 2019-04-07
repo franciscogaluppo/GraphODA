@@ -1,4 +1,5 @@
 #include "graph/Graph.hpp"
+#include "SFML/Graphics/Rect.hpp"
 #include "vector/Vector.hpp"
 #include "display/Interface.hpp"
 #include "display/DrawGraph.hpp"

@@ -6,6 +6,7 @@ int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
 	else return fontSize-6;
 }
 
+
 sf::Color getColor(int x) {
 	if (x == 0) return sf::Color::White;
 	if (x == 1) return sf::Color::Red;
@@ -93,10 +94,18 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 	int n, m;
 	inFile >> n >> m;
 	vector<string> label(n);
-	for (auto &i : label) inFile >> i;
-
+	for (auto &i : label)
+		inFile >> i;
 	*G = Graph(n, label);
-
+	int biggest = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		if(label[i].length() > biggest)
+		{
+			biggest = label[i].length();
+		}
+	}
+	printf("%d\n", biggest); 	//maior length no grafo
 	for (int i = 0; i < m; i++) {
 		int a, b; inFile >> a >> b;
 		G->addEdge(a, b);

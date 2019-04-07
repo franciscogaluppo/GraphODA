@@ -7,7 +7,9 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "SFML/Graphics/Rect.hpp"	//usada para calcular retg minimo
 #include <TGUI/TGUI.hpp>
+#include <limits>	//infinity
 
 #include <bits/stdc++.h>
 using namespace std;
