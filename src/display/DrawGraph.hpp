@@ -7,6 +7,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+void fdpPeso(Graph&, vector<Vector>&, vector<float>&, int);
+
 Vector deixaDentro(Vector, int, int, float);
 
 void fdp1(Graph&, vector<Vector>&, int, int, int, int, float);

@@ -12,6 +12,7 @@ struct Vector {
 	float norm();
 	float angle();
 	Vector rotate(float);
+	Vector project(Vector);
 };
 
 Vector operator +(const Vector&, const Vector&);
@@ -20,5 +21,6 @@ Vector operator *(const Vector&, const float);
 
 float cross(Vector, Vector);
 float dist(Vector, Vector);
+float dot(Vector, Vector);
 
 #endif

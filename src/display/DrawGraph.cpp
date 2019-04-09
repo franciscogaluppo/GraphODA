@@ -1,5 +1,78 @@
 #include "DrawGraph.hpp"
 
+#define EPS 1e-6
+
+void fdpPeso(Graph &G, vector<Vector> &pos, vector<float> &posPesoN, int it) {
+	if (posPesoN.size() != G.m) {
+		// TODO: Erro direito
+		cout << "Erro: posicoes dos pesos zoadas" << endl;
+		return;
+	}
+
+	// constroi posicoes de fato
+	vector<Vector> posPeso;
+	for (int i = 0; i < G.m; i++) {
+		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
+		posPeso.push_back(pos[G.edges[i].first] + v*posPesoN[i]);
+	}
+
+	// constantes do algoritmo de Eades
+	float c3 = 50000/(1+G.n+G.m), c4 = 0.1;
+
+	while (it--) {
+
+		// forca aplicada a cada peso
+		vector<Vector> forca;
+
+		for (int i = 0; i < G.m; i++) {
+			Vector f(0, 0);
+
+			// forca em relacao aos vertices adjacentes
+			for (int j = 0; j < 2; j++) {
+				// escolhe um deles
+				Vector v = pos[G.edges[i].first];
+				if (j) v = pos[G.edges[i].second];
+
+				float d = dist(posPeso[i], v);
+				if (d < EPS) d = EPS;
+
+				// vetor unitario na direcao de i para j
+				Vector unit = (v - posPeso[i])*(1/d);
+
+				// repulsao
+				f = f - unit*(c3/(d*d));
+			}
+
+			// forca em relacao aos pesos
+			for (int j = 0; j < G.m; j++) if (i != j) {
+				float d = dist(posPeso[i], posPeso[j]);
+				if (d < EPS) d = EPS;
+				Vector unit = (posPeso[j] - posPeso[i])*(1/d);
+				f = f - unit*(c3/(d*d));
+			}
+
+			// projeta a forca no vetor da aresta
+			Vector ar = pos[G.edges[i].second] - pos[G.edges[i].first];
+			f = f.project(ar);
+			forca.push_back(f);
+		}
+
+		// atualiza posicoes
+		for (int i = 0; i < G.m; i++) posPeso[i] = posPeso[i] + forca[i]*c4;
+	}
+
+	// transforma de volta para numeros
+	posPesoN = vector<float>();
+	for (int i = 0; i < G.m; i++) {
+		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
+		posPesoN.push_back((posPeso[i] - pos[G.edges[i].first]).norm() / v.norm());
+
+		// para o peso ficar na aresta
+		if (posPesoN[i] < 0.1) posPesoN[i] = 0.1;
+		if (posPesoN[i] > 0.9) posPesoN[i] = 0.9;
+	}
+}
+
 Vector deixaDentro(Vector v, int X, int Y, float raio) {
 	v.x = max(v.x, raio+1);
 	v.y = max(v.y, raio+1);
@@ -47,6 +120,7 @@ void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY,
 			for (int j = 0; j < G.n; j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
+				if (d < 1e-12) d = 1e-2;
 
 				// vetor unitario na direcao de i para j
 				Vector unit = (pos[j] - pos[i])*(1/d);
@@ -60,6 +134,7 @@ void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY,
 			for (auto j : parede) {
 
 				float d = dist(pos[i], j);
+				if (d < EPS) d = EPS;
 				Vector unit = (j - pos[i])*(1/d);
 
 				// repulsao
@@ -116,7 +191,7 @@ void fdp2(Graph &G, vector<Vector> &pos, int it, int MAXX, int MAXY) {
 			for (int j = 0; j < G.n; j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
-				if (d < 1e-12) d = 1e-2;
+				if (d < EPS) d = EPS;
 
 				// vetor unitario na direcao de i para j
 				Vector unit = (pos[j] - pos[i])*(1/d);
@@ -131,7 +206,7 @@ void fdp2(Graph &G, vector<Vector> &pos, int it, int MAXX, int MAXY) {
 
 				float d = dist(pos[i], j);
 				Vector unit = (j - pos[i])*(1/d);
-				if (d < 1e-12) d = 1e-2;
+				if (d < EPS) d = EPS;
 
 				// repulsao
 				if (d < k) f = f - unit*(k*k/d);

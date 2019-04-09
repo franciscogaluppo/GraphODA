@@ -82,8 +82,9 @@ void printSetas(sf::RenderWindow &janela, Graph &G, vector<Vector> &pos, int rai
 	}
 }
 
-void printPesos(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, vector<string> &peso) {
-	if (peso.size() != G.m) {
+void printPesos(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos,
+		vector<float> &posPeso, vector<string> &peso) {
+	if (posPeso.size() != G.m or peso.size() != G.m) {
 		// TODO: Erro direito
 		cout << "Erro: pesos zoados" << endl;
 		return;
@@ -96,13 +97,16 @@ void printPesos(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 		p.setCharacterSize(findFontSize(peso[i].size(), 24));
 		p.setFillColor(sf::Color::Black);
 
-		Vector position = (pos[G.edges[i].first]+pos[G.edges[i].second])*0.5 + Vector(5, -10);
-		p.setPosition(position.x, position.y);
+		// acha posicao
+		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
+		Vector at = pos[G.edges[i].first] + v*posPeso[i];
+		p.setPosition(at.x, at.y);
 		janela.draw(p);
 	}
 }
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y, vector<string>* peso) {
+void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vector<int> *color,
+		int *X, int *Y, vector<string>* peso, vector<float> *posPeso) {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
 		// TODO: Erro direito
@@ -133,6 +137,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 
 	*pos = getGood(*G, (*X)*2/3, *Y, max(10, 50-G->n), max(10, 100-G->m));
 	*color = vector<int>(n, 0);
+	*posPeso = vector<float>(m, 0.5);
 
 	// pesos teste
 	*peso = vector<string>(m);
@@ -173,7 +178,8 @@ vector<int> coloreDistancia(Graph &G, int at) {
 	return color;
 }
 
-void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y, int* dir, vector<string> *peso) {
+void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color,
+		int *X, int *Y, int* dir, vector<string> *peso, vector<float> *posPeso) {
 	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
@@ -209,7 +215,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *col
 
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y, peso);
+			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y, peso, posPeso);
 
 	check->connect(
 			"checked", mudaDir, dir);
@@ -242,10 +248,11 @@ void displayTeste(int X, int Y) {
 	Vector lastMousePos(0, 0);
 	const float raioG = 15;
 	vector<string> peso;
+	vector<float> posPeso;
 
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir, &peso);
+		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir, &peso, &posPeso);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return;
@@ -331,9 +338,10 @@ void displayTeste(int X, int Y) {
 
 		// faz mais iteracoes da mola
 		fdp1(G, pos, 2, clique, X*2/3, Y, raioG);
+		fdpPeso(G, pos, posPeso, 2);
 		printGrafo(janela, fonte, G, pos, color, raioG);
 		if (dir) printSetas(janela, G, pos, raioG);
-		printPesos(janela, fonte, G, pos, peso);
+		printPesos(janela, fonte, G, pos, posPeso, peso);
 
 		// testa clique
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {

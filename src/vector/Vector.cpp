@@ -33,6 +33,11 @@ Vector Vector::rotate(float th) {
 	return Vector(x*cos(th)-y*sin(th), x*sin(th)+y*cos(th));
 }
 
+// projecao sobre o vetor v
+Vector Vector::project(Vector v) {
+	return v*dot(*this, v)*(1/dot(v, v));
+}
+
 // norma do produvo vetorial
 float cross(Vector u, Vector v) {
 	return u.x*v.y - u.y*v.x;
@@ -40,4 +45,9 @@ float cross(Vector u, Vector v) {
 
 float dist(Vector u, Vector v) {
 	return (u-v).norm();
+}
+
+// produto escalar
+float dot(Vector u, Vector v) {
+	return u.x*v.x + u.y*v.y;
 }
