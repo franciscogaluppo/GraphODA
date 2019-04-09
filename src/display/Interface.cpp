@@ -3,6 +3,8 @@
 int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
 	if (n < 2) return fontSize;
 	else if (n < 3) return fontSize-6;
+	else if (n< 4) return fontSize-10;
+	else if(n < 5) return fontSize-14;
 	else return fontSize-10;
 }
 
@@ -17,7 +19,7 @@ sf::Color getColor(int x) {
 	return sf::Color::Black;
 }
 
-void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, vector<int> &color, int raio) {
+void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, vector<int> &color, int raio, int biggest) {
 
 	// Cria as arestas
 	for (int i = 0; i < G.m; i++) {
@@ -35,7 +37,6 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 
 		janela.draw(linha, 2, sf::Lines);
 	}
-
 	// Cria os vértices
 	for (int i = 0; i < G.n; i++) {
 		// Cria um círculo
@@ -50,9 +51,9 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 		sf::Text label;
 		label.setFont(fonte);
 		label.setString(G.label[i]);
-		label.setCharacterSize(findFontSize(G.label[i].size(), 24)); // fontSize default = 24
+		label.setCharacterSize(findFontSize(biggest, 24)); // fontSize default = 24
 		label.setFillColor(sf::Color::Black);
-		label.setPosition(pos[i].x+9-15, pos[i].y-15);
+		label.setPosition(pos[i].x+9-15, pos[i].y-15);	//TODO mudar posição
 		janela.draw(label);
 	}
 }
@@ -106,7 +107,7 @@ void printPesos(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 }
 
 void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vector<int> *color,
-		int *X, int *Y, vector<string>* peso, vector<float> *posPeso) {
+		int *X, int *Y, vector<string>* peso, vector<float> *posPeso, int *biggest) {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
 		// TODO: Erro direito
@@ -119,16 +120,17 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 	vector<string> label(n);
 	for (auto &i : label) inFile >> i;
 	*G = Graph(n, label);
-
-	int biggest = 0;
+	int r = *biggest;
+	
+	//int biggest = 0;
 	for (int i = 0; i < n; ++i)
 	{
-		if(label[i].length() > biggest)
+		if(label[i].length() > *biggest)
 		{
-			biggest = label[i].length();
+			*biggest = label[i].length();
 		}
 	}
-	printf("%d\n", biggest); 	//maior length no grafo
+	//printf("%d\n", *biggest); 	//maior length no grafo
 
 	for (int i = 0; i < m; i++) {
 		int a, b; inFile >> a >> b;
@@ -179,7 +181,7 @@ vector<int> coloreDistancia(Graph &G, int at) {
 }
 
 void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color,
-		int *X, int *Y, int* dir, vector<string> *peso, vector<float> *posPeso) {
+		int *X, int *Y, int* dir, vector<string> *peso, vector<float> *posPeso, int *biggest) {
 	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
@@ -215,7 +217,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *col
 
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y, peso, posPeso);
+			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y, peso, posPeso, biggest);
 
 	check->connect(
 			"checked", mudaDir, dir);
@@ -250,14 +252,15 @@ void displayTeste(int X, int Y) {
 	vector<string> peso;
 	vector<float> posPeso;
 
+	int biggest = 0; //maior string
+
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir, &peso, &posPeso);
+		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir, &peso, &posPeso, &biggest);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return;
 	}
-
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
 	
@@ -339,7 +342,7 @@ void displayTeste(int X, int Y) {
 		// faz mais iteracoes da mola
 		fdp1(G, pos, 2, clique, X*2/3, Y, raioG);
 		fdpPeso(G, pos, posPeso, 2);
-		printGrafo(janela, fonte, G, pos, color, raioG);
+		printGrafo(janela, fonte, G, pos, color, raioG, biggest);
 		if (dir) printSetas(janela, G, pos, raioG);
 		printPesos(janela, fonte, G, pos, posPeso, peso);
 
