@@ -1,11 +1,10 @@
 #include "Interface.hpp"
 
 int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
-	if (n < 10) return fontSize;
-	else if (n < 100) return fontSize-4;
-	else return fontSize-6;
+	if (n < 2) return fontSize;
+	else if (n < 3) return fontSize-6;
+	else return fontSize-10;
 }
-
 
 sf::Color getColor(int x) {
 	if (x == 0) return sf::Color::White;
@@ -51,8 +50,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 		sf::Text label;
 		label.setFont(fonte);
 		label.setString(G.label[i]);
-		int fontSize = findFontSize(G.n, 24);	// fontSize default = 24
-		label.setCharacterSize(fontSize); //tamanho fonte
+		label.setCharacterSize(findFontSize(G.label[i].size(), 24)); // fontSize default = 24
 		label.setFillColor(sf::Color::Black);
 		label.setPosition(pos[i].x+9-15, pos[i].y-15);
 		janela.draw(label);
@@ -84,9 +82,30 @@ void printSetas(sf::RenderWindow &janela, Graph &G, vector<Vector> &pos, int rai
 	}
 }
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y) {
+void printPesos(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, vector<string> &peso) {
+	if (peso.size() != G.m) {
+		// TODO: Erro direito
+		cout << "Erro: pesos zoados" << endl;
+		return;
+	}
+
+	for (int i = 0; i < G.m; i++) {
+		sf::Text p;
+		p.setFont(fonte);
+		p.setString(peso[i]);
+		p.setCharacterSize(findFontSize(peso[i].size(), 24));
+		p.setFillColor(sf::Color::Black);
+
+		Vector position = (pos[G.edges[i].first]+pos[G.edges[i].second])*0.5 + Vector(5, -10);
+		p.setPosition(position.x, position.y);
+		janela.draw(p);
+	}
+}
+
+void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y, vector<string>* peso) {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
+		// TODO: Erro direito
 		cout << "Erro: arquivo zoado" << endl;
 		return;
 	}
@@ -94,9 +113,9 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 	int n, m;
 	inFile >> n >> m;
 	vector<string> label(n);
-	for (auto &i : label)
-		inFile >> i;
+	for (auto &i : label) inFile >> i;
 	*G = Graph(n, label);
+
 	int biggest = 0;
 	for (int i = 0; i < n; ++i)
 	{
@@ -106,6 +125,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 		}
 	}
 	printf("%d\n", biggest); 	//maior length no grafo
+
 	for (int i = 0; i < m; i++) {
 		int a, b; inFile >> a >> b;
 		G->addEdge(a, b);
@@ -113,6 +133,10 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 
 	*pos = getGood(*G, (*X)*2/3, *Y, max(10, 50-G->n), max(10, 100-G->m));
 	*color = vector<int>(n, 0);
+
+	// pesos teste
+	*peso = vector<string>(m);
+	for (auto &i : *peso) i = to_string(rand()%100);
 
 	inFile.close();
 }
@@ -149,7 +173,7 @@ vector<int> coloreDistancia(Graph &G, int at) {
 	return color;
 }
 
-void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y, int* dir) {
+void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color, int *X, int *Y, int* dir, vector<string> *peso) {
 	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
@@ -185,7 +209,7 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *col
 
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y);
+			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y, peso);
 
 	check->connect(
 			"checked", mudaDir, dir);
@@ -217,10 +241,11 @@ void displayTeste(int X, int Y) {
 	int clique = -1, dir = 0;
 	Vector lastMousePos(0, 0);
 	const float raioG = 15;
+	vector<string> peso;
 
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir);
+		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir, &peso);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return;
@@ -308,6 +333,7 @@ void displayTeste(int X, int Y) {
 		fdp1(G, pos, 2, clique, X*2/3, Y, raioG);
 		printGrafo(janela, fonte, G, pos, color, raioG);
 		if (dir) printSetas(janela, G, pos, raioG);
+		printPesos(janela, fonte, G, pos, peso);
 
 		// testa clique
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
