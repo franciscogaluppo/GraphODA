@@ -1,5 +1,6 @@
 #include "Interface.hpp"
 
+
 int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
 	if (n < 2) return fontSize;
 	else if (n < 3) return fontSize-6;
@@ -8,6 +9,30 @@ int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
 	else return fontSize-10;
 }
 
+int findFontSizeNew(int biggest, int fontSize, sf::Font &fonte, int raio)
+{
+	sf::Text aux;
+	aux.setFont(fonte);
+	string st = "";
+	for (int i = 0; i < biggest; ++i)
+	{
+		st = st +'0';
+	}
+	aux.setString(st);
+	aux.setCharacterSize(fontSize);
+	sf::FloatRect boundingBox = aux.getLocalBounds();
+	int i;
+	for(i = fontSize; boundingBox.width >= raio+4; i--)
+	{
+		aux.setCharacterSize(i);
+		boundingBox = aux.getLocalBounds();
+		//printf("%.2f && %.2f -- %d\n", boundingBox.width, boundingBox.height, raio);
+	}
+	fontSize = i;
+	//printf("%lf -- %d\n", boundingBox.width, raio);
+	//printf("big = %d ... size = %d\n", biggest, fontSize);
+	return fontSize;
+}
 sf::Color getColor(int x) {
 	if (x == 0) return sf::Color::White;
 	if (x == 1) return sf::Color::Red;
@@ -51,9 +76,13 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 		sf::Text label;
 		label.setFont(fonte);
 		label.setString(G.label[i]);
-		label.setCharacterSize(findFontSize(biggest, 24)); // fontSize default = 24
+		//parte nova
+		label.setCharacterSize(findFontSizeNew(biggest, 24, fonte, raio));
+		//label.setCharacterSize(findFontSize(biggest, 24)); // fontSize default = 24 --> parte subst
 		label.setFillColor(sf::Color::Black);
-		sf::FloatRect boundingBox = label.getGlobalBounds(); //rect minimum
+
+
+		//sf::FloatRect boundingBox = label.getGlobalBounds(); //rect minimum
 		//cout << "BoB " <<  G.label[i] << " = "<< boundingBox.width << '\n';	//printa a largura minima de  cd vértice
 		label.setPosition(pos[i].x+9-15, pos[i].y-15);	//TODO mudar posição
 		janela.draw(label);
@@ -124,7 +153,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 	*G = Graph(n, label);
 	int r = *biggest;
 	
-	//int biggest = 0;
+	*biggest = 0;
 	for (int i = 0; i < n; ++i)
 	{
 		if(label[i].length() > *biggest)
@@ -132,7 +161,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 			*biggest = label[i].length();
 		}
 	}
-	//printf("%d\n", *biggest); 	//maior length no grafo
+	//printf(" ler grafo arq = %d\n", *biggest); 	//maior length no grafo
 
 	for (int i = 0; i < m; i++) {
 		int a, b; inFile >> a >> b;
