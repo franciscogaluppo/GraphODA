@@ -54,7 +54,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vect
 		label.setCharacterSize(findFontSize(biggest, 24)); // fontSize default = 24
 		label.setFillColor(sf::Color::Black);
 		sf::FloatRect boundingBox = label.getGlobalBounds(); //rect minimum
-		cout << "BoB " <<  G.label[i] << " = "<< boundingBox.width << '\n';	//printa a largura minima de  cd vértice
+		//cout << "BoB " <<  G.label[i] << " = "<< boundingBox.width << '\n';	//printa a largura minima de  cd vértice
 		label.setPosition(pos[i].x+9-15, pos[i].y-15);	//TODO mudar posição
 		janela.draw(label);
 	}
