@@ -21,8 +21,8 @@ int findFontSizeNew(int biggest, int fontSize, sf::Font &fonte, int raio)
 	aux.setString(st);
 	aux.setCharacterSize(fontSize);
 	sf::FloatRect boundingBox = aux.getLocalBounds();
-	int i;
-	for(i = fontSize; boundingBox.width >= raio+4; i--)
+	int i = fontSize;
+	for(; boundingBox.width >= raio+4 && i > 0; i--)
 	{
 		aux.setCharacterSize(i);
 		boundingBox = aux.getLocalBounds();
