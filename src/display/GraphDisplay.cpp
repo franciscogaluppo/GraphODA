@@ -1,23 +1,28 @@
-#include "DrawGraph.hpp"
+#include "GraphDisplay.hpp"
 
 #define EPS 1e-6
 
-void fdpPeso(Graph &G, vector<Vector> &pos, vector<float> &posPesoN, int it) {
-	if (posPesoN.size() != G.m) {
-		// TODO: Erro direito
-		cout << "Erro: posicoes dos pesos zoadas" << endl;
-		return;
-	}
+GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
+	G = G_;
+	X = X_;
+	Y = Y_;
+	raio = raio_;
+	temDir = 0, temPeso = 0, clique = -1;
+	this->poligono();
+	color = vector<int>(G.n, 0);
+	posPeso = vector<float>(G.m, 0.5);
+}
 
+void GraphDisplay::fdpPeso(int it) {
 	// constroi posicoes de fato
-	vector<Vector> posPeso;
+	vector<Vector> posPesoV;
 	for (int i = 0; i < G.m; i++) {
 		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
-		posPeso.push_back(pos[G.edges[i].first] + v*posPesoN[i]);
+		posPesoV.push_back(pos[G.edges[i].first] + v*posPeso[i]);
 	}
 
 	// constantes do algoritmo de Eades
-	float c3 = 50000/(1+G.n+G.m), c4 = 0.1;
+	float c3 = 50000/(float)(1+G.n+G.m), c4 = 0.1;
 
 	while (it--) {
 
@@ -33,11 +38,11 @@ void fdpPeso(Graph &G, vector<Vector> &pos, vector<float> &posPesoN, int it) {
 				Vector v = pos[G.edges[i].first];
 				if (j) v = pos[G.edges[i].second];
 
-				float d = dist(posPeso[i], v);
+				float d = dist(posPesoV[i], v);
 				if (d < EPS) d = EPS;
 
 				// vetor unitario na direcao de i para j
-				Vector unit = (v - posPeso[i])*(1/d);
+				Vector unit = (v - posPesoV[i])*(1/d);
 
 				// repulsao
 				f = f - unit*(c3/(d*d));
@@ -45,9 +50,9 @@ void fdpPeso(Graph &G, vector<Vector> &pos, vector<float> &posPesoN, int it) {
 
 			// forca em relacao aos pesos
 			for (int j = 0; j < G.m; j++) if (i != j) {
-				float d = dist(posPeso[i], posPeso[j]);
+				float d = dist(posPesoV[i], posPesoV[j]);
 				if (d < EPS) d = EPS;
-				Vector unit = (posPeso[j] - posPeso[i])*(1/d);
+				Vector unit = (posPesoV[j] - posPesoV[i])*(1/d);
 				f = f - unit*(c3/(d*d));
 			}
 
@@ -58,37 +63,35 @@ void fdpPeso(Graph &G, vector<Vector> &pos, vector<float> &posPesoN, int it) {
 		}
 
 		// atualiza posicoes
-		for (int i = 0; i < G.m; i++) posPeso[i] = posPeso[i] + forca[i]*c4;
+		for (int i = 0; i < G.m; i++) posPesoV[i] = posPesoV[i] + forca[i]*c4;
 	}
 
 	// transforma de volta para numeros
-	posPesoN = vector<float>();
+	posPeso = vector<float>();
 	for (int i = 0; i < G.m; i++) {
 		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
-		posPesoN.push_back((posPeso[i] - pos[G.edges[i].first]).norm() / v.norm());
+		if (v.norm() < EPS) {
+			posPeso.push_back(0.5);
+			continue;
+		}
+		posPeso.push_back((posPesoV[i] - pos[G.edges[i].first]).norm() / v.norm());
 
 		// para o peso ficar na aresta
-		if (posPesoN[i] < 0.1) posPesoN[i] = 0.1;
-		if (posPesoN[i] > 0.9) posPesoN[i] = 0.9;
+		if (posPeso[i] < 0.1) posPeso[i] = 0.1;
+		if (posPeso[i] > 0.9) posPeso[i] = 0.9;
 	}
 }
 
-Vector deixaDentro(Vector v, int X, int Y, float raio) {
-	v.x = max(v.x, raio+1);
-	v.y = max(v.y, raio+1);
-	v.x = min(v.x, X-raio-1);
-	v.y = min(v.y, Y-raio-1);
+Vector GraphDisplay::deixaDentro(Vector v) {
+	v.x = max(v.x, (float)raio+1);
+	v.y = max(v.y, (float)raio+1);
+	v.x = min(v.x, (float)X-raio-1);
+	v.y = min(v.y, (float)Y-raio-1);
 	return v;
 }
 
 // Eades algorithm
-void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY, float raio) {
-	if (pos.size() != G.n) {
-		// TODO: Erro direito
-		cout << "Erro: posicoes zoadas" << endl;
-		return;
-	}
-
+void GraphDisplay::fdp1(int it) {
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
 	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
@@ -99,13 +102,13 @@ void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY,
 	
 	// paredes como vertices artificiais
 	vector<Vector> parede;
-	for (int i = 0; i <= MAXX; i += 10) {
+	for (int i = 0; i <= X; i += 10) {
 		parede.push_back(Vector(i, 0));
-		parede.push_back(Vector(i, MAXY));
+		parede.push_back(Vector(i, Y));
 	}
-	for (int i = 0; i <= MAXY; i += 10) {
+	for (int i = 0; i <= Y; i += 10) {
 		parede.push_back(Vector(0, i));
-		parede.push_back(Vector(MAXX, i));
+		parede.push_back(Vector(X, i));
 	}
 
 	// numero de iteracoes
@@ -147,37 +150,31 @@ void fdp1(Graph &G, vector<Vector> &pos, int it, int clique, int MAXX, int MAXY,
 		// atualiza posicoes
 		if (clique > -1) forca[clique] = Vector(0, 0);
 		for (int i = 0; i < G.n; i++)
-			pos[i] = deixaDentro(pos[i] + forca[i]*c4, MAXX, MAXY, raio);
+			pos[i] = deixaDentro(pos[i] + forca[i]*c4);
 	}
 }
 
 // Fruchterman algorithm
-void fdp2(Graph &G, vector<Vector> &pos, int it, int MAXX, int MAXY) {
-	if (pos.size() != G.n) {
-		// TODO: Erro direito
-		cout << "Erro: posicoes zoadas" << endl;
-		return;
-	}
-
+void GraphDisplay::fdp2(int it) {
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
 	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
 	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
 
 	// constante do algoritmo
-	float k = sqrt(MAXX*MAXY/float(G.n))/2;
-	float t = min(MAXX, MAXY)/8.0;
+	float k = sqrt(X*Y/float(G.n))/2;
+	float t = min(X, Y)/8.0;
 	float delta = t/it;
 
 	// paredes como vertices artificiais
 	vector<Vector> parede;
-	for (int i = 0; i <= MAXX; i += 10) {
+	for (int i = 0; i <= X; i += 10) {
 		parede.push_back(Vector(i, 0));
-		parede.push_back(Vector(i, MAXY));
+		parede.push_back(Vector(i, Y));
 	}
-	for (int i = 0; i <= MAXY; i += 10) {
+	for (int i = 0; i <= Y; i += 10) {
 		parede.push_back(Vector(0, i));
-		parede.push_back(Vector(MAXX, i));
+		parede.push_back(Vector(X, i));
 	}
 
 	while (it--) {
@@ -237,16 +234,16 @@ bool cruza(Vector a, Vector b, Vector c, Vector d) {
 }
 
 // numero de intersecoes de arestas
-int inter(vector<Vector> &pos, Graph &G) {
+int GraphDisplay::inter() {
 	int ret = 0;
 	for (auto &i : G.edges) for (auto &j : G.edges)
 		if (cruza(pos[i.first], pos[i.second], pos[j.first], pos[j.second])) ret++;
 	return ret;
 }
 
-vector<Vector> getPoligono(Graph &G, int MAXX, int MAXY) {
-	const float raioGrafo = (min(MAXX, MAXY)-100)/2;
-	Vector centro(MAXX/2, MAXY/2);
+void GraphDisplay::poligono() {
+	const float raioGrafo = (min(X, Y)-100)/2;
+	Vector centro(X/2, Y/2);
 	// angulo = 360/n
 	const double theta = 2*acos(-1.0)/G.n;
 
@@ -256,32 +253,30 @@ vector<Vector> getPoligono(Graph &G, int MAXX, int MAXY) {
 		centro = centro + Vector(0, falta/2);
 	}
 
-	vector<Vector> pos(G.n, Vector(0, 0));
+	pos = vector<Vector>();
 	for (int i = 0; i < G.n; i++)
-		pos[i] = Vector(centro.x+sin(i*theta+theta/2)*raioGrafo,
-			centro.y+cos(i*theta+theta/2)*raioGrafo);
-	
-	return pos;
+		pos.push_back(Vector(centro.x+sin(i*theta+theta/2)*raioGrafo,
+			centro.y+cos(i*theta+theta/2)*raioGrafo));
 }
 
-vector<Vector> getRandom(Graph &G, int MAXX, int MAXY) {
-	vector<Vector> pos;
+void GraphDisplay::random() {
+	pos = vector<Vector>();
 	for (int i = 0; i < G.n; i++)
-		pos.push_back(Vector((rand()%(MAXX-100))+50, (rand()%(MAXY-100)+50)));
-	return pos;
+		pos.push_back(Vector((rand()%(X-100))+50, (rand()%(Y-100)+50)));
 }
 
-vector<Vector> getGood(Graph &G, int MAXX, int MAXY, int randIt, int fdpIt) {
-	int best = 10000000; vector<Vector> pos;
+void GraphDisplay::good(int randIt, int fdpIt) {
+	int best = 2*G.m*G.m+10;
+	vector<Vector> posBest = vector<Vector>();
 	while (randIt--) {
-		vector<Vector> pos2 = getRandom(G, MAXX, MAXY);
-		fdp2(G, pos2, fdpIt, MAXX, MAXY);
+		this->random();
+		this->fdp2(fdpIt);
 
-		int inters = inter(pos2, G);
+		int inters = this->inter();
 		if (inters < best) {
 			best = inters;
-			pos = pos2;
+			posBest = this->pos;
 		}
 	}
-	return pos;
+	this->pos = posBest;
 }

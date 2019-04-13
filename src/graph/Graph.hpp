@@ -10,6 +10,7 @@ struct Graph {
 	vector<vector<int> > adj;
 	vector<pair<int, int> > edges;
 
+	Graph();
 	Graph(int);
 	Graph(int, vector<string>&);
 	void addEdge(int, int);

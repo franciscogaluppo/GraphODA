@@ -5,25 +5,20 @@ int findFontSize(int n, int fontSize){	//acha o tamanho da fonte
 	if (n < 2) return fontSize;
 	else if (n < 3) return fontSize-6;
 	else if (n< 4) return fontSize-10;
-	else if(n < 5) return fontSize-14;
+	else if (n < 5) return fontSize-14;
 	else return fontSize-10;
 }
 
-int findFontSizeNew(int biggest, int fontSize, sf::Font &fonte, int raio)
-{
+int findFontSizeNew(int biggest, int fontSize, sf::Font &fonte, int raio) {
 	sf::Text aux;
 	aux.setFont(fonte);
 	string st = "";
-	for (int i = 0; i < biggest; ++i)
-	{
-		st = st +'0';
-	}
+	for (int i = 0; i < biggest; ++i) st = st +'0';
 	aux.setString(st);
 	aux.setCharacterSize(fontSize);
 	sf::FloatRect boundingBox = aux.getLocalBounds();
 	int i = fontSize;
-	for(; boundingBox.width >= raio+4 && i > 0; i--)
-	{
+	for(; boundingBox.width >= raio+4 && i > 0; i--) {
 		aux.setCharacterSize(i);
 		boundingBox = aux.getLocalBounds();
 		//printf("%.2f && %.2f -- %d\n", boundingBox.width, boundingBox.height, raio);
@@ -44,101 +39,95 @@ sf::Color getColor(int x) {
 	return sf::Color::Black;
 }
 
-void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos, vector<int> &color, int raio, int biggest) {
+void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD, int biggest) {
 
 	// Cria as arestas
-	for (int i = 0; i < G.m; i++) {
+	for (int i = 0; i < GD.G.m; i++) {
 		// Arestas sem largura, por isso vetores
 		sf::Vertex linha[] =
 		{
 			sf::Vertex(sf::Vector2f(
-				pos[G.edges[i].first].x, pos[G.edges[i].first].y),
+				GD.pos[GD.G.edges[i].first].x, GD.pos[GD.G.edges[i].first].y),
 					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(
-				pos[G.edges[i].second].x, pos[G.edges[i].second].y),
+				GD.pos[GD.G.edges[i].second].x, GD.pos[GD.G.edges[i].second].y),
 					sf::Color::Black)
 		};
 
 		janela.draw(linha, 2, sf::Lines);
 	}
 	// Cria os vértices
-	for (int i = 0; i < G.n; i++) {
+	for (int i = 0; i < GD.G.n; i++) {
 		// Cria um círculo
-		sf::CircleShape v(raio);
-		v.setFillColor(getColor(color[i]));
+		sf::CircleShape v(GD.raio);
+		v.setFillColor(getColor(GD.color[i]));
 		v.setOutlineThickness(2.f);
 		v.setOutlineColor(sf::Color::Black);
-		v.setPosition(pos[i].x-raio+1, pos[i].y-raio+1);
+		v.setPosition(GD.pos[i].x-GD.raio+1, GD.pos[i].y-GD.raio+1);
 		janela.draw(v);
 
 		// Coloca texto dentro da bola
 		sf::Text label;
 		label.setFont(fonte);
-		label.setString(G.label[i]);
+		label.setString(GD.G.label[i]);
 		//parte nova
-		label.setCharacterSize(findFontSizeNew(biggest, 24, fonte, raio));
+		label.setCharacterSize(findFontSizeNew(biggest, 24, fonte, GD.raio));
 		//label.setCharacterSize(findFontSize(biggest, 24)); // fontSize default = 24 --> parte subst
 		label.setFillColor(sf::Color::Black);
 
 
 		//sf::FloatRect boundingBox = label.getGlobalBounds(); //rect minimum
 		//cout << "BoB " <<  G.label[i] << " = "<< boundingBox.width << '\n';	//printa a largura minima de  cd vértice
-		label.setPosition(pos[i].x+9-15, pos[i].y-15);	//TODO mudar posição
+		label.setPosition(GD.pos[i].x+9-15, GD.pos[i].y-15);	//TODO mudar posição
 		janela.draw(label);
 	}
 }
 
 // eu sou mt bom com vetores
-void printSetas(sf::RenderWindow &janela, Graph &G, vector<Vector> &pos, int raio) {
+void printSetas(sf::RenderWindow &janela, GraphDisplay &GD) {
 	const float pi = acos(-1.0);
 
-	for (int i = 0; i < G.m; i++) {
-		Vector fim = pos[G.edges[i].second];
-		Vector v = fim - pos[G.edges[i].first];
+	for (int i = 0; i < GD.G.m; i++) {
+		Vector fim = GD.pos[GD.G.edges[i].second];
+		Vector v = fim - GD.pos[GD.G.edges[i].first];
 		Vector unit = v*(1/v.norm());
 
-		Vector pos = fim - unit*raio*1.6;
+		Vector pos = fim - unit*GD.raio*1.6;
 
 		// angulo que tem que rodar pra seta ficar certa
 		float angle = v.angle()-pi/6;
 
-		Vector delta = Vector(raio/2-1, raio/2-1).rotate(angle) - Vector(raio/2-1, raio/2-1);
+		Vector delta = Vector(GD.raio/2-1, GD.raio/2-1).rotate(angle)
+				- Vector(GD.raio/2-1, GD.raio/2-1);
 
 		// cria triangulo na ponta da aresta
-		sf::CircleShape tri(raio/2, 3);
+		sf::CircleShape tri(GD.raio/2, 3);
 		tri.setRotation((angle)*180/pi);
 		tri.setFillColor(sf::Color::Black);
-		tri.setPosition(pos.x-raio/2+1-delta.x, pos.y-raio/2+1-delta.y);
+		tri.setPosition(pos.x-GD.raio/2+1-delta.x, pos.y-GD.raio/2+1-delta.y);
 		janela.draw(tri);
 	}
 }
 
-void printPesos(sf::RenderWindow &janela, sf::Font &fonte, Graph &G, vector<Vector> &pos,
-		vector<float> &posPeso, vector<string> &peso) {
-	if (posPeso.size() != G.m or peso.size() != G.m) {
-		// TODO: Erro direito
-		cout << "Erro: pesos zoados" << endl;
-		return;
-	}
+void printPesos(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD) {
 
-	for (int i = 0; i < G.m; i++) {
+	for (int i = 0; i < GD.G.m; i++) {
 		sf::Text p;
 		p.setFont(fonte);
-		p.setString(peso[i]);
-		p.setCharacterSize(findFontSize(peso[i].size(), 24));
+		p.setString(GD.peso[i]);
+		p.setCharacterSize(findFontSize(GD.peso[i].size(), 24));
 		p.setFillColor(sf::Color::Black);
 
 		// acha posicao
-		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
-		Vector at = pos[G.edges[i].first] + v*posPeso[i];
+		Vector v = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+		Vector at = GD.pos[GD.G.edges[i].first] + v*GD.posPeso[i];
 		p.setPosition(at.x, at.y);
 		janela.draw(p);
 	}
 }
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vector<int> *color,
-		int *X, int *Y, vector<string>* peso, vector<float> *posPeso, int *biggest) {
+void lerGrafoArquivo(tgui::EditBox::Ptr arq, GraphDisplay *GD, int *biggest) {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
 		// TODO: Erro direito
@@ -150,43 +139,42 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, Graph *G, vector<Vector> *pos, vect
 	inFile >> n >> m;
 	vector<string> label(n);
 	for (auto &i : label) inFile >> i;
-	*G = Graph(n, label);
-	int r = *biggest;
 	
 	*biggest = 0;
 	for (int i = 0; i < n; ++i)
-	{
 		if(label[i].length() > *biggest)
-		{
 			*biggest = label[i].length();
-		}
-	}
 	//printf(" ler grafo arq = %d\n", *biggest); 	//maior length no grafo
 
+	Graph G(n, label);
 	for (int i = 0; i < m; i++) {
 		int a, b; inFile >> a >> b;
-		G->addEdge(a, b);
+		G.addEdge(a, b);
 	}
 
-	*pos = getGood(*G, (*X)*2/3, *Y, max(10, 50-G->n), max(10, 100-G->m));
-	*color = vector<int>(n, 0);
-	*posPeso = vector<float>(m, 0.5);
+	bool temDir = GD->temDir;
+	*GD = GraphDisplay(G, GD->X, GD->Y, GD->raio);
+	GD->temDir = temDir;
+
+	GD->good(max(10, 50 - GD->G.n), max(10, 100 - GD->G.m));
 
 	// pesos teste
-	*peso = vector<string>(m);
-	for (auto &i : *peso) i = to_string(rand()%100);
+//	GD->peso = vector<string>(m);
+//	for (auto &i : GD->peso) i = to_string(rand()%100);
+//	GD->temPeso = 1;
 
 	inFile.close();
 }
 
 // encontra o vertice onde a pessoa clicou
-int achaVertice(Vector at, vector<Vector> pos, float raio) {
-	for (int i = 0; i < pos.size(); i++) if (dist(at, pos[i]) < raio) return i;
+int achaVertice(Vector at, GraphDisplay &GD) {
+	for (int i = 0; i < GD.pos.size(); i++)
+		if (dist(at, GD.pos[i]) < GD.raio) return i;
 	return -1;
 }
 
-void mudaDir(int* dir) {
-	(*dir) ^= 1;
+void mudaDir(GraphDisplay *GD) {
+	(GD->temDir) ^= 1;
 }
 
 vector<int> coloreDistancia(Graph &G, int at) {
@@ -211,8 +199,7 @@ vector<int> coloreDistancia(Graph &G, int at) {
 	return color;
 }
 
-void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *color,
-		int *X, int *Y, int* dir, vector<string> *peso, vector<float> *posPeso, int *biggest) {
+void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
 	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
@@ -248,12 +235,12 @@ void loadWidgets(tgui::Gui &gui, Graph *G, vector<Vector> *pos, vector<int> *col
 
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, G, pos, color, X, Y, peso, posPeso, biggest);
+			"pressed", lerGrafoArquivo, textoArquivo, GD, biggest);
 
 	check->connect(
-			"checked", mudaDir, dir);
+			"checked", mudaDir, GD);
 	check->connect(
-			"unchecked", mudaDir, dir);
+			"unchecked", mudaDir, GD);
 }
 
 void displayTeste(int X, int Y) {
@@ -273,21 +260,14 @@ void displayTeste(int X, int Y) {
 	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Default, settings);
 	tgui::Gui gui(janela);
 
-	// TODO: tem que muder isso ae, talkei
-	Graph G = Graph(0);
-	vector<Vector> pos;
-	vector<int> color;
-	int clique = -1, dir = 0;
 	Vector lastMousePos(0, 0);
-	const float raioG = 15;
-	vector<string> peso;
-	vector<float> posPeso;
+	GraphDisplay GD(Graph(), X*2/3, Y, 15);
 
 	int biggest = 0; //maior string
 
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &G, &pos, &color, &X, &Y, &dir, &peso, &posPeso, &biggest);
+		loadWidgets(gui, &GD, &biggest);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return;
@@ -367,34 +347,34 @@ void displayTeste(int X, int Y) {
 		instr.setPosition(820, 55);
 		janela.draw(instr);
 
-		// se nao tiver posicoes, pega poligono
-		if (!pos.size() and G.n) pos = getPoligono(G, X*2/3, Y);
-
-		// faz mais iteracoes da mola
-		fdp1(G, pos, 2, clique, X*2/3, Y, raioG);
-		fdpPeso(G, pos, posPeso, 2);
-		printGrafo(janela, fonte, G, pos, color, raioG, biggest);
-		if (dir) printSetas(janela, G, pos, raioG);
-		printPesos(janela, fonte, G, pos, posPeso, peso);
+		// faz mais iteracoes da mola e printa o grafo
+		GD.fdp1(2);
+		if (GD.temPeso) {
+			GD.fdpPeso(2);
+			printPesos(janela, fonte, GD);
+		}
+		printGrafo(janela, fonte, GD, biggest);
+		if (GD.temDir) printSetas(janela, GD);
 
 		// testa clique
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			if (clique == -1) {
+			if (GD.clique == -1) {
 				auto position = sf::Mouse::getPosition(janela);
-				Vector position_vec(position.x, position.y);
-				clique = achaVertice(position_vec, pos, raioG);
-				lastMousePos = position_vec;
+				Vector positionV(position.x, position.y);
+				GD.clique = achaVertice(positionV, GD);
+				lastMousePos = positionV;
 			}
-		} else clique = -1, color = vector<int>(color.size(), 0);
+		} else GD.clique = -1, GD.color = vector<int>(GD.color.size(), 0);
 
 		// move vertice
-		if (clique > -1) {
+		if (GD.clique > -1) {
 			auto position = sf::Mouse::getPosition(janela);
-			Vector position_vec(position.x, position.y);
-			pos[clique] = deixaDentro(pos[clique] + (position_vec - lastMousePos), X*2/3, Y, raioG);
+			Vector positionV(position.x, position.y);
+			GD.pos[GD.clique] = GD.deixaDentro(GD.pos[GD.clique]
+							+ (positionV - lastMousePos));
 
-			lastMousePos = position_vec;
-			color = coloreDistancia(G, clique);
+			lastMousePos = positionV;
+			GD.color = coloreDistancia(GD.G, GD.clique);
 		}
 
 

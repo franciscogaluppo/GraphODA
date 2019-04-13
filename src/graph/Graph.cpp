@@ -1,19 +1,23 @@
 #include "Graph.hpp"
 
-Graph::Graph(int n) {
-	this->n = n;
+Graph::Graph() {
+	n = 0, m = 0;
+}
+
+Graph::Graph(int n_) {
+	n = n_;
 	m = 0;
 	adj.resize(n);
 	for (int i = 0; i < n; i++) label.push_back(to_string(i));
 }
 
-Graph::Graph(int n, vector<string> &label) {
-	this->n = n;
+Graph::Graph(int n_, vector<string> &label_) {
+	n = n_;
 	m = 0;
 	adj.resize(n);
 	for (int i = 0; i < n; i++) {
-		if (i >= label.size()) this->label.push_back(to_string(i));
-		else this->label.push_back(label[i]);
+		if (i >= label_.size()) label.push_back(to_string(i));
+		else label.push_back(label_[i]);
 	}
 }
 

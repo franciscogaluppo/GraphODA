@@ -3,7 +3,7 @@
 
 #include "../vector/Vector.hpp"
 #include "../graph/Graph.hpp"
-#include "DrawGraph.hpp"
+#include "GraphDisplay.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
