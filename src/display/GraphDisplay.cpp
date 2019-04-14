@@ -85,8 +85,8 @@ void GraphDisplay::fdpPeso(int it) {
 Vector GraphDisplay::deixaDentro(Vector v) {
 	v.x = max(v.x, (float)raio+1);
 	v.y = max(v.y, (float)raio+1);
-	v.x = min(v.x, (float)X-raio-1);
-	v.y = min(v.y, (float)Y-raio-1);
+	v.x = min(v.x, (float)X-raio-3);
+	v.y = min(v.y, (float)Y-raio-3);
 	return v;
 }
 

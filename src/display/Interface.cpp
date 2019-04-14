@@ -257,7 +257,7 @@ void displayTeste(int X, int Y) {
 	settings.antialiasingLevel = 8;
 
 	// Cria a janela
-	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Default, settings);
+	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Close, settings);
 	tgui::Gui gui(janela);
 
 	Vector dif;
