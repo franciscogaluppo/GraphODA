@@ -260,7 +260,7 @@ void displayTeste(int X, int Y) {
 	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Default, settings);
 	tgui::Gui gui(janela);
 
-	Vector lastMousePos(0, 0);
+	Vector dif;
 	GraphDisplay GD(Graph(), X*2/3, Y, 15);
 
 	int biggest = 0; //maior string
@@ -358,25 +358,24 @@ void displayTeste(int X, int Y) {
 
 		// testa clique
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			if (GD.clique == -1) {
-				auto position = sf::Mouse::getPosition(janela);
-				Vector positionV(position.x, position.y);
-				GD.clique = achaVertice(positionV, GD);
-				lastMousePos = positionV;
-			}
-		} else GD.clique = -1, GD.color = vector<int>(GD.color.size(), 0);
-
-		// move vertice
-		if (GD.clique > -1) {
 			auto position = sf::Mouse::getPosition(janela);
 			Vector positionV(position.x, position.y);
-			GD.pos[GD.clique] = GD.deixaDentro(GD.pos[GD.clique]
-							+ (positionV - lastMousePos));
 
-			lastMousePos = positionV;
-			GD.color = coloreDistancia(GD.G, GD.clique);
-		}
+			// acabei de clicar
+			if (GD.clique == -2) {
+				GD.clique = achaVertice(positionV, GD);
+				if (GD.clique > -1) dif = GD.pos[GD.clique] - positionV;
+			}
 
+			// move vertice
+			if (GD.clique > -1) {
+				GD.pos[GD.clique] = GD.deixaDentro(positionV + dif);
+				GD.color = coloreDistancia(GD.G, GD.clique);
+			}
+		} else if (GD.clique > -2) {
+			GD.clique = -2;
+			GD.color = vector<int>(GD.color.size(), 0);
+		}				
 
 		gui.draw();
 

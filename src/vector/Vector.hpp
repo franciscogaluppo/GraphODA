@@ -7,6 +7,7 @@ using namespace std;
 struct Vector {
 	float x, y;
 
+	Vector();
 	Vector(float, float);
 	Vector(pair<float, float>);
 	float norm();
