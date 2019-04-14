@@ -62,7 +62,11 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD, int
 		// Cria um círculo
 		sf::CircleShape v(GD.raio);
 		v.setFillColor(getColor(GD.color[i]));
-		v.setOutlineThickness(2.f);
+
+		// vertice travado
+		if (GD.para[i] > 1) v.setOutlineThickness(4.f);
+		else v.setOutlineThickness(2.f);
+
 		v.setOutlineColor(sf::Color::Black);
 		v.setPosition(GD.pos[i].x-GD.raio+1, GD.pos[i].y-GD.raio+1);
 		janela.draw(v);
@@ -94,6 +98,9 @@ void printSetas(sf::RenderWindow &janela, GraphDisplay &GD) {
 		Vector unit = v*(1/v.norm());
 
 		Vector pos = fim - unit*GD.raio*1.6;
+		// se ta travado arreda um pouco a seta
+		if (GD.para[GD.G.edges[i].second] > 1)
+			pos = pos - unit*2;
 
 		// angulo que tem que rodar pra seta ficar certa
 		float angle = v.angle()-pi/6;
@@ -166,37 +173,8 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, GraphDisplay *GD, int *biggest) {
 	inFile.close();
 }
 
-// encontra o vertice onde a pessoa clicou
-int achaVertice(Vector at, GraphDisplay &GD) {
-	for (int i = 0; i < GD.pos.size(); i++)
-		if (dist(at, GD.pos[i]) < GD.raio) return i;
-	return -1;
-}
-
 void mudaDir(GraphDisplay *GD) {
 	(GD->temDir) ^= 1;
-}
-
-vector<int> coloreDistancia(Graph &G, int at) {
-	vector<int> color(G.n, 0);
-
-	// BFS
-	vector<int> vis(G.n, 0); vis[at] = 1;
-	queue<pair<int, int> > q;
-	q.push({at, 0});
-
-	while (q.size()) {
-		int u = q.front().first, d = q.front().second;
-		q.pop();
-		color[u] = (d%6)+1;
-		
-		for (int i : G.adj[u]) if (!vis[i]) {
-			q.push({i, d+1});
-			vis[i] = 1;
-		}
-	}
-
-	return color;
 }
 
 void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
@@ -243,6 +221,109 @@ void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
 			"unchecked", mudaDir, GD);
 }
 
+void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
+	static Vector dif;
+	static int clique = -2;
+	static Vector ini;
+
+	// testa clique
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		auto position = sf::Mouse::getPosition(janela);
+		Vector positionV(position.x, position.y);
+
+		// acabei de clicar
+		if (clique == -2) {
+			ini = positionV;
+			clique = GD.achaVertice(positionV);
+			if (clique > -1) {
+				dif = GD.pos[clique] - positionV;
+				GD.para[clique]++;
+			}
+		}
+
+		// move vertice
+		if (clique > -1)
+			GD.pos[clique] = GD.deixaDentro(positionV + dif, (GD.para[clique] > 1));
+	}
+	else if (clique > -2) {
+		auto position = sf::Mouse::getPosition(janela);
+		Vector positionV(position.x, position.y);
+
+		// testa se tem que travar vertice
+		if (ini.x == positionV.x and ini.y == positionV.y) {
+			int vert = GD.achaVertice(positionV);
+			if (vert > -1) {
+				if (GD.para[vert] >= 2) GD.para[vert] -= 2;
+				else GD.para[vert] += 2;
+			}
+		}
+
+		if (clique > -1) GD.para[clique]--;
+		clique = -2;
+	}				
+}
+
+void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
+	// Limpa tela e coloca branco
+	janela.clear(sf::Color::White);
+
+	// Parte cinza
+	sf::RectangleShape menu(
+			sf::Vector2f(400.f,600.f));
+	menu.setFillColor(sf::Color(192,192,192));
+	menu.setPosition(800.f, 0.f);
+	janela.draw(menu);
+
+	// Divisão entre o canvas e o menu
+	sf::Vertex linha1[] =
+	{
+		sf::Vertex(sf::Vector2f(800,0),
+				sf::Color::Black),
+
+		sf::Vertex(sf::Vector2f(800,600),
+				sf::Color::Black)
+	};
+	janela.draw(linha1, 2, sf::Lines);
+
+	// Divisão entre instruções e import
+	sf::Vertex linha2[] =
+	{
+		sf::Vertex(sf::Vector2f(830,170),
+				sf::Color(130,130,130)),
+
+		sf::Vertex(sf::Vector2f(1170,170),
+				sf::Color(130,130,130))
+	};
+	janela.draw(linha2, 2, sf::Lines);
+
+	// Divisão entre import e algoritmos
+	sf::Vertex linha3[] =
+	{
+		sf::Vertex(sf::Vector2f(830,285),
+				sf::Color(130,130,130)),
+
+		sf::Vertex(sf::Vector2f(1170,285),
+				sf::Color(130,130,130))
+	};
+	janela.draw(linha3, 2, sf::Lines);
+
+	// Instruções
+	sf::Text instr;
+	instr.setFont(fonte);
+	instr.setString(L"Instruções:");
+	instr.setCharacterSize(32);
+	instr.setFillColor(sf::Color::Black);
+	instr.setPosition(830, 5);
+	janela.draw(instr);
+
+	// Instruções de fato...
+	instr.setString(L"1) ...\n2) ...\n3) ...");
+	instr.setCharacterSize(18);
+	instr.setFillColor(sf::Color(130,130,130));
+	instr.setPosition(820, 55);
+	janela.draw(instr);
+}
+
 void displayTeste(int X, int Y) {
 
 	// Carrega a fonte Consola Bold (Gosto dela)
@@ -260,7 +341,7 @@ void displayTeste(int X, int Y) {
 	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Close, settings);
 	tgui::Gui gui(janela);
 
-	Vector dif;
+	// GraphDisplay
 	GraphDisplay GD(Graph(), X*2/3, Y, 15);
 
 	int biggest = 0; //maior string
@@ -288,64 +369,7 @@ void displayTeste(int X, int Y) {
 			gui.handleEvent(evento);
 		}
 
-		// Limpa tela e coloca branco
-		janela.clear(sf::Color::White);
-
-		// Parte cinza
-		sf::RectangleShape menu(
-				sf::Vector2f(400.f,600.f));
-		menu.setFillColor(sf::Color(192,192,192));
-		menu.setPosition(800.f, 0.f);
-		janela.draw(menu);
-
-		// Divisão entre o canvas e o menu
-		sf::Vertex linha1[] =
-		{
-			sf::Vertex(sf::Vector2f(800,0),
-					sf::Color::Black),
-
-			sf::Vertex(sf::Vector2f(800,600),
-					sf::Color::Black)
-		};
-		janela.draw(linha1, 2, sf::Lines);
-
-		// Divisão entre instruções e import
-		sf::Vertex linha2[] =
-		{
-			sf::Vertex(sf::Vector2f(830,170),
-					sf::Color(130,130,130)),
-
-			sf::Vertex(sf::Vector2f(1170,170),
-					sf::Color(130,130,130))
-		};
-		janela.draw(linha2, 2, sf::Lines);
-
-		// Divisão entre import e algoritmos
-		sf::Vertex linha3[] =
-		{
-			sf::Vertex(sf::Vector2f(830,285),
-					sf::Color(130,130,130)),
-
-			sf::Vertex(sf::Vector2f(1170,285),
-					sf::Color(130,130,130))
-		};
-		janela.draw(linha3, 2, sf::Lines);
-
-		// Instruções
-		sf::Text instr;
-		instr.setFont(fonte);
-		instr.setString(L"Instruções:");
-		instr.setCharacterSize(32);
-		instr.setFillColor(sf::Color::Black);
-		instr.setPosition(830, 5);
-		janela.draw(instr);
-
-		// Instruções de fato...
-		instr.setString(L"1) ...\n2) ...\n3) ...");
-		instr.setCharacterSize(18);
-		instr.setFillColor(sf::Color(130,130,130));
-		instr.setPosition(820, 55);
-		janela.draw(instr);
+		drawStuff(janela, fonte);
 
 		// faz mais iteracoes da mola e printa o grafo
 		GD.fdp1(2);
@@ -356,26 +380,8 @@ void displayTeste(int X, int Y) {
 		printGrafo(janela, fonte, GD, biggest);
 		if (GD.temDir) printSetas(janela, GD);
 
-		// testa clique
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			auto position = sf::Mouse::getPosition(janela);
-			Vector positionV(position.x, position.y);
-
-			// acabei de clicar
-			if (GD.clique == -2) {
-				GD.clique = achaVertice(positionV, GD);
-				if (GD.clique > -1) dif = GD.pos[GD.clique] - positionV;
-			}
-
-			// move vertice
-			if (GD.clique > -1) {
-				GD.pos[GD.clique] = GD.deixaDentro(positionV + dif);
-				GD.color = coloreDistancia(GD.G, GD.clique);
-			}
-		} else if (GD.clique > -2) {
-			GD.clique = -2;
-			GD.color = vector<int>(GD.color.size(), 0);
-		}				
+		// olha se a pessoa ta mexendo no vertice
+		handleClique(janela, GD);
 
 		gui.draw();
 

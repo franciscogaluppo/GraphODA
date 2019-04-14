@@ -10,7 +10,8 @@ using namespace std;
 struct GraphDisplay {
 	Graph G;
 	bool temDir, temPeso;
-	int raio, X, Y, clique;
+	int raio, X, Y;
+	vector<int> para;
 	vector<Vector> pos;
 	vector<float> posPeso;
 	vector<string> peso;
@@ -18,13 +19,14 @@ struct GraphDisplay {
 
 	GraphDisplay(Graph, int, int, int);
 	void fdpPeso(int);
-	Vector deixaDentro(Vector);
+	Vector deixaDentro(Vector, bool);
 	void fdp1(int);
 	void fdp2(int);
 	int inter();
 	void poligono();
 	void random();
 	void good(int, int);
+	int achaVertice(Vector at);
 };
 
 #endif

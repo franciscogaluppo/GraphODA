@@ -7,10 +7,18 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	X = X_;
 	Y = Y_;
 	raio = raio_;
-	temDir = 0, temPeso = 0, clique = -1;
+	temDir = 0, temPeso = 0;
 	this->poligono();
+	para = vector<int>(G.n, 0);
 	color = vector<int>(G.n, 0);
 	posPeso = vector<float>(G.m, 0.5);
+}
+
+// encontra vertice na posicao 'at'
+int GraphDisplay::achaVertice(Vector at) {
+	for (int i = 0; i < G.n; i++)
+		if (dist(at, pos[i]) < raio) return i;
+	return -1;
 }
 
 void GraphDisplay::fdpPeso(int it) {
@@ -82,11 +90,11 @@ void GraphDisplay::fdpPeso(int it) {
 	}
 }
 
-Vector GraphDisplay::deixaDentro(Vector v) {
-	v.x = max(v.x, (float)raio+1);
-	v.y = max(v.y, (float)raio+1);
-	v.x = min(v.x, (float)X-raio-3);
-	v.y = min(v.y, (float)Y-raio-3);
+Vector GraphDisplay::deixaDentro(Vector v, bool trav) {
+	v.x = max(v.x, (float)raio+1+2*trav);
+	v.y = max(v.y, (float)raio+1+2*trav);
+	v.x = min(v.x, (float)X-raio-3-2*trav);
+	v.y = min(v.y, (float)Y-raio-3-2*trav);
 	return v;
 }
 
@@ -148,9 +156,8 @@ void GraphDisplay::fdp1(int it) {
 		}
 
 		// atualiza posicoes
-		if (clique > -1) forca[clique] = Vector(0, 0);
-		for (int i = 0; i < G.n; i++)
-			pos[i] = deixaDentro(pos[i] + forca[i]*c4);
+		for (int i = 0; i < G.n; i++) if (!para[i])
+			pos[i] = deixaDentro(pos[i] + forca[i]*c4, (para[i] > 1));
 	}
 }
 
