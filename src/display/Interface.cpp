@@ -163,7 +163,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, GraphDisplay *GD, int *biggest) {
 	*GD = GraphDisplay(G, GD->X, GD->Y, GD->raio);
 	GD->temDir = temDir;
 
-	GD->good(max(10, 50 - GD->G.n), max(10, 100 - GD->G.m));
+	GD->good(max(10, 100 - GD->G.n), max(10, 100 - GD->G.m));
 
 	// pesos teste
 //	GD->peso = vector<string>(m);

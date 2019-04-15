@@ -106,19 +106,8 @@ void GraphDisplay::fdp1(int it) {
 	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
 
 	// constantes do algoritmo
-	float c1 = 20, c2 = 100, c3 = 50000, c4 = 0.1, c5 = 1000;
+	float c1 = 20, c2 = 100, c3 = 50000, c4 = 0.1, c5 = 10000;
 	
-	// paredes como vertices artificiais
-	vector<Vector> parede;
-	for (int i = 0; i <= X; i += 10) {
-		parede.push_back(Vector(i, 0));
-		parede.push_back(Vector(i, Y));
-	}
-	for (int i = 0; i <= Y; i += 10) {
-		parede.push_back(Vector(0, i));
-		parede.push_back(Vector(X, i));
-	}
-
 	// numero de iteracoes
 	while (it--) {
 
@@ -131,7 +120,7 @@ void GraphDisplay::fdp1(int it) {
 			for (int j = 0; j < G.n; j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
-				if (d < 1e-12) d = 1e-2;
+				if (d < EPS) d = EPS;
 
 				// vetor unitario na direcao de i para j
 				Vector unit = (pos[j] - pos[i])*(1/d);
@@ -142,13 +131,12 @@ void GraphDisplay::fdp1(int it) {
 			}
 
 			// forca em relacao as paredes
+			vector<Vector> parede = {Vector(0, pos[i].y), Vector(X, pos[i].y),
+							  Vector(pos[i].x, 0), Vector(pos[i].x, Y)};
 			for (auto j : parede) {
-
 				float d = dist(pos[i], j);
 				if (d < EPS) d = EPS;
 				Vector unit = (j - pos[i])*(1/d);
-
-				// repulsao
 				f = f - unit*(c5/(d*d));
 			}
 
@@ -173,17 +161,6 @@ void GraphDisplay::fdp2(int it) {
 	float t = min(X, Y)/8.0;
 	float delta = t/it;
 
-	// paredes como vertices artificiais
-	vector<Vector> parede;
-	for (int i = 0; i <= X; i += 10) {
-		parede.push_back(Vector(i, 0));
-		parede.push_back(Vector(i, Y));
-	}
-	for (int i = 0; i <= Y; i += 10) {
-		parede.push_back(Vector(0, i));
-		parede.push_back(Vector(X, i));
-	}
-
 	while (it--) {
 
 		// forca aplicada a cada vertice
@@ -205,20 +182,9 @@ void GraphDisplay::fdp2(int it) {
 				if (adj[i][j]) f = f + unit*(d*d/k);
 			}
 
-			// forca em relacao as paredes
-			for (auto j : parede) {
-
-				float d = dist(pos[i], j);
-				Vector unit = (j - pos[i])*(1/d);
-				if (d < EPS) d = EPS;
-
-				// repulsao
-				if (d < k) f = f - unit*(k*k/d);
-			}
-
 			// limitante das forcas
 			float disp = f.norm();
-			if (disp > 1e-12) {
+			if (disp > EPS) {
 				f = f*(1/disp);
 				f = f*min(disp, t);
 			}
@@ -275,7 +241,7 @@ void GraphDisplay::random() {
 void GraphDisplay::good(int randIt, int fdpIt) {
 	int best = 2*G.m*G.m+10;
 	vector<Vector> posBest = vector<Vector>();
-	while (randIt--) {
+	for (int i = 0; i < randIt; i++) {
 		this->random();
 		this->fdp2(fdpIt);
 
@@ -286,4 +252,5 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 		}
 	}
 	this->pos = posBest;
+	this->fdp1(randIt*fdpIt);
 }
