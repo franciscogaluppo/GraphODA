@@ -372,7 +372,7 @@ void displayTeste(int X, int Y) {
 		drawStuff(janela, fonte);
 
 		// faz mais iteracoes da mola e printa o grafo
-		GD.fdp1(2);
+		GD.fdpEades(2);
 		if (GD.temPeso) {
 			GD.fdpPeso(2);
 			printPesos(janela, fonte, GD);

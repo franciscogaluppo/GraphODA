@@ -13,6 +13,7 @@ struct GraphDisplay {
 	int raio, X, Y;
 	vector<int> para;
 	vector<Vector> pos;
+	vector<Vector> vel;
 	vector<float> posPeso;
 	vector<string> peso;
 	vector<int> color;
@@ -20,8 +21,9 @@ struct GraphDisplay {
 	GraphDisplay(Graph, int, int, int);
 	void fdpPeso(int);
 	Vector deixaDentro(Vector, bool);
-	void fdp1(int);
-	void fdp2(int);
+	void fdpEades(int);
+	void fdpEadesAcc(int);
+	void fdpFruchterman(int);
 	int inter();
 	void poligono();
 	void random();
