@@ -9,7 +9,7 @@ using namespace std;
 
 struct GraphDisplay {
 	Graph G;
-	bool temDir, temPeso;
+	bool temDir, temPeso, centr;
 	int raio, X, Y;
 	vector<int> para;
 	vector<Vector> pos;
@@ -29,6 +29,8 @@ struct GraphDisplay {
 	void random();
 	void good(int, int);
 	int achaVertice(Vector at);
+	void centraliza();
+	void itera();
 };
 
 #endif

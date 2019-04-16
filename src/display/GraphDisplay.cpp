@@ -7,7 +7,7 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	X = X_;
 	Y = Y_;
 	raio = raio_;
-	temDir = 0, temPeso = 0;
+	temDir = 0, temPeso = 0, centr = 0;
 	this->poligono();
 	vel = vector<Vector>(G.n, Vector(0, 0));
 	para = vector<int>(G.n, 0);
@@ -150,57 +150,7 @@ void GraphDisplay::fdpEades(int it) {
 	}
 }
 
-// Fruchterman algorithm
-void GraphDisplay::fdpFruchterman(int it) {
-	// calcula matriz de adjacencia
-	// TODO: classe Graph calcular isso
-	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
-	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
-
-	// constante do algoritmo
-	float k = sqrt(X*Y/float(G.n))/2;
-	float t = min(X, Y)/8.0;
-	float delta = t/it;
-
-	while (it--) {
-
-		// forca aplicada a cada vertice
-		vector<Vector> forca;
-
-		for (int i = 0; i < G.n; i++) {
-			Vector f(0, 0);
-
-			for (int j = 0; j < G.n; j++) if (j != i) {
-
-				float d = dist(pos[i], pos[j]);
-				if (d < EPS) d = EPS;
-
-				// vetor unitario na direcao de i para j
-				Vector unit = (pos[j] - pos[i])*(1/d);
-
-				// computa forca de acordo com o algoritmo
-				if (d < 2*k)   f = f - unit*(k*k/d);
-				if (adj[i][j]) f = f + unit*(d*d/k);
-			}
-
-			// limitante das forcas
-			float disp = f.norm();
-			if (disp > EPS) {
-				f = f*(1/disp);
-				f = f*min(disp, t);
-			}
-
-			forca.push_back(f);
-		}
-
-		// atualiza posicoes
-		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i];
-
-		t = max((float)0, t-delta);
-	}
-}
-
-	// Eades algorithm with acceleration
+// Eades algorithm with acceleration
 void GraphDisplay::fdpEadesAcc(int it) {
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
@@ -259,6 +209,56 @@ void GraphDisplay::fdpEadesAcc(int it) {
 	}
 }
 
+// Fruchterman algorithm
+void GraphDisplay::fdpFruchterman(int it) {
+	// calcula matriz de adjacencia
+	// TODO: classe Graph calcular isso
+	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
+	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
+
+	// constante do algoritmo
+	float k = sqrt(X*Y/float(G.n))/2;
+	float t = min(X, Y)/8.0;
+	float delta = t/it;
+
+	while (it--) {
+
+		// forca aplicada a cada vertice
+		vector<Vector> forca;
+
+		for (int i = 0; i < G.n; i++) {
+			Vector f(0, 0);
+
+			for (int j = 0; j < G.n; j++) if (j != i) {
+
+				float d = dist(pos[i], pos[j]);
+				if (d < EPS) d = EPS;
+
+				// vetor unitario na direcao de i para j
+				Vector unit = (pos[j] - pos[i])*(1/d);
+
+				// computa forca de acordo com o algoritmo
+				if (d < 2*k)   f = f - unit*(k*k/d);
+				if (adj[i][j]) f = f + unit*(d*d/k);
+			}
+
+			// limitante das forcas
+			float disp = f.norm();
+			if (disp > EPS) {
+				f = f*(1/disp);
+				f = f*min(disp, t);
+			}
+
+			forca.push_back(f);
+		}
+
+		// atualiza posicoes
+		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i];
+
+		t = max((float)0, t-delta);
+	}
+}
+
 // se os segmentos de reta interceptam
 bool cruza(Vector a, Vector b, Vector c, Vector d) {
 	if (cross(b-a, c-b)*cross(b-a, d-b) > 0) return 0;
@@ -314,4 +314,10 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 	this->pos = posBest;
 	this->fdpEades(randIt*fdpIt/4);
 	this->fdpEadesAcc(randIt*fdpIt/4);
+}
+
+void GraphDisplay::itera() {
+	if (centr) fdpEadesAcc(2);
+	else fdpEades(2);
+	if (temPeso) fdpPeso(2);
 }

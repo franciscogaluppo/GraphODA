@@ -177,6 +177,10 @@ void mudaDir(GraphDisplay *GD) {
 	(GD->temDir) ^= 1;
 }
 
+void centraliza(GraphDisplay *GD) {
+	GD->centr = 1;
+}
+
 void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
 	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
@@ -207,9 +211,15 @@ void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
 
 	// Botao pra ler arquivo
 	auto botaoArquivo = tgui::Button::create("Importar");
-	botaoArquivo->setSize(70.f, 20.f);
+	botaoArquivo->setSize(75.f, 20.f);
 	botaoArquivo->setPosition(930.f, 235.f);
 	gui.add(botaoArquivo);
+
+	// botao pra centralizar grafo
+	auto botaoCenter = tgui::Button::create("Centralizar");
+	botaoCenter->setSize(75.f, 20.f);
+	botaoCenter->setPosition(930.f, 260.f);
+	gui.add(botaoCenter);
 
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
@@ -219,6 +229,9 @@ void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
 			"checked", mudaDir, GD);
 	check->connect(
 			"unchecked", mudaDir, GD);
+
+	botaoCenter->connect(
+			"pressed", centraliza, GD);
 }
 
 void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
@@ -236,6 +249,7 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 			ini = positionV;
 			clique = GD.achaVertice(positionV);
 			if (clique > -1) {
+				GD.centr = 0;
 				dif = GD.pos[clique] - positionV;
 				GD.para[clique]++;
 			}
@@ -372,11 +386,8 @@ void displayTeste(int X, int Y) {
 		drawStuff(janela, fonte);
 
 		// faz mais iteracoes da mola e printa o grafo
-		GD.fdpEades(2);
-		if (GD.temPeso) {
-			GD.fdpPeso(2);
-			printPesos(janela, fonte, GD);
-		}
+		GD.itera();
+		if (GD.temPeso) printPesos(janela, fonte, GD);
 		printGrafo(janela, fonte, GD, biggest);
 		if (GD.temDir) printSetas(janela, GD);
 
