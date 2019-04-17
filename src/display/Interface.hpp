@@ -11,7 +11,10 @@
 #include <SFML/Graphics/Transform.hpp>
 #include <TGUI/TGUI.hpp>
 
-#include <bits/stdc++.h>
+#include <string>
+#include <utility>
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 void displayTeste(int, int);

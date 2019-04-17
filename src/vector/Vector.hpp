@@ -1,7 +1,8 @@
 #ifndef VECTORH
 #define VECTORH
 
-#include <bits/stdc++.h>
+#include <cmath>
+#include <utility>
 using namespace std;
 
 struct Vector {

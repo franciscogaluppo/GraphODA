@@ -4,7 +4,9 @@
 #include "../vector/Vector.hpp"
 #include "../graph/Graph.hpp"
 
-#include <bits/stdc++.h>
+#include <vector>
+#include <cmath>
+#include <cstdlib>
 using namespace std;
 
 struct GraphDisplay {

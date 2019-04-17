@@ -1,7 +1,9 @@
 #ifndef GRAPH
 #define GRAPH
 
-#include <bits/stdc++.h>
+#include <vector>
+#include <string>
+#include <iostream>
 using namespace std;
 
 struct Graph {
