@@ -13,6 +13,14 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	para = vector<int>(G.n, 0);
 	color = vector<int>(G.n, 0);
 	posPeso = vector<float>(G.m, 0.5);
+
+	isParal = vector<bool>(G.m, 0);
+	// calcula matriz de adjacencia
+	// TODO: classe Graph calcular isso
+	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
+	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = 1;
+	for (int i = 0; i < G.m; i++) if (adj[G.edges[i].second][G.edges[i].first])
+		isParal[i] = 1;
 }
 
 // encontra vertice na posicao 'at'

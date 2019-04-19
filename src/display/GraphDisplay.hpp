@@ -19,6 +19,7 @@ struct GraphDisplay {
 	vector<float> posPeso;
 	vector<string> peso;
 	vector<int> color;
+	vector<bool> isParal;
 
 	GraphDisplay(Graph, int, int, int);
 	void fdpPeso(int);

@@ -5,10 +5,7 @@
 #include "../graph/Graph.hpp"
 #include "GraphDisplay.hpp"
 
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "SFML/Graphics/Rect.hpp"	//usada para calcular retg minimo
-#include <SFML/Graphics/Transform.hpp>
 #include <TGUI/TGUI.hpp>
 
 #include <string>

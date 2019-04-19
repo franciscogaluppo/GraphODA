@@ -44,14 +44,23 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD, int
 	// Cria as arestas
 	for (int i = 0; i < GD.G.m; i++) {
 		// Arestas sem largura, por isso vetores
+		Vector add(0, 0);
+		if (GD.isParal[i]) {
+			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			if (add.norm()) {
+				add = add*(1/add.norm());
+				add = add.rotate(acos(-1.0)/2);
+				add = add*(GD.raio/3.0);
+			}
+		}
 		sf::Vertex linha[] =
 		{
 			sf::Vertex(sf::Vector2f(
-				GD.pos[GD.G.edges[i].first].x, GD.pos[GD.G.edges[i].first].y),
+				GD.pos[GD.G.edges[i].first].x+add.x, GD.pos[GD.G.edges[i].first].y+add.y),
 					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(
-				GD.pos[GD.G.edges[i].second].x, GD.pos[GD.G.edges[i].second].y),
+				GD.pos[GD.G.edges[i].second].x+add.x, GD.pos[GD.G.edges[i].second].y+add.y),
 					sf::Color::Black)
 		};
 
@@ -108,11 +117,22 @@ void printSetas(sf::RenderWindow &janela, GraphDisplay &GD) {
 		Vector delta = Vector(GD.raio/2-1, GD.raio/2-1).rotate(angle)
 				- Vector(GD.raio/2-1, GD.raio/2-1);
 
+		// trata aresta paralelas
+		Vector add(0, 0);
+		if (GD.isParal[i]) {
+			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			if (add.norm()) {
+				add = add*(1/add.norm());
+				add = add.rotate(acos(-1.0)/2);
+				add = add*(GD.raio/3.0);
+			}
+		}
+
 		// cria triangulo na ponta da aresta
 		sf::CircleShape tri(GD.raio/2, 3);
 		tri.setRotation((angle)*180/pi);
 		tri.setFillColor(sf::Color::Black);
-		tri.setPosition(pos.x-GD.raio/2+1-delta.x, pos.y-GD.raio/2+1-delta.y);
+		tri.setPosition(pos.x-GD.raio/2+1-delta.x+add.x, pos.y-GD.raio/2+1-delta.y+add.y);
 		janela.draw(tri);
 	}
 }
@@ -129,7 +149,19 @@ void printPesos(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD) {
 		// acha posicao
 		Vector v = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
 		Vector at = GD.pos[GD.G.edges[i].first] + v*GD.posPeso[i];
-		p.setPosition(at.x, at.y);
+
+		// arestas paralelas
+		Vector add(0, 0);
+		if (GD.isParal[i]) {
+			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			if (add.norm()) {
+				add = add*(1/add.norm());
+				add = add.rotate(acos(-1.0)/2);
+				add = add*(GD.raio/3.0);
+			}
+		}
+
+		p.setPosition(at.x+add.x, at.y+add.y);
 		janela.draw(p);
 	}
 }
