@@ -210,7 +210,7 @@ void mudaDir(GraphDisplay *GD) {
 }
 
 void centraliza(GraphDisplay *GD) {
-	GD->centr = 1;
+	(GD->centr) ^= 1;
 }
 
 void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
@@ -276,6 +276,18 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 		auto position = sf::Mouse::getPosition(janela);
 		Vector positionV(position.x, position.y);
 
+		// ta no modo draw
+		if (GD.draw) {
+			// acabei de clicar
+			if (clique == -2) {
+				ini = positionV;
+				clique = GD.achaVertice(positionV);	
+				if (clique == -1 and GD.taDentro(positionV))
+					GD.addVertex(positionV);
+				else dif = GD.pos[clique] - positionV;
+			}
+		}
+
 		// acabei de clicar
 		if (clique == -2) {
 			ini = positionV;
@@ -296,7 +308,7 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 		Vector positionV(position.x, position.y);
 
 		// testa se tem que travar vertice
-		if (ini.x == positionV.x and ini.y == positionV.y) {
+		if (!GD.draw and ini.x == positionV.x and ini.y == positionV.y) {
 			int vert = GD.achaVertice(positionV);
 			if (vert > -1) {
 				if (GD.para[vert] >= 2) GD.para[vert] -= 2;
@@ -304,8 +316,20 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 			}
 		}
 
-		if (clique > -1) GD.para[clique]--;
+		if (!GD.draw and clique > -1) GD.para[clique]--;
 		clique = -2;
+	}
+
+	// clique com o botao direito
+	if (GD.draw and sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+		auto position = sf::Mouse::getPosition(janela);
+		Vector positionV(position.x, position.y);
+
+		// acabei de clicar
+		if (clique == -2) {
+			clique = GD.achaVertice(positionV);
+			if (clique > -1) GD.removeVertex(clique);
+		}
 	}
 }
 
@@ -385,6 +409,7 @@ void displayTeste(int X, int Y) {
 
 	// Cria a janela
 	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Close, settings);
+	janela.setKeyRepeatEnabled(false);
 	tgui::Gui gui(janela);
 
 	// GraphDisplay
@@ -402,17 +427,22 @@ void displayTeste(int X, int Y) {
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
 
-	while(janela.isOpen()) {
+	while (janela.isOpen()) {
 		// Checa se algum evento aconteceu
 		sf::Event evento;
-		while(janela.pollEvent(evento))
-		{
+		while (janela.pollEvent(evento)) {
 			// Se pediu pra fechar
 			if(evento.type == sf::Event::Closed)
 				janela.close();
 
 			// Cria os widgets da GUI
 			gui.handleEvent(evento);
+
+			// testa se apertou ctrl
+			if (evento.type == sf::Event::KeyPressed and
+						evento.key.code == sf::Keyboard::LControl) {
+				GD.draw ^= 1;
+			}
 		}
 
 		drawStuff(janela, fonte);
@@ -425,7 +455,7 @@ void displayTeste(int X, int Y) {
 
 		// olha se a pessoa ta mexendo no vertice
 		handleClique(janela, GD);
-
+	
 		gui.draw();
 
 		// Termina iteração e atualiza janela

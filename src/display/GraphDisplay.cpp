@@ -7,7 +7,7 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	X = X_;
 	Y = Y_;
 	raio = raio_;
-	temDir = 0, temPeso = 0, centr = 0;
+	temDir = temPeso = centr = draw = 0;
 	this->poligono();
 	vel = vector<Vector>(G.n, Vector(0, 0));
 	para = vector<int>(G.n, 0);
@@ -105,6 +105,14 @@ Vector GraphDisplay::deixaDentro(Vector v, bool trav) {
 	v.x = min(v.x, (float)X-raio-3-2*trav);
 	v.y = min(v.y, (float)Y-raio-3-2*trav);
 	return v;
+}
+
+bool GraphDisplay::taDentro(Vector v) {
+	if (v.x < 0) return 0;
+	if (v.x > X) return 0;
+	if (v.y < 0) return 0;
+	if (v.y > Y) return 0;
+	return 1;
 }
 
 // Eades algorithm
@@ -324,8 +332,36 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 	this->fdpEadesAcc(randIt*fdpIt/4);
 }
 
+void GraphDisplay::addVertex(Vector v) {
+	Graph G2(G.n+1, G.label);
+	pos.push_back(v);
+	vel.push_back(Vector(0, 0));
+	para.push_back(0);
+	color.push_back(0);
+	for (auto i : G.edges) G2.addEdge(i.first, i.second);
+	G = G2;
+}
+
+void GraphDisplay::removeVertex(int v) {
+	G.label.erase(G.label.begin()+v);
+	Graph G2(G.n-1, G.label);
+	pos.erase(pos.begin()+v);
+	vel.erase(vel.begin()+v);
+	para.erase(para.begin()+v);
+	color.erase(color.begin()+v);
+	for (auto& i : G.edges) {
+		if (i.first == v or i.second == v) continue;
+		if (i.first > v) i.first--;
+		if (i.second > v) i.second--;
+		G2.addEdge(i.first, i.second);
+	}
+	G = G2;
+}
+
 void GraphDisplay::itera() {
+	if (draw) return;
+
 	if (centr) fdpEadesAcc(2);
-	else fdpEades(2);
+	else  fdpEades(2);
 	if (temPeso) fdpPeso(2);
 }
