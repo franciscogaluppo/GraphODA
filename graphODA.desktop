@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Graph O.D.A.
+Comment=Visualizador aberto de grafos
+Exec=graphODA
+Icon=graphODA
+Categories=Development;
