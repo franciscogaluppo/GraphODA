@@ -39,6 +39,48 @@ sf::Color getColor(int x) {
 	return sf::Color::Black;
 }
 
+void drawAresta(sf::RenderWindow &janela, GraphDisplay &GD, int aresta) {
+	auto position = sf::Mouse::getPosition(janela);
+	Vector positionV(position.x, position.y);
+	positionV = GD.deixaDentro(positionV, 0);
+
+	sf::Vertex linha[] =
+	{
+		sf::Vertex(sf::Vector2f(
+			positionV.x, positionV.y),
+				sf::Color::Black),
+
+		sf::Vertex(sf::Vector2f(
+			GD.pos[aresta].x, GD.pos[aresta].y),
+				sf::Color::Black)
+	};
+
+	janela.draw(linha, 2, sf::Lines);
+
+	if (GD.temDir) {
+		const float pi = acos(-1.0);
+
+		Vector fim = positionV;
+		Vector v = fim - GD.pos[aresta];
+		Vector unit = v*(1/v.norm());
+
+		Vector pos = fim - unit*GD.raio*0.5;
+
+		// angulo que tem que rodar pra seta ficar certa
+		float angle = v.angle()-pi/6;
+
+		Vector delta = Vector(GD.raio/2-1, GD.raio/2-1).rotate(angle)
+				- Vector(GD.raio/2-1, GD.raio/2-1);
+
+		// cria triangulo na ponta da aresta
+		sf::CircleShape tri(GD.raio/2, 3);
+		tri.setRotation((angle)*180/pi);
+		tri.setFillColor(sf::Color::Black);
+		tri.setPosition(pos.x-GD.raio/2+1-delta.x, pos.y-GD.raio/2+1-delta.y);
+		janela.draw(tri);
+	}
+}
+
 void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD, int biggest) {
 
 	// Cria as arestas
@@ -266,10 +308,15 @@ void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
 			"pressed", centraliza, GD);
 }
 
+// muitos ifs
 void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 	static Vector dif;
 	static int clique = -2;
 	static Vector ini;
+	static int aresta = -1;
+
+	// desenha aresta pela metade
+	if (aresta > -1) drawAresta(janela, GD, aresta);
 
 	// testa clique
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -283,8 +330,8 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 				ini = positionV;
 				clique = GD.achaVertice(positionV);	
 				if (clique == -1 and GD.taDentro(positionV))
-					GD.addVertex(positionV);
-				else dif = GD.pos[clique] - positionV;
+					GD.addVertex(positionV), aresta = -2;
+				else dif = GD.pos[clique] - positionV, GD.centr = 0;
 			}
 		}
 
@@ -304,16 +351,26 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 			GD.pos[clique] = GD.deixaDentro(positionV + dif, (GD.para[clique] > 1));
 	}
 	else if (clique > -2) {
+		// soltei
 		auto position = sf::Mouse::getPosition(janela);
 		Vector positionV(position.x, position.y);
 
-		// testa se tem que travar vertice
-		if (!GD.draw and ini.x == positionV.x and ini.y == positionV.y) {
+		// testa se tem que travar vertice ou iniciar aresta
+		if (ini.x == positionV.x and ini.y == positionV.y) {
 			int vert = GD.achaVertice(positionV);
 			if (vert > -1) {
-				if (GD.para[vert] >= 2) GD.para[vert] -= 2;
-				else GD.para[vert] += 2;
-			}
+				if (!GD.draw) { // trava
+					if (GD.para[vert] >= 2) GD.para[vert] -= 2;
+					else GD.para[vert] += 2;
+				} else { // desenha aresta
+					if (aresta == -1) aresta = vert;
+					else {
+						if (aresta > -1 and aresta != vert)
+							GD.addEdge(aresta, vert);
+						aresta = -1;
+					}
+				}
+			} else aresta = -1;
 		}
 
 		if (!GD.draw and clique > -1) GD.para[clique]--;
@@ -329,6 +386,32 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 		if (clique == -2) {
 			clique = GD.achaVertice(positionV);
 			if (clique > -1) GD.removeVertex(clique);
+			else {
+				// tenta encontrar aresta clicada
+				for (int i = 0; i < GD.G.m; i++) {
+					Vector ini = GD.pos[GD.G.edges[i].first],
+							fim = GD.pos[GD.G.edges[i].second];
+
+					Vector add(0, 0);
+					if (GD.isParal[i]) {
+						add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+						if (add.norm()) {
+							add = add*(1/add.norm());
+							add = add.rotate(acos(-1.0)/2);
+							add = add*(GD.raio/3.0);
+						}
+					}
+
+					ini = ini+add;
+					fim = fim+add;
+
+					if ((positionV-ini).norm() + (fim-positionV).norm() - 0.5
+							< (fim-ini).norm()) {
+						GD.removeEdge(i);
+						break;
+					}
+				}
+			}
 		}
 	}
 }
@@ -447,14 +530,14 @@ void displayTeste(int X, int Y) {
 
 		drawStuff(janela, fonte);
 
+		// olha se a pessoa ta mexendo no vertice
+		handleClique(janela, GD);
+
 		// faz mais iteracoes da mola e printa o grafo
 		GD.itera();
 		if (GD.temPeso) printPesos(janela, fonte, GD);
 		printGrafo(janela, fonte, GD, biggest);
 		if (GD.temDir) printSetas(janela, GD);
-
-		// olha se a pessoa ta mexendo no vertice
-		handleClique(janela, GD);
 	
 		gui.draw();
 

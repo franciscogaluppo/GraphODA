@@ -36,6 +36,8 @@ struct GraphDisplay {
 	void centraliza();
 	void addVertex(Vector);
 	void removeVertex(int);
+	void addEdge(int, int);
+	void removeEdge(int);
 	void itera();
 };
 
