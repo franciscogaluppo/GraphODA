@@ -178,7 +178,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, GraphDisplay *GD, int *biggest) {
 	inFile >> n >> m;
 	vector<string> label(n);
 	for (auto &i : label) inFile >> i;
-	
+
 	*biggest = 0;
 	for (int i = 0; i < n; ++i)
 		if(label[i].length() > *biggest)
@@ -214,7 +214,7 @@ void centraliza(GraphDisplay *GD) {
 }
 
 void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
-	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
+	tgui::Theme tema{"assets/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
 
@@ -306,7 +306,7 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 
 		if (clique > -1) GD.para[clique]--;
 		clique = -2;
-	}				
+	}
 }
 
 void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
@@ -374,7 +374,7 @@ void displayTeste(int X, int Y) {
 
 	// Carrega a fonte Consola Bold (Gosto dela)
 	sf::Font fonte;
-	if (!fonte.loadFromFile("src/fontes/CONSOLAB.TTF")) {
+	if (!fonte.loadFromFile("assets/fontes/CONSOLAB.TTF")) {
 		// TODO: Erro direito
 		return;
 	}
@@ -401,7 +401,7 @@ void displayTeste(int X, int Y) {
 	}
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
-	
+
 	while(janela.isOpen()) {
 		// Checa se algum evento aconteceu
 		sf::Event evento;
