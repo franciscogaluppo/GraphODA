@@ -7,6 +7,10 @@ project(graphODA)
 set (graphODA_VERSION_MAJOR 1)
 set (graphODA_VERSION_MINOR 0)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Escolha o tipo de build (Debug ou Release)" FORCE)
+endif()
+
 # Headers
 include_directories(include)
 include_directories(include/display)
@@ -15,7 +19,7 @@ include_directories(include/vector)
 
 # Dependências
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
-find_package(SFML 2.4 COMPONENTS graphics window system REQUIRED)
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 find_package(TGUI 0.8 REQUIRED)
 
 set(SRC_FILES

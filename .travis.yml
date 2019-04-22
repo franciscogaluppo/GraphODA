@@ -1,8 +1,9 @@
-language: cpp
+os: linux
 dist: xenial
 sudo: required
+language: cpp
 compiler: gcc
-os: linux
+cache: ccache
 
 branches:
   except:
@@ -17,30 +18,35 @@ env:
 install:
   - mkdir deps
   - cd deps
-  - wget https://www.sfml-dev.org/files/SFML-2.4.2-linux-gcc-64-bit.tar.gz
-  - tar -xvzf SFML-2.4.2-linux-gcc-64-bit.tar.gz
-  - sudo cp -R ./SFML-2.4.2/* /usr/local
+  - wget https://www.sfml-dev.org/files/SFML-2.5.1-sources.zip
+  - unzip SFML-2.5.1-sources.zip
+  - cd SFML-2.5.1
+  - cmake -DCMAKE_BUILD_TYPE=Release -DSFML_BUILD_EXAMPLES=FALSE -DSFML_BUILD_DOC=FALSE
+  - make
+  - sudo make install
+  - cd ..
   - wget https://github.com/texus/TGUI/archive/v0.8.5.zip
   - unzip v0.8.5.zip
   - cd TGUI-0.8.5
-  - cmake -DTGUI_BUILD_GUI_BUILDER=FALSE .
+  - cmake -DCMAKE_BUILD_TYPE=Release -DTGUI_BUILD_GUI_BUILDER=FALSE
   - make
   - sudo make install
+  - sudo ldconfig
   - cd ../..
 
 script:
   - mkdir build
   - cd build
-  - cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+  - cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .. 
   - make
   - make install DESTDIR=appdir
-#  - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-#  - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
-#  - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/graphODA.desktop -appimage -bundle-non-qt-libs -no-copy-copyright-files -no-translations
-#
-#after_success:
-#  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-#  - bash upload.sh Graph_O.D.A.-x86_64.AppImage
+  - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/5/linuxdeployqt-5-x86_64.AppImage"
+  - chmod a+x linuxdeployqt-5-x86_64.AppImage
+  - ./linuxdeployqt-5-x86_64.AppImage appdir/usr/share/applications/graphODA.desktop -appimage -bundle-non-qt-libs -no-copy-copyright-files -no-translations
+
+after_success:
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash upload.sh Graph_O.D.A.-x86_64.AppImage
 
 addons:
   apt:
@@ -48,3 +54,16 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-8
+      - libfreetype6-dev
+      - libjpeg-dev
+      - libx11-dev
+      - libxrandr-dev
+      - libx11-xcb-dev
+      - libxcb-randr0-dev
+      - libxcb-image0-dev
+      - libxcb1-dev
+      - libgl1-mesa-dev
+      - libudev-dev
+      - libopenal-dev
+      - libflac-dev
+      - libvorbis-dev
