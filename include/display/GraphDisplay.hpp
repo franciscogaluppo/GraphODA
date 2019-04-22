@@ -11,7 +11,7 @@ using namespace std;
 
 struct GraphDisplay {
 	Graph G;
-	bool temDir, temPeso, centr;
+	bool temDir, temPeso, centr, draw;
 	int raio, X, Y;
 	vector<int> para;
 	vector<Vector> pos;
@@ -19,10 +19,12 @@ struct GraphDisplay {
 	vector<float> posPeso;
 	vector<string> peso;
 	vector<int> color;
+	vector<bool> isParal;
 
 	GraphDisplay(Graph, int, int, int);
 	void fdpPeso(int);
 	Vector deixaDentro(Vector, bool);
+	bool taDentro(Vector);
 	void fdpEades(int);
 	void fdpEadesAcc(int);
 	void fdpFruchterman(int);
@@ -32,6 +34,10 @@ struct GraphDisplay {
 	void good(int, int);
 	int achaVertice(Vector at);
 	void centraliza();
+	void addVertex(Vector);
+	void removeVertex(int);
+	void addEdge(int, int);
+	void removeEdge(int);
 	void itera();
 };
 

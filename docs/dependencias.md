@@ -1,0 +1,1 @@
+## Este projeto depende de vários softwares e bibliotecas, listadas exaustivamente aqui

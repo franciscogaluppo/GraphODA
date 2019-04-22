@@ -1,0 +1,50 @@
+language: cpp
+dist: xenial
+sudo: required
+compiler: gcc
+os: linux
+
+branches:
+  except:
+    - /^(?i:continuous)$/
+# Do not build tags that we create when we upload to GitHub Releases
+
+env:
+  global:
+    - CC=gcc-8
+    - CXX=g++-8
+
+install:
+  - mkdir deps
+  - cd deps
+  - wget https://www.sfml-dev.org/files/SFML-2.4.2-linux-gcc-64-bit.tar.gz
+  - tar -xvzf SFML-2.4.2-linux-gcc-64-bit.tar.gz
+  - sudo cp -R ./SFML-2.4.2/* /usr/local
+  - wget https://github.com/texus/TGUI/archive/v0.8.5.zip
+  - unzip v0.8.5.zip
+  - cd TGUI-0.8.5
+  - cmake -DTGUI_BUILD_GUI_BUILDER=FALSE .
+  - make
+  - sudo make install
+  - cd ../..
+
+script:
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+  - make
+  - make install DESTDIR=appdir
+#  - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+#  - chmod a+x linuxdeployqt-continuous-x86_64.AppImage
+#  - ./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/graphODA.desktop -appimage -bundle-non-qt-libs -no-copy-copyright-files -no-translations
+#
+#after_success:
+#  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+#  - bash upload.sh Graph_O.D.A.-x86_64.AppImage
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-8

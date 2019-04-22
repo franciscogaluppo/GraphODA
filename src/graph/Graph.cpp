@@ -22,7 +22,7 @@ Graph::Graph(int n_, vector<string> &label_) {
 }
 
 void Graph::addEdge(int i, int j) {
-	if (i >= n or j >= n) {
+	if (i < 0 or j < 0 or i == j or i >= n or j >= n) {
 		// TODO: Erro direito
 		cout << "ERRO: aresta zoada" << endl;
 		return;

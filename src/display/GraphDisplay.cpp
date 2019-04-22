@@ -7,12 +7,20 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	X = X_;
 	Y = Y_;
 	raio = raio_;
-	temDir = 0, temPeso = 0, centr = 0;
+	temDir = temPeso = centr = draw = 0;
 	this->poligono();
 	vel = vector<Vector>(G.n, Vector(0, 0));
 	para = vector<int>(G.n, 0);
 	color = vector<int>(G.n, 0);
 	posPeso = vector<float>(G.m, 0.5);
+
+	isParal = vector<bool>(G.m, 0);
+	// calcula matriz de adjacencia
+	// TODO: classe Graph calcular isso
+	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
+	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = 1;
+	for (int i = 0; i < G.m; i++) if (adj[G.edges[i].second][G.edges[i].first])
+		isParal[i] = 1;
 }
 
 // encontra vertice na posicao 'at'
@@ -97,6 +105,14 @@ Vector GraphDisplay::deixaDentro(Vector v, bool trav) {
 	v.x = min(v.x, (float)X-raio-3-2*trav);
 	v.y = min(v.y, (float)Y-raio-3-2*trav);
 	return v;
+}
+
+bool GraphDisplay::taDentro(Vector v) {
+	if (v.x < 0) return 0;
+	if (v.x > X) return 0;
+	if (v.y < 0) return 0;
+	if (v.y > Y) return 0;
+	return 1;
 }
 
 // Eades algorithm
@@ -316,8 +332,76 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 	this->fdpEadesAcc(randIt*fdpIt/4);
 }
 
+void GraphDisplay::addVertex(Vector v) {
+	Graph G2(G.n+1, G.label);
+	pos.push_back(v);
+	vel.push_back(Vector(0, 0));
+	para.push_back(0);
+	color.push_back(0);
+	for (auto i : G.edges) G2.addEdge(i.first, i.second);
+	G = G2;
+}
+
+void GraphDisplay::removeVertex(int v) {
+	G.label.erase(G.label.begin()+v);
+	Graph G2(G.n-1, G.label);
+	pos.erase(pos.begin()+v);
+	vel.erase(vel.begin()+v);
+	para.erase(para.begin()+v);
+	color.erase(color.begin()+v);
+
+	int erased = 0;
+	for (int i = 0; i < G.m; i++) {
+		int a = G.edges[i].first, b = G.edges[i].second;
+		if (a == v or b == v) {
+			if (temPeso) {
+				peso.erase(peso.begin()+i-erased);
+				posPeso.erase(posPeso.begin()+i-erased);
+			}
+			isParal.erase(isParal.begin()+i-erased);
+			erased++;
+			continue;
+		}
+		if (a > v) a--;
+		if (b > v) b--;
+		G2.addEdge(a, b);
+	}
+	G = G2;
+}
+
+void GraphDisplay::addEdge(int a, int b) {
+	for (int i : G.adj[a]) if (i == b) return;
+	G.addEdge(a, b);
+	posPeso.push_back(0.5);
+	isParal.push_back(0);
+	for (int i : G.adj[b]) if (i == a) {
+		isParal[G.m-1] = 1;
+		for (int j = 0; j < G.m; j++) if (G.edges[j].first == b and G.edges[j].second == a)
+			isParal[j] = 1;
+	}
+	if (temPeso) peso.push_back("1");
+}
+
+void GraphDisplay::removeEdge(int e) {
+	int a = G.edges[e].first, b = G.edges[e].second;
+	for (int i = 0; i < G.adj[a].size(); i++)
+		if (G.adj[a][i] == b) {
+			G.adj[a].erase(G.adj[a].begin()+i);
+			break;
+		}
+	G.edges.erase(G.edges.begin()+e);
+	posPeso.erase(posPeso.begin()+e);
+	isParal.erase(isParal.begin()+e);
+	for (int i = 0; i < G.m; i++) if (G.edges[i].first == b and G.edges[i].second == a)
+		isParal[i] = 0;
+	if (temPeso) peso.erase(peso.begin()+e);
+	G.m--;
+}
+
 void GraphDisplay::itera() {
+	if (draw) return;
+
 	if (centr) fdpEadesAcc(2);
-	else fdpEades(2);
+	else  fdpEades(2);
 	if (temPeso) fdpPeso(2);
 }

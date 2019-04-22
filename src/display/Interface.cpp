@@ -39,19 +39,70 @@ sf::Color getColor(int x) {
 	return sf::Color::Black;
 }
 
+void drawAresta(sf::RenderWindow &janela, GraphDisplay &GD, int aresta) {
+	auto position = sf::Mouse::getPosition(janela);
+	Vector positionV(position.x, position.y);
+	positionV = GD.deixaDentro(positionV, 0);
+
+	sf::Vertex linha[] =
+	{
+		sf::Vertex(sf::Vector2f(
+			positionV.x, positionV.y),
+				sf::Color::Black),
+
+		sf::Vertex(sf::Vector2f(
+			GD.pos[aresta].x, GD.pos[aresta].y),
+				sf::Color::Black)
+	};
+
+	janela.draw(linha, 2, sf::Lines);
+
+	if (GD.temDir) {
+		const float pi = acos(-1.0);
+
+		Vector fim = positionV;
+		Vector v = fim - GD.pos[aresta];
+		Vector unit = v*(1/v.norm());
+
+		Vector pos = fim - unit*GD.raio*0.5;
+
+		// angulo que tem que rodar pra seta ficar certa
+		float angle = v.angle()-pi/6;
+
+		Vector delta = Vector(GD.raio/2-1, GD.raio/2-1).rotate(angle)
+				- Vector(GD.raio/2-1, GD.raio/2-1);
+
+		// cria triangulo na ponta da aresta
+		sf::CircleShape tri(GD.raio/2, 3);
+		tri.setRotation((angle)*180/pi);
+		tri.setFillColor(sf::Color::Black);
+		tri.setPosition(pos.x-GD.raio/2+1-delta.x, pos.y-GD.raio/2+1-delta.y);
+		janela.draw(tri);
+	}
+}
+
 void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD, int biggest) {
 
 	// Cria as arestas
 	for (int i = 0; i < GD.G.m; i++) {
 		// Arestas sem largura, por isso vetores
+		Vector add(0, 0);
+		if (GD.isParal[i]) {
+			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			if (add.norm()) {
+				add = add*(1/add.norm());
+				add = add.rotate(acos(-1.0)/2);
+				add = add*(GD.raio/3.0);
+			}
+		}
 		sf::Vertex linha[] =
 		{
 			sf::Vertex(sf::Vector2f(
-				GD.pos[GD.G.edges[i].first].x, GD.pos[GD.G.edges[i].first].y),
+				GD.pos[GD.G.edges[i].first].x+add.x, GD.pos[GD.G.edges[i].first].y+add.y),
 					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(
-				GD.pos[GD.G.edges[i].second].x, GD.pos[GD.G.edges[i].second].y),
+				GD.pos[GD.G.edges[i].second].x+add.x, GD.pos[GD.G.edges[i].second].y+add.y),
 					sf::Color::Black)
 		};
 
@@ -108,11 +159,22 @@ void printSetas(sf::RenderWindow &janela, GraphDisplay &GD) {
 		Vector delta = Vector(GD.raio/2-1, GD.raio/2-1).rotate(angle)
 				- Vector(GD.raio/2-1, GD.raio/2-1);
 
+		// trata aresta paralelas
+		Vector add(0, 0);
+		if (GD.isParal[i]) {
+			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			if (add.norm()) {
+				add = add*(1/add.norm());
+				add = add.rotate(acos(-1.0)/2);
+				add = add*(GD.raio/3.0);
+			}
+		}
+
 		// cria triangulo na ponta da aresta
 		sf::CircleShape tri(GD.raio/2, 3);
 		tri.setRotation((angle)*180/pi);
 		tri.setFillColor(sf::Color::Black);
-		tri.setPosition(pos.x-GD.raio/2+1-delta.x, pos.y-GD.raio/2+1-delta.y);
+		tri.setPosition(pos.x-GD.raio/2+1-delta.x+add.x, pos.y-GD.raio/2+1-delta.y+add.y);
 		janela.draw(tri);
 	}
 }
@@ -129,7 +191,19 @@ void printPesos(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD) {
 		// acha posicao
 		Vector v = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
 		Vector at = GD.pos[GD.G.edges[i].first] + v*GD.posPeso[i];
-		p.setPosition(at.x, at.y);
+
+		// arestas paralelas
+		Vector add(0, 0);
+		if (GD.isParal[i]) {
+			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			if (add.norm()) {
+				add = add*(1/add.norm());
+				add = add.rotate(acos(-1.0)/2);
+				add = add*(GD.raio/3.0);
+			}
+		}
+
+		p.setPosition(at.x+add.x, at.y+add.y);
 		janela.draw(p);
 	}
 }
@@ -146,7 +220,7 @@ void lerGrafoArquivo(tgui::EditBox::Ptr arq, GraphDisplay *GD, int *biggest) {
 	inFile >> n >> m;
 	vector<string> label(n);
 	for (auto &i : label) inFile >> i;
-	
+
 	*biggest = 0;
 	for (int i = 0; i < n; ++i)
 		if(label[i].length() > *biggest)
@@ -178,11 +252,11 @@ void mudaDir(GraphDisplay *GD) {
 }
 
 void centraliza(GraphDisplay *GD) {
-	GD->centr = 1;
+	(GD->centr) ^= 1;
 }
 
 void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
-	tgui::Theme tema{"src/temas/TransparentGrey.txt"};
+	tgui::Theme tema{"assets/temas/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
 
@@ -234,15 +308,32 @@ void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
 			"pressed", centraliza, GD);
 }
 
+// muitos ifs
 void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 	static Vector dif;
 	static int clique = -2;
 	static Vector ini;
+	static int aresta = -1;
+
+	// desenha aresta pela metade
+	if (aresta > -1) drawAresta(janela, GD, aresta);
 
 	// testa clique
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		auto position = sf::Mouse::getPosition(janela);
 		Vector positionV(position.x, position.y);
+
+		// ta no modo draw
+		if (GD.draw) {
+			// acabei de clicar
+			if (clique == -2) {
+				ini = positionV;
+				clique = GD.achaVertice(positionV);	
+				if (clique == -1 and GD.taDentro(positionV))
+					GD.addVertex(positionV), aresta = -2;
+				else dif = GD.pos[clique] - positionV, GD.centr = 0;
+			}
+		}
 
 		// acabei de clicar
 		if (clique == -2) {
@@ -260,21 +351,69 @@ void handleClique(sf::RenderWindow &janela, GraphDisplay &GD) {
 			GD.pos[clique] = GD.deixaDentro(positionV + dif, (GD.para[clique] > 1));
 	}
 	else if (clique > -2) {
+		// soltei
 		auto position = sf::Mouse::getPosition(janela);
 		Vector positionV(position.x, position.y);
 
-		// testa se tem que travar vertice
+		// testa se tem que travar vertice ou iniciar aresta
 		if (ini.x == positionV.x and ini.y == positionV.y) {
 			int vert = GD.achaVertice(positionV);
 			if (vert > -1) {
-				if (GD.para[vert] >= 2) GD.para[vert] -= 2;
-				else GD.para[vert] += 2;
-			}
+				if (!GD.draw) { // trava
+					if (GD.para[vert] >= 2) GD.para[vert] -= 2;
+					else GD.para[vert] += 2;
+				} else { // desenha aresta
+					if (aresta == -1) aresta = vert;
+					else {
+						if (aresta > -1 and aresta != vert)
+							GD.addEdge(aresta, vert);
+						aresta = -1;
+					}
+				}
+			} else aresta = -1;
 		}
 
-		if (clique > -1) GD.para[clique]--;
+		if (!GD.draw and clique > -1) GD.para[clique]--;
 		clique = -2;
-	}				
+	}
+
+	// clique com o botao direito
+	if (GD.draw and sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+		auto position = sf::Mouse::getPosition(janela);
+		Vector positionV(position.x, position.y);
+
+		// acabei de clicar
+		if (clique == -2) {
+			clique = GD.achaVertice(positionV);
+			if (clique > -1) GD.removeVertex(clique);
+			else {
+				// tenta encontrar aresta clicada
+				for (int i = 0; i < GD.G.m; i++) {
+					Vector ini = GD.pos[GD.G.edges[i].first],
+							fim = GD.pos[GD.G.edges[i].second];
+
+					Vector add(0, 0);
+					if (GD.isParal[i]) {
+						add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+						if (add.norm()) {
+							add = add*(1/add.norm());
+							add = add.rotate(acos(-1.0)/2);
+							add = add*(GD.raio/3.0);
+						}
+					}
+
+					ini = ini+add;
+					fim = fim+add;
+
+					if ((positionV-ini).norm() + (fim-positionV).norm() - 0.5
+							< (fim-ini).norm()) {
+						GD.removeEdge(i);
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
@@ -342,7 +481,7 @@ void displayTeste(int X, int Y) {
 
 	// Carrega a fonte Consola Bold (Gosto dela)
 	sf::Font fonte;
-	if (!fonte.loadFromFile("src/fontes/CONSOLAB.TTF")) {
+	if (!fonte.loadFromFile("assets/fontes/CONSOLAB.TTF")) {
 		// TODO: Erro direito
 		return;
 	}
@@ -353,6 +492,7 @@ void displayTeste(int X, int Y) {
 
 	// Cria a janela
 	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Close, settings);
+	janela.setKeyRepeatEnabled(false);
 	tgui::Gui gui(janela);
 
 	// GraphDisplay
@@ -369,31 +509,36 @@ void displayTeste(int X, int Y) {
 	}
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
-	
-	while(janela.isOpen()) {
+
+	while (janela.isOpen()) {
 		// Checa se algum evento aconteceu
 		sf::Event evento;
-		while(janela.pollEvent(evento))
-		{
+		while (janela.pollEvent(evento)) {
 			// Se pediu pra fechar
 			if(evento.type == sf::Event::Closed)
 				janela.close();
 
 			// Cria os widgets da GUI
 			gui.handleEvent(evento);
+
+			// testa se apertou ctrl
+			if (evento.type == sf::Event::KeyPressed and
+						evento.key.code == sf::Keyboard::LControl) {
+				GD.draw ^= 1;
+			}
 		}
 
 		drawStuff(janela, fonte);
+
+		// olha se a pessoa ta mexendo no vertice
+		handleClique(janela, GD);
 
 		// faz mais iteracoes da mola e printa o grafo
 		GD.itera();
 		if (GD.temPeso) printPesos(janela, fonte, GD);
 		printGrafo(janela, fonte, GD, biggest);
 		if (GD.temDir) printSetas(janela, GD);
-
-		// olha se a pessoa ta mexendo no vertice
-		handleClique(janela, GD);
-
+	
 		gui.draw();
 
 		// Termina iteração e atualiza janela
