@@ -256,7 +256,7 @@ void centraliza(GraphDisplay *GD) {
 }
 
 void loadWidgets(tgui::Gui &gui, GraphDisplay *GD, int *biggest) {
-	tgui::Theme tema{"assets/temas/TransparentGrey.txt"};
+	tgui::Theme tema{"./assets/TransparentGrey.txt"};
 	//tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
 
@@ -481,7 +481,7 @@ void displayTeste(int X, int Y) {
 
 	// Carrega a fonte Consola Bold (Gosto dela)
 	sf::Font fonte;
-	if (!fonte.loadFromFile("assets/fontes/CONSOLAB.TTF")) {
+	if (!fonte.loadFromFile("./assets/CONSOLAB.TTF")) {
 		// TODO: Erro direito
 		return;
 	}
