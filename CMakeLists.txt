@@ -27,12 +27,14 @@ set(SRC_FILES
 set(ASSET_FILES
         "${PROJECT_SOURCE_DIR}/assets/temas/TransparentGrey.txt"
         "${PROJECT_SOURCE_DIR}/assets/fontes/CONSOLAB.TTF")
+set(DESKTOP_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.desktop")
+set(ICON_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.png")
 
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 add_executable(graphODA ${SRC_FILES} ${ASSET_FILES})
 target_link_libraries(graphODA tgui sfml-graphics sfml-window sfml-system)
 
 install(TARGETS graphODA DESTINATION bin)
-install(FILES "${PROJECT_SOURCE_DIR}/graphODA.desktop" DESTINATION "share/applications")
-install(FILES "${PROJECT_SOURCE_DIR}/graphODA.png" DESTINATION "share/icons/hicolor/256x256/apps")
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/assets" DESTINATION bin)
+install(FILES ${DESKTOP_FILE} DESTINATION "share/applications")
+install(FILES ${ICON_FILE} DESTINATION "share/icons/hicolor/256x256/apps")
+install(FILES ${ASSET_FILES} DESTINATION bin/assets)

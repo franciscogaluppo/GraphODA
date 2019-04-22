@@ -50,4 +50,4 @@ cmake-build-debug
 
 *.cbp
 
-graphODA.bin
+build/

@@ -1,1 +1,1 @@
-/usr/local/share/tgui-0.8
+## Este projeto depende de vários softwares e bibliotecas, listadas exaustivamente aqui
