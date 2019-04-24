@@ -3,6 +3,7 @@
 
 #include "../vector/Vector.hpp"
 #include "../graph/Graph.hpp"
+#include "../utils/Assets.hpp"
 #include "GraphDisplay.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -14,6 +15,6 @@
 #include <fstream>
 using namespace std;
 
-void displayTeste(int, int);
+void displayTeste (int, int);
 
 #endif
