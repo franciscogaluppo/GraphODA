@@ -38,7 +38,6 @@ script:
   - mkdir build
   - cd build
   - cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .. 
-  - make
   - make install DESTDIR=appdir
   - wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/5/linuxdeployqt-5-x86_64.AppImage"
   - chmod a+x linuxdeployqt-5-x86_64.AppImage

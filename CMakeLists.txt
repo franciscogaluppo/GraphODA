@@ -29,17 +29,16 @@ else()
     find_package(TGUI REQUIRED)
 endif()
 
-
 set(SRC_FILES
-        ${PROJECT_SOURCE_DIR}/src/display/GraphDisplay.cpp
-        ${PROJECT_SOURCE_DIR}/src/display/Interface.cpp
-        ${PROJECT_SOURCE_DIR}/src/graph/Graph.cpp
-        ${PROJECT_SOURCE_DIR}/src/vector/Vector.cpp
-        ${PROJECT_SOURCE_DIR}/src/utils/Assets.cpp
-        ${PROJECT_SOURCE_DIR}/src/main.cpp)
+        "${PROJECT_SOURCE_DIR}/src/display/GraphDisplay.cpp"
+        "${PROJECT_SOURCE_DIR}/src/display/Interface.cpp"
+        "${PROJECT_SOURCE_DIR}/src/graph/Graph.cpp"
+        "${PROJECT_SOURCE_DIR}/src/vector/Vector.cpp"
+        "${PROJECT_SOURCE_DIR}/src/utils/Assets.cpp"
+        "${PROJECT_SOURCE_DIR}/src/main.cpp")
 set(ASSET_FILES
-        "${PROJECT_SOURCE_DIR}/assets/temas/TransparentGrey.txt"
-        "${PROJECT_SOURCE_DIR}/assets/fontes/CONSOLAB.TTF")
+        "${PROJECT_SOURCE_DIR}/assets/TransparentGrey.txt"
+        "${PROJECT_SOURCE_DIR}/assets/CONSOLAB.TTF")
 set(DESKTOP_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.desktop")
 set(ICON_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.png")
 
@@ -53,6 +52,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     install(FILES ${ICON_FILE} DESTINATION "share/icons/hicolor/256x256/apps")
     install(FILES ${ASSET_FILES} DESTINATION "share/graphODA/assets")
 else()
-   install(TARGETS graphODA DESTINATION "")
+   install(TARGETS graphODA DESTINATION "./")
    install(FILES ${ASSET_FILES} DESTINATION "assets")
 endif()
