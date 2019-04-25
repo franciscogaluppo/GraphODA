@@ -330,9 +330,18 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 	this->pos = posBest;
 	this->fdpEades(randIt*fdpIt/4);
 	this->fdpEadesAcc(randIt*fdpIt/4);
+	if (temPeso) this->fdpPeso(randIt*fdpIt/4);
 }
 
 void GraphDisplay::addVertex(Vector v) {
+	int newLabel = 0;
+	while (1) {
+		bool isValid = 1;
+		for (auto& i : G.label) if (i == to_string(newLabel)) isValid = 0;
+		if (isValid) break;
+		newLabel++;
+	}
+	G.label.push_back(to_string(newLabel));
 	Graph G2(G.n+1, G.label);
 	pos.push_back(v);
 	vel.push_back(Vector(0, 0));

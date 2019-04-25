@@ -3,7 +3,6 @@
 
 #include "../vector/Vector.hpp"
 #include "../graph/Graph.hpp"
-#include "../utils/Assets.hpp"
 #include "GraphDisplay.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -13,8 +12,9 @@
 #include <utility>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 using namespace std;
 
-void displayTeste (int, int);
+void displayTeste(int, int);
 
 #endif

@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+graphODA
 
 # CMake files
 CMakeLists.txt.user
