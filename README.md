@@ -4,7 +4,10 @@
 ## Como instalar as dependências?
 
 ```plain
-$ ./installDeps.sh
+$ sudo apt-get install libsfml-dev
+$ sudo add-apt-repository ppa:texus/tgui-0.8
+$ sudo apt-get update
+$ sudo apt-get install libtgui-dev
 ```
 
 ## Como gerar o makefile?

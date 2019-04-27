@@ -226,9 +226,12 @@ void printPesos(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD) {
 void lerGrafoArquivo(tgui::EditBox::Ptr arq, GraphDisplay *GD, int *biggest) {
 	ifstream inFile(arq->getText().toAnsiString());
 	if (!inFile) {
-		// TODO: Erro direito
-		cout << "Erro: arquivo zoado" << endl;
-		return;
+		inFile = ifstream("grafos/grafo"+arq->getText().toAnsiString()+".txt");
+		if (!inFile) {
+			// TODO: Erro direito
+			cout << "Erro: arquivo zoado" << endl;
+			return;
+		}
 	}
 
 	int n, m;

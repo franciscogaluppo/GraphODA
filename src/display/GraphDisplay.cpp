@@ -30,6 +30,7 @@ int GraphDisplay::achaVertice(Vector at) {
 	return -1;
 }
 
+// O(it * m^2)
 void GraphDisplay::fdpPeso(int it) {
 	// constroi posicoes de fato
 	vector<Vector> posPesoV;
@@ -115,7 +116,7 @@ bool GraphDisplay::taDentro(Vector v) {
 	return 1;
 }
 
-// Eades algorithm
+// Eades algorithm ; O(it * n^2)
 void GraphDisplay::fdpEades(int it) {
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
@@ -166,7 +167,7 @@ void GraphDisplay::fdpEades(int it) {
 	}
 }
 
-// Eades algorithm with acceleration
+// Eades algorithm with acceleration ; O(it * n^2)
 void GraphDisplay::fdpEadesAcc(int it) {
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
@@ -225,7 +226,7 @@ void GraphDisplay::fdpEadesAcc(int it) {
 	}
 }
 
-// Fruchterman algorithm
+// Fruchterman algorithm ; O(it * n^2)
 void GraphDisplay::fdpFruchterman(int it) {
 	// calcula matriz de adjacencia
 	// TODO: classe Graph calcular isso
@@ -282,7 +283,7 @@ bool cruza(Vector a, Vector b, Vector c, Vector d) {
 	return 1;
 }
 
-// numero de intersecoes de arestas
+// numero de intersecoes de arestas ; O(m^2)
 int GraphDisplay::inter() {
 	int ret = 0;
 	for (auto &i : G.edges) for (auto &j : G.edges)
@@ -290,6 +291,7 @@ int GraphDisplay::inter() {
 	return ret;
 }
 
+// O(n)
 void GraphDisplay::poligono() {
 	const float raioGrafo = (min(X, Y)-100)/2;
 	Vector centro(X/2, Y/2);
@@ -308,12 +310,14 @@ void GraphDisplay::poligono() {
 			centro.y+cos(i*theta+theta/2)*raioGrafo));
 }
 
+// O(n)
 void GraphDisplay::random() {
 	pos = vector<Vector>();
 	for (int i = 0; i < G.n; i++)
 		pos.push_back(Vector((rand()%(X-100))+50, (rand()%(Y-100)+50)));
 }
 
+// O(randIt * fdpIt * n^2)
 void GraphDisplay::good(int randIt, int fdpIt) {
 	int best = 2*G.m*G.m+10;
 	vector<Vector> posBest = vector<Vector>();
@@ -333,6 +337,7 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 	if (temPeso) this->fdpPeso(randIt*fdpIt/4);
 }
 
+// O(n^2)
 void GraphDisplay::addVertex(Vector v) {
 	int newLabel = 0;
 	while (1) {
@@ -351,6 +356,7 @@ void GraphDisplay::addVertex(Vector v) {
 	G = G2;
 }
 
+// O(n+m)
 void GraphDisplay::removeVertex(int v) {
 	G.label.erase(G.label.begin()+v);
 	Graph G2(G.n-1, G.label);
@@ -378,6 +384,7 @@ void GraphDisplay::removeVertex(int v) {
 	G = G2;
 }
 
+// O(n+m)
 void GraphDisplay::addEdge(int a, int b) {
 	for (int i : G.adj[a]) if (i == b) return;
 	G.addEdge(a, b);
@@ -391,6 +398,7 @@ void GraphDisplay::addEdge(int a, int b) {
 	if (temPeso) peso.push_back("1");
 }
 
+// O(n+m)
 void GraphDisplay::removeEdge(int e) {
 	int a = G.edges[e].first, b = G.edges[e].second;
 	for (int i = 0; i < G.adj[a].size(); i++)
@@ -407,10 +415,11 @@ void GraphDisplay::removeEdge(int e) {
 	G.m--;
 }
 
+// O(n^2 + m^2)
 void GraphDisplay::itera() {
 	if (draw) return;
 
 	if (centr) fdpEadesAcc(2);
-	else  fdpEades(2);
+	else fdpEades(2);
 	if (temPeso) fdpPeso(2);
 }
