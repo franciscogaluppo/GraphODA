@@ -23,6 +23,10 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 		isParal[i] = 1;
 }
 
+void GraphDisplay::setGraph(Graph& G) {
+	*this = GraphDisplay(G, X, Y, raio);
+}
+
 // encontra vertice na posicao 'at'
 int GraphDisplay::achaVertice(Vector at) {
 	for (int i = 0; i < G.n; i++)

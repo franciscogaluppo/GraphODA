@@ -31,6 +31,7 @@ endif()
 
 set(SRC_FILES
         "${PROJECT_SOURCE_DIR}/src/display/GraphDisplay.cpp"
+        "${PROJECT_SOURCE_DIR}/src/display/GraphCanvas.cpp"
         "${PROJECT_SOURCE_DIR}/src/display/Interface.cpp"
         "${PROJECT_SOURCE_DIR}/src/graph/Graph.cpp"
         "${PROJECT_SOURCE_DIR}/src/vector/Vector.cpp"

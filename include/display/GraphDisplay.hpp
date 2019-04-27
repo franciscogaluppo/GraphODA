@@ -21,7 +21,9 @@ struct GraphDisplay {
 	vector<int> color;
 	vector<bool> isParal;
 
+	GraphDisplay() {}
 	GraphDisplay(Graph, int, int, int);
+	void setGraph(Graph&);
 	void fdpPeso(int);
 	Vector deixaDentro(Vector, bool);
 	bool taDentro(Vector);

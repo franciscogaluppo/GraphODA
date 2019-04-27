@@ -16,7 +16,6 @@ struct Graph {
 	Graph(int);
 	Graph(int, vector<string>&);
 	void addEdge(int, int);
-	vector<int> getColoring();
 };
 
 #endif
