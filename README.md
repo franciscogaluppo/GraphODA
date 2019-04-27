@@ -22,5 +22,5 @@ $ make
 ## Como executar?
 
 ```plain
-# ./graphODA
+$ ./graphODA
 ```
