@@ -1,8 +1,0 @@
-coisas a corrigir:
-
-- centralizar os nomes dos vértices dependendo da qtd de numeros
-- Fazer o GUI
-- Comecar a implementar as coisas mesmo
-- fazer user stories
-- arruamr o README
-- diagrama de classe

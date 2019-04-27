@@ -102,7 +102,7 @@ void printGrafo(sf::RenderWindow &janela, sf::Font &fonte, GraphDisplay &GD, int
 	for (int i = 0; i < GD.G.m; i++) {
 		// Arestas sem largura, por isso vetores
 		Vector add(0, 0);
-		if (GD.isParal[i]) {
+		if (GD.isParal[i] and GD.temDir) {
 			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
 			if (add.norm()) {
 				add = add*(1/add.norm());
