@@ -1,6 +1,7 @@
 #include "GraphCanvas.hpp"
 
 GraphCanvas::GraphCanvas(sf::RenderWindow &janela, sf::Font &fonte, int X, int Y, int raio) {
+	biggest = 0;
 	this->janela = &janela;
 	this->fonte = fonte;
 	this->GD = GraphDisplay(Graph(), X, Y, raio);
@@ -293,6 +294,11 @@ void GraphCanvas::handleClique() {
 	auto position = sf::Mouse::getPosition(*janela);
 	Vector positionV(position.x, position.y);
 
+	if (!GD.taDentro(positionV)) {
+		aresta = -1;
+		return;
+	}
+
 	// desenha aresta pela metade
 	if (aresta > -1 and GD.draw) printAresta(positionV, aresta);
 
@@ -388,6 +394,7 @@ void GraphCanvas::handleClique() {
 }
 
 void GraphCanvas::display() {
+	for (auto& i : GD.G.label) biggest = max(biggest, (int)i.size());
 	GD.itera();
 	if (GD.temPeso) printPesos();
 	if (GD.temDir) printSetas();

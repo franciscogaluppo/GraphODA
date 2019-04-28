@@ -126,6 +126,16 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	janela.draw(instr);
 }
 
+void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
+	sf::Text draw;
+	draw.setFont(fonte);
+	draw.setString("D");
+	draw.setCharacterSize(32);
+	draw.setFillColor(sf::Color::Red);
+	draw.setPosition(X-32, 0);
+	janela.draw(draw);
+}
+
 void displayTeste(int X, int Y) {
 
 	// Carrega a fonte Consola Bold (Gosto dela)
@@ -176,6 +186,7 @@ void displayTeste(int X, int Y) {
 		}
 
 		drawStuff(janela, fonte);
+		if (GC.GD.draw) drawDrawMode(janela, fonte, X*2/3);
 
 		// olha se a pessoa ta mexendo no grafo
 		GC.handleClique();
