@@ -17,7 +17,6 @@ struct GraphCanvas {
 	GraphDisplay GD;
 	sf::RenderWindow *janela;
 	sf::Font fonte;
-	int biggest;
 
 	GraphCanvas(sf::RenderWindow&, sf::Font&, int, int, int);
 	void lerGrafoArquivo(string);
@@ -27,7 +26,7 @@ struct GraphCanvas {
 	// private:
 	sf::Color getColor(int);
 	int findFontSize(int, int);
-	int findFontSizeNew(int);
+	int findFontSizeNew(int, int);
 	void printPesos();
 	void printAresta(Vector, int);
 	void printGrafo();

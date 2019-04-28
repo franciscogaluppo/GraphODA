@@ -1,16 +1,15 @@
 #include "GraphCanvas.hpp"
 
 GraphCanvas::GraphCanvas(sf::RenderWindow &janela, sf::Font &fonte, int X, int Y, int raio) {
-	biggest = 0;
 	this->janela = &janela;
 	this->fonte = fonte;
 	this->GD = GraphDisplay(Graph(), X, Y, raio);
 }
 
-int GraphCanvas::findFontSize(int n, int fontSize){	//acha o tamanho da fonte
+int GraphCanvas::findFontSize(int n, int fontSize) {
 	if (n < 2) return fontSize;
 	else if (n < 3) return fontSize-6;
-	else if (n< 4) return fontSize-10;
+	else if (n < 4) return fontSize-10;
 	else if (n < 5) return fontSize-14;
 	else return fontSize-10;
 }
@@ -26,7 +25,7 @@ sf::Color GraphCanvas::getColor(int x) {
 	return sf::Color::Black;
 }
 
-int GraphCanvas::findFontSizeNew(int fontSize) {
+int GraphCanvas::findFontSizeNew(int fontSize, int biggest) {
 	sf::Text aux;
 	aux.setFont(fonte);
 	string st = "";
@@ -129,6 +128,11 @@ void GraphCanvas::printGrafo() {
 
 		janela->draw(linha, 2, sf::Lines);
 	}
+
+	// encontra tamanho da fonte
+	int fontSize = 10000;
+	for (auto& i : GD.G.label) fontSize = min(fontSize, findFontSize(i.size(), 24));
+
 	// Cria os vértices
 	for (int i = 0; i < GD.G.n; i++) {
 		// Cria um círculo
@@ -147,15 +151,13 @@ void GraphCanvas::printGrafo() {
 		sf::Text label;
 		label.setFont(fonte);
 		label.setString(GD.G.label[i]);
-		//parte nova
-		label.setCharacterSize(findFontSizeNew(24));
-		//label.setCharacterSize(findFontSize(biggest, 24)); // fontSize default = 24 --> parte subst
+		label.setCharacterSize(fontSize);
 		label.setFillColor(sf::Color::Black);
 
-
-		//sf::FloatRect boundingBox = label.getGlobalBounds(); //rect minimum
-		//cout << "BoB " <<  G.label[i] << " = "<< boundingBox.width << '\n';	//printa a largura minima de  cd vértice
-		label.setPosition(GD.pos[i].x+9-15, GD.pos[i].y-15);	//TODO mudar posição
+		// centraliza texto
+		sf::FloatRect box = label.getLocalBounds();
+		label.setOrigin(box.left + round(box.width/2), box.top + round(box.height/2));
+		label.setPosition(GD.pos[i].x, GD.pos[i].y);
 		janela->draw(label);
 	}
 }
@@ -201,11 +203,14 @@ void GraphCanvas::printSetas() {
 }
 
 void GraphCanvas::printPesos() {
+	int fontSize = 10000;
+	for (auto& i : GD.peso) fontSize = min(fontSize, findFontSize(i.size(), 24));
+
 	for (int i = 0; i < GD.G.m; i++) {
 		sf::Text p;
 		p.setFont(fonte);
 		p.setString(GD.peso[i]);
-		p.setCharacterSize(findFontSize(GD.peso[i].size(), 24));
+		p.setCharacterSize(fontSize);
 		p.setFillColor(sf::Color::Black);
 
 		// acha posicao
@@ -223,7 +228,11 @@ void GraphCanvas::printPesos() {
 			}
 		}
 
+		sf::FloatRect box = p.getLocalBounds();
+		p.setOrigin(box.left + round(box.width/2), box.top + round(box.height/2));
 		p.setPosition(at.x+add.x, at.y+add.y);
+		p.setOutlineColor(sf::Color::White);
+		p.setOutlineThickness(2.0);
 		janela->draw(p);
 	}
 }
@@ -243,12 +252,6 @@ void GraphCanvas::lerGrafoArquivo(string arq) {
 	inFile >> n >> m;
 	vector<string> label(n);
 	for (auto &i : label) inFile >> i;
-
-	biggest = 0;
-	for (int i = 0; i < n; ++i)
-		if(label[i].length() > biggest)
-			biggest = label[i].length();
-	//printf(" ler grafo arq = %d\n", *biggest); 	//maior length no grafo
 
 	Graph G(n, label);
 
@@ -394,9 +397,8 @@ void GraphCanvas::handleClique() {
 }
 
 void GraphCanvas::display() {
-	for (auto& i : GD.G.label) biggest = max(biggest, (int)i.size());
 	GD.itera();
-	if (GD.temPeso) printPesos();
 	if (GD.temDir) printSetas();
 	printGrafo();
+	if (GD.temPeso) printPesos();
 }
