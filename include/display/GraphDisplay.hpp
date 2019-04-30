@@ -13,11 +13,11 @@ struct GraphDisplay {
 	Graph G;
 	bool temDir, temPeso, centr, draw;
 	int raio, X, Y;
-	vector<int> para;
+	vector<bool> para, trava;
 	vector<Vector> pos;
 	vector<Vector> vel;
 	vector<float> posPeso;
-	vector<string> peso;
+	vector<int> peso;
 	vector<int> color;
 	vector<bool> isParal;
 
@@ -34,7 +34,8 @@ struct GraphDisplay {
 	void poligono();
 	void random();
 	void good(int, int);
-	int achaVertice(Vector at);
+	int achaVertice(Vector);
+	int achaAresta(Vector);
 	void centraliza();
 	void addVertex(Vector);
 	void removeVertex(int);

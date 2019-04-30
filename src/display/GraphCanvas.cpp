@@ -4,6 +4,14 @@ GraphCanvas::GraphCanvas(sf::RenderWindow &janela, sf::Font &fonte, int X, int Y
 	this->janela = &janela;
 	this->fonte = fonte;
 	this->GD = GraphDisplay(Graph(), X, Y, raio);
+	editLabel = -1;
+	editWeight = -1;
+}
+
+int getIntSize(int n) {
+	int s = 1;
+	while (n /= 10) s++;
+	return s;
 }
 
 int GraphCanvas::findFontSize(int n, int fontSize) {
@@ -140,7 +148,7 @@ void GraphCanvas::printGrafo() {
 		v.setFillColor(getColor(GD.color[i]));
 
 		// vertice travado
-		if (GD.para[i] > 1) v.setOutlineThickness(4.f);
+		if (GD.trava[i]) v.setOutlineThickness(4.f);
 		else v.setOutlineThickness(2.f);
 
 		v.setOutlineColor(sf::Color::Black);
@@ -158,7 +166,8 @@ void GraphCanvas::printGrafo() {
 		sf::FloatRect box = label.getLocalBounds();
 		label.setOrigin(box.left + round(box.width/2), box.top + round(box.height/2));
 		label.setPosition(GD.pos[i].x, GD.pos[i].y);
-		janela->draw(label);
+
+		if (i != editLabel) janela->draw(label);
 	}
 }
 
@@ -173,8 +182,7 @@ void GraphCanvas::printSetas() {
 
 		Vector pos = fim - unit*GD.raio*1.6;
 		// se ta travado arreda um pouco a seta
-		if (GD.para[GD.G.edges[i].second] > 1)
-			pos = pos - unit*2;
+		if (GD.trava[GD.G.edges[i].second]) pos = pos - unit*2;
 
 		// angulo que tem que rodar pra seta ficar certa
 		float angle = v.angle()-pi/6;
@@ -204,12 +212,12 @@ void GraphCanvas::printSetas() {
 
 void GraphCanvas::printPesos() {
 	int fontSize = 10000;
-	for (auto& i : GD.peso) fontSize = min(fontSize, findFontSize(i.size(), 24));
+	for (auto& i : GD.peso) fontSize = min(fontSize, findFontSize(getIntSize(i), 24));
 
 	for (int i = 0; i < GD.G.m; i++) {
 		sf::Text p;
 		p.setFont(fonte);
-		p.setString(GD.peso[i]);
+		p.setString(to_string(GD.peso[i]));
 		p.setCharacterSize(fontSize);
 		p.setFillColor(sf::Color::Black);
 
@@ -233,7 +241,8 @@ void GraphCanvas::printPesos() {
 		p.setPosition(at.x+add.x, at.y+add.y);
 		p.setOutlineColor(sf::Color::White);
 		p.setOutlineThickness(2.0);
-		janela->draw(p);
+
+		if (i != editWeight) janela->draw(p);
 	}
 }
 
@@ -262,10 +271,10 @@ void GraphCanvas::lerGrafoArquivo(string arq) {
 	stringstream ss(l);
 	vector<int> entrada;
 	for (int i; ss >> i;) entrada.push_back(i);
-	bool temPeso = 0; vector<string> peso;
+	bool temPeso = 0; vector<int> peso;
 	if (entrada.size() == 3) {
 		temPeso = 1;
-		peso.push_back(to_string(entrada.back()));
+		peso.push_back(entrada.back());
 	}
 	G.addEdge(entrada[0], entrada[1]);
 
@@ -273,7 +282,7 @@ void GraphCanvas::lerGrafoArquivo(string arq) {
 		int a, b; inFile >> a >> b;
 		G.addEdge(a, b);
 		if (temPeso) {
-			string p; inFile >> p;
+			int p; inFile >> p;
 			peso.push_back(p);
 		}
 	}
@@ -281,6 +290,7 @@ void GraphCanvas::lerGrafoArquivo(string arq) {
 	GD.setGraph(G);
 	GD.temPeso = temPeso;
 	if (GD.temPeso) GD.peso = peso;
+	editLabel = editWeight = -1;
 
 	GD.good(max(10, 100 - GD.G.n), max(10, 100 - GD.G.m));
 
@@ -289,111 +299,109 @@ void GraphCanvas::lerGrafoArquivo(string arq) {
 
 // muitos ifs
 void GraphCanvas::handleClique() {
-	static Vector dif;
-	static int clique = -2;
-	static Vector ini;
-	static int aresta = -1;
+	// variaveis estaticas para controle
+	// (nao arranjei forma melhor)
+	static bool clique = 0, cliqueD = 0;
+	static Vector ini, dif;
+	static int vertice, aresta; // vertice clicado
+	static int lastVertice = -1, lastAresta = -1;
+	static bool crieiVertice = 0;
+	static sf::Clock clock;
+	static sf::Time lastTime = clock.getElapsedTime(); // ultima vez que clicou
 
 	auto position = sf::Mouse::getPosition(*janela);
 	Vector positionV(position.x, position.y);
 
-	if (!GD.taDentro(positionV)) {
-		aresta = -1;
-		return;
-	}
+	// atualiza vertice
+	if (!(vertice > -1 and clique)) vertice = GD.achaVertice(positionV);
 
-	// desenha aresta pela metade
-	if (aresta > -1 and GD.draw) printAresta(positionV, aresta);
+	// desenha / destroi aresta pela metade
+	if (!GD.taDentro(positionV)) lastVertice = -1;
+	if (lastVertice > -1) printAresta(positionV, lastVertice);
 
-	// testa clique
+	// cliquei com o botao esquerdo
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		// ta no modo draw
-		if (GD.draw) {
-			// acabei de clicar
-			if (clique == -2) {
-				ini = positionV;
-				clique = GD.achaVertice(positionV);	
-				if (clique == -1 and GD.taDentro(positionV))
-					GD.addVertex(positionV), aresta = -2;
-				else if (clique > -1)
-					dif = GD.pos[clique] - positionV, GD.centr = 0;
-			}
-		}
-
-		// acabei de clicar
-		if (clique == -2) {
+		if (!clique) {
+			clique = 1;
 			ini = positionV;
-			clique = GD.achaVertice(positionV);
-			if (clique > -1) {
-				GD.centr = 0;
-				dif = GD.pos[clique] - positionV;
-				GD.para[clique]++;
+			if (vertice > -1) dif = GD.pos[vertice] - positionV;
+
+			if (GD.draw) {
+				// add vertice
+				if (vertice == -1 and GD.taDentro(positionV) and GD.achaAresta(positionV) == -1) {
+					GD.addVertex(positionV);
+					crieiVertice = 1;
+				}
+			} else {
+				// trava vertice
+				if (vertice > -1) {
+					GD.centr = 0;
+					GD.para[vertice] = 1;
+				}
 			}
 		}
 
 		// move vertice
-		if (clique > -1)
-			GD.pos[clique] = GD.deixaDentro(positionV + dif, (GD.para[clique] > 1));
-	}
-	else if (clique > -2) { // soltei
-		// testa se tem que travar vertice ou iniciar aresta
-		if (ini.x == positionV.x and ini.y == positionV.y) {
-			int vert = GD.achaVertice(positionV);
-			if (vert > -1) {
+		if (vertice > -1) GD.pos[vertice] = GD.deixaDentro(positionV + dif, GD.trava[vertice]);
+	} else if (clique) { // soltei
+		clique = 0;
+		lastAresta = aresta;
+		aresta = GD.achaAresta(positionV);
+		
+		// cliquei e soltei no mesmo lugar
+		if (abs(ini.x - positionV.x) <= 2 and abs(ini.y - positionV.y) <= 2) {
+			// testa se foi um double click
+			sf::Time atual = clock.getElapsedTime();
+			float delta = atual.asSeconds() - lastTime.asSeconds();
+			lastTime = atual;
+			if (delta <= 0.5 and GD.draw) {
+				if (vertice > -1 and vertice == lastVertice) {
+					editLabel = vertice;
+					lastVertice = -1;
+					return;
+				} else if (aresta > -1 and aresta == lastAresta) {
+					editWeight = aresta;
+					lastAresta = -1;
+					return;
+				}
+			}
+
+			if (vertice > -1) {
 				if (!GD.draw) { // trava
-					if (GD.para[vert] >= 2) GD.para[vert] -= 2;
-					else GD.para[vert] += 2;
+					GD.trava[vertice] = !GD.trava[vertice];
+					GD.para[vertice] = 0;
 				} else { // desenha aresta
-					if (aresta == -1) aresta = vert;
+					if (lastVertice == -1 and !crieiVertice) lastVertice = vertice;
 					else {
-						if (aresta > -1 and aresta != vert)
-							GD.addEdge(aresta, vert);
-						aresta = -1;
+						if (lastVertice > -1 and lastVertice != vertice)
+							GD.addEdge(lastVertice, vertice);
+						lastVertice = -1;
 					}
 				}
-			} else aresta = -1;
-		}
+			} else lastVertice = -1;
+		} else if (vertice > -1) GD.para[vertice] = 0; // solta vertice
 
-		if (!GD.draw and clique > -1) GD.para[clique]--;
-		clique = -2;
+		crieiVertice = 0;
 	}
 
-	// clique com o botao direito
-	if (GD.draw and sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-		// acabei de clicar
-		if (clique == -2) {
-			clique = GD.achaVertice(positionV);
-			if (clique > -1) {
-				if (clique == aresta) aresta = -1;
-				GD.removeVertex(clique);
-			} else {
-				// tenta encontrar aresta clicada
-				for (int i = 0; i < GD.G.m; i++) {
-					Vector ini = GD.pos[GD.G.edges[i].first],
-							fim = GD.pos[GD.G.edges[i].second];
+	// cliquei com o botao direito
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+		if (!cliqueD) {
+			cliqueD = 1;
 
-					Vector add(0, 0);
-					if (GD.isParal[i]) {
-						add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
-						if (add.norm()) {
-							add = add*(1/add.norm());
-							add = add.rotate(acos(-1.0)/2);
-							add = add*(GD.raio/3.0);
-						}
-					}
-
-					ini = ini+add;
-					fim = fim+add;
-
-					if ((positionV-ini).norm() + (fim-positionV).norm() - 0.5
-							< (fim-ini).norm()) {
-						GD.removeEdge(i);
-						break;
-					}
+			if (GD.draw) {
+				if (vertice > -1) {
+					// remove vertice
+					if (lastVertice == vertice) lastVertice = -1;
+					GD.removeVertex(vertice);
+				} else {
+					// remove aresta
+					int arestaClicada = GD.achaAresta(positionV);
+					if (arestaClicada > -1) GD.removeEdge(arestaClicada);
 				}
 			}
 		}
-	}
+	} else if (cliqueD) cliqueD = 0;
 }
 
 void GraphCanvas::display() {

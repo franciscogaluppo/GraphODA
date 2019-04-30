@@ -10,7 +10,8 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	temDir = temPeso = centr = draw = 0;
 	this->poligono();
 	vel = vector<Vector>(G.n, Vector(0, 0));
-	para = vector<int>(G.n, 0);
+	para = vector<bool>(G.n, false);
+	trava = vector<bool>(G.n, false);
 	color = vector<int>(G.n, 0);
 	posPeso = vector<float>(G.m, 0.5);
 
@@ -29,8 +30,31 @@ void GraphDisplay::setGraph(Graph& G) {
 
 // encontra vertice na posicao 'at'
 int GraphDisplay::achaVertice(Vector at) {
-	for (int i = 0; i < G.n; i++)
+	for (int i = G.n-1; i >= 0; i--)
 		if (dist(at, pos[i]) < raio) return i;
+	return -1;
+}
+
+// encontra aresta na posicao 'at'
+int GraphDisplay::achaAresta(Vector at) {
+	for (int i = 0; i < G.m; i++) {
+		Vector ini = pos[G.edges[i].first], fim = pos[G.edges[i].second];
+
+		Vector add(0, 0);
+		if (isParal[i]) {
+			add = fim - ini;
+			if (add.norm()) {
+				add = add*(1/add.norm());
+				add = add.rotate(acos(-1.0)/2);
+				add = add*(raio/3.0);
+			}
+		}
+
+		ini = ini+add;
+		fim = fim+add;
+
+		if ((at-ini).norm() + (fim-at).norm() - 0.5 < (fim-ini).norm()) return i;
+	}
 	return -1;
 }
 
@@ -166,8 +190,8 @@ void GraphDisplay::fdpEades(int it) {
 		}
 
 		// atualiza posicoes
-		for (int i = 0; i < G.n; i++) if (!para[i])
-			pos[i] = deixaDentro(pos[i] + forca[i]*c4, (para[i] > 1));
+		for (int i = 0; i < G.n; i++) if (!para[i] and !trava[i])
+			pos[i] = deixaDentro(pos[i] + forca[i]*c4, trava[i]);
 	}
 }
 
@@ -222,11 +246,11 @@ void GraphDisplay::fdpEadesAcc(int it) {
 
 		// atualiza velocidade
 		for (int i = 0; i < G.n; i++) vel[i] = vel[i] + forca[i]*c4;
-		for (int i = 0; i < G.n; i++) if (para[i]) vel[i] = Vector(0, 0);
+		for (int i = 0; i < G.n; i++) if (para[i] or trava[i]) vel[i] = Vector(0, 0);
 
 		// atualiza posicoes
 		for (int i = 0; i < G.n; i++)
-			pos[i] = deixaDentro(pos[i] + vel[i], (para[i] > 1));
+			pos[i] = deixaDentro(pos[i] + vel[i], trava[i]);
 	}
 }
 
@@ -355,6 +379,7 @@ void GraphDisplay::addVertex(Vector v) {
 	pos.push_back(v);
 	vel.push_back(Vector(0, 0));
 	para.push_back(0);
+	trava.push_back(0);
 	color.push_back(0);
 	for (auto i : G.edges) G2.addEdge(i.first, i.second);
 	G = G2;
@@ -367,6 +392,7 @@ void GraphDisplay::removeVertex(int v) {
 	pos.erase(pos.begin()+v);
 	vel.erase(vel.begin()+v);
 	para.erase(para.begin()+v);
+	trava.erase(trava.begin()+v);
 	color.erase(color.begin()+v);
 
 	int erased = 0;
@@ -399,7 +425,7 @@ void GraphDisplay::addEdge(int a, int b) {
 		for (int j = 0; j < G.m; j++) if (G.edges[j].first == b and G.edges[j].second == a)
 			isParal[j] = 1;
 	}
-	if (temPeso) peso.push_back("1");
+	if (temPeso) peso.push_back(0);
 }
 
 // O(n+m)

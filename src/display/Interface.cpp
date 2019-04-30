@@ -156,6 +156,8 @@ void displayTeste(int X, int Y) {
 
 	// GraphCanvas
 	GraphCanvas GC(janela, fonte, X*2/3, Y, 15);
+	bool editing;
+	tgui::EditBox::Ptr edit;
 
 	// Tenta importar os widgets da gui
 	try {
@@ -178,18 +180,90 @@ void displayTeste(int X, int Y) {
 			// Cria os widgets da GUI
 			gui.handleEvent(evento);
 
-			// testa se apertou ctrl
-			if (evento.type == sf::Event::KeyPressed and
-						evento.key.code == sf::Keyboard::LControl) {
-				GC.GD.draw ^= 1;
+			// apertou alguma coisa no teclado
+			if (evento.type == sf::Event::KeyPressed) {
+
+				// ctrl -> toggle edit mode
+				if (evento.key.code == sf::Keyboard::LControl and !editing) GC.GD.draw ^= 1;
+
+				// esc -> sai da edicao dos pesos/labels
+				if (evento.key.code == sf::Keyboard::Escape) {
+					editing = 0;
+					gui.remove(edit);
+					GC.editLabel = GC.editWeight = -1;
+				}
+
+				// enter -> edita peso/label de fato
+				if (evento.key.code == sf::Keyboard::Return and editing) {
+					// label
+					if (GC.editLabel > -1) GC.GD.G.label[GC.editLabel] = edit->getText().toAnsiString();
+
+					// weight
+					if (GC.editWeight > -1) {
+						// torna grafo com peso
+						if (!GC.GD.temPeso) GC.GD.peso = vector<int>(GC.GD.G.m, 0);
+						GC.GD.temPeso = 1;
+
+						string s = edit->getText().toAnsiString();
+						bool valid = 1;
+						for (auto c : s) if (c < '0' or c > '9') valid = 0;
+						if (valid) GC.GD.peso[GC.editWeight] = stoi(edit->getText().toAnsiString());
+					}
+
+					editing = 0;
+					gui.remove(edit);
+					GC.editLabel = GC.editWeight = -1;
+				}
 			}
 		}
 
 		drawStuff(janela, fonte);
 		if (GC.GD.draw) drawDrawMode(janela, fonte, X*2/3);
 
-		// olha se a pessoa ta mexendo no grafo
-		GC.handleClique();
+		// olha se ta editando os pesos/labels
+		if (GC.editLabel > -1 or GC.editWeight > -1) {
+			if (!editing) {
+				editing = 1;
+
+				if (GC.editLabel > -1) {
+					edit = tgui::EditBox::create();
+					edit->setSize(GC.GD.raio*sqrt(2), GC.GD.raio*sqrt(2));
+					edit->setPosition(GC.GD.pos[GC.editLabel].x - (GC.GD.raio-1)/sqrt(2),
+										GC.GD.pos[GC.editLabel].y - (GC.GD.raio-1)/sqrt(2));
+					edit->setText(GC.GD.G.label[GC.editLabel]);
+					gui.add(edit);
+					edit->setFocused(true);
+				}
+
+				if (GC.editWeight > -1) {
+					edit = tgui::EditBox::create();
+					Vector size(GC.GD.raio*sqrt(2), GC.GD.raio*sqrt(2));
+					edit->setSize(size.x, size.y);
+
+					// acha posicao
+					Vector ini = GC.GD.pos[GC.GD.G.edges[GC.editWeight].first],
+									fim = GC.GD.pos[GC.GD.G.edges[GC.editWeight].second];
+					Vector pos = ini + (fim-ini)*GC.GD.posPeso[GC.editWeight];
+
+					// arestas paralelas
+					Vector add(0, 0);
+					if (GC.GD.isParal[GC.editWeight]) {
+						add = fim - ini;
+						if (add.norm()) {
+							add = add*(1/add.norm());
+							add = add.rotate(acos(-1.0)/2);
+							add = add*(GC.GD.raio/3.0);
+						}
+					}
+					pos = pos+add;
+
+					edit->setPosition(pos.x - size.x/2, pos.y - size.y/2);
+					if (GC.GD.temPeso) edit->setText(to_string(GC.GD.peso[GC.editWeight]));
+					gui.add(edit);
+					edit->setFocused(true);
+				}
+			}
+		} else GC.handleClique();
 
 		// display do grafo
 		GC.display();
