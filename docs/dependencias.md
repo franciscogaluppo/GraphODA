@@ -1,1 +1,1 @@
-## Este projeto depende de vários softwares e bibliotecas, listadas exaustivamente aqui
+## Este projeto depende de vários softwares e bibliotecas, listadas quasi-exaustivamente aqui
