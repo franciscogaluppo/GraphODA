@@ -17,6 +17,7 @@ struct GraphCanvas {
 	GraphDisplay GD;
 	sf::RenderWindow *janela;
 	sf::Font fonte;
+	int editLabel, editWeight;
 
 	GraphCanvas(sf::RenderWindow&, sf::Font&, int, int, int);
 	void lerGrafoArquivo(string);
