@@ -20,7 +20,7 @@ struct GraphCanvas {
 	int editLabel, editWeight;
 
 	GraphCanvas(sf::RenderWindow&, sf::Font&, int, int, int);
-	void lerGrafoArquivo(string);
+	void setGraph(Graph, vector<int>);
 	void handleClique();
 	void display();
 
@@ -34,5 +34,6 @@ struct GraphCanvas {
 	void printSetas();
 };
 
+pair<Graph, vector<int> > lerGrafoArquivo(string);
 
 #endif

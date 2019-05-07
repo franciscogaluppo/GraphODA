@@ -17,6 +17,7 @@ include_directories(include/display)
 include_directories(include/graph)
 include_directories(include/vector)
 include_directories(include/utils)
+include_directories(include/repl)
 
 # Dependências
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -36,6 +37,7 @@ set(SRC_FILES
         "${PROJECT_SOURCE_DIR}/src/graph/Graph.cpp"
         "${PROJECT_SOURCE_DIR}/src/vector/Vector.cpp"
         "${PROJECT_SOURCE_DIR}/src/utils/Assets.cpp"
+        "${PROJECT_SOURCE_DIR}/src/repl/Repl.cpp"
         "${PROJECT_SOURCE_DIR}/src/main.cpp")
 set(ASSET_FILES
         "${PROJECT_SOURCE_DIR}/assets/TransparentGrey.txt"

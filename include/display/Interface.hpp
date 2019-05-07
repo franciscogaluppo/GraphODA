@@ -11,6 +11,6 @@
 #include <string>
 using namespace std;
 
-void displayTeste(int, int);
+void displayTeste(int, int, Graph = Graph(), vector<int> = vector<int>());
 
 #endif

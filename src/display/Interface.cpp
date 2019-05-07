@@ -1,7 +1,8 @@
 #include "Interface.hpp"
 
-void lerGrafoArquivo(tgui::EditBox::Ptr arq, GraphCanvas *GC) {
-	GC->lerGrafoArquivo(arq->getText().toAnsiString());
+void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC) {
+	auto i = lerGrafoArquivo(arq->getText().toAnsiString());
+	GC->setGraph(i.first, i.second);
 }
 
 void mudaDir(GraphCanvas *GC) {
@@ -54,7 +55,7 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
 
 	// Chama a função de importar arquivo
 	botaoArquivo->connect(
-			"pressed", lerGrafoArquivo, textoArquivo, GC);
+			"pressed", lerGrafoArquivoAux, textoArquivo, GC);
 
 	check->connect(
 			"checked", mudaDir, GC);
@@ -136,7 +137,7 @@ void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
 	janela.draw(draw);
 }
 
-void displayTeste(int X, int Y) {
+void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 
 	// Carrega a fonte Consola Bold (Gosto dela)
 	sf::Font fonte;
@@ -156,6 +157,7 @@ void displayTeste(int X, int Y) {
 
 	// GraphCanvas
 	GraphCanvas GC(janela, fonte, X*2/3, Y, 15);
+	GC.setGraph(G, peso);
 	bool editing;
 	tgui::EditBox::Ptr edit;
 
@@ -208,6 +210,10 @@ void displayTeste(int X, int Y) {
 						bool valid = 1;
 						for (auto c : s) if (c < '0' or c > '9') valid = 0;
 						if (valid) GC.GD.peso[GC.editWeight] = stoi(edit->getText().toAnsiString());
+						else {
+							// TODO: erro direito
+							cout << "ERRO: peso invalido" << endl;
+						}
 					}
 
 					editing = 0;

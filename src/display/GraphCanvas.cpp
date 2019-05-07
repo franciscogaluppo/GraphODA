@@ -246,14 +246,14 @@ void GraphCanvas::printPesos() {
 	}
 }
 
-void GraphCanvas::lerGrafoArquivo(string arq) {
+pair<Graph, vector<int> > lerGrafoArquivo(string arq) {
 	ifstream inFile(arq);
 	if (!inFile) {
 		inFile = ifstream("grafos/grafo"+arq+".txt");
 		if (!inFile) {
 			// TODO: Erro direito
 			cout << "Erro: arquivo zoado" << endl;
-			return;
+			exit(1);
 		}
 	}
 
@@ -287,14 +287,19 @@ void GraphCanvas::lerGrafoArquivo(string arq) {
 		}
 	}
 
+	inFile.close();
+
+	return {G, peso};
+}
+
+void GraphCanvas::setGraph(Graph G, vector<int> peso) {
 	GD.setGraph(G);
-	GD.temPeso = temPeso;
-	if (GD.temPeso) GD.peso = peso;
-	editLabel = editWeight = -1;
+	if (peso.size()) {
+		GD.temPeso = 1;
+		GD.peso = peso;
+	}
 
 	GD.good(max(10, 100 - GD.G.n), max(10, 100 - GD.G.m));
-
-	inFile.close();
 }
 
 // muitos ifs
@@ -373,8 +378,10 @@ void GraphCanvas::handleClique() {
 				} else { // desenha aresta
 					if (lastVertice == -1 and !crieiVertice) lastVertice = vertice;
 					else {
-						if (lastVertice > -1 and lastVertice != vertice)
+						if (lastVertice > -1 and lastVertice != vertice) {
 							GD.addEdge(lastVertice, vertice);
+							aresta = -1;
+						}
 						lastVertice = -1;
 					}
 				}

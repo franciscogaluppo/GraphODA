@@ -1,12 +1,9 @@
 #include "display/Interface.hpp"
+#include "repl/Repl.hpp"
 
-int main(int argc, char **argv, char **envp)
+int main(int argc, char **argv)
 {
-  for (char **env = envp; *env != 0; env++)
-  {
-    char *thisEnv = *env;
-    printf("%s\n", thisEnv);
-  }
-  displayTeste(1200, 600);
+  if (argc > 1) runRepl();
+  else displayTeste(1200, 600);
   return 0;
 }
