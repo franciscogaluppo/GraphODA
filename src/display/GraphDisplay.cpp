@@ -7,21 +7,18 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	X = X_;
 	Y = Y_;
 	raio = raio_;
-	temDir = temPeso = centr = draw = 0;
+	temDir = centr = draw = 0;
 	this->poligono();
-	vel = vector<Vector>(G.n, Vector(0, 0));
-	para = vector<bool>(G.n, false);
-	trava = vector<bool>(G.n, false);
-	color = vector<int>(G.n, 0);
-	posPeso = vector<float>(G.m, 0.5);
+	vel = vector<Vector>(G.getN(), Vector(0, 0));
+	para = vector<bool>(G.getN(), false);
+	trava = vector<bool>(G.getN(), false);
+	color = vector<int>(G.getN(), 0);
+	posPeso = vector<float>(G.getM(), 0.5);
 
-	isParal = vector<bool>(G.m, 0);
-	// calcula matriz de adjacencia
-	// TODO: classe Graph calcular isso
-	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
-	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = 1;
-	for (int i = 0; i < G.m; i++) if (adj[G.edges[i].second][G.edges[i].first])
-		isParal[i] = 1;
+	isParal = vector<bool>(G.getM(), false);
+	auto adj = G.getMatrix();
+	auto edg = G.getEdges();
+	for (int i = 0; i < G.getM(); i++) if (adj[edg[i].second][edg[i].first]) isParal[i] = true;
 }
 
 void GraphDisplay::setGraph(Graph& G) {
@@ -30,15 +27,16 @@ void GraphDisplay::setGraph(Graph& G) {
 
 // encontra vertice na posicao 'at'
 int GraphDisplay::achaVertice(Vector at) {
-	for (int i = G.n-1; i >= 0; i--)
+	for (int i = G.getN()-1; i >= 0; i--)
 		if (dist(at, pos[i]) < raio) return i;
 	return -1;
 }
 
 // encontra aresta na posicao 'at'
 int GraphDisplay::achaAresta(Vector at) {
-	for (int i = 0; i < G.m; i++) {
-		Vector ini = pos[G.edges[i].first], fim = pos[G.edges[i].second];
+	auto edg = G.getEdges();
+	for (int i = 0; i < G.getM(); i++) {
+		Vector ini = pos[edg[i].first], fim = pos[edg[i].second];
 
 		Vector add(0, 0);
 		if (isParal[i]) {
@@ -62,27 +60,28 @@ int GraphDisplay::achaAresta(Vector at) {
 void GraphDisplay::fdpPeso(int it) {
 	// constroi posicoes de fato
 	vector<Vector> posPesoV;
-	for (int i = 0; i < G.m; i++) {
-		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
-		posPesoV.push_back(pos[G.edges[i].first] + v*posPeso[i]);
+	auto edg = G.getEdges();
+	for (int i = 0; i < G.getM(); i++) {
+		Vector v = pos[edg[i].second] - pos[edg[i].first];
+		posPesoV.push_back(pos[edg[i].first] + v*posPeso[i]);
 	}
 
 	// constantes do algoritmo de Eades
-	float c3 = 50000/(float)(1+G.n+G.m), c4 = 0.1;
+	float c3 = 50000/(float)(1+G.getN()+G.getM()), c4 = 0.1;
 
 	while (it--) {
 
 		// forca aplicada a cada peso
 		vector<Vector> forca;
 
-		for (int i = 0; i < G.m; i++) {
+		for (int i = 0; i < G.getM(); i++) {
 			Vector f(0, 0);
 
 			// forca em relacao aos vertices adjacentes
 			for (int j = 0; j < 2; j++) {
 				// escolhe um deles
-				Vector v = pos[G.edges[i].first];
-				if (j) v = pos[G.edges[i].second];
+				Vector v = pos[edg[i].first];
+				if (j) v = pos[edg[i].second];
 
 				float d = dist(posPesoV[i], v);
 				if (d < EPS) d = EPS;
@@ -95,7 +94,7 @@ void GraphDisplay::fdpPeso(int it) {
 			}
 
 			// forca em relacao aos pesos
-			for (int j = 0; j < G.m; j++) if (i != j) {
+			for (int j = 0; j < G.getM(); j++) if (i != j) {
 				float d = dist(posPesoV[i], posPesoV[j]);
 				if (d < EPS) d = EPS;
 				Vector unit = (posPesoV[j] - posPesoV[i])*(1/d);
@@ -103,24 +102,24 @@ void GraphDisplay::fdpPeso(int it) {
 			}
 
 			// projeta a forca no vetor da aresta
-			Vector ar = pos[G.edges[i].second] - pos[G.edges[i].first];
+			Vector ar = pos[edg[i].second] - pos[edg[i].first];
 			f = f.project(ar);
 			forca.push_back(f);
 		}
 
 		// atualiza posicoes
-		for (int i = 0; i < G.m; i++) posPesoV[i] = posPesoV[i] + forca[i]*c4;
+		for (int i = 0; i < G.getM(); i++) posPesoV[i] = posPesoV[i] + forca[i]*c4;
 	}
 
 	// transforma de volta para numeros
 	posPeso = vector<float>();
-	for (int i = 0; i < G.m; i++) {
-		Vector v = pos[G.edges[i].second] - pos[G.edges[i].first];
+	for (int i = 0; i < G.getM(); i++) {
+		Vector v = pos[edg[i].second] - pos[edg[i].first];
 		if (v.norm() < EPS) {
 			posPeso.push_back(0.5);
 			continue;
 		}
-		posPeso.push_back((posPesoV[i] - pos[G.edges[i].first]).norm() / v.norm());
+		posPeso.push_back((posPesoV[i] - pos[edg[i].first]).norm() / v.norm());
 
 		// para o peso ficar na aresta
 		if (posPeso[i] < 0.1) posPeso[i] = 0.1;
@@ -146,10 +145,7 @@ bool GraphDisplay::taDentro(Vector v) {
 
 // Eades algorithm ; O(it * n^2)
 void GraphDisplay::fdpEades(int it) {
-	// calcula matriz de adjacencia
-	// TODO: classe Graph calcular isso
-	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
-	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
+	auto adj = G.getSimMatrix();
 
 	// constantes do algoritmo
 	float c1 = 20, c2 = 100, c3 = 50000, c4 = 0.1, c5 = 10000;
@@ -160,10 +156,10 @@ void GraphDisplay::fdpEades(int it) {
 		// forca aplicada a cada vertice
 		vector<Vector> forca;
 
-		for (int i = 0; i < G.n; i++) {
+		for (int i = 0; i < G.getN(); i++) {
 			Vector f(0, 0);
 
-			for (int j = 0; j < G.n; j++) if (j != i) {
+			for (int j = 0; j < G.getN(); j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
 				if (d < EPS) d = EPS;
@@ -173,7 +169,7 @@ void GraphDisplay::fdpEades(int it) {
 
 				// computa forca de acordo com o algoritmo
 				if (!adj[i][j])  f = f - unit*(c3/(d*d));
-				else             f = f + unit*(c1*log(d/(c2+G.n+G.m)));
+				else             f = f + unit*(c1*log(d/(c2+G.getN()+G.getM())));
 			}
 
 			// forca em relacao as paredes
@@ -190,17 +186,14 @@ void GraphDisplay::fdpEades(int it) {
 		}
 
 		// atualiza posicoes
-		for (int i = 0; i < G.n; i++) if (!para[i] and !trava[i])
+		for (int i = 0; i < G.getN(); i++) if (!para[i] and !trava[i])
 			pos[i] = deixaDentro(pos[i] + forca[i]*c4, trava[i]);
 	}
 }
 
 // Eades algorithm with acceleration ; O(it * n^2)
 void GraphDisplay::fdpEadesAcc(int it) {
-	// calcula matriz de adjacencia
-	// TODO: classe Graph calcular isso
-	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
-	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
+	auto adj = G.getSimMatrix();
 
 	// constantes do algoritmo
 	float c1 = 20, c2 = 100, c3 = 50000, c4 = 0.1, c5 = 10000;
@@ -211,10 +204,10 @@ void GraphDisplay::fdpEadesAcc(int it) {
 		// forca aplicada a cada vertice
 		vector<Vector> forca;
 
-		for (int i = 0; i < G.n; i++) {
+		for (int i = 0; i < G.getN(); i++) {
 			Vector f(0, 0);
 
-			for (int j = 0; j < G.n; j++) if (j != i) {
+			for (int j = 0; j < G.getN(); j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
 				if (d < EPS) d = EPS;
@@ -224,7 +217,7 @@ void GraphDisplay::fdpEadesAcc(int it) {
 
 				// computa forca de acordo com o algoritmo
 				if (!adj[i][j])  f = f - unit*(c3/(d*d));
-				else             f = f + unit*(c1*log(d/(c2+G.n+G.m)));
+				else             f = f + unit*(c1*log(d/(c2+G.getN()+G.getM())));
 			}
 
 			// forca em relacao as paredes
@@ -245,24 +238,21 @@ void GraphDisplay::fdpEadesAcc(int it) {
 		}
 
 		// atualiza velocidade
-		for (int i = 0; i < G.n; i++) vel[i] = vel[i] + forca[i]*c4;
-		for (int i = 0; i < G.n; i++) if (para[i] or trava[i]) vel[i] = Vector(0, 0);
+		for (int i = 0; i < G.getN(); i++) vel[i] = vel[i] + forca[i]*c4;
+		for (int i = 0; i < G.getN(); i++) if (para[i] or trava[i]) vel[i] = Vector(0, 0);
 
 		// atualiza posicoes
-		for (int i = 0; i < G.n; i++)
+		for (int i = 0; i < G.getN(); i++)
 			pos[i] = deixaDentro(pos[i] + vel[i], trava[i]);
 	}
 }
 
 // Fruchterman algorithm ; O(it * n^2)
 void GraphDisplay::fdpFruchterman(int it) {
-	// calcula matriz de adjacencia
-	// TODO: classe Graph calcular isso
-	vector<vector<int> > adj(G.n, vector<int>(G.n, 0));
-	for (int i = 0; i < G.n; i++) for (int j : G.adj[i]) adj[i][j] = adj[j][i] = 1;
+	auto adj = G.getSimMatrix();
 
 	// constante do algoritmo
-	float k = sqrt(X*Y/float(G.n))/2;
+	float k = sqrt(X*Y/float(G.getN()))/2;
 	float t = min(X, Y)/8.0;
 	float delta = t/it;
 
@@ -271,10 +261,10 @@ void GraphDisplay::fdpFruchterman(int it) {
 		// forca aplicada a cada vertice
 		vector<Vector> forca;
 
-		for (int i = 0; i < G.n; i++) {
+		for (int i = 0; i < G.getN(); i++) {
 			Vector f(0, 0);
 
-			for (int j = 0; j < G.n; j++) if (j != i) {
+			for (int j = 0; j < G.getN(); j++) if (j != i) {
 
 				float d = dist(pos[i], pos[j]);
 				if (d < EPS) d = EPS;
@@ -298,7 +288,7 @@ void GraphDisplay::fdpFruchterman(int it) {
 		}
 
 		// atualiza posicoes
-		for (int i = 0; i < G.n; i++) pos[i] = pos[i] + forca[i];
+		for (int i = 0; i < G.getN(); i++) pos[i] = pos[i] + forca[i];
 
 		t = max((float)0, t-delta);
 	}
@@ -314,7 +304,8 @@ bool cruza(Vector a, Vector b, Vector c, Vector d) {
 // numero de intersecoes de arestas ; O(m^2)
 int GraphDisplay::inter() {
 	int ret = 0;
-	for (auto &i : G.edges) for (auto &j : G.edges)
+	auto edg = G.getEdges();
+	for (auto &i : edg) for (auto &j : edg)
 		if (cruza(pos[i.first], pos[i.second], pos[j.first], pos[j.second])) ret++;
 	return ret;
 }
@@ -324,16 +315,16 @@ void GraphDisplay::poligono() {
 	const float raioGrafo = (min(X, Y)-100)/2;
 	Vector centro(X/2, Y/2);
 	// angulo = 360/n
-	const double theta = 2*acos(-1.0)/G.n;
+	const double theta = 2*acos(-1.0)/G.getN();
 
 	// numero impar de vertices tem que arredar um pouco
-	if (G.n % 2 == 1) {
+	if (G.getN() % 2 == 1) {
 		float falta = raioGrafo - raioGrafo*cos(theta/2);
 		centro = centro + Vector(0, falta/2);
 	}
 
 	pos = vector<Vector>();
-	for (int i = 0; i < G.n; i++)
+	for (int i = 0; i < G.getN(); i++)
 		pos.push_back(Vector(centro.x+sin(i*theta+theta/2)*raioGrafo,
 			centro.y+cos(i*theta+theta/2)*raioGrafo));
 }
@@ -341,13 +332,13 @@ void GraphDisplay::poligono() {
 // O(n)
 void GraphDisplay::random() {
 	pos = vector<Vector>();
-	for (int i = 0; i < G.n; i++)
+	for (int i = 0; i < G.getN(); i++)
 		pos.push_back(Vector((rand()%(X-100))+50, (rand()%(Y-100)+50)));
 }
 
 // O(randIt * fdpIt * n^2)
 void GraphDisplay::good(int randIt, int fdpIt) {
-	int best = 2*G.m*G.m+10;
+	int best = 2*G.getM()*G.getM()+10;
 	vector<Vector> posBest = vector<Vector>();
 	for (int i = 0; i < randIt; i++) {
 		this->random();
@@ -362,7 +353,7 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 	this->pos = posBest;
 	this->fdpEades(randIt*fdpIt/4);
 	this->fdpEadesAcc(randIt*fdpIt/4);
-	if (temPeso) this->fdpPeso(randIt*fdpIt/4);
+	this->fdpPeso(randIt*fdpIt/4);
 }
 
 // O(n^2)
@@ -375,74 +366,86 @@ void GraphDisplay::addVertex(Vector v) {
 		newLabel++;
 	}
 	G.label.push_back(to_string(newLabel));
-	Graph G2(G.n+1, G.label);
+	Graph G2(G.getN()+1, G.label);
 	pos.push_back(v);
 	vel.push_back(Vector(0, 0));
 	para.push_back(0);
 	trava.push_back(0);
 	color.push_back(0);
-	for (auto i : G.edges) G2.addEdge(i.first, i.second);
+	auto edg = G.getEdges();
+	auto peso = G.getPesos();
+	for (int i = 0; i < G.getM(); i++) G2.addEdge(edg[i].first, edg[i].second, peso[i]);
 	G = G2;
 }
 
 // O(n+m)
 void GraphDisplay::removeVertex(int v) {
 	G.label.erase(G.label.begin()+v);
-	Graph G2(G.n-1, G.label);
+	Graph G2(G.getN()-1, G.label);
 	pos.erase(pos.begin()+v);
 	vel.erase(vel.begin()+v);
 	para.erase(para.begin()+v);
 	trava.erase(trava.begin()+v);
 	color.erase(color.begin()+v);
 
-	int erased = 0;
-	for (int i = 0; i < G.m; i++) {
-		int a = G.edges[i].first, b = G.edges[i].second;
-		if (a == v or b == v) {
-			if (temPeso) {
-				peso.erase(peso.begin()+i-erased);
-				posPeso.erase(posPeso.begin()+i-erased);
-			}
-			isParal.erase(isParal.begin()+i-erased);
+	int erased = 0, position = -1;
+	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
+		position++;
+		if (i == v or j.first == v) {
+			posPeso.erase(posPeso.begin()+position-erased);
+			isParal.erase(isParal.begin()+position-erased);
 			erased++;
 			continue;
 		}
+		int a = i, b = j.first;
 		if (a > v) a--;
 		if (b > v) b--;
-		G2.addEdge(a, b);
+		G2.addEdge(a, b, j.second);
 	}
 	G = G2;
 }
 
 // O(n+m)
 void GraphDisplay::addEdge(int a, int b) {
-	for (int i : G.adj[a]) if (i == b) return;
+	for (auto i : G.adj[a]) if (i.first == b) return;
 	G.addEdge(a, b);
-	posPeso.push_back(0.5);
-	isParal.push_back(0);
-	for (int i : G.adj[b]) if (i == a) {
-		isParal[G.m-1] = 1;
-		for (int j = 0; j < G.m; j++) if (G.edges[j].first == b and G.edges[j].second == a)
-			isParal[j] = 1;
+	int posicao = 0;
+	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
+		if (i == a and j.first == b) break;
+		posicao++;
 	}
-	if (temPeso) peso.push_back(0);
+	posPeso.insert(posPeso.begin()+posicao, 0.5);
+	isParal.insert(isParal.begin()+posicao, 0);
+	for (auto i : G.adj[b]) if (i.first == a) {
+		isParal[posicao] = true;
+
+		int posicao2 = 0;
+		for (int j = 0; j < G.getN(); j++) for (auto k : G.adj[j]) {
+			if (j == b and k.first == a) isParal[posicao2] = true;
+			posicao2++;
+		}
+	}
 }
 
 // O(n+m)
 void GraphDisplay::removeEdge(int e) {
-	int a = G.edges[e].first, b = G.edges[e].second;
-	for (int i = 0; i < G.adj[a].size(); i++)
-		if (G.adj[a][i] == b) {
-			G.adj[a].erase(G.adj[a].begin()+i);
-			break;
-		}
-	G.edges.erase(G.edges.begin()+e);
+	Graph G2(G.getN(), G.label);
+	int posicao = 0;
+	int a, b;
+	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
+		if (posicao != e) G2.addEdge(i, j.first, j.second);
+		else a = i, b = j.first;
+		posicao++;
+	}
+
 	posPeso.erase(posPeso.begin()+e);
 	isParal.erase(isParal.begin()+e);
-	for (int i = 0; i < G.m; i++) if (G.edges[i].first == b and G.edges[i].second == a)
-		isParal[i] = 0;
-	if (temPeso) peso.erase(peso.begin()+e);
-	G.m--;
+	posicao = 0;
+	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
+		if (i == b and j.first == a) isParal[posicao] = false;
+		posicao++;
+	}
+	G = G2;
 }
 
 // O(n^2 + m^2)
@@ -451,5 +454,6 @@ void GraphDisplay::itera() {
 
 	if (centr) fdpEadesAcc(2);
 	else fdpEades(2);
-	if (temPeso) fdpPeso(2);
+	
+	fdpPeso(2);
 }

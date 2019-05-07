@@ -11,13 +11,12 @@ using namespace std;
 
 struct GraphDisplay {
 	Graph G;
-	bool temDir, temPeso, centr, draw;
+	bool temDir, centr, draw;
 	int raio, X, Y;
 	vector<bool> para, trava;
 	vector<Vector> pos;
 	vector<Vector> vel;
 	vector<float> posPeso;
-	vector<int> peso;
 	vector<int> color;
 	vector<bool> isParal;
 

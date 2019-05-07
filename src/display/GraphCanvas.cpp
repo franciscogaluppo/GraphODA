@@ -33,26 +33,6 @@ sf::Color GraphCanvas::getColor(int x) {
 	return sf::Color::Black;
 }
 
-int GraphCanvas::findFontSizeNew(int fontSize, int biggest) {
-	sf::Text aux;
-	aux.setFont(fonte);
-	string st = "";
-	for (int i = 0; i < biggest; ++i) st = st +'0';
-	aux.setString(st);
-	aux.setCharacterSize(fontSize);
-	sf::FloatRect boundingBox = aux.getLocalBounds();
-	int i = fontSize;
-	for(; boundingBox.width >= GD.raio+4 && i > 0; i--) {
-		aux.setCharacterSize(i);
-		boundingBox = aux.getLocalBounds();
-		//printf("%.2f && %.2f -- %d\n", boundingBox.width, boundingBox.height, raio);
-	}
-	fontSize = i;
-	//printf("%lf -- %d\n", boundingBox.width, raio);
-	//printf("big = %d ... size = %d\n", biggest, fontSize);
-	return fontSize;
-}
-
 void GraphCanvas::printAresta(Vector at, int aresta) {
 	auto position = sf::Mouse::getPosition(*janela);
 	Vector positionV(position.x, position.y);
@@ -111,12 +91,14 @@ void GraphCanvas::printAresta(Vector at, int aresta) {
 }
 
 void GraphCanvas::printGrafo() {
+	auto edg = GD.G.getEdges();
+
 	// Cria as arestas
-	for (int i = 0; i < GD.G.m; i++) {
+	for (int i = 0; i < GD.G.getM(); i++) {
 		// Arestas sem largura, por isso vetores
 		Vector add(0, 0);
 		if (GD.isParal[i] and GD.temDir) {
-			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			add = GD.pos[edg[i].second] - GD.pos[edg[i].first];
 			if (add.norm()) {
 				add = add*(1/add.norm());
 				add = add.rotate(acos(-1.0)/2);
@@ -126,11 +108,11 @@ void GraphCanvas::printGrafo() {
 		sf::Vertex linha[] =
 		{
 			sf::Vertex(sf::Vector2f(
-				GD.pos[GD.G.edges[i].first].x+add.x, GD.pos[GD.G.edges[i].first].y+add.y),
+				GD.pos[edg[i].first].x+add.x, GD.pos[edg[i].first].y+add.y),
 					sf::Color::Black),
 
 			sf::Vertex(sf::Vector2f(
-				GD.pos[GD.G.edges[i].second].x+add.x, GD.pos[GD.G.edges[i].second].y+add.y),
+				GD.pos[edg[i].second].x+add.x, GD.pos[edg[i].second].y+add.y),
 					sf::Color::Black)
 		};
 
@@ -142,7 +124,7 @@ void GraphCanvas::printGrafo() {
 	for (auto& i : GD.G.label) fontSize = min(fontSize, findFontSize(i.size(), 24));
 
 	// Cria os vértices
-	for (int i = 0; i < GD.G.n; i++) {
+	for (int i = 0; i < GD.G.getN(); i++) {
 		// Cria um círculo
 		sf::CircleShape v(GD.raio);
 		v.setFillColor(getColor(GD.color[i]));
@@ -174,15 +156,16 @@ void GraphCanvas::printGrafo() {
 // eu sou mt bom com vetores
 void GraphCanvas::printSetas() {
 	const float pi = acos(-1.0);
+	auto edg = GD.G.getEdges();
 
-	for (int i = 0; i < GD.G.m; i++) {
-		Vector fim = GD.pos[GD.G.edges[i].second];
-		Vector v = fim - GD.pos[GD.G.edges[i].first];
+	for (int i = 0; i < GD.G.getM(); i++) {
+		Vector fim = GD.pos[edg[i].second];
+		Vector v = fim - GD.pos[edg[i].first];
 		Vector unit = v*(1/v.norm());
 
 		Vector pos = fim - unit*GD.raio*1.6;
 		// se ta travado arreda um pouco a seta
-		if (GD.trava[GD.G.edges[i].second]) pos = pos - unit*2;
+		if (GD.trava[edg[i].second]) pos = pos - unit*2;
 
 		// angulo que tem que rodar pra seta ficar certa
 		float angle = v.angle()-pi/6;
@@ -193,7 +176,7 @@ void GraphCanvas::printSetas() {
 		// trata aresta paralelas
 		Vector add(0, 0);
 		if (GD.isParal[i]) {
-			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			add = GD.pos[edg[i].second] - GD.pos[edg[i].first];
 			if (add.norm()) {
 				add = add*(1/add.norm());
 				add = add.rotate(acos(-1.0)/2);
@@ -212,23 +195,26 @@ void GraphCanvas::printSetas() {
 
 void GraphCanvas::printPesos() {
 	int fontSize = 10000;
-	for (auto& i : GD.peso) fontSize = min(fontSize, findFontSize(getIntSize(i), 24));
+	for (int i = 0; i < GD.G.getN(); i++) for (auto j : GD.G.adj[i])
+		fontSize = min(fontSize, findFontSize(getIntSize(j.second), 24));
+	auto edg = GD.G.getEdges();
+	auto pesos = GD.G.getPesos();
 
-	for (int i = 0; i < GD.G.m; i++) {
+	for (int i = 0; i < GD.G.getM(); i++) {
 		sf::Text p;
 		p.setFont(fonte);
-		p.setString(to_string(GD.peso[i]));
+		p.setString(to_string(pesos[i]));
 		p.setCharacterSize(fontSize);
 		p.setFillColor(sf::Color::Black);
 
 		// acha posicao
-		Vector v = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
-		Vector at = GD.pos[GD.G.edges[i].first] + v*GD.posPeso[i];
+		Vector v = GD.pos[edg[i].second] - GD.pos[edg[i].first];
+		Vector at = GD.pos[edg[i].first] + v*GD.posPeso[i];
 
 		// arestas paralelas
 		Vector add(0, 0);
 		if (GD.isParal[i]) {
-			add = GD.pos[GD.G.edges[i].second] - GD.pos[GD.G.edges[i].first];
+			add = GD.pos[edg[i].second] - GD.pos[edg[i].first];
 			if (add.norm()) {
 				add = add*(1/add.norm());
 				add = add.rotate(acos(-1.0)/2);
@@ -246,7 +232,7 @@ void GraphCanvas::printPesos() {
 	}
 }
 
-pair<Graph, vector<int> > lerGrafoArquivo(string arq) {
+Graph lerGrafoArquivo(string arq) {
 	ifstream inFile(arq);
 	if (!inFile) {
 		inFile = ifstream("grafos/grafo"+arq+".txt");
@@ -271,35 +257,30 @@ pair<Graph, vector<int> > lerGrafoArquivo(string arq) {
 	stringstream ss(l);
 	vector<int> entrada;
 	for (int i; ss >> i;) entrada.push_back(i);
-	bool temPeso = 0; vector<int> peso;
+	bool temPeso = false;
 	if (entrada.size() == 3) {
-		temPeso = 1;
-		peso.push_back(entrada.back());
-	}
-	G.addEdge(entrada[0], entrada[1]);
+		temPeso = true;
+		G.addEdge(entrada[0], entrada[1], entrada[2]);
+	} else G.addEdge(entrada[0], entrada[1]);
 
 	for (int i = 0; i < m-1; i++) {
 		int a, b; inFile >> a >> b;
-		G.addEdge(a, b);
 		if (temPeso) {
 			int p; inFile >> p;
-			peso.push_back(p);
-		}
+			G.addEdge(a, b, p);
+		} else G.addEdge(a, b);
 	}
 
 	inFile.close();
 
-	return {G, peso};
+	return G;
 }
 
-void GraphCanvas::setGraph(Graph G, vector<int> peso) {
+void GraphCanvas::setGraph(Graph G) {
+	bool temDir = GD.temDir;
 	GD.setGraph(G);
-	if (peso.size()) {
-		GD.temPeso = 1;
-		GD.peso = peso;
-	}
-
-	GD.good(max(10, 100 - GD.G.n), max(10, 100 - GD.G.m));
+	GD.temDir = temDir;
+	GD.good(max(10, 100 - GD.G.getN()), max(10, 100 - GD.G.getM()));
 }
 
 // muitos ifs
@@ -415,5 +396,5 @@ void GraphCanvas::display() {
 	GD.itera();
 	if (GD.temDir) printSetas();
 	printGrafo();
-	if (GD.temPeso) printPesos();
+	if (GD.G.isWeighted()) printPesos();
 }

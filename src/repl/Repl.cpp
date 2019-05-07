@@ -5,7 +5,6 @@ void runRepl() {
 
 	map<string, int> vars;
 	vector<Graph> graphs;
-	vector<vector<int> > pesos;
 
 	while (1) {
 		cout << ">>> ";
@@ -40,7 +39,6 @@ void runRepl() {
 			}
 			vars[var] = graphs.size();
 			graphs.push_back(Graph());
-			pesos.push_back(vector<int>());
 		}
 
 		int i = vars[var];
@@ -52,18 +50,16 @@ void runRepl() {
 				string file;
 				ss >> file;
 				auto j = lerGrafoArquivo(file);
-				graphs[i] = j.first;
-				pesos[i] = j.second;
+				graphs[i] = j;
 			} else {
 				if (!vars.count(type)) {
 					cout << "ERRO: " << type << " nao definido" << endl;
 					continue;
 				}
 				graphs[i] = graphs[vars[type]];
-				pesos[i] = pesos[vars[type]];
 			}
 		} else {
-			displayTeste(1200, 600, graphs[i], pesos[i]);
+			graphs[i] = displayTeste(1200, 600, graphs[i]);
 		}
 	}
 }

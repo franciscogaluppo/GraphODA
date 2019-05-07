@@ -2,7 +2,7 @@
 
 void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC) {
 	auto i = lerGrafoArquivo(arq->getText().toAnsiString());
-	GC->setGraph(i.first, i.second);
+	GC->setGraph(i);
 }
 
 void mudaDir(GraphCanvas *GC) {
@@ -137,13 +137,13 @@ void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
 	janela.draw(draw);
 }
 
-void displayTeste(int X, int Y, Graph G, vector<int> peso) {
+Graph displayTeste(int X, int Y, Graph G) {
 
 	// Carrega a fonte Consola Bold (Gosto dela)
 	sf::Font fonte;
 	if (!fonte.loadFromFile("assets/CONSOLAB.TTF")) {
 		// TODO: Erro direito
-		return;
+		return G;
 	}
 
 	// Antialiasing
@@ -157,7 +157,7 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 
 	// GraphCanvas
 	GraphCanvas GC(janela, fonte, X*2/3, Y, 15);
-	GC.setGraph(G, peso);
+	GC.setGraph(G);
 	bool editing;
 	tgui::EditBox::Ptr edit;
 
@@ -166,7 +166,7 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 		loadWidgets(gui, &GC);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
-		return;
+		return G;
 	}
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
@@ -185,8 +185,11 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 			// apertou alguma coisa no teclado
 			if (evento.type == sf::Event::KeyPressed) {
 
-				// ctrl -> toggle edit mode
-				if (evento.key.code == sf::Keyboard::LControl and !editing) GC.GD.draw ^= 1;
+				// ctrl -> toggle draw mode
+				if (evento.key.code == sf::Keyboard::LControl and !editing) {
+					GC.GD.draw ^= 1;
+					cout << "Toggle draw mode" << endl;
+				}
 
 				// esc -> sai da edicao dos pesos/labels
 				if (evento.key.code == sf::Keyboard::Escape) {
@@ -202,15 +205,16 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 
 					// weight
 					if (GC.editWeight > -1) {
-						// torna grafo com peso
-						if (!GC.GD.temPeso) GC.GD.peso = vector<int>(GC.GD.G.m, 0);
-						GC.GD.temPeso = 1;
 
 						string s = edit->getText().toAnsiString();
 						bool valid = 1;
 						for (auto c : s) if (c < '0' or c > '9') valid = 0;
-						if (valid) GC.GD.peso[GC.editWeight] = stoi(edit->getText().toAnsiString());
-						else {
+						if (valid) {
+							int position = 0;
+							for (int i = 0; i < GC.GD.G.getN(); i++) for (auto& j : GC.GD.G.adj[i])
+								if (position++ == GC.editWeight) j.second = stoi(edit->getText().toAnsiString());
+							GC.GD.G.checkWeighted();
+						} else {
 							// TODO: erro direito
 							cout << "ERRO: peso invalido" << endl;
 						}
@@ -230,6 +234,7 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 		if (GC.editLabel > -1 or GC.editWeight > -1) {
 			if (!editing) {
 				editing = 1;
+				auto edg = GC.GD.G.getEdges();
 
 				if (GC.editLabel > -1) {
 					edit = tgui::EditBox::create();
@@ -247,8 +252,8 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 					edit->setSize(size.x, size.y);
 
 					// acha posicao
-					Vector ini = GC.GD.pos[GC.GD.G.edges[GC.editWeight].first],
-									fim = GC.GD.pos[GC.GD.G.edges[GC.editWeight].second];
+					Vector ini = GC.GD.pos[edg[GC.editWeight].first],
+									fim = GC.GD.pos[edg[GC.editWeight].second];
 					Vector pos = ini + (fim-ini)*GC.GD.posPeso[GC.editWeight];
 
 					// arestas paralelas
@@ -264,7 +269,10 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 					pos = pos+add;
 
 					edit->setPosition(pos.x - size.x/2, pos.y - size.y/2);
-					if (GC.GD.temPeso) edit->setText(to_string(GC.GD.peso[GC.editWeight]));
+					int peso, position = 0;
+					for (int i = 0; i < GC.GD.G.getN(); i++) for (auto j : GC.GD.G.adj[i])
+						if (position++ == GC.editWeight) peso = j.second;
+					edit->setText(to_string(peso));
 					gui.add(edit);
 					edit->setFocused(true);
 				}
@@ -279,4 +287,6 @@ void displayTeste(int X, int Y, Graph G, vector<int> peso) {
 		// Termina iteração e atualiza janela
 		janela.display();
 	}
+
+	return GC.GD.G;
 }

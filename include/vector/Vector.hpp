@@ -5,16 +5,17 @@
 #include <utility>
 using namespace std;
 
-struct Vector {
-	float x, y;
+class Vector {
+	public:
+		float x, y;
 
-	Vector();
-	Vector(float, float);
-	Vector(pair<float, float>);
-	float norm();
-	float angle();
-	Vector rotate(float);
-	Vector project(Vector);
+		Vector();
+		Vector(float, float);
+		Vector(pair<float, float>);
+		float norm();
+		float angle();
+		Vector rotate(float);
+		Vector project(Vector);
 };
 
 Vector operator +(const Vector&, const Vector&);
