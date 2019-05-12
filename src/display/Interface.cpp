@@ -148,7 +148,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 
 	// Antialiasing
 	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
+	settings.antialiasingLevel = 4;
 
 	// Cria a janela
 	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Close, settings);
@@ -186,10 +186,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 			if (evento.type == sf::Event::KeyPressed) {
 
 				// ctrl -> toggle draw mode
-				if (evento.key.code == sf::Keyboard::LControl and !editing) {
-					GC.GD.draw ^= 1;
-					cout << "Toggle draw mode" << endl;
-				}
+				if (evento.key.code == sf::Keyboard::LControl and !editing) GC.GD.draw ^= 1;
 
 				// esc -> sai da edicao dos pesos/labels
 				if (evento.key.code == sf::Keyboard::Escape) {

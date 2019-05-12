@@ -35,6 +35,7 @@ int GraphDisplay::achaVertice(Vector at) {
 // encontra aresta na posicao 'at'
 int GraphDisplay::achaAresta(Vector at) {
 	auto edg = G.getEdges();
+	float best = 1000000; int ar = -1;
 	for (int i = 0; i < G.getM(); i++) {
 		Vector ini = pos[edg[i].first], fim = pos[edg[i].second];
 
@@ -51,9 +52,13 @@ int GraphDisplay::achaAresta(Vector at) {
 		ini = ini+add;
 		fim = fim+add;
 
-		if ((at-ini).norm() + (fim-at).norm() - 0.5 < (fim-ini).norm()) return i;
+		float d = (at-ini).norm() + (fim-at).norm();
+		if (d - 0.5 < (fim-ini).norm() and d < best) {
+			best = d;
+			ar = i;
+		}
 	}
-	return -1;
+	return ar;
 }
 
 // O(it * m^2)
@@ -372,9 +377,11 @@ void GraphDisplay::addVertex(Vector v) {
 	para.push_back(0);
 	trava.push_back(0);
 	color.push_back(0);
-	auto edg = G.getEdges();
-	auto peso = G.getPesos();
-	for (int i = 0; i < G.getM(); i++) G2.addEdge(edg[i].first, edg[i].second, peso[i]);
+//	auto edg = G.getEdges();
+//	auto peso = G.getPesos();
+//	for (int i = 0; i < G.getM(); i++) G2.addEdge(edg[i].first, edg[i].second, peso[i]);
+	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i])
+		G2.addEdge(i, j.first, j.second);
 	G = G2;
 }
 
@@ -410,12 +417,16 @@ void GraphDisplay::addEdge(int a, int b) {
 	for (auto i : G.adj[a]) if (i.first == b) return;
 	G.addEdge(a, b);
 	int posicao = 0;
-	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
-		if (i == a and j.first == b) break;
+	bool achou = false;
+	for (int i = 0; i < G.getN() and !achou; i++) for (auto j : G.adj[i]) {
+		if (i == a and j.first == b) {
+			achou = true;
+			break;
+		}
 		posicao++;
 	}
 	posPeso.insert(posPeso.begin()+posicao, 0.5);
-	isParal.insert(isParal.begin()+posicao, 0);
+	isParal.insert(isParal.begin()+posicao, false);
 	for (auto i : G.adj[b]) if (i.first == a) {
 		isParal[posicao] = true;
 
@@ -438,13 +449,15 @@ void GraphDisplay::removeEdge(int e) {
 		posicao++;
 	}
 
-	posPeso.erase(posPeso.begin()+e);
-	isParal.erase(isParal.begin()+e);
 	posicao = 0;
 	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
 		if (i == b and j.first == a) isParal[posicao] = false;
 		posicao++;
 	}
+
+	posPeso.erase(posPeso.begin()+e);
+	isParal.erase(isParal.begin()+e);
+
 	G = G2;
 }
 
