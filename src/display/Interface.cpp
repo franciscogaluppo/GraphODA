@@ -207,10 +207,14 @@ Graph displayTeste(int X, int Y, Graph G) {
 						bool valid = 1;
 						for (auto c : s) if (c < '0' or c > '9') valid = 0;
 						if (valid) {
+							Graph G(GC.GD.G.getN());
 							int position = 0;
-							for (int i = 0; i < GC.GD.G.getN(); i++) for (auto& j : GC.GD.G.adj[i])
-								if (position++ == GC.editWeight) j.second = stoi(edit->getText().toAnsiString());
-							GC.GD.G.checkWeighted();
+							auto adj = GC.GD.G.getAdj();
+							for (int i = 0; i < GC.GD.G.getN(); i++) for (auto& j : adj[i]) {
+								if (position++ == GC.editWeight) G.addEdge(i, j.first, stoi(edit->getText().toAnsiString()));
+								else G.addEdge(i, j.first, j.second);
+							}
+							GC.GD.setGraphContinue(G);
 						} else {
 							// TODO: erro direito
 							cout << "ERRO: peso invalido" << endl;
@@ -267,7 +271,8 @@ Graph displayTeste(int X, int Y, Graph G) {
 
 					edit->setPosition(pos.x - size.x/2, pos.y - size.y/2);
 					int peso, position = 0;
-					for (int i = 0; i < GC.GD.G.getN(); i++) for (auto j : GC.GD.G.adj[i])
+					auto adj = GC.GD.G.getAdj();
+					for (int i = 0; i < GC.GD.G.getN(); i++) for (auto j : adj[i])
 						if (position++ == GC.editWeight) peso = j.second;
 					edit->setText(to_string(peso));
 					gui.add(edit);

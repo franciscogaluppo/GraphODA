@@ -25,6 +25,10 @@ void GraphDisplay::setGraph(Graph& G) {
 	*this = GraphDisplay(G, X, Y, raio);
 }
 
+void GraphDisplay::setGraphContinue(Graph& G) {
+	this->G = G;	
+}
+
 // encontra vertice na posicao 'at'
 int GraphDisplay::achaVertice(Vector at) {
 	for (int i = G.getN()-1; i >= 0; i--)
@@ -377,10 +381,8 @@ void GraphDisplay::addVertex(Vector v) {
 	para.push_back(0);
 	trava.push_back(0);
 	color.push_back(0);
-//	auto edg = G.getEdges();
-//	auto peso = G.getPesos();
-//	for (int i = 0; i < G.getM(); i++) G2.addEdge(edg[i].first, edg[i].second, peso[i]);
-	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i])
+	auto adj = G.getAdj();
+	for (int i = 0; i < G.getN(); i++) for (auto j : adj[i])
 		G2.addEdge(i, j.first, j.second);
 	G = G2;
 }
@@ -396,7 +398,8 @@ void GraphDisplay::removeVertex(int v) {
 	color.erase(color.begin()+v);
 
 	int erased = 0, position = -1;
-	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
+	auto adj = G.getAdj();
+	for (int i = 0; i < G.getN(); i++) for (auto j : adj[i]) {
 		position++;
 		if (i == v or j.first == v) {
 			posPeso.erase(posPeso.begin()+position-erased);
@@ -414,11 +417,13 @@ void GraphDisplay::removeVertex(int v) {
 
 // O(n+m)
 void GraphDisplay::addEdge(int a, int b) {
-	for (auto i : G.adj[a]) if (i.first == b) return;
+	auto adj = G.getAdj();
+	for (auto i : adj[a]) if (i.first == b) return;
 	G.addEdge(a, b);
 	int posicao = 0;
 	bool achou = false;
-	for (int i = 0; i < G.getN() and !achou; i++) for (auto j : G.adj[i]) {
+	adj = G.getAdj();
+	for (int i = 0; i < G.getN() and !achou; i++) for (auto j : adj[i]) {
 		if (i == a and j.first == b) {
 			achou = true;
 			break;
@@ -427,11 +432,11 @@ void GraphDisplay::addEdge(int a, int b) {
 	}
 	posPeso.insert(posPeso.begin()+posicao, 0.5);
 	isParal.insert(isParal.begin()+posicao, false);
-	for (auto i : G.adj[b]) if (i.first == a) {
+	for (auto i : adj[b]) if (i.first == a) {
 		isParal[posicao] = true;
 
 		int posicao2 = 0;
-		for (int j = 0; j < G.getN(); j++) for (auto k : G.adj[j]) {
+		for (int j = 0; j < G.getN(); j++) for (auto k : adj[j]) {
 			if (j == b and k.first == a) isParal[posicao2] = true;
 			posicao2++;
 		}
@@ -443,14 +448,15 @@ void GraphDisplay::removeEdge(int e) {
 	Graph G2(G.getN(), G.label);
 	int posicao = 0;
 	int a, b;
-	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
+	auto adj = G.getAdj();
+	for (int i = 0; i < G.getN(); i++) for (auto j : adj[i]) {
 		if (posicao != e) G2.addEdge(i, j.first, j.second);
 		else a = i, b = j.first;
 		posicao++;
 	}
 
 	posicao = 0;
-	for (int i = 0; i < G.getN(); i++) for (auto j : G.adj[i]) {
+	for (int i = 0; i < G.getN(); i++) for (auto j : adj[i]) {
 		if (i == b and j.first == a) isParal[posicao] = false;
 		posicao++;
 	}

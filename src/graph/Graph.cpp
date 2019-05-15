@@ -36,10 +36,9 @@ bool Graph::isWeighted() {
 	return weighted;
 }
 
-void Graph::checkWeighted() {
-	weighted = 0;
-	for (int i = 0; i < n; i++) for (auto j : adj[i])
-		if (j.second != 1) weighted = 1;
+// O(n+m)
+vector<vector<pair<int, int> > > Graph::getAdj() {
+	return adj;
 }
 
 // O(n+m)

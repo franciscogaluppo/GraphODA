@@ -195,7 +195,8 @@ void GraphCanvas::printSetas() {
 
 void GraphCanvas::printPesos() {
 	int fontSize = 10000;
-	for (int i = 0; i < GD.G.getN(); i++) for (auto j : GD.G.adj[i])
+	auto adj = GD.G.getAdj();
+	for (int i = 0; i < GD.G.getN(); i++) for (auto j : adj[i])
 		fontSize = min(fontSize, findFontSize(getIntSize(j.second), 24));
 	auto edg = GD.G.getEdges();
 	auto pesos = GD.G.getPesos();
