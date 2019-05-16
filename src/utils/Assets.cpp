@@ -3,6 +3,7 @@
 const string get_font_path ()
 {
   const char *s = getenv ("APPDIR");
+  printf("Environ: %s", s);
   return s == nullptr ? FONT_FILE : string (s) + "/usr/share/graphODA/" FONT_FILE;
 }
 
