@@ -18,6 +18,7 @@ include_directories(include/graph)
 include_directories(include/vector)
 include_directories(include/utils)
 include_directories(include/repl)
+include_directories(include/dataStructures)
 
 # Dependências
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -35,9 +36,14 @@ set(SRC_FILES
         "${PROJECT_SOURCE_DIR}/src/display/GraphCanvas.cpp"
         "${PROJECT_SOURCE_DIR}/src/display/Interface.cpp"
         "${PROJECT_SOURCE_DIR}/src/graph/Graph.cpp"
+        "${PROJECT_SOURCE_DIR}/src/graph/Bipartite.cpp"
+        "${PROJECT_SOURCE_DIR}/src/graph/Chordal.cpp"
+        "${PROJECT_SOURCE_DIR}/src/graph/Dag.cpp"
+        "${PROJECT_SOURCE_DIR}/src/graph/Tree.cpp"
         "${PROJECT_SOURCE_DIR}/src/vector/Vector.cpp"
         "${PROJECT_SOURCE_DIR}/src/utils/Assets.cpp"
         "${PROJECT_SOURCE_DIR}/src/repl/Repl.cpp"
+        "${PROJECT_SOURCE_DIR}/src/dataStructures/DSU.cpp"
         "${PROJECT_SOURCE_DIR}/src/main.cpp")
 set(ASSET_FILES
         "${PROJECT_SOURCE_DIR}/assets/TransparentGrey.txt"
