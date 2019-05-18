@@ -1,9 +1,9 @@
 #ifndef DAGH
 #define DAGH
 
-#include "Graph.hpp"
+#include "GraphGen.hpp"
 
-class Dag : public Graph {
+class Dag : public GraphGen {
 	public:
 		Dag();
 };

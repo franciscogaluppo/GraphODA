@@ -1,9 +1,9 @@
 #ifndef BIPARTITEH
 #define BIPARTITEH
 
-#include "Graph.hpp"
+#include "GraphGen.hpp"
 
-class Bipartite : public Graph {
+class Bipartite : public GraphGen {
 	public:
 		Bipartite();
 };

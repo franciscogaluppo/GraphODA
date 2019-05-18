@@ -1,5 +1,9 @@
 #include "DSU.hpp"
 
+DSU::DSU() {
+	n = 0;
+}
+
 DSU::DSU(int n_) {
 	n = n_;
 	v.resize(n);

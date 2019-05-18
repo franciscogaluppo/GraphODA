@@ -1,3 +1,3 @@
 #include "Bipartite.hpp"
 
-Bipartite::Bipartite() : Graph() {}
+Bipartite::Bipartite() : GraphGen() {}

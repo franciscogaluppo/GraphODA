@@ -7,6 +7,7 @@ using namespace std;
 
 class DSU {
 	public:
+		DSU();
 		DSU(int);
 		int find(int);
 		void une(int, int);

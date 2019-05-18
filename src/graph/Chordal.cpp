@@ -1,5 +1,5 @@
 #include "Chordal.hpp"
 
-Chordal::Chordal() : Graph() {}
+Chordal::Chordal() : GraphGen() {}
 
-Chordal::Chordal(int n) : Graph(n) {}
+Chordal::Chordal(int n) : GraphGen(n) {}

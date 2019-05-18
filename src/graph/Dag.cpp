@@ -1,3 +1,3 @@
 #include "Dag.hpp"
 
-Dag::Dag() : Graph() {}
+Dag::Dag() : GraphGen() {}

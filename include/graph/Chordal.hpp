@@ -1,9 +1,9 @@
 #ifndef CHORDALH
 #define CHORDALH
 
-#include "Graph.hpp"
+#include "GraphGen.hpp"
 
-class Chordal : public Graph {
+class Chordal : public GraphGen {
 	public:
 		Chordal();
 		Chordal(int);
