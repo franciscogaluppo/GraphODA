@@ -21,15 +21,15 @@ include_directories(include/controllers/repl)
 include_directories(include/models/dataStructures)
 
 ## Dependências
-#if(CMAKE_BUILD_TYPE STREQUAL "Release")
-#    find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
-#    find_package(TGUI 0.8 REQUIRED)
-#else()
-#    # Se estamos rodando localmente para desenvolvimento, relaxamos as dependências
-#    set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_debug_packages" ${CMAKE_MODULE_PATH})
-#    find_package(SFML COMPONENTS graphics window system REQUIRED)
-#    find_package(TGUI REQUIRED)
-#endif()
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+    find_package(TGUI 0.8 REQUIRED)
+else()
+    # Se estamos rodando localmente para desenvolvimento, relaxamos as dependências
+    set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_debug_packages" ${CMAKE_MODULE_PATH})
+    find_package(SFML COMPONENTS graphics window system REQUIRED)
+    find_package(TGUI REQUIRED)
+endif()
 
 set(SRC_FILES
         "src/views/GraphDisplay.cpp"
@@ -54,7 +54,7 @@ set(ICON_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.png")
 
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 add_executable(graphODA ${SRC_FILES})
-#target_link_libraries(graphODA tgui sfml-graphics sfml-window sfml-system)
+target_link_libraries(graphODA tgui sfml-graphics sfml-window sfml-system)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     install(TARGETS graphODA DESTINATION "bin")
