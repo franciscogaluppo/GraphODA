@@ -15,7 +15,6 @@ set (graphODA_VERSION_MINOR 0)
 include_directories(include)
 include_directories(include/views)
 include_directories(include/models/graph)
-include_directories(include/models/vector)
 include_directories(include/utils)
 include_directories(include/controllers/repl)
 include_directories(include/models/dataStructures)
@@ -41,9 +40,9 @@ set(SRC_FILES
         "src/models/graph/Chordal.cpp"
         "src/models/graph/Dag.cpp"
         "src/models/graph/Tree.cpp"
-        "src/models/vector/Vector.cpp"
         "${PROJECT_SOURCE_DIR}/src/utils/Assets.cpp"
         "src/controllers/repl/Repl.cpp"
+        "src/models/dataStructures/Vector.cpp"
         "src/models/dataStructures/DSU.cpp"
         "${PROJECT_SOURCE_DIR}/src/main.cpp")
 set(ASSET_FILES

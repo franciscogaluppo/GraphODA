@@ -4,8 +4,10 @@
 #include "GraphGen.hpp"
 
 class Dag : public GraphGen {
- public:
-  Dag();
+	public:
+		Dag();
+		Dag(int);
+		Dag(GraphGen&);
 };
 
 #endif

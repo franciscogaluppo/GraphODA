@@ -15,6 +15,9 @@
 
 using namespace std;
 
-void runRepl();
+namespace repl {
+
+	void run();
+}
 
 #endif

@@ -4,9 +4,10 @@
 #include "GraphGen.hpp"
 
 class Chordal : public GraphGen {
- public:
-  Chordal();
-  Chordal(int);
+	public:
+		Chordal();
+		Chordal(int);
+		Chordal(GraphGen&);
 };
 
 #endif

@@ -248,7 +248,7 @@ Graph lerGrafoArquivo(string arq) {
     if (!inFile) {
       // TODO: Erro direito
       cout << "Erro: arquivo zoado" << endl;
-      exit(1);
+      return Graph();
     }
   }
 

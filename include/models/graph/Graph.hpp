@@ -4,6 +4,7 @@
 #include "Bipartite.hpp"
 #include "Chordal.hpp"
 #include "Dag.hpp"
+#include "DSU.hpp"
 #include "GraphGen.hpp"
 #include "Tree.hpp"
 
@@ -14,19 +15,19 @@
 using namespace std;
 
 class Graph : public GraphGen {
- public:
-  Graph();
-  Graph(int);
-  Graph(int, vector<string> &);
-  Graph(Bipartite);
-  Graph(Chordal);
-  Graph(Dag);
-  Graph(Tree);
+	public:
+		Graph();
+		Graph(int);
+		Graph(int, vector<string> &);
+		Graph(Bipartite);
+		Graph(Chordal);
+		Graph(Dag);
+		Graph(Tree);
 
-  void addEdge(int, int);
-  void addEdge(int, int, int);
+		void addEdge(int, int);
+		void addEdge(int, int, int);
 
-  Tree mst();
+		Tree mst();
 };
 
 #endif
