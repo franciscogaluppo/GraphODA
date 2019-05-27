@@ -25,19 +25,19 @@ O REPL possui dois tipos de comando: atribuição e operação.
 ### Atribuição
 
 #### Atribuição de variável
-```bash
+```
 >>> var1 = var2
 ```
 A variável *var1* passa a representar o grafo representado por *var2*.
 
 #### import
-```bash
+```
 >>> var = import file_name
 ```
 A variável *var* passa a representar o grafo armazenado em *file_name*. Se a leitura do arquivo falhar, *var* passa a representar um grafo vazio.
 
 #### mst
-```bash
+```
 >>> var1 = mst var2
 ```
 A variável *var1* passa a representar a **árvore geradora mínima** do grafo representado por *var2*.
@@ -45,19 +45,25 @@ A variável *var1* passa a representar a **árvore geradora mínima** do grafo r
 ### Operação
 
 #### describe
-```bash
+```
 >>> var > describe
 ```
 Exibe informações sobre o grafo representado por *var*.
 
 #### show
-```bash
+```
 >>> var > show
 ```
 Exibe o grafo representado por *var*.
 
 #### edit
-```bash
+```
 >>> var > edit
 ```
 Exibe o grafo representado por *var*, salvando as modificações efetuadas.
+
+#### scc
+```
+>>> var > scc
+```
+Exibe as componentes fortemente conexas do grafo representado por *var*.

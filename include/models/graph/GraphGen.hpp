@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stack>
 using namespace std;
 
 class GraphGen {
@@ -14,6 +15,7 @@ class GraphGen {
 		GraphGen(int);
 		GraphGen(int, vector<string> &);
 
+		// gets
 		int getN();
 		int getM();
 		bool isWeighted();
@@ -24,10 +26,14 @@ class GraphGen {
 		vector<vector<int>> getMatrix();
 		vector<vector<int>> getSimMatrix();
 
+		// reconhecedores
 		bool isBipartite();
 		bool isChordal();
 		bool isDag();
 		bool isTree();
+
+		// algoritmos
+		vector<int> scc();
 
 	protected:
 		int n, m;
@@ -39,6 +45,7 @@ class GraphGen {
 		bool dfsCheckBipartite(int, int, vector<int>&);
 		bool dfsCheckDag(int, vector<int>&);
 		bool dfsCheckTree(int, int, vector<int>&);
+		int dfsScc(vector<int>&, vector<int>&, vector<int>&, int&, int&, int);
 };
 
 #endif

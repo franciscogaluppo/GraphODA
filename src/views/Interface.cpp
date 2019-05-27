@@ -150,6 +150,9 @@ Graph displayTeste(int X, int Y, Graph G) {
 	// Roda o programa enquanto a janela estiver aberta
 
 	while (janela.isOpen()) {
+		// se janela nao ta ativa, espera
+		if (!janela.hasFocus()) continue;
+
 		// Checa se algum evento aconteceu
 		sf::Event evento;
 		while (janela.pollEvent(evento)) {

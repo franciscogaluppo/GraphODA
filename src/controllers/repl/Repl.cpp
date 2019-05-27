@@ -96,6 +96,23 @@ namespace repl {
 		else cout << " no" << endl;
 	}
 
+	// O(n+m);
+	void scc() {
+		Graph G = getGraph();
+		auto v = G.scc();
+		int ma = 0;
+		for (int i : v) ma = max(ma, i);
+		cout << ma+1 << " componentes fortemente conexas" << endl << endl;
+
+		vector<vector<int> > v2(ma+1);
+		for (int i = 0; i < G.getN(); i++) v2[v[i]].push_back(i);
+		for (int i = 0; i <= ma; i++) {
+			cout << i+1 << ":";
+			for (int j : v2[i]) cout << " " << G.label[j];
+			cout << endl;
+		}
+	}
+
 	void run() {
 		cout << "GraphODA" << endl;
 
@@ -171,6 +188,7 @@ namespace repl {
 				if (com == "show") show();
 				else if (com == "edit") edit();
 				else if (com == "describe") describe();
+				else if (com == "scc") scc();
 			}
 		}
 	}

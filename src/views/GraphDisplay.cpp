@@ -29,7 +29,7 @@ void GraphDisplay::setGraphContinue(Graph &G) { this->G = G; }
 // encontra vertice na posicao 'at'
 int GraphDisplay::achaVertice(Vector at) {
   for (int i = G.getN() - 1; i >= 0; i--)
-    if (dist(at, pos[i]) < raio) return i;
+    if ((at^pos[i]) < raio) return i;
   return -1;
 }
 
@@ -89,7 +89,7 @@ void GraphDisplay::fdpPeso(int it) {
         Vector v = pos[edg[i].first];
         if (j) v = pos[edg[i].second];
 
-        float d = dist(posPesoV[i], v);
+        float d = posPesoV[i]^v;
         if (d < EPS) d = EPS;
 
         // vetor unitario na direcao de i para j
@@ -102,7 +102,7 @@ void GraphDisplay::fdpPeso(int it) {
       // forca em relacao aos pesos
       for (int j = 0; j < G.getM(); j++)
         if (i != j) {
-          float d = dist(posPesoV[i], posPesoV[j]);
+          float d = posPesoV[i]^posPesoV[j];
           if (d < EPS) d = EPS;
           Vector unit = (posPesoV[j] - posPesoV[i]) * (1 / d);
           f = f - unit * (c3 / (d * d));
@@ -168,7 +168,7 @@ void GraphDisplay::fdpEades(int it) {
 
       for (int j = 0; j < G.getN(); j++)
         if (j != i) {
-          float d = dist(pos[i], pos[j]);
+          float d = pos[i]^pos[j];
           if (d < EPS) d = EPS;
 
           // vetor unitario na direcao de i para j
@@ -185,7 +185,7 @@ void GraphDisplay::fdpEades(int it) {
       vector<Vector> parede = {Vector(0, pos[i].y), Vector(X, pos[i].y),
                                Vector(pos[i].x, 0), Vector(pos[i].x, Y)};
       for (auto j : parede) {
-        float d = dist(pos[i], j);
+        float d = pos[i]^j;
         if (d < EPS) d = EPS;
         Vector unit = (j - pos[i]) * (1 / d);
         f = f - unit * (c5 / (d * d));
@@ -218,7 +218,7 @@ void GraphDisplay::fdpEadesAcc(int it) {
 
       for (int j = 0; j < G.getN(); j++)
         if (j != i) {
-          float d = dist(pos[i], pos[j]);
+          float d = pos[i]^pos[j];
           if (d < EPS) d = EPS;
 
           // vetor unitario na direcao de i para j
@@ -235,7 +235,7 @@ void GraphDisplay::fdpEadesAcc(int it) {
       vector<Vector> parede = {Vector(0, pos[i].y), Vector(X, pos[i].y),
                                Vector(pos[i].x, 0), Vector(pos[i].x, Y)};
       for (auto j : parede) {
-        float d = dist(pos[i], j);
+        float d = pos[i]^j;
         if (d < EPS) d = EPS;
         Vector unit = (j - pos[i]) * (1 / d);
         f = f - unit * (c5 / (d * d));
@@ -277,7 +277,7 @@ void GraphDisplay::fdpFruchterman(int it) {
 
       for (int j = 0; j < G.getN(); j++)
         if (j != i) {
-          float d = dist(pos[i], pos[j]);
+          float d = pos[i]^pos[j];
           if (d < EPS) d = EPS;
 
           // vetor unitario na direcao de i para j
@@ -307,8 +307,8 @@ void GraphDisplay::fdpFruchterman(int it) {
 
 // se os segmentos de reta interceptam
 bool cruza(Vector a, Vector b, Vector c, Vector d) {
-  if (cross(b - a, c - b) * cross(b - a, d - b) > 0) return 0;
-  if (cross(d - c, a - d) * cross(d - c, b - d) > 0) return 0;
+  if (((b - a)%(c - b)) * ((b - a)%(d - b)) > 0) return 0;
+  if (((d - c)%(a - d)) * ((d - c)%(b - d)) > 0) return 0;
   return 1;
 }
 

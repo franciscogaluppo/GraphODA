@@ -125,3 +125,36 @@ bool GraphGen::isTree() {
 	for (int i = 0; i < n; i++) if (!vis[i] and !dfsCheckTree(i, i, vis)) return false;
 	return true;
 }
+
+// algoritmo de Tarjan para SCC
+int GraphGen::dfsScc(vector<int> &comp, vector<int> &vis, vector<int> &id, int& t, int& c, int k) {
+	static stack<int> s;
+
+	int lo = id[k] = t++;
+	s.push(k);
+	vis[k] = 2;
+
+	for (int i = 0; i < adj[k].size(); i++) {
+		if (!vis[adj[k][i].first]) lo = min(lo, dfsScc(comp, vis, id, t, c, adj[k][i].first));
+		else if (vis[adj[k][i].first] == 2) lo = min(lo, id[adj[k][i].first]);
+	}
+	if (lo == id[k]) while (1) {
+		int u = s.top();
+		s.pop();
+		vis[u] = 1;
+		comp[u] = c;
+		if (u == k) {
+			c++;
+			break;
+		}
+	}
+	return lo;
+}
+
+// O(n+m)
+vector<int> GraphGen::scc() {
+	vector<int> vis(n, 0), comp(n), id(n);
+	int t = -1, c = 0;
+	for (int i = 0; i < n; i++) if (!vis[i]) dfsScc(comp, vis, id, ++t, c, i);
+	return comp;
+}
