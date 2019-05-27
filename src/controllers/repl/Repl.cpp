@@ -85,7 +85,7 @@ namespace repl {
 
 		cout << "chordal:     ";
 		if (G.isChordal()) cout << "yes" << endl;
-		else cout << " ??" << endl;
+		else cout << " no" << endl;
 
 		cout << "dag:         ";
 		if (G.isDag()) cout << "yes" << endl;

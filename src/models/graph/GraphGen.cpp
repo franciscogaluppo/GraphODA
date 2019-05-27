@@ -88,8 +88,77 @@ bool GraphGen::isBipartite() {
 	return true;
 }
 
-bool GraphGen::isChordal() {
-	return false;	
+bool GraphGen::isChordal()
+{
+	vector<set<int> > Set (n);
+	vector<int> size (n, 0);
+	vector<int> alpha (n);
+	vector<int> alphaInv (n);
+	vector<int> f (n);
+	vector<int> index (n);
+	int i = n-1, j = 0;
+
+	for(int i = 0; i < n; i++)
+		Set[0].insert(i);
+	
+	// Maximum Cardinality Search
+	while(i >= 0)
+	{
+		int v = *Set[j].begin();
+		Set[j].erase(v);
+		
+		alpha[v] = i;
+		alphaInv[i] = v;
+		size[v] = -1;
+
+		for(auto u: simAdj[v])
+		{
+			int w = u.first;
+			if(size[w] < 0)
+				continue;
+
+			Set[size[w]].erase(w);
+			size[w]++;
+			Set[size[w]].insert(w);
+		}
+
+		i--;
+		j++;
+
+		while(j > 0 && Set[j].empty())
+			j--;
+	}
+
+	// Zero Fill-in
+	for(int i = 0; i < n; i++)
+	{
+		int w = alphaInv[i];
+		f[w] = w;
+		index[w] = i;
+	   	
+		for(auto u: simAdj[w])
+		{
+			int v = u.first;
+			if(alpha[v] >= i)
+				continue;
+
+			index[v] = i;
+
+			if(f[v] == v)
+				f[v] = w;
+		}
+
+		for(auto u: simAdj[w])
+		{
+			int v = u.first;
+			if(alpha[v] >= i)
+				continue;
+
+			if(index[f[v]] < i)
+				return false;
+		}
+	}
+	return true;
 }
 
 bool GraphGen::dfsCheckDag(int i, vector<int>& vis) {
