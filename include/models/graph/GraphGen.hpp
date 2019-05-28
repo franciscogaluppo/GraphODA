@@ -6,6 +6,7 @@
 #include <vector>
 #include <stack>
 #include <set>
+#include <queue>
 using namespace std;
 
 class GraphGen {
@@ -27,6 +28,9 @@ class GraphGen {
 		vector<vector<int>> getMatrix();
 		vector<vector<int>> getSimMatrix();
 
+		// auxiliares
+		bool reaches(int, int);
+
 		// reconhecedores
 		bool isBipartite();
 		bool isChordal();
@@ -35,6 +39,9 @@ class GraphGen {
 
 		// algoritmos
 		vector<int> scc();
+		long long shortestPathBFS(int, int);
+		long long dijkstra(int, int);
+		long long shortestPath(int, int);
 
 	protected:
 		int n, m;
@@ -43,6 +50,7 @@ class GraphGen {
 		bool weighted;
 
 	private:
+		bool dfsReaches(vector<bool>&, int, int);
 		bool dfsCheckBipartite(int, int, vector<int>&);
 		bool dfsCheckDag(int, vector<int>&);
 		bool dfsCheckTree(int, int, vector<int>&);

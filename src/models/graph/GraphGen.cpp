@@ -70,6 +70,19 @@ vector<vector<int>> GraphGen::getSimMatrix() {
 	return matrix;
 }
 
+bool GraphGen::dfsReaches(vector<bool> &vis, int a, int b) {
+	vis[a] = true;
+	if (a == b) return true;
+	
+	for (auto i : adj[a]) if (!vis[i.first] and dfsReaches(vis, i.first, b)) return true;
+	return false;
+}
+
+bool GraphGen::reaches(int a, int b) {
+	vector<bool> vis(n, false);
+	return dfsReaches(vis, a, b);
+}
+
 bool GraphGen::dfsCheckBipartite(int i, int c, vector<int>& cor) {
 	cor[i] = c;
 	for (auto j : simAdj[i]) {
@@ -226,4 +239,54 @@ vector<int> GraphGen::scc() {
 	int t = -1, c = 0;
 	for (int i = 0; i < n; i++) if (!vis[i]) dfsScc(comp, vis, id, ++t, c, i);
 	return comp;
+}
+
+// O(n+m)
+long long GraphGen::shortestPathBFS(int a, int b) {
+	vector<bool> vis(n, 0);
+	queue<pair<int, int> > q;
+	vis[a] = true;
+	q.push({a, 0});
+
+	while (q.size()) {
+		int u = q.front().first, d = q.front().second;
+		q.pop();
+
+		if (u == b) return d;
+		for (auto i : adj[u]) if (!vis[i.first]) {
+			q.push({i.first, d+1});
+			vis[i.first] = true;
+		}
+	}
+	return 0x3f3f3f3f3f3f3f3fll;
+}
+
+// O(m log(n))
+long long GraphGen::dijkstra(int a, int b) {
+	vector<long long> d(n, 0x3f3f3f3f3f3f3f3fll);
+	priority_queue<pair<long long, int>, vector<pair<long long, int> >,
+										greater<pair<long long, int> > > q;
+	d[a] = 0;
+	q.push({0, a});
+
+	while(q.size()) {
+		int u = q.top().second;
+		long long dist = q.top().first;
+		q.pop();
+		if (dist > d[u]) continue;
+
+		for (auto i : adj[u]) {
+			int v = i.first, w = i.second;
+			if (d[v] > d[u] + w) {
+				d[v] = d[u] + w;
+				q.push({d[v], v});
+			}
+		}
+	}
+	return d[b];
+}
+
+long long GraphGen::shortestPath(int a, int b) {
+	if (!weighted) return shortestPathBFS(a, b);
+	return dijkstra(a, b);
 }

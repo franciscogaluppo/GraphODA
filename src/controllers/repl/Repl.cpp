@@ -37,6 +37,11 @@ namespace repl {
 		return G;
 	}
 
+	int getVertex(Graph& G, string s) {
+		for (int i = 0; i < G.getN(); i++) if (G.label[i] == s) return i;
+		return -1;
+	}
+
 	void import() {
 		string file;
 		ss >> file;
@@ -96,7 +101,21 @@ namespace repl {
 		else cout << " no" << endl;
 	}
 
-	// O(n+m);
+	void reaches() {
+		Graph G = getGraph();
+		string a, b;
+		ss >> a >> b;
+		int aa = getVertex(G, a), bb = getVertex(G, b);
+		if (aa == -1 or bb == -1) {
+			cout << "ERRO: vertices nao encontrados" << endl;
+			return;
+		}
+
+		if (G.reaches(aa, bb)) cout << "true" << endl;
+		else cout << "false" << endl;
+	}
+
+	// O(n+m)
 	void scc() {
 		Graph G = getGraph();
 		auto v = G.scc();
@@ -111,6 +130,23 @@ namespace repl {
 			for (int j : v2[i]) cout << " " << G.label[j];
 			cout << endl;
 		}
+	}
+
+	void shortestPath() {
+		string a, b;
+		ss >> a >> b;
+		Graph G = getGraph();
+		int aa = getVertex(G, a), bb = getVertex(G, b);
+
+		if (aa == -1 or bb == -1) {
+			cout << "ERRO: vertices nao encontrados" << endl;
+			return;
+		}
+		if (!G.reaches(aa, bb)) {
+			cout << "ERRO: " << a << " nao alcanca " << b << endl;	
+			return;
+		}
+		cout << G.shortestPath(aa, bb) << endl;
 	}
 
 	void run() {
@@ -188,7 +224,9 @@ namespace repl {
 				if (com == "show") show();
 				else if (com == "edit") edit();
 				else if (com == "describe") describe();
+				else if (com == "reaches") reaches();
 				else if (com == "scc") scc();
+				else if (com == "shortestPath") shortestPath();
 			}
 		}
 	}
