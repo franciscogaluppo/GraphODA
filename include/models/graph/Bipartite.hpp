@@ -10,4 +10,12 @@ class Bipartite : public GraphGen {
 		Bipartite(GraphGen&);
 };
 
+class BipartiteConstructorException : public GraphException {
+	public:
+		BipartiteConstructorException() {}
+		const char *what() const throw () {
+			return "constructor paramer is not bipartite";
+		}
+};
+
 #endif

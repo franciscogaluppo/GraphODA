@@ -184,9 +184,12 @@ Graph displayTeste(int X, int Y, Graph G) {
 					// weight
 					if (GC.editWeight > -1) {
 						string s = edit->getText().toAnsiString();
+
 						bool valid = 1;
-						for (auto c : s)
-							if (c < '0' or c > '9') valid = 0;
+						if (!s.size()) valid = 0;
+						else if (!(s[0] == '-' or (s[0] >= '0' and s[0] <= '9'))) valid = 0;
+						for (int i = 1; i < s.size(); i++) if (s[i] < '0' or s[i] > '9') valid = 0;
+
 						if (valid) {
 							Graph G(GC.GD.G.getN());
 							G.label = GC.GD.G.label;

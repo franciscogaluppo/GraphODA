@@ -6,49 +6,20 @@ Graph::Graph(int n_) : GraphGen(n_) {}
 
 Graph::Graph(int n_, vector<string> &label_) : GraphGen(n_, label_) {}
 
-Graph::Graph(Bipartite B) {
-	n = B.getN();
-	m = B.getM();
-	label = B.label;
-	adj = B.getAdj();
-	simAdj = B.getSimAdj();
-	weighted = B.isWeighted();
-}
-
-Graph::Graph(Chordal C) {
-	n = C.getN();
-	m = C.getM();
-	label = C.label;
-	adj = C.getAdj();
-	simAdj = C.getSimAdj();
-	weighted = C.isWeighted();
-}
-
-Graph::Graph(Dag D) {
-	n = D.getN();
-	m = D.getM();
-	label = D.label;
-	adj = D.getAdj();
-	simAdj = D.getSimAdj();
-	weighted = D.isWeighted();
-}
-
-Graph::Graph(Tree T) {
-	n = T.getN();
-	m = T.getM();
-	label = T.label;
-	adj = T.getAdj();
-	simAdj = T.getSimAdj();
-	weighted = T.isWeighted();
+Graph::Graph(GraphGen &G) {
+	n = G.getN();
+	m = G.getM();
+	label = G.label;
+	adj = G.getAdj();
+	simAdj = G.getSimAdj();
 }
 
 // O(1)
 void Graph::addEdge(int i, int j) {
-	if (i < 0 or j < 0 or i == j or i >= n or j >= n) {
-		// TODO: Erro direito
-		cout << "ERRO: aresta zoada" << endl;
-		return;
-	}
+	if (i < 0 or i >= n) throw GraphVertexOutOfBoundsException(i);
+	if (j < 0 or j >= n) throw GraphVertexOutOfBoundsException(j);
+	if (i == j) throw GraphSelfLoopException(i);
+
 	adj[i].push_back({j, 1});
 	simAdj[i].push_back({j, 1});
 	simAdj[j].push_back({i, 1});
@@ -57,15 +28,13 @@ void Graph::addEdge(int i, int j) {
 
 // O(1)
 void Graph::addEdge(int i, int j, int k) {
-	if (i < 0 or j < 0 or i == j or i >= n or j >= n) {
-		// TODO: Erro direito
-		cout << "ERRO: aresta zoada" << endl;
-		return;
-	}
+	if (i < 0 or i >= n) throw GraphVertexOutOfBoundsException(i);
+	if (j < 0 or j >= n) throw GraphVertexOutOfBoundsException(j);
+	if (i == j) throw GraphSelfLoopException(i);
+
 	adj[i].push_back({j, k});
 	simAdj[i].push_back({j, k});
 	simAdj[j].push_back({i, k});
-	if (k != 1) weighted = true;
 	m++;
 }
 

@@ -245,11 +245,7 @@ Graph lerGrafoArquivo(string arq) {
 	ifstream inFile(arq);
 	if (!inFile) {
 		inFile = ifstream("grafos/grafo" + arq + ".txt");
-		if (!inFile) {
-			// TODO: Erro direito
-			cout << "Erro: arquivo zoado" << endl;
-			return Graph();
-		}
+		if (!inFile) throw FileNotFoundException();
 	}
 
 	int n, m;

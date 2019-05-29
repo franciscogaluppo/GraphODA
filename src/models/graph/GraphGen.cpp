@@ -2,13 +2,11 @@
 
 GraphGen::GraphGen() {
 	n = 0, m = 0;
-	weighted = false;
 }
 
 GraphGen::GraphGen(int n_) {
 	n = n_;
 	m = 0;
-	weighted = false;
 	adj.resize(n);
 	simAdj.resize(n);
 	for (int i = 0; i < n; i++) label.push_back(to_string(i));
@@ -17,7 +15,6 @@ GraphGen::GraphGen(int n_) {
 GraphGen::GraphGen(int n_, vector<string> &label_) {
 	n = n_;
 	m = 0;
-	weighted = false;
 	adj.resize(n);
 	simAdj.resize(n);
 	for (int i = 0; i < n; i++) {
@@ -31,8 +28,6 @@ GraphGen::GraphGen(int n_, vector<string> &label_) {
 int GraphGen::getN() { return n; }
 
 int GraphGen::getM() { return m; }
-
-bool GraphGen::isWeighted() { return weighted; }
 
 // O(n+m)
 vector<vector<pair<int, int>>> GraphGen::getAdj() { return adj; }
@@ -68,6 +63,18 @@ vector<vector<int>> GraphGen::getSimMatrix() {
 	for (int i = 0; i < n; i++)
 		for (auto j : adj[i]) matrix[i][j.first] = matrix[j.first][i] = 1;
 	return matrix;
+}
+
+// O(n+m)
+bool GraphGen::isWeighted() {
+	for (int i = 0; i < n; i++) for (auto j : adj[i]) if (j.second != 1) return true;
+	return false;
+}
+
+// O(n+m)
+bool GraphGen::hasNegativeWeight() {
+	for (int i = 0; i < n; i++) for (auto j : adj[i]) if (j.second < 0) return true;
+	return false;
 }
 
 bool GraphGen::dfsReaches(vector<bool> &vis, int a, int b) {
@@ -258,7 +265,7 @@ long long GraphGen::shortestPathBFS(int a, int b) {
 			vis[i.first] = true;
 		}
 	}
-	return 0x3f3f3f3f3f3f3f3fll;
+	throw GraphNoPathException(a, b);
 }
 
 // O(m log(n))
@@ -286,7 +293,27 @@ long long GraphGen::dijkstra(int a, int b) {
 	return d[b];
 }
 
+long long GraphGen::bellmanFord(int a, int b) {
+	vector<long long> d(n, 0x3f3f3f3f3f3f3f3fll);
+	d[a] = 0;
+	auto edg = this->getEdges();
+	auto pesos = this->getPesos();
+
+	for (int i = 0; i <= n; i++) for (int j = 0; j < m; j++) {
+		if (d[edg[j].first] + pesos[j] < d[edg[j].second]) {
+			if (i == n) throw GraphNegativeCycleException();
+
+			d[edg[j].second] = d[edg[j].first] + pesos[j];
+		}
+	}
+
+	return d[b];
+}
+
 long long GraphGen::shortestPath(int a, int b) {
-	if (!weighted) return shortestPathBFS(a, b);
+	if (!this->reaches(a, b)) throw GraphNoPathException(a, b);
+
+	if (this->hasNegativeWeight()) return bellmanFord(a, b);
+	if (!this->isWeighted()) return shortestPathBFS(a, b);
 	return dijkstra(a, b);
 }

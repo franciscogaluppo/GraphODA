@@ -45,7 +45,13 @@ namespace repl {
 	void import() {
 		string file;
 		ss >> file;
-		auto j = lerGrafoArquivo(file);
+		Graph j;
+		try {
+			j = lerGrafoArquivo(file);
+		} catch (FileNotFoundException &e) {
+			cout << "ERROR: file not found" << endl;
+			return;
+		}
 		if (j.getN()) {
 			graphs[at].G = j;
 			graphs[at].type = 0;
@@ -56,13 +62,13 @@ namespace repl {
 		string var2;
 		ss >> var2;
 		if (!vars.count(var2)) {
-			cout << "ERRO: " << var2 << " nao definido" << endl;
+			cout << "ERROR: undefined variable " << var2 << endl;
 			return;
 		}
 		if (graphs[vars[var2]].type != 0) {
-			cout << "ERRO: " << var2 << " eh do tipo "
+			cout << "ERROR: " << var2 << " has type "
 				<< getType(graphs[vars[var2]].type) << endl;
-			cout << "\tesperava tipo " << getType(0) << endl;
+			cout << "\texpected " << getType(0) << endl;
 			return;
 		}
 		graphs[at].T = graphs[vars[var2]].G.mst();
@@ -106,8 +112,12 @@ namespace repl {
 		string a, b;
 		ss >> a >> b;
 		int aa = getVertex(G, a), bb = getVertex(G, b);
-		if (aa == -1 or bb == -1) {
-			cout << "ERRO: vertices nao encontrados" << endl;
+		if (aa == -1) {
+			cout << "ERROR: vertex " << a << " not found" << endl;
+			return;
+		}
+		if (bb == -1) {
+			cout << "ERROR: vertex " << b << " not found" << endl;
 			return;
 		}
 
@@ -121,7 +131,7 @@ namespace repl {
 		auto v = G.scc();
 		int ma = 0;
 		for (int i : v) ma = max(ma, i);
-		cout << ma+1 << " componentes fortemente conexas" << endl << endl;
+		cout << ma+1 << " strongly connected componentes" << endl << endl;
 
 		vector<vector<int> > v2(ma+1);
 		for (int i = 0; i < G.getN(); i++) v2[v[i]].push_back(i);
@@ -137,16 +147,19 @@ namespace repl {
 		ss >> a >> b;
 		Graph G = getGraph();
 		int aa = getVertex(G, a), bb = getVertex(G, b);
-
-		if (aa == -1 or bb == -1) {
-			cout << "ERRO: vertices nao encontrados" << endl;
+		if (aa == -1) {
+			cout << "ERROR: vertex " << a << " not found" << endl;
 			return;
 		}
-		if (!G.reaches(aa, bb)) {
-			cout << "ERRO: " << a << " nao alcanca " << b << endl;	
+		if (bb == -1) {
+			cout << "ERROR: vertex " << b << " not found" << endl;
 			return;
 		}
-		cout << G.shortestPath(aa, bb) << endl;
+		try {
+			cout << G.shortestPath(aa, bb) << endl;
+		} catch (GraphNoPathException &e) {
+			cout << "ERROR: no path from " << a << " to " << b << endl;	
+		}
 	}
 
 	void run() {
@@ -180,14 +193,14 @@ namespace repl {
 				var += c;
 			}
 			if (atribuicao == -1) {
-				cout << "ERRO: seu comando ta na Disney" << endl;
+				cout << "ERROR: what are you doing?" << endl;
 				continue;
 			}
 
 			// coloca no map
 			if (!vars.count(var)) {
 				if (!atribuicao) {
-					cout << "ERRO: " << var << " nao definido" << endl;
+					cout << "ERROR: undefined variable " << var << endl;
 					continue;
 				}
 				vars[var] = graphs.size();
@@ -207,7 +220,7 @@ namespace repl {
 				else {
 					// a = b
 					if (!vars.count(com)) {
-						cout << "ERRO: " << com << " nao definido" << endl;
+						cout << "ERROR: undefined variable " << com << endl;
 						continue;
 					}
 					graphs[at].type = graphs[vars[com]].type;

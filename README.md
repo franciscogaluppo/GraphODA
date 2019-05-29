@@ -62,8 +62,20 @@ Exibe o grafo representado por *var*.
 ```
 Exibe o grafo representado por *var*, salvando as modificações efetuadas.
 
+#### reaches
+```
+>>> var > reaches a b
+```
+Verifica se o vértice *a* alcança o vértice *b* no grafo representado por *var*.
+
 #### scc
 ```
 >>> var > scc
 ```
 Exibe as componentes fortemente conexas do grafo representado por *var*.
+
+#### shortestPath
+```
+>>> var > shortestPath a b
+```
+Computa o peso do caminho mínimo do vértice *a* para o vértice *b* no grafo representado por *var*.

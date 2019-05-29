@@ -10,4 +10,12 @@ class Dag : public GraphGen {
 		Dag(GraphGen&);
 };
 
+class DagConstructorException : public GraphException {
+	public:
+		DagConstructorException() {}
+		const char *what() const throw () {
+			return "construcor parameter is not a dag";	
+		}
+};
+
 #endif

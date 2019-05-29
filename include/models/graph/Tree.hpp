@@ -10,4 +10,12 @@ class Tree : public Chordal {
 		Tree(GraphGen&);
 };
 
+class TreeConstructorException : public GraphException {
+	public:
+		TreeConstructorException() {}
+		const char *what() const throw () {
+			return "constructor parameter is not a tree";	
+		}
+};
+
 #endif

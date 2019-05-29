@@ -10,4 +10,12 @@ class Chordal : public GraphGen {
 		Chordal(GraphGen&);
 };
 
+class ChordalConstructorException : public GraphException {
+	public:
+		ChordalConstructorException() {}
+		const char *what() const throw () {
+			return "constructor parameter is not chordal";	
+		}
+};
+
 #endif
