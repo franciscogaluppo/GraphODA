@@ -19,6 +19,8 @@ namespace repl {
 	string var;
 	int at;
 
+	// aux
+
 	string getType(int i) {
 		if (i == 0) return "Graph";
 		if (i == 1) return "Bipartite";
@@ -39,17 +41,47 @@ namespace repl {
 
 	int getVertex(Graph& G, string s) {
 		for (int i = 0; i < G.getN(); i++) if (G.label[i] == s) return i;
-		return -1;
+		throw REPLVertexNotFoundException();
 	}
+
+	// errors
+
+	void fileNotFoundError(string f) {
+		cout << "ERROR: file " << f << " not found" << endl;
+	}
+
+	void undefinedVariableError(string var) {
+		cout << "ERROR: undefined variable " << var << endl;
+	}
+
+	void wrongTypeError(string var, int exp) {
+		cout << "ERROR: " << var << " has type "
+			<< getType(graphs[vars[var]].type) << endl;
+		cout << "\texpected " << getType(exp) << endl;
+	}
+
+	void vertexNotFoundError(string v) {
+		cout << "ERROR: vertex " << v << " not found" << endl;
+	}
+
+	void noPathError(string a, string b) {
+		cout << "ERROR: no path from " << a << " to " << b << endl;
+	}
+
+	void negativeCycleError() {
+		cout << "ERROR: graph has a negative cycle" << endl;
+	}
+
+	// commands
 
 	void import() {
 		string file;
-		ss >> file;
+		if (!(ss >> file)) throw REPLInvalidCommandException();
 		Graph j;
 		try {
 			j = lerGrafoArquivo(file);
 		} catch (FileNotFoundException &e) {
-			cout << "ERROR: file not found" << endl;
+			fileNotFoundError(file);
 			return;
 		}
 		if (j.getN()) {
@@ -60,15 +92,13 @@ namespace repl {
 
 	void mst() {
 		string var2;
-		ss >> var2;
+		if (!(ss >> var2)) throw REPLInvalidCommandException();
 		if (!vars.count(var2)) {
-			cout << "ERROR: undefined variable " << var2 << endl;
+			undefinedVariableError(var2);
 			return;
 		}
 		if (graphs[vars[var2]].type != 0) {
-			cout << "ERROR: " << var2 << " has type "
-				<< getType(graphs[vars[var2]].type) << endl;
-			cout << "\texpected " << getType(0) << endl;
+			wrongTypeError(var2, 0);
 			return;
 		}
 		graphs[at].T = graphs[vars[var2]].G.mst();
@@ -110,14 +140,18 @@ namespace repl {
 	void reaches() {
 		Graph G = getGraph();
 		string a, b;
-		ss >> a >> b;
-		int aa = getVertex(G, a), bb = getVertex(G, b);
-		if (aa == -1) {
-			cout << "ERROR: vertex " << a << " not found" << endl;
+		if (!(ss >> a >> b)) throw REPLInvalidCommandException();
+		int aa, bb;
+		try {
+			aa = getVertex(G, a);
+		} catch (REPLVertexNotFoundException &e) {
+			vertexNotFoundError(a);
 			return;
 		}
-		if (bb == -1) {
-			cout << "ERROR: vertex " << b << " not found" << endl;
+		try {
+			bb = getVertex(G, b);
+		} catch (REPLVertexNotFoundException &e) {
+			vertexNotFoundError(b);
 			return;
 		}
 
@@ -144,21 +178,27 @@ namespace repl {
 
 	void shortestPath() {
 		string a, b;
-		ss >> a >> b;
+		if (!(ss >> a >> b)) throw REPLInvalidCommandException();
 		Graph G = getGraph();
-		int aa = getVertex(G, a), bb = getVertex(G, b);
-		if (aa == -1) {
-			cout << "ERROR: vertex " << a << " not found" << endl;
+		int aa, bb;
+		try {
+			aa = getVertex(G, a);
+		} catch (REPLVertexNotFoundException &e) {
+			vertexNotFoundError(a);
 			return;
 		}
-		if (bb == -1) {
-			cout << "ERROR: vertex " << b << " not found" << endl;
+		try {
+			bb = getVertex(G, b);
+		} catch (REPLVertexNotFoundException &e) {
+			vertexNotFoundError(b);
 			return;
 		}
 		try {
 			cout << G.shortestPath(aa, bb) << endl;
 		} catch (GraphNoPathException &e) {
-			cout << "ERROR: no path from " << a << " to " << b << endl;	
+			noPathError(a, b);
+		} catch (GraphNegativeCycleException &e) {
+			negativeCycleError();
 		}
 	}
 
@@ -200,7 +240,7 @@ namespace repl {
 			// coloca no map
 			if (!vars.count(var)) {
 				if (!atribuicao) {
-					cout << "ERROR: undefined variable " << var << endl;
+					undefinedVariableError(var);
 					continue;
 				}
 				vars[var] = graphs.size();
@@ -211,35 +251,39 @@ namespace repl {
 			}
 
 			at = vars[var];
-			if (atribuicao) {
-				string com;
-				ss >> com;
+			try {
+				if (atribuicao) {
+					string com;
+					ss >> com;
 
-				if (com == "import") import();
-				else if (com == "mst") mst();
-				else {
-					// a = b
-					if (!vars.count(com)) {
-						cout << "ERROR: undefined variable " << com << endl;
-						continue;
+					if (com == "import") import();
+					else if (com == "mst") mst();
+					else {
+						// a = b
+						if (!vars.count(com)) {
+							undefinedVariableError(com);
+							continue;
+						}
+						graphs[at].type = graphs[vars[com]].type;
+						if (graphs[at].type == 0) graphs[at].G = graphs[vars[com]].G;
+						if (graphs[at].type == 1) graphs[at].B = graphs[vars[com]].B;
+						if (graphs[at].type == 2) graphs[at].C = graphs[vars[com]].C;
+						if (graphs[at].type == 3) graphs[at].D = graphs[vars[com]].D;
+						if (graphs[at].type == 4) graphs[at].T = graphs[vars[com]].T;
 					}
-					graphs[at].type = graphs[vars[com]].type;
-					if (graphs[at].type == 0) graphs[at].G = graphs[vars[com]].G;
-					if (graphs[at].type == 1) graphs[at].B = graphs[vars[com]].B;
-					if (graphs[at].type == 2) graphs[at].C = graphs[vars[com]].C;
-					if (graphs[at].type == 3) graphs[at].D = graphs[vars[com]].D;
-					if (graphs[at].type == 4) graphs[at].T = graphs[vars[com]].T;
-				}
-			} else {
-				string com;
-				ss >> com;
+				} else {
+					string com;
+					ss >> com;
 
-				if (com == "show") show();
-				else if (com == "edit") edit();
-				else if (com == "describe") describe();
-				else if (com == "reaches") reaches();
-				else if (com == "scc") scc();
-				else if (com == "shortestPath") shortestPath();
+					if (com == "show") show();
+					else if (com == "edit") edit();
+					else if (com == "describe") describe();
+					else if (com == "reaches") reaches();
+					else if (com == "scc") scc();
+					else if (com == "shortestPath") shortestPath();
+				}
+			} catch (REPLInvalidCommandException &e) {
+				cout << "ERROR: invalid command" << endl;	
 			}
 		}
 	}
