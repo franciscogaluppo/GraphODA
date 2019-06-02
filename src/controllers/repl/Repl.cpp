@@ -41,31 +41,31 @@ namespace repl {
 
 	int getVertex(Graph& G, string s) {
 		for (int i = 0; i < G.getN(); i++) if (G.label[i] == s) return i;
-		throw REPLVertexNotFoundException();
+		throw REPLVertexNotFoundException(s);
 	}
 
 	// errors
 
 	void fileNotFoundError(string f) {
-		cout << "ERROR: file " << f << " not found" << endl;
+		cout << "ERROR: file '" << f << "' not found" << endl;
 	}
 
 	void undefinedVariableError(string var) {
-		cout << "ERROR: undefined variable " << var << endl;
+		cout << "ERROR: undefined variable '" << var << "'" << endl;
 	}
 
 	void wrongTypeError(string var, int exp) {
-		cout << "ERROR: " << var << " has type "
-			<< getType(graphs[vars[var]].type) << endl;
-		cout << "\texpected " << getType(exp) << endl;
+		cout << "ERROR: " << var << " has type '"
+			<< getType(graphs[vars[var]].type) << "'" << endl;
+		cout << "\texpected '" << getType(exp) << "'" << endl;
 	}
 
 	void vertexNotFoundError(string v) {
-		cout << "ERROR: vertex " << v << " not found" << endl;
+		cout << "ERROR: vertex '" << v << "' not found" << endl;
 	}
 
 	void noPathError(string a, string b) {
-		cout << "ERROR: no path from " << a << " to " << b << endl;
+		cout << "ERROR: no path from '" << a << "' to '" << b << "'" << endl;
 	}
 
 	void negativeCycleError() {

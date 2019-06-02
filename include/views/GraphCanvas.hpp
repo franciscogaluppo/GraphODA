@@ -38,10 +38,13 @@ Graph lerGrafoArquivo(string);
 
 class FileNotFoundException : public exception {
 	public:
-		FileNotFoundException() {}
-		const char *what() const throw () {
-			return "couldn't read file";
+		FileNotFoundException(string f) {
+			msg = "coudn't read file: "+f;
 		}
+		const char *what() const throw () { return msg.c_str(); }
+
+	private:
+		string msg;
 };
 
 #endif

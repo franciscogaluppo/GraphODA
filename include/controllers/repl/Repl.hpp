@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -25,18 +26,23 @@ class REPLException : public exception {
 		const char *what() const throw () { return "REPL Exception"; }
 };
 
-class REPLInvalidCommandException : REPLException {
+class REPLInvalidCommandException : public REPLException {
 	public:
 		REPLInvalidCommandException() {}
 		const char *what() const throw () { return "invalid syntax"; }
 };
 
-class REPLVertexNotFoundException : REPLException {
+class REPLVertexNotFoundException : public REPLException {
 	public:
-		REPLVertexNotFoundException() {}
-		const char *what() const throw () {
-			return "coudn't find vertex with given label";
+		REPLVertexNotFoundException(string v) {
+			msg = "coudn't find vertex with label: "+v;
 		}
+		const char *what() const throw () {
+			return msg.c_str();
+		}
+
+	private:
+		string msg;
 };
 
 #endif

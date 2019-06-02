@@ -6,6 +6,7 @@
 #include <vector>
 #include <stack>
 #include <set>
+#include <string>
 #include <queue>
 using namespace std;
 
@@ -69,12 +70,13 @@ class GraphException : public exception {
 
 class GraphNoPathException : public GraphException {
 	public:
-		GraphNoPathException(int a_, int b_) : a(a_), b(b_) {}
-		const char *what() const throw () { return "no path"; }
-		pair<int, int> get() { return make_pair(a, b); }
+		GraphNoPathException(int a, int b) {
+			msg = "no path from "+to_string(a)+" to "+to_string(b);	
+		}
+		const char *what() const throw () { return msg.c_str(); }
 
 	private:
-		int a, b;
+		string msg;
 };
 
 class GraphNegativeCycleException : public GraphException {

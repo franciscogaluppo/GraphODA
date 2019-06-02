@@ -245,7 +245,7 @@ Graph lerGrafoArquivo(string arq) {
 	ifstream inFile(arq);
 	if (!inFile) {
 		inFile = ifstream("grafos/grafo" + arq + ".txt");
-		if (!inFile) throw FileNotFoundException();
+		if (!inFile) throw FileNotFoundException(arq);
 	}
 
 	int n, m;

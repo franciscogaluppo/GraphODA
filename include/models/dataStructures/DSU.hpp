@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace std;
 
 class DSU {
@@ -26,26 +27,24 @@ class DSUException : public exception {
 
 class DSUNegativeConstructorParameterException : public DSUException {
 	public:
-		DSUNegativeConstructorParameterException(int n_) : n(n_) {}
-		const char *what() const throw () {
-			return "constructor parameter cannot be negative";
+		DSUNegativeConstructorParameterException(int n) {
+			msg = "constructor parameter cannot be negative; got "+to_string(n);
 		}
-		int get() { return n; }
+		const char *what() const throw () { return msg.c_str(); }
 
 	private:
-		int n;
+		string msg;
 };
 
 class DSUValueOutOfBoundsException : public DSUException {
 	public:
-		DSUValueOutOfBoundsException(int n_) : n(n_) {}
-		const char *what() const throw () {
-			return "value out of bounds";
+		DSUValueOutOfBoundsException(int n) {
+			msg = "value out of bounds: "+to_string(n);	
 		}
-		int get() { return n; }
+		const char *what() const throw () { return msg.c_str(); }
 
 	private:
-		int n;
+		string msg;
 };
 
 #endif

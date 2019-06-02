@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <string>
 using namespace std;
 
 class Graph : public GraphGen {
@@ -29,26 +30,24 @@ class Graph : public GraphGen {
 
 class GraphVertexOutOfBoundsException : public GraphException {
 	public:
-		GraphVertexOutOfBoundsException(int n_) : n(n_) {}
-		const char *what() const throw () {
-			return "vertex out of bounds";
+		GraphVertexOutOfBoundsException(int n) {
+			msg = "vertex out of bounds: "+to_string(n);	
 		}
-		int get() { return n; }
+		const char *what() const throw () { return msg.c_str(); }
 
 	private:
-		int n;
+		string msg;
 };
 
 class GraphSelfLoopException : public GraphException {
 	public:
-		GraphSelfLoopException(int n_) : n(n_) {}
-		const char *what() const throw () {
-			return "self loop not allowed";
+		GraphSelfLoopException(int n) {
+			msg = "self loop not allowed (at vertex "+to_string(n)+")";
 		}
-		int get() { return n; }
+		const char *what() const throw () { return msg.c_str(); }
 
 	private:
-		int n;
+		string msg;
 };
 
 #endif
