@@ -1,6 +1,7 @@
 #ifndef GRAPHGENH
 #define GRAPHGENH
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>

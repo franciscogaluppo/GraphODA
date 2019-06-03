@@ -114,8 +114,7 @@ bool GraphGen::isChordal()
 	vector<int> size (n, 0);
 	vector<int> alpha (n);
 	vector<int> alphaInv (n);
-	vector<int> f (n);
-	vector<int> index (n);
+	vector<bool> visitado (n, 0);
 	int i = n-1, j = 0;
 
 	for(int i = 0; i < n; i++)
@@ -131,12 +130,17 @@ bool GraphGen::isChordal()
 		alphaInv[i] = v;
 		size[v] = -1;
 
+		fill(visitado.begin(), visitado.end(), false);
 		for(auto u: simAdj[v])
 		{
 			int w = u.first;
+			if(visitado[w])
+				continue;
+
 			if(size[w] < 0)
 				continue;
 
+			visitado[w] = true;
 			Set[size[w]].erase(w);
 			size[w]++;
 			Set[size[w]].insert(w);
@@ -150,30 +154,42 @@ bool GraphGen::isChordal()
 	}
 
 	// Zero Fill-in
+	vector<int> f (n);
+	vector<int> index (n);
 	for(int i = 0; i < n; i++)
 	{
 		int w = alphaInv[i];
 		f[w] = w;
 		index[w] = i;
 	   	
+		fill(visitado.begin(), visitado.end(), false);
 		for(auto u: simAdj[w])
 		{
 			int v = u.first;
+			if(visitado[v])
+				continue;
+
 			if(alpha[v] >= i)
 				continue;
 
+			visitado[v] = true;
 			index[v] = i;
 
 			if(f[v] == v)
 				f[v] = w;
 		}
 
+		fill(visitado.begin(), visitado.end(), false);
 		for(auto u: simAdj[w])
 		{
 			int v = u.first;
+			if(visitado[v])
+				continue;
+
 			if(alpha[v] >= i)
 				continue;
 
+			visitado[v] = true;
 			if(index[f[v]] < i)
 				return false;
 		}

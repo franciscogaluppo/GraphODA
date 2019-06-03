@@ -8,6 +8,11 @@ class Chordal : public GraphGen {
 		Chordal();
 		Chordal(int);
 		Chordal(GraphGen&);
+
+		// Algoritmos
+		vector<int> perfectEliminationOrdering();
+		vector<int> coloring();
+		int chromaticNumber();
 };
 
 class ChordalConstructorException : public GraphException {
