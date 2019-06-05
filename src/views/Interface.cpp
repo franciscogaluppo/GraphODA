@@ -1,6 +1,7 @@
 #include "Interface.hpp"
 
-void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC) {
+void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC)
+{
 	auto i = lerGrafoArquivo(arq->getText().toAnsiString());
 	GC->setGraph(i);
 }
@@ -37,6 +38,12 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
 	check->setPosition(820.f, 235.f);
 	gui.add(check);
 
+	// Botão de help
+	auto botaoHelp = tgui::Button::create("Help");
+	botaoHelp->setSize(75.f,20.f);
+	botaoHelp->setPosition(930.f, 290.f);
+	gui.add(botaoHelp);
+
 	// Botao pra ler arquivo
 	auto botaoArquivo = tgui::Button::create("Importar");
 	botaoArquivo->setSize(75.f, 20.f);
@@ -63,15 +70,27 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	janela.clear(sf::Color::White);
 
 	// Parte cinza
-	sf::RectangleShape menu(sf::Vector2f(400.f, 600.f));
+	sf::RectangleShape menu(sf::Vector2f(400.f, 700.f));
 	menu.setFillColor(sf::Color(192, 192, 192));
 	menu.setPosition(800.f, 0.f);
 	janela.draw(menu);
 
+		//Menu superior
+	sf::RectangleShape superior(sf::Vector2f(800.f,100.f));	//larg x alt
+	superior.setFillColor(sf::Color(255,0,0));
+	superior.setPosition(0.f, 600.f);
+	janela.draw(superior);
+
+	//Divisão entre o canvas e o superior
+	sf::Vertex linha0[] = {sf::Vertex(sf::Vector2f(0,600), sf::Color(130, 130, 130)),
+
+		sf::Vertex(sf::Vector2f(1200, 600), sf::Color(130, 130, 130))};
+	janela.draw(linha0, 2, sf::Lines);
+
 	// Divisão entre o canvas e o menu
 	sf::Vertex linha1[] = {sf::Vertex(sf::Vector2f(800, 0), sf::Color::Black),
 
-		sf::Vertex(sf::Vector2f(800, 600), sf::Color::Black)};
+		sf::Vertex(sf::Vector2f(800, 700), sf::Color::Black)};
 	janela.draw(linha1, 2, sf::Lines);
 
 	// Divisão entre instruções e import
@@ -134,7 +153,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 	tgui::Gui gui(janela);
 
 	// GraphCanvas
-	GraphCanvas GC(janela, fonte, X * 2 / 3, Y, 15);
+	GraphCanvas GC(janela, fonte, X * 2 / 3, Y * 6/7, 15);
 	GC.setGraph(G);
 	bool editing;
 	tgui::EditBox::Ptr edit;
