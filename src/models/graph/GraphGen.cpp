@@ -108,23 +108,24 @@ bool GraphGen::isBipartite() {
 	return true;
 }
 
-bool GraphGen::isChordal()
-{
+
+pair<vector<int>, vector<int>> GraphGen::maximumCardinalitySearch()
+{	
 	vector<set<int> > Set (n);
 	vector<int> size (n, 0);
 	vector<int> alpha (n);
 	vector<int> alphaInv (n);
 	vector<bool> visitado (n, 0);
-	int i = n-1, j = 0;
 
-	for(int i = 0; i < n; i++)
-		Set[0].insert(i);
+	for(int k = 0; k < n; k++)
+		Set[0].insert(k);
 	
 	// Maximum Cardinality Search
-	while(i >= 0)
+	for(int i = n-1, j = 0; i >= 0; i--)
 	{
 		int v = *Set[j].begin();
 		Set[j].erase(v);
+		j++;
 		
 		alpha[v] = i;
 		alphaInv[i] = v;
@@ -134,10 +135,7 @@ bool GraphGen::isChordal()
 		for(auto u: simAdj[v])
 		{
 			int w = u.first;
-			if(visitado[w])
-				continue;
-
-			if(size[w] < 0)
+			if(visitado[w] || size[w] < 0)
 				continue;
 
 			visitado[w] = true;
@@ -146,16 +144,23 @@ bool GraphGen::isChordal()
 			Set[size[w]].insert(w);
 		}
 
-		i--;
-		j++;
-
 		while(j > 0 && Set[j].empty())
 			j--;
 	}
 
-	// Zero Fill-in
+	return make_pair(alpha, alphaInv);
+}
+
+
+bool GraphGen::zeroFillIn(pair<vector<int>, vector<int>> parAlpha)
+{
+	vector<int> alpha = parAlpha.first;
+	vector<int> alphaInv = parAlpha.second;
 	vector<int> f (n);
 	vector<int> index (n);
+	vector<bool> visitado (n, 0);
+
+	// Zero Fill-in
 	for(int i = 0; i < n; i++)
 	{
 		int w = alphaInv[i];
@@ -195,6 +200,12 @@ bool GraphGen::isChordal()
 		}
 	}
 	return true;
+}
+
+
+bool GraphGen::isChordal()
+{
+	return zeroFillIn(maximumCardinalitySearch());
 }
 
 bool GraphGen::dfsCheckDag(int i, vector<int>& vis) {

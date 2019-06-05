@@ -202,6 +202,35 @@ namespace repl {
 		}
 	}
 
+	void coloring()
+	{
+		Graph H = getGraph();
+		if(!H.isChordal())
+		{
+			cout << "Work in progess :p" << endl;
+			return;
+		}	
+
+		Chordal G(H);
+		cout << "Coloring" << endl << endl;
+		vector<int> cores = G.coloring();
+		for(int i = 0; i < G.getN(); i++)
+			cout << G.label[i] << ": " << cores[i] << endl;
+	}
+
+	void chromaticNumber()
+	{
+		Graph H = getGraph();
+		if(!H.isChordal())
+		{
+			cout << "Work in progess :p" << endl;
+			return;
+		}	
+	
+		Chordal G(H);
+		cout << "Chromatic number: " << G.chromaticNumber() << endl;
+	}
+
 	void run() {
 		cout << "GraphODA" << endl;
 
@@ -281,6 +310,8 @@ namespace repl {
 					else if (com == "reaches") reaches();
 					else if (com == "scc") scc();
 					else if (com == "shortestPath") shortestPath();
+					else if (com == "coloring") coloring();
+					else if (com == "chromatic_number") chromaticNumber();
 				}
 			} catch (REPLInvalidCommandException &e) {
 				cout << "ERROR: invalid command" << endl;	

@@ -9,6 +9,7 @@
 #include <set>
 #include <string>
 #include <queue>
+#include <utility>
 using namespace std;
 
 class GraphGen {
@@ -49,6 +50,9 @@ class GraphGen {
 		vector<vector<pair<int, int>>> adj;
 		vector<vector<pair<int, int>>> simAdj;
 
+		pair<vector<int>, vector<int>> maximumCardinalitySearch();
+		bool zeroFillIn(pair<vector<int>, vector<int>>);
+
 	private:
 		// auxiliares
 		bool dfsReaches(vector<bool>&, int, int);
@@ -56,7 +60,7 @@ class GraphGen {
 		bool dfsCheckDag(int, vector<int>&);
 		bool dfsCheckTree(int, int, vector<int>&);
 		int dfsScc(vector<int>&, vector<int>&, vector<int>&, int&, int&, int);
-
+		
 		// algoritmos
 		long long shortestPathBFS(int, int);
 		long long dijkstra(int, int);
