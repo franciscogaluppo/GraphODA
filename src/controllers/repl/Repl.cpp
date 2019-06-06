@@ -106,7 +106,7 @@ namespace repl {
 	}
 
 	void show() {
-		displayTeste(1200, 600, getGraph());
+		displayTeste(1200, 700, getGraph());
 	}
 
 	void edit() {
@@ -231,6 +231,15 @@ namespace repl {
 		cout << "Chromatic number: " << G.chromaticNumber() << endl;
 	}
 
+	void greedyColoring()
+	{
+		Graph G = getGraph();
+		cout << "Coloring" << endl << endl;
+		vector<int> cores = G.greedyColoring();
+		for(int i = 0; i < G.getN(); i++)
+			cout << G.label[i] << ": " << cores[i] << endl;
+	}
+
 	void run() {
 		cout << "GraphODA" << endl;
 
@@ -312,6 +321,7 @@ namespace repl {
 					else if (com == "shortestPath") shortestPath();
 					else if (com == "coloring") coloring();
 					else if (com == "chromatic_number") chromaticNumber();
+					else if (com == "greedy_coloring") greedyColoring();
 				}
 			} catch (REPLInvalidCommandException &e) {
 				cout << "ERROR: invalid command" << endl;	

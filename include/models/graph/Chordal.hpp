@@ -11,7 +11,7 @@ class Chordal : public GraphGen {
 
 		// Algoritmos
 		vector<int> perfectEliminationOrdering();
-		vector<int> coloring();
+		vector<int> coloring() override;
 		int chromaticNumber();
 };
 

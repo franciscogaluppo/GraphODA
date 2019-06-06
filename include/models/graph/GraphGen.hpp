@@ -10,6 +10,8 @@
 #include <string>
 #include <queue>
 #include <utility>
+#include <numeric>
+
 using namespace std;
 
 class GraphGen {
@@ -44,6 +46,10 @@ class GraphGen {
 		// algoritmos
 		vector<int> scc();
 		long long shortestPath(int, int);
+
+		virtual vector<int> coloring();
+		vector<int> greedyColoring();
+		vector<int> greedyColoring(vector<int>);
 
 	protected:
 		int n, m;
