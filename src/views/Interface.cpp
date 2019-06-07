@@ -11,7 +11,8 @@ void mudaDir(GraphCanvas *GC) { (GC->GD.temDir) ^= 1; }
 void centraliza(GraphCanvas *GC) { (GC->GD.centr) ^= 1; }
 
 void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
-	tgui::Theme tema{"assets/TransparentGrey.txt"};
+	tgui::Theme tema{"assets/Botoes.txt"};
+	//tgui::Theme tema{"assets/TransparentGrey.txt"};
 	// tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 	tgui::Theme::setDefault(&tema);
 
