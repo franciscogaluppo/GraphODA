@@ -18,14 +18,14 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
 	// Caixa de texto para o arquivo
 	auto textoArquivo = tgui::EditBox::create();
 	textoArquivo->setSize(200.f, 20.f);
-	textoArquivo->setPosition(820.f, 200.f);
+	textoArquivo->setPosition(120.f, 615.f);
 	textoArquivo->setDefaultText("Nome do arquivo");
 	gui.add(textoArquivo);
 
 	// Lista de tipos de grafos
 	auto lista = tgui::ListBox::create();
 	lista->setSize(150.f, 55.f);
-	lista->setPosition(1030.f, 200.f);
+	lista->setPosition(420.f, 615.f);
 	lista->setItemHeight(20);
 	lista->addItem(L"Grafo generico");
 	lista->addItem(L"Cordal generico");
@@ -35,25 +35,31 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
 	// Check box de se tem peso ou não
 	auto check = tgui::CheckBox::create("Direcionado");
 	check->setSize(20.f, 20.f);
-	check->setPosition(820.f, 235.f);
+	check->setPosition(120.f, 640.f);
 	gui.add(check);
 
 	// Botão de help
 	auto botaoHelp = tgui::Button::create("Help");
 	botaoHelp->setSize(75.f,20.f);
-	botaoHelp->setPosition(930.f, 290.f);
+	botaoHelp->setPosition(20.f, 615.f);
 	gui.add(botaoHelp);
+
+	//botão de salvar
+	auto botaoSave = tgui::Button::create("Save");
+	botaoSave->setSize(75.f,20.f);
+	botaoSave->setPosition(20.f, 660.f);
+	gui.add(botaoSave);
 
 	// Botao pra ler arquivo
 	auto botaoArquivo = tgui::Button::create("Importar");
 	botaoArquivo->setSize(75.f, 20.f);
-	botaoArquivo->setPosition(930.f, 235.f);
+	botaoArquivo->setPosition(330.f, 615.f);
 	gui.add(botaoArquivo);
 
 	// botao pra centralizar grafo
 	auto botaoCenter = tgui::Button::create("Centralizar");
 	botaoCenter->setSize(75.f, 20.f);
-	botaoCenter->setPosition(930.f, 260.f);
+	botaoCenter->setPosition(245.f, 640.f);
 	gui.add(botaoCenter);
 
 	// Chama a função de importar arquivo
