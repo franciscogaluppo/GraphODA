@@ -151,11 +151,38 @@ pair<vector<int>, vector<int>> GraphGen::maximumCardinalitySearch()
 	return make_pair(alpha, alphaInv);
 }
 
+bool GraphGen::checkOrdering(vector<int> ordering)
+{
+	if(ordering.size() != n)
+		return false;
+
+	vector<bool> checker (n, false);
+	int count = 0;
+
+	for(auto x: ordering)
+	{
+		if(x >= n || x < 0)
+			return false;
+
+		if(!checker[x])
+		{
+			checker[x] = true;
+			count++;
+		}
+	}
+
+	return count == n;
+}
+
 
 bool GraphGen::zeroFillIn(pair<vector<int>, vector<int>> parAlpha)
 {
 	vector<int> alpha = parAlpha.first;
 	vector<int> alphaInv = parAlpha.second;
+	
+	if(!checkOrdering(alpha)) throw GraphOrderingException();	
+	if(!checkOrdering(alphaInv)) throw GraphOrderingException();	
+
 	vector<int> f (n);
 	vector<int> index (n);
 	vector<bool> visitado (n, 0);
@@ -348,6 +375,8 @@ long long GraphGen::shortestPath(int a, int b) {
 // Recebe uma ordem dos vértices e colore
 vector<int> GraphGen::greedyColoring(vector<int> alpha)
 {
+	if(!checkOrdering(alpha)) throw GraphOrderingException();	
+
 	vector<int> colors (n, 0);
 	vector<int> vizinhanca;
 	vector<bool> visitado (n, false);

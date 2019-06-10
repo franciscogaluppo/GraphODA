@@ -59,6 +59,8 @@ class GraphGen {
 		pair<vector<int>, vector<int>> maximumCardinalitySearch();
 		bool zeroFillIn(pair<vector<int>, vector<int>>);
 
+		bool checkOrdering(vector<int>);
+
 	private:
 		// auxiliares
 		bool dfsReaches(vector<bool>&, int, int);
@@ -94,6 +96,16 @@ class GraphNegativeCycleException : public GraphException {
 	public:
 		GraphNegativeCycleException() {}
 		const char *what() const throw () { return "negative cycle found; shortest path is undefined"; }
+};
+
+class GraphOrderingException: public GraphException
+{
+	public:
+		GraphOrderingException() {}
+		const char *what() const throw ()
+		{
+			return "not a valid vertex ordering";
+		}
 };
 
 #endif
