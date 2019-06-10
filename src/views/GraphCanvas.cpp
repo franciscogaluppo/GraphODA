@@ -293,7 +293,7 @@ void GraphCanvas::setGraph(Graph G) {
 }
 
 // muitos ifs
-void GraphCanvas::handleClique() {
+bool GraphCanvas::handleClique() {
 	// variaveis estaticas para controle
 	// (nao arranjei forma melhor)
 	static bool clique = 0, cliqueD = 0;
@@ -303,6 +303,8 @@ void GraphCanvas::handleClique() {
 	static bool crieiVertice = 0;
 	static sf::Clock clock;
 	static sf::Time lastTime = clock.getElapsedTime();  // ultima vez que clicou
+
+	bool mudou = false;
 
 	auto position = sf::Mouse::getPosition(*janela);
 	Vector positionV(position.x, position.y);
@@ -326,6 +328,7 @@ void GraphCanvas::handleClique() {
 				if (vertice == -1 and GD.taDentro(positionV) and
 						GD.achaAresta(positionV) == -1) {
 					GD.addVertex(positionV);
+					mudou = true;
 					crieiVertice = 1;
 				}
 			} else {
@@ -355,11 +358,11 @@ void GraphCanvas::handleClique() {
 				if (vertice > -1 and vertice == lastVertice) {
 					editLabel = vertice;
 					lastVertice = -1;
-					return;
+					return mudou;
 				} else if (aresta > -1 and aresta == lastAresta) {
 					editWeight = aresta;
 					lastAresta = -1;
-					return;
+					return mudou;
 				}
 			}
 
@@ -374,6 +377,7 @@ void GraphCanvas::handleClique() {
 						if (lastVertice > -1 and lastVertice != vertice) {
 							GD.addEdge(lastVertice, vertice);
 							aresta = -1;
+							mudou = true;
 						}
 						lastVertice = -1;
 					}
@@ -396,15 +400,21 @@ void GraphCanvas::handleClique() {
 					// remove vertice
 					if (lastVertice == vertice) lastVertice = -1;
 					GD.removeVertex(vertice);
+					mudou = true;
 				} else {
 					// remove aresta
 					int arestaClicada = GD.achaAresta(positionV);
-					if (arestaClicada > -1) GD.removeEdge(arestaClicada);
+					if (arestaClicada > -1) {
+						GD.removeEdge(arestaClicada);
+						mudou = true;
+					}
 				}
 			}
 		}
 	} else if (cliqueD)
 		cliqueD = 0;
+
+	return mudou;
 }
 
 void GraphCanvas::display() {

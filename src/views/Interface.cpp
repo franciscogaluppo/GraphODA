@@ -1,20 +1,27 @@
 #include "Interface.hpp"
 
-void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC)
-{
-	auto i = lerGrafoArquivo(arq->getText().toAnsiString());
+void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC, int *tipoGrafo) {
+	Graph i;
+	try {
+		i = lerGrafoArquivo(arq->getText().toAnsiString());
+	} catch (...) {
+		return;	
+	}
 	GC->setGraph(i);
+	if (GC->GD.G.isTree()) *tipoGrafo = 4; // tem que ser primeiro pq herda das outras
+	else if (GC->GD.G.isBipartite()) *tipoGrafo = 1;
+	else if (GC->GD.G.isChordal()) *tipoGrafo = 2;
+	else if (GC->GD.G.isDag()) *tipoGrafo = 3;
+	else *tipoGrafo = 0;
 }
 
 void mudaDir(GraphCanvas *GC) { (GC->GD.temDir) ^= 1; }
 
 void centraliza(GraphCanvas *GC) { (GC->GD.centr) ^= 1; }
 
-void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
-	tgui::Theme tema{"assets/Botoes.txt"};
+void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, int* tipoGrafo) {
 	//tgui::Theme tema{"assets/TransparentGrey.txt"};
 	// tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
-	tgui::Theme::setDefault(&tema);
 
 	// Caixa de texto para o arquivo
 	auto textoArquivo = tgui::EditBox::create();
@@ -24,6 +31,7 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
 	gui.add(textoArquivo);
 
 	// Lista de tipos de grafos
+	/*
 	auto lista = tgui::ListBox::create();
 	lista->setSize(150.f, 55.f);
 	lista->setPosition(420.f, 615.f);
@@ -32,7 +40,7 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
 	lista->addItem(L"Cordal generico");
 	lista->addItem(L"Arvore");
 	gui.add(lista);
-
+*/
 	// Check box de se tem peso ou não
 	auto check = tgui::CheckBox::create("Direcionado");
 	check->setSize(20.f, 20.f);
@@ -64,8 +72,7 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC) {
 	gui.add(botaoCenter);
 
 	// Chama a função de importar arquivo
-	botaoArquivo->connect("pressed", lerGrafoArquivoAux, textoArquivo, GC);
-
+	botaoArquivo->connect("pressed", lerGrafoArquivoAux, textoArquivo, GC, tipoGrafo); 
 	check->connect("checked", mudaDir, GC);
 	check->connect("unchecked", mudaDir, GC);
 
@@ -82,13 +89,13 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	menu.setPosition(800.f, 0.f);
 	janela.draw(menu);
 
-		//Menu superior
-	sf::RectangleShape superior(sf::Vector2f(800.f,100.f));	//larg x alt
-	superior.setFillColor(sf::Color(255,0,0));
-	superior.setPosition(0.f, 600.f);
-	janela.draw(superior);
+		//Menu inferior
+	sf::RectangleShape inferior(sf::Vector2f(800.f,100.f));	//larg x alt
+	inferior.setFillColor(sf::Color(0,0,0));
+	inferior.setPosition(0.f, 600.f);
+	janela.draw(inferior);
 
-	//Divisão entre o canvas e o superior
+	//Divisão entre o canvas e o inferior
 	sf::Vertex linha0[] = {sf::Vertex(sf::Vector2f(0,600), sf::Color(130, 130, 130)),
 
 		sf::Vertex(sf::Vector2f(1200, 600), sf::Color(130, 130, 130))};
@@ -115,6 +122,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	janela.draw(linha3, 2, sf::Lines);
 
 	// Instruções
+	/*
 	sf::Text instr;
 	instr.setFont(fonte);
 	instr.setString(L"Instruções:");
@@ -129,6 +137,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	instr.setFillColor(sf::Color(130, 130, 130));
 	instr.setPosition(820, 55);
 	janela.draw(instr);
+*/
 }
 
 void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
@@ -139,6 +148,53 @@ void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
 	draw.setFillColor(sf::Color::Red);
 	draw.setPosition(X - 32, 0);
 	janela.draw(draw);
+}
+
+namespace buttons {
+	void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+	}
+
+	void coloreChordal(GraphCanvas *GC) {
+		Chordal C(GC->GD.G);
+		auto coloracao = C.coloring();
+		GC->GD.color = coloracao;
+	}
+
+	void clear(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+		for (auto i : v) gui.remove(i);
+	}
+
+	void chordal(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+		vector<int> op = {0};
+		for (int i : op) gui.add(v[i]);
+	}
+
+	void tree(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+		chordal(gui, v);
+	}
+
+	void inicializa(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
+		auto color = tgui::Button::create("Colore");
+		v.push_back(color);
+		color->setSize(75.f,20.f);
+		color->setPosition(1000.f, 650.f);
+		color->connect("pressed", coloreChordal, &GC);
+	}
+
+	void atualiza(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC, int &tipoGrafo) {
+		if (GC.GD.G.isTree()) tipoGrafo = 4; // tem que ser primeiro pq herda das outras
+		else if (GC.GD.G.isBipartite()) tipoGrafo = 1;
+		else if (GC.GD.G.isChordal()) tipoGrafo = 2;
+		else if (GC.GD.G.isDag()) tipoGrafo = 3;
+		else tipoGrafo = 0;
+
+		GC.GD.color = vector<int>(GC.GD.G.getN(), 0);
+
+		clear(gui, botoes);
+		if (tipoGrafo == 0) general(gui, botoes);
+		if (tipoGrafo == 2) chordal(gui, botoes);
+		if (tipoGrafo == 4) tree(gui, botoes);
+	}
 }
 
 Graph displayTeste(int X, int Y, Graph G) {
@@ -158,20 +214,31 @@ Graph displayTeste(int X, int Y, Graph G) {
 			settings);
 	janela.setKeyRepeatEnabled(false);
 	tgui::Gui gui(janela);
+	tgui::Theme tema{"assets/Botoes.txt"};
+	tgui::Theme::setDefault(&tema);
 
 	// GraphCanvas
 	GraphCanvas GC(janela, fonte, X * 2 / 3, Y * 6/7, 15);
 	GC.setGraph(G);
 	bool editing;
 	tgui::EditBox::Ptr edit;
+	
+	int tipoGrafo, lastTipoGrafo;
 
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &GC);
+		loadWidgets(gui, &GC, &tipoGrafo);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return G;
 	}
+
+	// Botoes
+	vector<tgui::Button::Ptr> botoes;
+	buttons::inicializa(botoes, GC);
+
+	buttons::atualiza(gui, botoes, GC, tipoGrafo);
+
 	// "Main Loop"
 	// Roda o programa enquanto a janela estiver aberta
 
@@ -295,8 +362,9 @@ Graph displayTeste(int X, int Y, Graph G) {
 					edit->setFocused(true);
 				}
 			}
-		} else
-			GC.handleClique();
+		} else if (GC.handleClique() or tipoGrafo != lastTipoGrafo) { // mudou
+			buttons::atualiza(gui, botoes, GC, tipoGrafo);
+		}
 
 		// views do grafo
 		GC.display();
@@ -305,6 +373,9 @@ Graph displayTeste(int X, int Y, Graph G) {
 
 		// Termina iteração e atualiza janela
 		janela.display();
+
+		// atualiza variaveis
+		lastTipoGrafo = tipoGrafo;
 	}
 
 	return GC.GD.G;
