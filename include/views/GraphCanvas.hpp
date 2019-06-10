@@ -21,7 +21,7 @@ struct GraphCanvas {
 
 	GraphCanvas(sf::RenderWindow &, sf::Font &, int, int, int);
 	void setGraph(Graph);
-	void handleClique();
+	bool handleClique();
 	void display();
 
 	// private:

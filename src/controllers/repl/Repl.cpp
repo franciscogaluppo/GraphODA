@@ -105,12 +105,12 @@ namespace repl {
 		graphs[at].type = 4;
 	}
 
-	void show() {
-		displayTeste(1200, 700, getGraph());
+	void show(int X, int Y) {
+		displayTeste(X, Y, getGraph());
 	}
 
-	void edit() {
-		graphs[at].G = displayTeste(1200, 600, getGraph());
+	void edit(int X, int Y) {
+		graphs[at].G = displayTeste(X, Y, getGraph());
 		graphs[at].type = 0;
 	}
 
@@ -240,7 +240,7 @@ namespace repl {
 			cout << G.label[i] << ": " << cores[i] << endl;
 	}
 
-	void run() {
+	void run(int X, int Y) {
 		cout << "GraphODA" << endl;
 
 		while (1) {
@@ -313,8 +313,8 @@ namespace repl {
 					string com;
 					ss >> com;
 
-					if (com == "show") show();
-					else if (com == "edit") edit();
+					if (com == "show") show(X, Y);
+					else if (com == "edit") edit(X, Y);
 					else if (com == "describe") describe();
 					else if (com == "reaches") reaches();
 					else if (com == "scc") scc();

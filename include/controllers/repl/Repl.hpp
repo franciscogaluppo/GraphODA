@@ -17,7 +17,7 @@
 using namespace std;
 
 namespace repl {
-	void run();
+	void run(int, int);
 }
 
 class REPLException : public exception {
