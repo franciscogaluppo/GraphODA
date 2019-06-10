@@ -26,6 +26,7 @@ class Graph : public GraphGen {
 		void addEdge(int, int, int);
 
 		Tree mst();
+		vector<bool> mstEdges();
 };
 
 class GraphVertexOutOfBoundsException : public GraphException {

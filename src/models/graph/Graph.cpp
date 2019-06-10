@@ -57,3 +57,23 @@ Tree Graph::mst() {
 	}
 	return Tree(T);
 }
+
+// O(m log(m))
+vector<bool> Graph::mstEdges() {
+	auto ar = this->getEdges();
+	auto pesos = this->getPesos();
+
+	vector<pair<pair<int, int>, pair<int, int>>> v;
+	for (int i = 0; i < m; i++) v.push_back({{pesos[i], i}, ar[i]});
+	sort(v.begin(), v.end());
+	vector<bool> ans(m, false);
+	DSU dsu(n);
+	for (auto i : v) {
+		int a = i.second.first, b = i.second.second;
+		if (dsu.find(a) != dsu.find(b)) {
+			dsu.une(a, b);
+			ans[i.first.second] = true;
+		}
+	}
+	return ans;
+}

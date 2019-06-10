@@ -13,6 +13,7 @@ GraphDisplay::GraphDisplay(Graph G_, int X_, int Y_, int raio_) {
 	para = vector<bool>(G.getN(), false);
 	trava = vector<bool>(G.getN(), false);
 	color = vector<int>(G.getN(), 0);
+	colorAresta = vector<int>(G.getM(), 100);
 	posPeso = vector<float>(G.getM(), 0.5);
 
 	isParal = vector<bool>(G.getM(), false);
@@ -369,6 +370,11 @@ void GraphDisplay::good(int randIt, int fdpIt) {
 	this->fdpPeso(randIt * fdpIt / 4);
 }
 
+void GraphDisplay::resetColors() {
+	color = vector<int>(G.getN(), 0);
+	colorAresta = vector<int>(G.getM(), 100);
+}
+
 // O(n^2)
 void GraphDisplay::addVertex(Vector v) {
 	int newLabel = 0;
@@ -390,6 +396,7 @@ void GraphDisplay::addVertex(Vector v) {
 	for (int i = 0; i < G.getN(); i++)
 		for (auto j : adj[i]) G2.addEdge(i, j.first, j.second);
 	G = G2;
+	this->resetColors();
 }
 
 // O(n+m)
@@ -419,6 +426,7 @@ void GraphDisplay::removeVertex(int v) {
 			G2.addEdge(a, b, j.second);
 		}
 	G = G2;
+	this->resetColors();
 }
 
 // O(n+m)
@@ -451,6 +459,7 @@ void GraphDisplay::addEdge(int a, int b) {
 					posicao2++;
 				}
 		}
+	this->resetColors();
 }
 
 // O(n+m)
@@ -479,6 +488,7 @@ void GraphDisplay::removeEdge(int e) {
 	isParal.erase(isParal.begin() + e);
 
 	G = G2;
+	this->resetColors();
 }
 
 // O(n^2 + m^2)

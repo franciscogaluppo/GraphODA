@@ -108,16 +108,23 @@ void GraphCanvas::printGrafo() {
 				add = add * (GD.raio / 3.0);
 			}
 		}
-		sf::Vertex linha[] = {
-			sf::Vertex(sf::Vector2f(GD.pos[edg[i].first].x + add.x,
-						GD.pos[edg[i].first].y + add.y),
-					sf::Color::Black),
+		
+		sf::Vector2f ini(GD.pos[edg[i].first].x + add.x,
+						GD.pos[edg[i].first].y + add.y);
+		sf::Vector2f fim(GD.pos[edg[i].second].x + add.x,
+						GD.pos[edg[i].second].y + add.y);
 
-			sf::Vertex(sf::Vector2f(GD.pos[edg[i].second].x + add.x,
-						GD.pos[edg[i].second].y + add.y),
-					sf::Color::Black)};
+		sf::Vector2f dif = fim-ini;
+		Vector difV(dif.x, dif.y);
 
-		janela->draw(linha, 2, sf::Lines);
+		sf::RectangleShape aresta(sf::Vector2f(difV.norm(), 0));
+		if (GD.temDir) aresta = sf::RectangleShape(sf::Vector2f(difV.norm() - 1.5*GD.raio, 0));
+		aresta.rotate(180*difV.angle()/acos(-1.0));
+		aresta.move(ini);
+		aresta.setOutlineThickness(2);
+		aresta.setOutlineColor(getColor(GD.colorAresta[i]));
+
+		janela->draw(aresta);
 	}
 
 	// encontra tamanho da fonte
@@ -192,7 +199,7 @@ void GraphCanvas::printSetas() {
 		// cria triangulo na ponta da aresta
 		sf::CircleShape tri(GD.raio / 2, 3);
 		tri.setRotation((angle)*180 / pi);
-		tri.setFillColor(sf::Color::Black);
+		tri.setFillColor(getColor(GD.colorAresta[i]));
 		tri.setPosition(pos.x - GD.raio / 2 + 1 - delta.x + add.x,
 				pos.y - GD.raio / 2 + 1 - delta.y + add.y);
 		janela->draw(tri);
@@ -235,7 +242,7 @@ void GraphCanvas::printPesos() {
 				box.top + round(box.height / 2));
 		p.setPosition(at.x + add.x, at.y + add.y);
 		p.setOutlineColor(sf::Color::White);
-		p.setOutlineThickness(2.0);
+		p.setOutlineThickness(3.0);
 
 		if (i != editWeight) janela->draw(p);
 	}
