@@ -1,26 +1,32 @@
 #include "Interface.hpp"
 
-void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC, int *tipoGrafo) {
+void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC,
+						int *tipoGrafo) {
 	Graph i;
 	try {
 		i = lerGrafoArquivo(arq->getText().toAnsiString());
 	} catch (...) {
-		return;	
+		return;
 	}
 	GC->setGraph(i);
-	if (GC->GD.G.isTree()) *tipoGrafo = 4; // tem que ser primeiro pq herda das outras
-	else if (GC->GD.G.isBipartite()) *tipoGrafo = 1;
-	else if (GC->GD.G.isChordal()) *tipoGrafo = 2;
-	else if (GC->GD.G.isDag()) *tipoGrafo = 3;
-	else *tipoGrafo = 0;
+	if (GC->GD.G.isTree())
+		*tipoGrafo = 4;  // tem que ser primeiro pq herda das outras
+	else if (GC->GD.G.isBipartite())
+		*tipoGrafo = 1;
+	else if (GC->GD.G.isChordal())
+		*tipoGrafo = 2;
+	else if (GC->GD.G.isDag())
+		*tipoGrafo = 3;
+	else
+		*tipoGrafo = 0;
 }
 
 void mudaDir(GraphCanvas *GC) { (GC->GD.temDir) ^= 1; }
 
 void centraliza(GraphCanvas *GC) { (GC->GD.centr) ^= 1; }
 
-void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, int* tipoGrafo) {
-	//tgui::Theme tema{"assets/TransparentGrey.txt"};
+void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, int *tipoGrafo) {
+	// tgui::Theme tema{"assets/TransparentGrey.txt"};
 	// tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 
 	// Caixa de texto para o arquivo
@@ -49,13 +55,13 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, int* tipoGrafo) {
 
 	// Botão de help
 	auto botaoHelp = tgui::Button::create("Help");
-	botaoHelp->setSize(75.f,20.f);
+	botaoHelp->setSize(75.f, 20.f);
 	botaoHelp->setPosition(20.f, 615.f);
 	gui.add(botaoHelp);
 
-	//botão de salvar
+	// botão de salvar
 	auto botaoSave = tgui::Button::create("Save");
-	botaoSave->setSize(75.f,20.f);
+	botaoSave->setSize(75.f, 20.f);
 	botaoSave->setPosition(20.f, 660.f);
 	gui.add(botaoSave);
 
@@ -72,7 +78,8 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, int* tipoGrafo) {
 	gui.add(botaoCenter);
 
 	// Chama a função de importar arquivo
-	botaoArquivo->connect("pressed", lerGrafoArquivoAux, textoArquivo, GC, tipoGrafo); 
+	botaoArquivo->connect("pressed", lerGrafoArquivoAux, textoArquivo, GC,
+						  tipoGrafo);
 	check->connect("checked", mudaDir, GC);
 	check->connect("unchecked", mudaDir, GC);
 
@@ -89,20 +96,22 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	menu.setPosition(800.f, 0.f);
 	janela.draw(menu);
 
-		//Menu inferior
-	sf::RectangleShape inferior(sf::Vector2f(800.f,100.f));	//larg x alt
-	inferior.setFillColor(sf::Color(0,0,0));
+	// Menu inferior
+	sf::RectangleShape inferior(sf::Vector2f(800.f, 100.f));  // larg x alt
+	inferior.setFillColor(sf::Color(0, 0, 0));
 	inferior.setPosition(0.f, 600.f);
 	janela.draw(inferior);
 
-	//Divisão entre o canvas e o inferior
-	sf::Vertex linha0[] = {sf::Vertex(sf::Vector2f(0,600), sf::Color(130, 130, 130)),
+	// Divisão entre o canvas e o inferior
+	sf::Vertex linha0[] = {
+		sf::Vertex(sf::Vector2f(0, 600), sf::Color(130, 130, 130)),
 
 		sf::Vertex(sf::Vector2f(800, 600), sf::Color(130, 130, 130))};
 	janela.draw(linha0, 2, sf::Lines);
 
 	// Divisão entre o canvas e o menu
-	sf::Vertex linha1[] = {sf::Vertex(sf::Vector2f(800, 0), sf::Color::Black),
+	sf::Vertex linha1[] = {
+		sf::Vertex(sf::Vector2f(800, 0), sf::Color::Black),
 
 		sf::Vertex(sf::Vector2f(800, 700), sf::Color::Black)};
 	janela.draw(linha1, 2, sf::Lines);
@@ -151,84 +160,86 @@ void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
 }
 
 namespace functions {
-	void coloreChordal(GraphCanvas *GC) {
-		Chordal C(GC->GD.G);
-		auto coloracao = C.coloring();
-		GC->GD.color = coloracao;
-	}
-
-	void mst(GraphCanvas *GC) {
-		auto v = GC->GD.G.mstEdges();
-		for (int i = 0; i < GC->GD.G.getM(); i++)
-			GC->GD.colorAresta[i] = (v[i] ? 1 : 100);
-	}
-
-	void greedyColoring(GraphCanvas *GC)
-	{
-		auto coloracao = GC->GD.G.greedyColoring();
-		GC->GD.color = coloracao;  
-	}
+void coloreChordal(GraphCanvas *GC) {
+	Chordal C(GC->GD.G);
+	auto coloracao = C.coloring();
+	GC->GD.color = coloracao;
 }
+
+void mst(GraphCanvas *GC) {
+	auto v = GC->GD.G.mstEdges();
+	for (int i = 0; i < GC->GD.G.getM(); i++)
+		GC->GD.colorAresta[i] = (v[i] ? 1 : 100);
+}
+
+void greedyColoring(GraphCanvas *GC) {
+	auto coloracao = GC->GD.G.greedyColoring();
+	GC->GD.color = coloracao;
+}
+}  // namespace functions
 
 namespace buttons {
-	void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-		vector<int> op = {1, 2};
-		for (int i : op) gui.add(v[i]);
-	}
-
-	void clear(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-		for (auto i : v) gui.remove(i);
-	}
-
-	void bipartite(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-	}
-
-	void chordal(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-		vector<int> op = {0};
-		for (int i : op) gui.add(v[i]);
-	}
-
-	void dag(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-	}
-
-	void tree(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-	}
-
-	void inicializa(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
-		auto color = tgui::Button::create("Colore");
-		v.push_back(color);
-		color->setSize(75.f,20.f);
-		color->setPosition(1000.f, 650.f);
-		color->connect("pressed", functions::coloreChordal, &GC);
-
-		auto mst = tgui::Button::create("mst");
-		v.push_back(mst);
-		mst->setSize(75.f,20.f);
-		mst->setPosition(1000.f, 630.f);
-		mst->connect("pressed", functions::mst, &GC);
-
-		auto guloso = tgui::Button::create("Colore (guloso)");
-		v.push_back(guloso);
-		guloso->setSize(115.f,20.f);
-		guloso->setPosition(980.f, 600.f);
-		guloso->connect("pressed", functions::greedyColoring, &GC);
-	}
-
-	void atualiza(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC, int &tipoGrafo) {
-		if (GC.GD.G.isTree()) tipoGrafo = 4; // tem que ser primeiro pq herda das outras
-		else if (GC.GD.G.isBipartite()) tipoGrafo = 1;
-		else if (GC.GD.G.isChordal()) tipoGrafo = 2;
-		else if (GC.GD.G.isDag()) tipoGrafo = 3;
-		else tipoGrafo = 0;
-
-		clear(gui, botoes);
-		general(gui, botoes);
-		if (GC.GD.G.isBipartite()) bipartite(gui, botoes);
-		if (GC.GD.G.isChordal()) chordal(gui, botoes);
-		if (GC.GD.G.isDag()) dag(gui, botoes);
-		if (GC.GD.G.isTree()) tree(gui, botoes);
-	}
+void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+	vector<int> op = {1, 2};
+	for (int i : op) gui.add(v[i]);
 }
+
+void clear(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+	for (auto i : v) gui.remove(i);
+}
+
+void bipartite(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {}
+
+void chordal(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+	vector<int> op = {0};
+	for (int i : op) gui.add(v[i]);
+}
+
+void dag(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {}
+
+void tree(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {}
+
+void inicializa(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
+	auto color = tgui::Button::create("Colore");
+	v.push_back(color);
+	color->setSize(75.f, 20.f);
+	color->setPosition(1000.f, 650.f);
+	color->connect("pressed", functions::coloreChordal, &GC);
+
+	auto mst = tgui::Button::create("mst");
+	v.push_back(mst);
+	mst->setSize(75.f, 20.f);
+	mst->setPosition(1000.f, 630.f);
+	mst->connect("pressed", functions::mst, &GC);
+
+	auto guloso = tgui::Button::create("Colore (guloso)");
+	v.push_back(guloso);
+	guloso->setSize(115.f, 20.f);
+	guloso->setPosition(980.f, 600.f);
+	guloso->connect("pressed", functions::greedyColoring, &GC);
+}
+
+void atualiza(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes,
+			  GraphCanvas &GC, int &tipoGrafo) {
+	if (GC.GD.G.isTree())
+		tipoGrafo = 4;  // tem que ser primeiro pq herda das outras
+	else if (GC.GD.G.isBipartite())
+		tipoGrafo = 1;
+	else if (GC.GD.G.isChordal())
+		tipoGrafo = 2;
+	else if (GC.GD.G.isDag())
+		tipoGrafo = 3;
+	else
+		tipoGrafo = 0;
+
+	clear(gui, botoes);
+	general(gui, botoes);
+	if (GC.GD.G.isBipartite()) bipartite(gui, botoes);
+	if (GC.GD.G.isChordal()) chordal(gui, botoes);
+	if (GC.GD.G.isDag()) dag(gui, botoes);
+	if (GC.GD.G.isTree()) tree(gui, botoes);
+}
+}  // namespace buttons
 
 Graph displayTeste(int X, int Y, Graph G) {
 	// Carrega a fonte Consola Bold (Gosto dela)
@@ -244,18 +255,18 @@ Graph displayTeste(int X, int Y, Graph G) {
 
 	// Cria a janela
 	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Close,
-			settings);
+							settings);
 	janela.setKeyRepeatEnabled(false);
 	tgui::Gui gui(janela);
 	tgui::Theme tema{"assets/Botoes.txt"};
 	tgui::Theme::setDefault(&tema);
 
 	// GraphCanvas
-	GraphCanvas GC(janela, fonte, X * 2 / 3, Y * 6/7, 15);
+	GraphCanvas GC(janela, fonte, X * 2 / 3, Y * 6 / 7, 15);
 	GC.setGraph(G);
 	bool editing;
 	tgui::EditBox::Ptr edit;
-	
+
 	int tipoGrafo, lastTipoGrafo;
 
 	// Tenta importar os widgets da gui
@@ -305,16 +316,21 @@ Graph displayTeste(int X, int Y, Graph G) {
 				if (evento.key.code == sf::Keyboard::Return and editing) {
 					// label
 					if (GC.editLabel > -1)
-						GC.GD.G.label[GC.editLabel] = edit->getText().toAnsiString();
+						GC.GD.G.label[GC.editLabel] =
+							edit->getText().toAnsiString();
 
 					// weight
 					if (GC.editWeight > -1) {
 						string s = edit->getText().toAnsiString();
 
 						bool valid = 1;
-						if (!s.size()) valid = 0;
-						else if (!(s[0] == '-' or (s[0] >= '0' and s[0] <= '9'))) valid = 0;
-						for (int i = 1; i < s.size(); i++) if (s[i] < '0' or s[i] > '9') valid = 0;
+						if (!s.size())
+							valid = 0;
+						else if (!(s[0] == '-' or
+								   (s[0] >= '0' and s[0] <= '9')))
+							valid = 0;
+						for (int i = 1; i < s.size(); i++)
+							if (s[i] < '0' or s[i] > '9') valid = 0;
 
 						if (valid) {
 							Graph G(GC.GD.G.getN());
@@ -324,7 +340,9 @@ Graph displayTeste(int X, int Y, Graph G) {
 							for (int i = 0; i < GC.GD.G.getN(); i++)
 								for (auto &j : adj[i]) {
 									if (position++ == GC.editWeight)
-										G.addEdge(i, j.first, stoi(edit->getText().toAnsiString()));
+										G.addEdge(i, j.first,
+												  stoi(edit->getText()
+														   .toAnsiString()));
 									else
 										G.addEdge(i, j.first, j.second);
 								}
@@ -355,8 +373,8 @@ Graph displayTeste(int X, int Y, Graph G) {
 					edit = tgui::EditBox::create();
 					edit->setSize(GC.GD.raio * sqrt(2), GC.GD.raio * sqrt(2));
 					edit->setPosition(
-							GC.GD.pos[GC.editLabel].x - (GC.GD.raio - 1) / sqrt(2),
-							GC.GD.pos[GC.editLabel].y - (GC.GD.raio - 1) / sqrt(2));
+						GC.GD.pos[GC.editLabel].x - (GC.GD.raio - 1) / sqrt(2),
+						GC.GD.pos[GC.editLabel].y - (GC.GD.raio - 1) / sqrt(2));
 					edit->setText(GC.GD.G.label[GC.editLabel]);
 					gui.add(edit);
 					edit->setFocused(true);
@@ -369,8 +387,9 @@ Graph displayTeste(int X, int Y, Graph G) {
 
 					// acha posicao
 					Vector ini = GC.GD.pos[edg[GC.editWeight].first],
-					fim = GC.GD.pos[edg[GC.editWeight].second];
-					Vector pos = ini + (fim - ini) * GC.GD.posPeso[GC.editWeight];
+						   fim = GC.GD.pos[edg[GC.editWeight].second];
+					Vector pos =
+						ini + (fim - ini) * GC.GD.posPeso[GC.editWeight];
 
 					// arestas paralelas
 					Vector add(0, 0);
@@ -395,7 +414,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 					edit->setFocused(true);
 				}
 			}
-		} else if (GC.handleClique() or tipoGrafo != lastTipoGrafo) { // mudou
+		} else if (GC.handleClique() or tipoGrafo != lastTipoGrafo) {  // mudou
 			buttons::atualiza(gui, botoes, GC, tipoGrafo);
 		}
 

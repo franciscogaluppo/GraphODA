@@ -1,7 +1,7 @@
 #include "GraphCanvas.hpp"
 
 GraphCanvas::GraphCanvas(sf::RenderWindow &janela, sf::Font &fonte, int X,
-		int Y, int raio) {
+						 int Y, int raio) {
 	this->janela = &janela;
 	this->fonte = fonte;
 	this->GD = GraphDisplay(Graph(), X, Y, raio);
@@ -48,7 +48,7 @@ void GraphCanvas::printAresta(Vector at, int aresta) {
 		sf::Vertex(sf::Vector2f(positionV.x, positionV.y), sf::Color::Black),
 
 		sf::Vertex(sf::Vector2f(GD.pos[aresta].x, GD.pos[aresta].y),
-				sf::Color::Black)};
+				   sf::Color::Black)};
 
 	janela->draw(linha, 2, sf::Lines);
 
@@ -65,7 +65,7 @@ void GraphCanvas::printAresta(Vector at, int aresta) {
 		float angle = v.angle() - pi / 6;
 
 		Vector delta = Vector(GD.raio / 2 - 1, GD.raio / 2 - 1).rotate(angle) -
-			Vector(GD.raio / 2 - 1, GD.raio / 2 - 1);
+					   Vector(GD.raio / 2 - 1, GD.raio / 2 - 1);
 
 		// arreda um pouqinho a seta se ta dentro do vertice
 		float add = 0;
@@ -78,7 +78,7 @@ void GraphCanvas::printAresta(Vector at, int aresta) {
 
 			// lei dos cossenos mt louca
 			add = y * cos(alpha) +
-				sqrt(GD.raio * GD.raio - y * y * sin(alpha) * sin(alpha));
+				  sqrt(GD.raio * GD.raio - y * y * sin(alpha) * sin(alpha));
 		}
 
 		Vector addV = v * (1 / v.norm()) * (-add);
@@ -88,7 +88,7 @@ void GraphCanvas::printAresta(Vector at, int aresta) {
 		tri.setRotation((angle)*180 / pi);
 		tri.setFillColor(sf::Color::Black);
 		tri.setPosition(pos.x - GD.raio / 2 + 1 - delta.x + addV.x,
-				pos.y - GD.raio / 2 + 1 - delta.y + addV.y);
+						pos.y - GD.raio / 2 + 1 - delta.y + addV.y);
 		janela->draw(tri);
 	}
 }
@@ -108,18 +108,20 @@ void GraphCanvas::printGrafo() {
 				add = add * (GD.raio / 3.0);
 			}
 		}
-		
-		sf::Vector2f ini(GD.pos[edg[i].first].x + add.x,
-						GD.pos[edg[i].first].y + add.y);
-		sf::Vector2f fim(GD.pos[edg[i].second].x + add.x,
-						GD.pos[edg[i].second].y + add.y);
 
-		sf::Vector2f dif = fim-ini;
+		sf::Vector2f ini(GD.pos[edg[i].first].x + add.x,
+						 GD.pos[edg[i].first].y + add.y);
+		sf::Vector2f fim(GD.pos[edg[i].second].x + add.x,
+						 GD.pos[edg[i].second].y + add.y);
+
+		sf::Vector2f dif = fim - ini;
 		Vector difV(dif.x, dif.y);
 
 		sf::RectangleShape aresta(sf::Vector2f(difV.norm(), 0));
-		if (GD.temDir) aresta = sf::RectangleShape(sf::Vector2f(difV.norm() - 1.5*GD.raio, 0));
-		aresta.rotate(180*difV.angle()/acos(-1.0));
+		if (GD.temDir)
+			aresta = sf::RectangleShape(
+				sf::Vector2f(difV.norm() - 1.5 * GD.raio, 0));
+		aresta.rotate(180 * difV.angle() / acos(-1.0));
 		aresta.move(ini);
 		aresta.setOutlineThickness(2);
 		aresta.setOutlineColor(getColor(GD.colorAresta[i]));
@@ -158,7 +160,7 @@ void GraphCanvas::printGrafo() {
 		// centraliza texto
 		sf::FloatRect box = label.getLocalBounds();
 		label.setOrigin(box.left + round(box.width / 2),
-				box.top + round(box.height / 2));
+						box.top + round(box.height / 2));
 		label.setPosition(GD.pos[i].x, GD.pos[i].y);
 
 		if (i != editLabel) janela->draw(label);
@@ -183,7 +185,7 @@ void GraphCanvas::printSetas() {
 		float angle = v.angle() - pi / 6;
 
 		Vector delta = Vector(GD.raio / 2 - 1, GD.raio / 2 - 1).rotate(angle) -
-			Vector(GD.raio / 2 - 1, GD.raio / 2 - 1);
+					   Vector(GD.raio / 2 - 1, GD.raio / 2 - 1);
 
 		// trata aresta paralelas
 		Vector add(0, 0);
@@ -201,7 +203,7 @@ void GraphCanvas::printSetas() {
 		tri.setRotation((angle)*180 / pi);
 		tri.setFillColor(getColor(GD.colorAresta[i]));
 		tri.setPosition(pos.x - GD.raio / 2 + 1 - delta.x + add.x,
-				pos.y - GD.raio / 2 + 1 - delta.y + add.y);
+						pos.y - GD.raio / 2 + 1 - delta.y + add.y);
 		janela->draw(tri);
 	}
 }
@@ -239,7 +241,7 @@ void GraphCanvas::printPesos() {
 
 		sf::FloatRect box = p.getLocalBounds();
 		p.setOrigin(box.left + round(box.width / 2),
-				box.top + round(box.height / 2));
+					box.top + round(box.height / 2));
 		p.setPosition(at.x + add.x, at.y + add.y);
 		p.setOutlineColor(sf::Color::White);
 		p.setOutlineThickness(3.0);
@@ -333,7 +335,7 @@ bool GraphCanvas::handleClique() {
 			if (GD.draw) {
 				// add vertice
 				if (vertice == -1 and GD.taDentro(positionV) and
-						GD.achaAresta(positionV) == -1) {
+					GD.achaAresta(positionV) == -1) {
 					GD.addVertex(positionV);
 					mudou = true;
 					crieiVertice = 1;
@@ -349,7 +351,8 @@ bool GraphCanvas::handleClique() {
 
 		// move vertice
 		if (vertice > -1)
-			GD.pos[vertice] = GD.deixaDentro(positionV + dif, GD.trava[vertice]);
+			GD.pos[vertice] =
+				GD.deixaDentro(positionV + dif, GD.trava[vertice]);
 	} else if (clique) {  // soltei
 		clique = 0;
 		lastAresta = aresta;

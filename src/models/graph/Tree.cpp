@@ -13,4 +13,3 @@ Tree::Tree(GraphGen& G) {
 	adj = G.getAdj();
 	simAdj = G.getSimAdj();
 }
-

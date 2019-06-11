@@ -37,14 +37,12 @@ struct GraphCanvas {
 Graph lerGrafoArquivo(string);
 
 class FileNotFoundException : public exception {
-	public:
-		FileNotFoundException(string f) {
-			msg = "coudn't read file: "+f;
-		}
-		const char *what() const throw () { return msg.c_str(); }
+   public:
+	FileNotFoundException(string f) { msg = "coudn't read file: " + f; }
+	const char *what() const throw() { return msg.c_str(); }
 
-	private:
-		string msg;
+   private:
+	string msg;
 };
 
 #endif

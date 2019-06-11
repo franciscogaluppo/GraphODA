@@ -14,26 +14,19 @@ Chordal::Chordal(GraphGen& G) {
 	simAdj = G.getSimAdj();
 }
 
-vector<int> Chordal::perfectEliminationOrdering()
-{
+vector<int> Chordal::perfectEliminationOrdering() {
 	return maximumCardinalitySearch().second;
 }
 
-vector<int> Chordal::coloring()
-{
+vector<int> Chordal::coloring() {
 	return greedyColoring(perfectEliminationOrdering());
 }
 
-int Chordal::chromaticNumber()
-{
+int Chordal::chromaticNumber() {
 	vector<int> cores = coloring();
 	int maior = 0;
-	for(auto c: cores)
-		maior = (c > maior? c: maior);
+	for (auto c : cores) maior = (c > maior ? c : maior);
 	return maior;
 }
 
-int Chordal::maxClique()
-{
-	return chromaticNumber();
-}
+int Chordal::maxClique() { return chromaticNumber(); }
