@@ -98,7 +98,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	//Divisão entre o canvas e o inferior
 	sf::Vertex linha0[] = {sf::Vertex(sf::Vector2f(0,600), sf::Color(130, 130, 130)),
 
-		sf::Vertex(sf::Vector2f(1200, 600), sf::Color(130, 130, 130))};
+		sf::Vertex(sf::Vector2f(800, 600), sf::Color(130, 130, 130))};
 	janela.draw(linha0, 2, sf::Lines);
 
 	// Divisão entre o canvas e o menu
@@ -107,6 +107,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 		sf::Vertex(sf::Vector2f(800, 700), sf::Color::Black)};
 	janela.draw(linha1, 2, sf::Lines);
 
+	/*
 	// Divisão entre instruções e import
 	sf::Vertex linha2[] = {
 		sf::Vertex(sf::Vector2f(830, 170), sf::Color(130, 130, 130)),
@@ -122,7 +123,6 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	janela.draw(linha3, 2, sf::Lines);
 
 	// Instruções
-	/*
 	sf::Text instr;
 	instr.setFont(fonte);
 	instr.setString(L"Instruções:");
@@ -162,11 +162,17 @@ namespace functions {
 		for (int i = 0; i < GC->GD.G.getM(); i++)
 			GC->GD.colorAresta[i] = (v[i] ? 1 : 100);
 	}
+
+	void greedyColoring(GraphCanvas *GC)
+	{
+		auto coloracao = GC->GD.G.greedyColoring();
+		GC->GD.color = coloracao;  
+	}
 }
 
 namespace buttons {
 	void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-		vector<int> op = {1};
+		vector<int> op = {1, 2};
 		for (int i : op) gui.add(v[i]);
 	}
 
@@ -200,6 +206,12 @@ namespace buttons {
 		mst->setSize(75.f,20.f);
 		mst->setPosition(1000.f, 630.f);
 		mst->connect("pressed", functions::mst, &GC);
+
+		auto guloso = tgui::Button::create("Colore (guloso)");
+		v.push_back(guloso);
+		guloso->setSize(115.f,20.f);
+		guloso->setPosition(980.f, 600.f);
+		guloso->connect("pressed", functions::greedyColoring, &GC);
 	}
 
 	void atualiza(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC, int &tipoGrafo) {
