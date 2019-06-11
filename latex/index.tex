@@ -63,4 +63,29 @@ O R\+E\+PL possui dois tipos de comando\+: atribuição e operação.\hypertarge
 \begin{DoxyCode}{0}
 \DoxyCodeLine{>>> var > shortestPath a b}
 \end{DoxyCode}
- Computa o peso do caminho mínimo do vértice {\itshape a} para o vértice {\itshape b} no grafo representado por {\itshape var}. 
+ Computa o peso do caminho mínimo do vértice {\itshape a} para o vértice {\itshape b} no grafo representado por {\itshape var}.\hypertarget{index_autotoc_md15}{}\doxysubsubsection{coloring}\label{index_autotoc_md15}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > coloring}
+\end{DoxyCode}
+ Computa uma coloração mínima para {\itshape var}. O algoritmo é polinomial quando {\itshape var} é cordal e {\bfseries{T\+O\+DO}} quando não é.\hypertarget{index_autotoc_md16}{}\doxysubsubsection{chromatic\+Number}\label{index_autotoc_md16}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > chromaticNumber}
+\end{DoxyCode}
+ Computa o número cromático, i.\+e. o menor número de cores necessárias para se colorir o grafo. O algoritmo é polinomial quando {\itshape var} é cordal e {\bfseries{T\+O\+DO}} quando não é.\hypertarget{index_autotoc_md17}{}\doxysubsubsection{greedy\+Coloring}\label{index_autotoc_md17}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > greedyColoring}
+\end{DoxyCode}
+ Computa uma coloração usando um algoritmo guloso na ordem dos vértices. Linear no tamanho do grafo.\hypertarget{index_autotoc_md18}{}\doxysubsubsection{maximum\+Clique\+Size}\label{index_autotoc_md18}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > maximumCliqueSize}
+\end{DoxyCode}
+ Computa o tamanho da clique máxima. Disponível apenas para grafos cordais.\hypertarget{index_autotoc_md19}{}\doxysubsubsection{art\+Points}\label{index_autotoc_md19}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > artPoints}
+\end{DoxyCode}
+ Encontra os vértices cuja remoção aumenta o número de componentes conexas do grafo. 

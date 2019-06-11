@@ -79,3 +79,33 @@ Exibe as componentes fortemente conexas do grafo representado por *var*.
 >>> var > shortestPath a b
 ```
 Computa o peso do caminho mínimo do vértice *a* para o vértice *b* no grafo representado por *var*.
+
+#### coloring
+```
+>>> var > coloring
+```
+Computa uma coloração mínima para *var*. O algoritmo é polinomial quando *var* é cordal e **TODO** quando não é.
+
+#### chromaticNumber
+```
+>>> var > chromaticNumber
+```
+Computa o número cromático, i.e. o menor número de cores necessárias para se colorir o grafo. O algoritmo é polinomial quando *var* é cordal e **TODO** quando não é.
+
+#### greedyColoring
+```
+>>> var > greedyColoring
+```
+Computa uma coloração usando um algoritmo guloso na ordem dos vértices. Linear no tamanho do grafo.
+
+#### maximumCliqueSize
+```
+>>> var > maximumCliqueSize
+```
+Computa o tamanho da clique máxima. Disponível apenas para grafos cordais.
+
+#### artPoints
+```
+>>> var > artPoints
+```
+Encontra os vértices cuja remoção aumenta o número de componentes conexas do grafo.

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['simadj',['simAdj',['../classGraphGen.html#a6bfecbfc2aca704e5107dd667a23a1c0',1,'GraphGen']]]
+  ['janela',['janela',['../classGraphCanvas.html#acbae5a92eb6cdc7cd7714093295f5412',1,'GraphCanvas']]]
 ];

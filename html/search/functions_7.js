@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['maxclique',['maxClique',['../classChordal.html#aa19bddaef6b83d8bdb98993cf04929b7',1,'Chordal']]],
-  ['maximumcardinalitysearch',['maximumCardinalitySearch',['../classGraphGen.html#a7811947062c0aa0fd1c56af0442dc9ad',1,'GraphGen']]],
-  ['mst',['mst',['../classGraph.html#a59f3bafa5e1935a2de4313b43219c4d6',1,'Graph']]],
-  ['mstedges',['mstEdges',['../classGraph.html#a645760818f3f2a20f8593b6b2a65c2d8',1,'Graph']]]
+  ['isbipartite',['isBipartite',['../classGraphGen.html#a41afdf97face9260e82749c4c770b2e7',1,'GraphGen']]],
+  ['ischordal',['isChordal',['../classGraphGen.html#aac3e93061f340c6855aa54ed73922f47',1,'GraphGen']]],
+  ['isdag',['isDag',['../classGraphGen.html#ab4923b690b5fe013f35377b849bb6609',1,'GraphGen']]],
+  ['istree',['isTree',['../classGraphGen.html#adffd99540a68b2c158cc1b089ccfd550',1,'GraphGen']]],
+  ['isweighted',['isWeighted',['../classGraphGen.html#aa0069b56cfa3e2d7d596bda9ba4ccc2b',1,'GraphGen']]]
 ];

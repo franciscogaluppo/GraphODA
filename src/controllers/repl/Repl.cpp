@@ -318,28 +318,32 @@ void shortestPath() {
 }
 
 void coloring() {
-	Graph H = getGraph();
-	if (!H.isChordal()) {
-		cout << "Work in progess :p" << endl;
-		return;
-	}
+	try
+	{
+		Graph H = getGraph();
+		Chordal G(H);
+		
+		cout << "Coloring" << endl << endl;
+		vector<int> cores = G.coloring();
+		for (int i = 0; i < G.getN(); i++)
+			cout << G.label[i] << ": " << cores[i] << endl;
 
-	Chordal G(H);
-	cout << "Coloring" << endl << endl;
-	vector<int> cores = G.coloring();
-	for (int i = 0; i < G.getN(); i++)
-		cout << G.label[i] << ": " << cores[i] << endl;
+	} catch(ChordalConstructorException &e)
+	{
+		wrongTypeError(var, 2);
+	}
 }
 
 void chromaticNumber() {
-	Graph H = getGraph();
-	if (!H.isChordal()) {
-		cout << "Work in progess :p" << endl;
-		return;
+	try
+	{
+		Graph H = getGraph();
+		Chordal G(H);
+		cout << "Chromatic number: " << G.chromaticNumber() << endl;
+	} catch(ChordalConstructorException &e)
+	{
+		wrongTypeError(var, 2);
 	}
-
-	Chordal G(H);
-	cout << "Chromatic number: " << G.chromaticNumber() << endl;
 }
 
 void greedyColoring() {
@@ -351,14 +355,15 @@ void greedyColoring() {
 }
 
 void maxClique() {
-	Graph H = getGraph();
-	if (!H.isChordal()) {
-		cout << "Work in progess :p" << endl;
-		return;
+	try
+	{
+		Graph H = getGraph();
+		Chordal G(H);
+		cout << "Maximum clique size: " << G.maxClique() << endl;
+	} catch(ChordalConstructorException &e)
+	{
+		wrongTypeError(var, 2);
 	}
-
-	Chordal G(H);
-	cout << "Maximum clique size: " << G.maxClique() << endl;
 }
 
 void artPoints() {
@@ -480,7 +485,7 @@ void run(int X, int Y) {
 					chromaticNumber();
 				else if (com == "greedyColoring")
 					greedyColoring();
-				else if (com == "maximumClique")
+				else if (com == "maximumCliqueSize")
 					maxClique();
 				else if (com == "artPoints")
 					artPoints();

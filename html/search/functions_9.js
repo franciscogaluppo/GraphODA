@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reaches',['reaches',['../classGraphGen.html#a4fba74f3a12a3153843f550569981b0b',1,'GraphGen']]]
+  ['perfecteliminationordering',['perfectEliminationOrdering',['../classChordal.html#a45b66b1ee19a628646d83613d337d94a',1,'Chordal']]]
 ];

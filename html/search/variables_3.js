@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['n',['n',['../classGraphGen.html#af0087a36d5f72076ae87b0f9022c0033',1,'GraphGen']]]
+  ['gd',['GD',['../classGraphCanvas.html#a7e2f16ce3638db53fb73061fe1c93f15',1,'GraphCanvas']]]
 ];

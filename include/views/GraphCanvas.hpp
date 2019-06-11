@@ -13,35 +13,98 @@
 #include <utility>
 #include <vector>
 
-struct GraphCanvas {
-	GraphDisplay GD;
-	sf::RenderWindow *janela;
-	sf::Font fonte;
-	int editLabel, editWeight;
+///
+/// @file
 
-	GraphCanvas(sf::RenderWindow &, sf::Font &, int, int, int);
-	void setGraph(Graph);
-	bool handleClique();
-	void display();
+///
+/// Classe para o canvas.
+class GraphCanvas {
+	public:
+		///
+		/// Display do canvas.
+		GraphDisplay GD;
 
-	// private:
-	sf::Color getColor(int);
-	int findFontSize(int, int);
-	int findFontSizeNew(int, int);
-	void printPesos();
-	void printAresta(Vector, int);
-	void printGrafo();
-	void printSetas();
+		///
+		/// TODO
+		/// Objeto RenderWindow para trabalhar no canvas.
+		sf::RenderWindow *janela;
+		
+		///
+		/// Fonte para textos da interface.
+		sf::Font fonte;
+
+		///
+		/// TODO
+		int editLabel;
+		
+		///
+		/// TODO
+		int editWeight;
+
+		///
+		/// Construtor da classe.
+		GraphCanvas(sf::RenderWindow &, sf::Font &, int, int, int);
+
+		///
+		/// Define o grafo a ser representado.
+		void setGraph(Graph);
+
+		///
+		/// TODO
+		bool handleClique();
+		
+		///
+		/// TODO
+		void display();
+
+	private:
+		///
+		/// Retorna uma cor correspondente ao número.
+		sf::Color getColor(int);
+		
+		///
+		/// TODO
+		/// Encontra o tamanho apropriado da fonte. 
+		int findFontSize(int, int);
+
+		///
+		/// Mostra os pesos das arestas no canvas.
+		void printPesos();
+
+		///
+		/// TODO
+		/// Mostra as arestas do grafo.
+		void printAresta(Vector, int);
+		
+		///
+		/// TODO
+		/// Mostra o grafo no canvas.
+		void printGrafo();
+
+		///
+		/// Mostra as setas nas arestas direcionadas.
+		void printSetas();
 };
 
+///
+/// Retorna grafo lido de um dado arquivo.
 Graph lerGrafoArquivo(string);
 
+///
+/// Classe de exceções para leitura de grafos inexistentes.
 class FileNotFoundException : public exception {
   public:
+
+	///
+	/// Construtor da exceção. 
 	FileNotFoundException(string f) { msg = "coudn't read file: " + f; }
+
+	///
+	/// Retorna a mensagem de erro da exceção.
 	const char *what() const throw() { return msg.c_str(); }
 
   private:
+	/// Mensagem de erro da exceção.
 	string msg;
 };
 
