@@ -18,10 +18,20 @@ using namespace std;
 /// Classe para grafos gerais.
 class GraphGen {
   public:
+	///
+	/// Lista de rótulos dos vértices.
 	vector<string> label;
 
+	///
+	/// Construtor para o grafo vazio. 
 	GraphGen();
+
+	///
+	/// Construtor para o grafo por número de vértices.
 	GraphGen(int);
+
+	///
+	/// Construtor para o grafo por número de vértices e seus rótulos.
 	GraphGen(int, vector<string> &);
 
 	// gets
@@ -104,7 +114,9 @@ class GraphGen {
 	virtual vector<int> coloring();
 
 	/// Retorna uma lista com a cor de cada vértice em uma coloração gulosa na
-	/// ordem dos vértices. Complexidade: O(n + m)
+	/// ordem dos vértices.
+	///
+	/// Complexidade: O(n + m)
 	vector<int> greedyColoring();
 
 	/// Retorna uma lista com a cor de cada vértice em uma coloração gulosa para
@@ -119,8 +131,20 @@ class GraphGen {
 	vector<bool> artPoints();
 
   protected:
-	int n, m;
+	///
+	/// Número de vértices do grafo.
+	int n;
+	
+	///
+	/// Número de arestas do grafo.
+	int m;
+
+	///
+	/// Lista de adjacência direcionada.
 	vector<vector<pair<int, int>>> adj;
+
+	///
+	/// Lista de adjacência não direcionada.
 	vector<vector<pair<int, int>>> simAdj;
 
 	/// Retorna uma ordenação dos vértices, e sua ordenação inversa, de máxima
@@ -141,47 +165,104 @@ class GraphGen {
 
   private:
 	// auxiliares
+	/// .
+	/// 
+	/// Complexidade: O()
 	bool dfsReaches(vector<bool> &, int, int);
+	
+	/// .
+	/// 
+	/// Complexidade: O()
 	bool dfsCheckBipartite(int, int, vector<int> &);
+	
+	/// .
+	/// 
+	/// Complexidade: O()
 	bool dfsCheckDag(int, vector<int> &);
+	
+	/// .
+	/// 
+	/// Complexidade: O()
 	bool dfsCheckTree(int, int, vector<int> &);
+	
+	/// .
+	/// 
+	/// Complexidade: O()
 	int dfsScc(vector<int> &, vector<int> &, vector<int> &, int &, int &, int);
+	
+	/// .
+	/// 
+	/// Complexidade: O()
 	void dfsArt(vector<bool>&, vector<int>&, vector<int>&, vector<int>&, vector<bool>&, int, int, int&);
 
 	// algoritmos
+	/// .
+	/// 
+	/// Complexidade: O()
 	long long shortestPathBFS(int, int);
+	
+	/// .
+	/// 
+	/// Complexidade: O()
 	long long dijkstra(int, int);
+	
+	/// .
+	/// 
+	/// Complexidade: O()
 	long long bellmanFord(int, int);
 };
 
+///
+/// Classe de exceções de grafos.
 class GraphException : public exception {
   public:
 	GraphException() {}
+
+	///
+	/// Retorna a mensagem de erro da exceção.
 	const char *what() const throw() { return "Graph Exception"; }
 };
 
+///
+/// Classe de exceções de ausência de caminho entre dois vértices.
 class GraphNoPathException : public GraphException {
   public:
+
+	/// Construtor para a exceção de
+	/// ausência de caminho entre dois vértices
 	GraphNoPathException(int a, int b) {
 		msg = "no path from " + to_string(a) + " to " + to_string(b);
 	}
+
+	///
+	/// Retorna a mensagem de erro da exceção.
 	const char *what() const throw() { return msg.c_str(); }
 
   private:
 	string msg;
 };
 
+///
+/// Classe de exceções para ciclos negativos em caminhos mínimos.
 class GraphNegativeCycleException : public GraphException {
   public:
 	GraphNegativeCycleException() {}
+
+	///
+	/// Retorna a mensagem de erro da exceção.
 	const char *what() const throw() {
 		return "negative cycle found; shortest path is undefined";
 	}
 };
 
+///
+/// Classe de exceções para ordenações de vértices fora do domínio.
 class GraphOrderingException : public GraphException {
   public:
 	GraphOrderingException() {}
+
+	///
+	/// Retorna a mensagem de erro da exceção.
 	const char *what() const throw() { return "not a valid vertex ordering"; }
 };
 

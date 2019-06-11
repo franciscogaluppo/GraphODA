@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['perfecteliminationordering',['perfectEliminationOrdering',['../classChordal.html#a45b66b1ee19a628646d83613d337d94a',1,'Chordal']]]
+  ['hasnegativeweight',['hasNegativeWeight',['../classGraphGen.html#a904cd0ab02e4c837ebd85226996fb4b2',1,'GraphGen::hasNegativeWeight()'],['../classGraphGen.html#a904cd0ab02e4c837ebd85226996fb4b2',1,'GraphGen::hasNegativeWeight()']]]
 ];

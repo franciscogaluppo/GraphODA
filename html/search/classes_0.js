@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['chordal',['Chordal',['../classChordal.html',1,'']]],
-  ['chordalconstructorexception',['ChordalConstructorException',['../classChordalConstructorException.html',1,'']]]
+  ['bipartite',['Bipartite',['../classBipartite.html',1,'']]],
+  ['bipartiteconstructorexception',['BipartiteConstructorException',['../classBipartiteConstructorException.html',1,'']]]
 ];

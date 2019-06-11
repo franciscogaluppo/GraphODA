@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['isbipartite',['isBipartite',['../classGraphGen.html#a41afdf97face9260e82749c4c770b2e7',1,'GraphGen']]],
-  ['ischordal',['isChordal',['../classGraphGen.html#aac3e93061f340c6855aa54ed73922f47',1,'GraphGen']]],
-  ['isdag',['isDag',['../classGraphGen.html#ab4923b690b5fe013f35377b849bb6609',1,'GraphGen']]],
-  ['istree',['isTree',['../classGraphGen.html#adffd99540a68b2c158cc1b089ccfd550',1,'GraphGen']]],
-  ['isweighted',['isWeighted',['../classGraphGen.html#aa0069b56cfa3e2d7d596bda9ba4ccc2b',1,'GraphGen']]]
+  ['dag',['Dag',['../classDag.html#a9389de85348f50a4cad1681d5d573e12',1,'Dag::Dag()'],['../classDag.html#a60039050421d45ed24d5fff16dd0b4d9',1,'Dag::Dag(int)'],['../classDag.html#a7ac03b3c8b13d4a85956eec57a1b8cd3',1,'Dag::Dag(GraphGen &amp;)']]],
+  ['dagconstructorexception',['DagConstructorException',['../classDagConstructorException.html#a0c6e8ae8788ed7b42f73f4f1bfb0198f',1,'DagConstructorException']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['checkordering',['checkOrdering',['../classGraphGen.html#ac4ae31e7a52c9b2227ab8deb47d091a5',1,'GraphGen']]],
-  ['chromaticnumber',['chromaticNumber',['../classChordal.html#ad7e9a3c8bd7f66ad4ddc6221523e6b12',1,'Chordal']]],
-  ['coloring',['coloring',['../classChordal.html#acac4822a1eb3376c29f3d193baaec91f',1,'Chordal::coloring()'],['../classGraphGen.html#ad44c80646f694460fafa3e3657beb4d0',1,'GraphGen::coloring()']]]
+  ['addedge',['addEdge',['../classGraph.html#a9f627b8aaa697daabe0ed31bbd0953eb',1,'Graph::addEdge(int, int)'],['../classGraph.html#ad4155b07ec70e1d85787710452a2bcfa',1,'Graph::addEdge(int, int, int)']]],
+  ['artpoints',['artPoints',['../classGraphGen.html#abfc9e2946585f5ea7e2948cd724d37e8',1,'GraphGen']]]
 ];
