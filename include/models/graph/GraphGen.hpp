@@ -132,6 +132,11 @@ class GraphGen {
 	/// Complexidade: O(n + m)
 	vector<bool> artPoints();
 
+	/// Retorna um vetor de booleanos que informa se cada aresta é uma ponte
+	///
+	/// Complexidade: O(n + m)
+	vector<pair<int, int> > bridges();
+
   protected:
 	///
 	/// Número de vértices do grafo.
@@ -201,7 +206,7 @@ class GraphGen {
 	/// .
 	/// 
 	/// Complexidade: O()
-	void dfsArt(vector<bool>&, vector<int>&, vector<int>&, vector<int>&, vector<bool>&, int, int, int&);
+	void dfsArt(vector<bool>&, vector<int>&, vector<int>&, vector<int>&, vector<bool>&, vector<pair<int, int> >&, int, int, int&);
 
 	// algoritmos
 	// TODO

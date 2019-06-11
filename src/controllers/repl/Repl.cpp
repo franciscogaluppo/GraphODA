@@ -374,6 +374,13 @@ void artPoints() {
 	cout << endl;
 }
 
+void bridges() {
+	Graph G = getGraph();
+	auto bridge = G.bridges();
+	cout << "Bridges: " << endl;
+	for (auto i : bridge) cout << "(" << G.label[i.first] << ", " << G.label[i.second] << ")" << endl;
+}
+
 void run(int X, int Y) {
 	cout << "GraphODA" << endl;
 
@@ -489,6 +496,8 @@ void run(int X, int Y) {
 					maxClique();
 				else if (com == "artPoints")
 					artPoints();
+				else if (com == "bridges")
+					bridges();
 			}
 		} catch (REPLInvalidCommandException &e) {
 			cout << "ERROR: invalid command" << endl;

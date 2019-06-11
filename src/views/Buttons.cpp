@@ -21,13 +21,29 @@ void greedyColoring(GraphCanvas *GC) {
 void artPoints(GraphCanvas *GC) {
 	auto art = GC->GD.G.artPoints();
 	for (int i = 0; i < GC->GD.G.getN(); i++)
-		if (art[i]) GC->GD.color[i] = 1;
+		GC->GD.color[i] = art[i];
+}
+
+void pontes(GraphCanvas *GC) {
+	auto pont = GC->GD.G.bridges();
+	for (int i = 0; i < GC->GD.G.getM(); i++)
+		GC->GD.colorAresta[i] = 100;
+	map<pair<int, int>, int> id;
+	auto adj = GC->GD.G.getAdj();
+	int count = 0;
+	for (int i = 0; i < GC->GD.G.getN(); i++) for (auto j : adj[i])
+		id[make_pair(i, j.first)] = count++;
+	for (auto i : pont) {
+		GC->GD.colorAresta[id[i]] = 1;
+		pair<int, int> j = make_pair(i.second, i.first);
+		if (id.count(j)) GC->GD.colorAresta[id[j]] = 1;
+	}
 }
 } // namespace functions
 
 namespace buttons {
 void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-	vector<int> op = {1, 2, 3};
+	vector<int> op = {1, 2, 3, 4};
 	for (int i : op) gui.add(v[i]);
 }
 
@@ -70,6 +86,12 @@ void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	artPoints->setSize(115.f, 20.f);
 	artPoints->setPosition(860.f, 600.f);
 	artPoints->connect("pressed", functions::artPoints, &GC);
+
+	auto pontes = tgui::Button::create("Pontes");
+	v.push_back(pontes);
+	pontes->setSize(75.f, 20.f);
+	pontes->setPosition(780.f, 600.f);
+	pontes->connect("pressed", functions::pontes, &GC);
 }
 
 void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC,

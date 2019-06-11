@@ -108,4 +108,10 @@ Computa o tamanho da clique máxima. Disponível apenas para grafos cordais.
 ```
 >>> var > artPoints
 ```
-Encontra os vértices cuja remoção aumenta o número de componentes conexas do grafo.
+Encontra os vértices cujas remoções aumentam o número de componentes conexas do grafo.
+
+#### bridges
+```
+>>> var > bridges
+```
+Encontra as arestas cujas remoções aumentam o número de componentes conexas do grafo.
