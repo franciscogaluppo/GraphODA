@@ -22,37 +22,38 @@ include_directories(include/models/dataStructures)
 ## Dependências
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
-    find_package(TGUI 0.8 REQUIRED)
 else()
-    # Se estamos rodando localmente para desenvolvimento, relaxamos as dependências
+# Se estamos rodando localmente para desenvolvimento, relaxamos as dependências
     set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_debug_packages" ${CMAKE_MODULE_PATH})
-    find_package(SFML COMPONENTS graphics window system REQUIRED)
-    find_package(TGUI REQUIRED)
+    find_package(SFML 2 COMPONENTS graphics window system REQUIRED)
 endif()
+find_package(TGUI 0.8 REQUIRED)
 
 set(SRC_FILES
-        "src/views/GraphDisplay.cpp"
-        "src/views/GraphCanvas.cpp"
-        "src/views/Interface.cpp"
-        "src/models/graph/GraphGen.cpp"
-        "src/models/graph/Graph.cpp"
-        "src/models/graph/Bipartite.cpp"
-        "src/models/graph/Chordal.cpp"
-        "src/models/graph/Dag.cpp"
-        "src/models/graph/Tree.cpp"
+        "${PROJECT_SOURCE_DIR}/src/views/GraphDisplay.cpp"
+        "${PROJECT_SOURCE_DIR}/src/views/GraphCanvas.cpp"
+        "${PROJECT_SOURCE_DIR}/src/views/Interface.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/graph/GraphGen.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/graph/Graph.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/graph/Bipartite.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/graph/Chordal.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/graph/Dag.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/graph/Tree.cpp"
         "${PROJECT_SOURCE_DIR}/src/utils/Assets.cpp"
-        "src/controllers/repl/Repl.cpp"
-        "src/models/dataStructures/Vector.cpp"
-        "src/models/dataStructures/DSU.cpp"
-        "${PROJECT_SOURCE_DIR}/src/main.cpp")
+        "${PROJECT_SOURCE_DIR}/src/controllers/repl/Repl.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/dataStructures/Vector.cpp"
+        "${PROJECT_SOURCE_DIR}/src/models/dataStructures/DSU.cpp")
 set(ASSET_FILES
         "${PROJECT_SOURCE_DIR}/assets/TransparentGrey.txt"
         "${PROJECT_SOURCE_DIR}/assets/CONSOLAB.TTF")
 set(DESKTOP_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.desktop")
 set(ICON_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.png")
 
+add_library(common OBJECT ${SRC_FILES})
+
+## Configuração para compilação do executável final
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-add_executable(graphODA ${SRC_FILES})
+add_executable(graphODA $<TARGET_OBJECTS:common> "${PROJECT_SOURCE_DIR}/src/main.cpp")
 target_link_libraries(graphODA tgui sfml-graphics sfml-window sfml-system)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -64,3 +65,7 @@ else()
    install(TARGETS graphODA DESTINATION "./")
    install(FILES ${ASSET_FILES} DESTINATION "assets")
 endif()
+
+## Configuração dos testes
+enable_testing ()
+add_subdirectory (tests)
