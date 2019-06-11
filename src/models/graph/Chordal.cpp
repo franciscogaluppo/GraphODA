@@ -32,3 +32,8 @@ int Chordal::chromaticNumber()
 		maior = (c > maior? c: maior);
 	return maior;
 }
+
+int Chordal::maxClique()
+{
+	return chromaticNumber();
+}

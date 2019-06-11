@@ -240,6 +240,19 @@ namespace repl {
 			cout << G.label[i] << ": " << cores[i] << endl;
 	}
 
+	void maxClique()
+	{
+		Graph H = getGraph();
+		if(!H.isChordal())
+		{
+			cout << "Work in progess :p" << endl;
+			return;
+		}	
+	
+		Chordal G(H);
+		cout << "Maximum clique size: " << G.maxClique() << endl;
+	}
+
 	void run(int X, int Y) {
 		cout << "GraphODA" << endl;
 
@@ -322,6 +335,7 @@ namespace repl {
 					else if (com == "coloring") coloring();
 					else if (com == "chromatic_number") chromaticNumber();
 					else if (com == "greedy_coloring") greedyColoring();
+					else if (com == "maximum_clique") maxClique();
 				}
 			} catch (REPLInvalidCommandException &e) {
 				cout << "ERROR: invalid command" << endl;	

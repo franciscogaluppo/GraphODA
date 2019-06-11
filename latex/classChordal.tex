@@ -1,0 +1,62 @@
+\hypertarget{classChordal}{}\doxysection{Referência à classe Chordal}
+\label{classChordal}\index{Chordal@{Chordal}}
+Diagrama de heranças da classe Chordal\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classChordal}
+\end{center}
+\end{figure}
+\doxysubsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classChordal_af315e26462665f1881975cc27372a67a}\label{classChordal_af315e26462665f1881975cc27372a67a}} 
+{\bfseries Chordal} (int)
+\item 
+\mbox{\Hypertarget{classChordal_a6ab51b523f1b150560fcae74db9eee68}\label{classChordal_a6ab51b523f1b150560fcae74db9eee68}} 
+{\bfseries Chordal} (\mbox{\hyperlink{classGraphGen}{Graph\+Gen}} \&)
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classChordal_a45b66b1ee19a628646d83613d337d94a}{perfect\+Elimination\+Ordering}} ()
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classChordal_acac4822a1eb3376c29f3d193baaec91f}{coloring}} () override
+\item 
+int \mbox{\hyperlink{classChordal_ad7e9a3c8bd7f66ad4ddc6221523e6b12}{chromatic\+Number}} ()
+\item 
+int \mbox{\hyperlink{classChordal_aa19bddaef6b83d8bdb98993cf04929b7}{max\+Clique}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Outros membros herdados}
+
+
+\doxysubsection{Documentação dos métodos}
+\mbox{\Hypertarget{classChordal_ad7e9a3c8bd7f66ad4ddc6221523e6b12}\label{classChordal_ad7e9a3c8bd7f66ad4ddc6221523e6b12}} 
+\index{Chordal@{Chordal}!chromaticNumber@{chromaticNumber}}
+\index{chromaticNumber@{chromaticNumber}!Chordal@{Chordal}}
+\doxysubsubsection{\texorpdfstring{chromaticNumber()}{chromaticNumber()}}
+{\footnotesize\ttfamily int Chordal\+::chromatic\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Calcula o número cromático do grafo Complexidade\+: O(nlog() + m) \mbox{\Hypertarget{classChordal_acac4822a1eb3376c29f3d193baaec91f}\label{classChordal_acac4822a1eb3376c29f3d193baaec91f}} 
+\index{Chordal@{Chordal}!coloring@{coloring}}
+\index{coloring@{coloring}!Chordal@{Chordal}}
+\doxysubsubsection{\texorpdfstring{coloring()}{coloring()}}
+{\footnotesize\ttfamily vector$<$int$>$ Chordal\+::coloring (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Algoritmo de coloração para grafos cordais. Complexidade\+: O(nlog() + m) 
+
+Reimplementado de \mbox{\hyperlink{classGraphGen_ad44c80646f694460fafa3e3657beb4d0}{Graph\+Gen}}.
+
+\mbox{\Hypertarget{classChordal_aa19bddaef6b83d8bdb98993cf04929b7}\label{classChordal_aa19bddaef6b83d8bdb98993cf04929b7}} 
+\index{Chordal@{Chordal}!maxClique@{maxClique}}
+\index{maxClique@{maxClique}!Chordal@{Chordal}}
+\doxysubsubsection{\texorpdfstring{maxClique()}{maxClique()}}
+{\footnotesize\ttfamily int Chordal\+::max\+Clique (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Calcula o tamanho da maior clique do grafo Complexidade\+: O(nlog() + m) \mbox{\Hypertarget{classChordal_a45b66b1ee19a628646d83613d337d94a}\label{classChordal_a45b66b1ee19a628646d83613d337d94a}} 
+\index{Chordal@{Chordal}!perfectEliminationOrdering@{perfectEliminationOrdering}}
+\index{perfectEliminationOrdering@{perfectEliminationOrdering}!Chordal@{Chordal}}
+\doxysubsubsection{\texorpdfstring{perfectEliminationOrdering()}{perfectEliminationOrdering()}}
+{\footnotesize\ttfamily vector$<$int$>$ Chordal\+::perfect\+Elimination\+Ordering (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Cria uma ordem de eliminação perfeita dos vértices. Complexidade\+: O(nlog(n)) 
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+include/models/graph/\mbox{\hyperlink{Chordal_8hpp}{Chordal.\+hpp}}\end{DoxyCompactItemize}
