@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['dag',['Dag',['../classDag.html',1,'Dag'],['../classDag.html#a9389de85348f50a4cad1681d5d573e12',1,'Dag::Dag()'],['../classDag.html#a60039050421d45ed24d5fff16dd0b4d9',1,'Dag::Dag(int)'],['../classDag.html#a7ac03b3c8b13d4a85956eec57a1b8cd3',1,'Dag::Dag(GraphGen &amp;)']]],
-  ['dag_2ehpp',['Dag.hpp',['../Dag_8hpp.html',1,'']]],
-  ['dagconstructorexception',['DagConstructorException',['../classDagConstructorException.html',1,'DagConstructorException'],['../classDagConstructorException.html#a0c6e8ae8788ed7b42f73f4f1bfb0198f',1,'DagConstructorException::DagConstructorException()']]],
-  ['dsu',['DSU',['../classDSU.html',1,'']]],
-  ['dsuexception',['DSUException',['../classDSUException.html',1,'']]],
-  ['dsunegativeconstructorparameterexception',['DSUNegativeConstructorParameterException',['../classDSUNegativeConstructorParameterException.html',1,'']]],
-  ['dsuvalueoutofboundsexception',['DSUValueOutOfBoundsException',['../classDSUValueOutOfBoundsException.html',1,'']]]
+  ['checkordering',['checkOrdering',['../classGraphGen.html#ac4ae31e7a52c9b2227ab8deb47d091a5',1,'GraphGen']]],
+  ['chordal',['Chordal',['../classChordal.html',1,'Chordal'],['../classChordal.html#ab20403cdb91238d6576d0e757ae4c8f3',1,'Chordal::Chordal()'],['../classChordal.html#af315e26462665f1881975cc27372a67a',1,'Chordal::Chordal(int)'],['../classChordal.html#a6ab51b523f1b150560fcae74db9eee68',1,'Chordal::Chordal(GraphGen &amp;)']]],
+  ['chordal_2ehpp',['Chordal.hpp',['../Chordal_8hpp.html',1,'']]],
+  ['chordalconstructorexception',['ChordalConstructorException',['../classChordalConstructorException.html',1,'ChordalConstructorException'],['../classChordalConstructorException.html#a7b884c1b0146128227fc27162f2820c5',1,'ChordalConstructorException::ChordalConstructorException()']]],
+  ['chromaticnumber',['chromaticNumber',['../classChordal.html#ad7e9a3c8bd7f66ad4ddc6221523e6b12',1,'Chordal']]],
+  ['coloring',['coloring',['../classChordal.html#acac4822a1eb3376c29f3d193baaec91f',1,'Chordal::coloring()'],['../classGraphGen.html#ad44c80646f694460fafa3e3657beb4d0',1,'GraphGen::coloring()']]]
 ];

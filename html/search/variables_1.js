@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['label',['label',['../classGraphGen.html#ab815894cbafb101c1cc8ab89a3fc86fe',1,'GraphGen']]]
+  ['label',['label',['../classGraphGen.html#a59a950a3a5b8d5f3bda7b544a83248ed',1,'GraphGen']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GraphODA: Página principal</title>
+<title>GraphODA: 2019-1-grupo19</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,11 +60,51 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">GraphODA Documentação</div>  </div>
+<div class="title">2019-1-grupo19 </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a href="https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19"><img src="https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19.svg?token=Mnxg5DUtyLmLApyc8NAT&amp;branch=master" alt="Build Status" class="inline"/></a></p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Como instalar as dependências?</h1>
+<p>Um script simples para Ubuntu 18.04+ </p><div class="fragment"><div class="line">sudo add-apt-repository ppa:texus/tgui-0.8</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install libsfml-dev libtgui-dev</div></div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+Como desenvolver localmente?</h1>
+<div class="fragment"><div class="line"># Gere os scripts de compilação para sua plataforma</div><div class="line">cmake CMakeLists.txt</div><div class="line"># Compile</div><div class="line">make</div><div class="line"># Execute</div><div class="line">./graphODA</div></div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
+Como usar o REPL</h1>
+<p>O REPL possui dois tipos de comando: atribuição e operação.</p>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Atribuição</h2>
+<h3><a class="anchor" id="autotoc_md5"></a>
+Atribuição de variável</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var1 = var2</div></div><!-- fragment --><p> A variável <em>var1</em> passa a representar o grafo representado por <em>var2</em>.</p>
+<h3><a class="anchor" id="autotoc_md6"></a>
+import</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var = import file_name</div></div><!-- fragment --><p> A variável <em>var</em> passa a representar o grafo armazenado em <em>file_name</em>. Se a leitura do arquivo falhar, <em>var</em> passa a representar um grafo vazio.</p>
+<h3><a class="anchor" id="autotoc_md7"></a>
+mst</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var1 = mst var2</div></div><!-- fragment --><p> A variável <em>var1</em> passa a representar a <b>árvore geradora mínima</b> do grafo representado por <em>var2</em>.</p>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Operação</h2>
+<h3><a class="anchor" id="autotoc_md9"></a>
+describe</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; describe</div></div><!-- fragment --><p> Exibe informações sobre o grafo representado por <em>var</em>.</p>
+<h3><a class="anchor" id="autotoc_md10"></a>
+show</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; show</div></div><!-- fragment --><p> Exibe o grafo representado por <em>var</em>.</p>
+<h3><a class="anchor" id="autotoc_md11"></a>
+edit</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; edit</div></div><!-- fragment --><p> Exibe o grafo representado por <em>var</em>, salvando as modificações efetuadas.</p>
+<h3><a class="anchor" id="autotoc_md12"></a>
+reaches</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; reaches a b</div></div><!-- fragment --><p> Verifica se o vértice <em>a</em> alcança o vértice <em>b</em> no grafo representado por <em>var</em>.</p>
+<h3><a class="anchor" id="autotoc_md13"></a>
+scc</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; scc</div></div><!-- fragment --><p> Exibe as componentes fortemente conexas do grafo representado por <em>var</em>.</p>
+<h3><a class="anchor" id="autotoc_md14"></a>
+shortestPath</h3>
+<div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; shortestPath a b</div></div><!-- fragment --><p> Computa o peso do caminho mínimo do vértice <em>a</em> para o vértice <em>b</em> no grafo representado por <em>var</em>. </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

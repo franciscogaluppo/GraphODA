@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['reaches',['reaches',['../classGraphGen.html#a4fba74f3a12a3153843f550569981b0b',1,'GraphGen::reaches(int, int)'],['../classGraphGen.html#a4fba74f3a12a3153843f550569981b0b',1,'GraphGen::reaches(int, int)']]],
-  ['replexception',['REPLException',['../classREPLException.html',1,'']]],
-  ['replinvalidcommandexception',['REPLInvalidCommandException',['../classREPLInvalidCommandException.html',1,'']]],
-  ['replvertexnotfoundexception',['REPLVertexNotFoundException',['../classREPLVertexNotFoundException.html',1,'']]]
+  ['perfecteliminationordering',['perfectEliminationOrdering',['../classChordal.html#a45b66b1ee19a628646d83613d337d94a',1,'Chordal']]]
 ];

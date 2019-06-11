@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['perfecteliminationordering',['perfectEliminationOrdering',['../classChordal.html#a45b66b1ee19a628646d83613d337d94a',1,'Chordal']]]
+  ['n',['n',['../classGraphGen.html#af0087a36d5f72076ae87b0f9022c0033',1,'GraphGen']]]
 ];
