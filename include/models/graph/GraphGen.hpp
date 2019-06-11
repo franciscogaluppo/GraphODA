@@ -17,7 +17,7 @@ using namespace std;
 ///
 /// Classe para grafos gerais.
 class GraphGen {
-   public:
+  public:
 	vector<string> label;
 
 	GraphGen();
@@ -113,7 +113,7 @@ class GraphGen {
 	/// Complexidade: O(n + m)
 	vector<int> greedyColoring(vector<int>);
 
-   protected:
+  protected:
 	int n, m;
 	vector<vector<pair<int, int>>> adj;
 	vector<vector<pair<int, int>>> simAdj;
@@ -134,7 +134,7 @@ class GraphGen {
 	/// Verifica se uma ordenação atende às exigências de uma ordenação.
 	bool checkOrdering(vector<int>);
 
-   private:
+  private:
 	// auxiliares
 	bool dfsReaches(vector<bool> &, int, int);
 	bool dfsCheckBipartite(int, int, vector<int> &);
@@ -149,24 +149,24 @@ class GraphGen {
 };
 
 class GraphException : public exception {
-   public:
+  public:
 	GraphException() {}
 	const char *what() const throw() { return "Graph Exception"; }
 };
 
 class GraphNoPathException : public GraphException {
-   public:
+  public:
 	GraphNoPathException(int a, int b) {
 		msg = "no path from " + to_string(a) + " to " + to_string(b);
 	}
 	const char *what() const throw() { return msg.c_str(); }
 
-   private:
+  private:
 	string msg;
 };
 
 class GraphNegativeCycleException : public GraphException {
-   public:
+  public:
 	GraphNegativeCycleException() {}
 	const char *what() const throw() {
 		return "negative cycle found; shortest path is undefined";
@@ -174,7 +174,7 @@ class GraphNegativeCycleException : public GraphException {
 };
 
 class GraphOrderingException : public GraphException {
-   public:
+  public:
 	GraphOrderingException() {}
 	const char *what() const throw() { return "not a valid vertex ordering"; }
 };

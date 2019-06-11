@@ -3,7 +3,7 @@
 namespace repl {
 
 class TYPE {
-   public:
+  public:
 	Graph G;
 	Bipartite B;
 	Chordal C;
@@ -361,4 +361,4 @@ void run(int X, int Y) {
 		}
 	}
 }
-}  // namespace repl
+} // namespace repl

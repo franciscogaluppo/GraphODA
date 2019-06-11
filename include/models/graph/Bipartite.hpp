@@ -4,14 +4,14 @@
 #include "GraphGen.hpp"
 
 class Bipartite : public GraphGen {
-   public:
+  public:
 	Bipartite();
 	Bipartite(int);
 	Bipartite(GraphGen &);
 };
 
 class BipartiteConstructorException : public GraphException {
-   public:
+  public:
 	BipartiteConstructorException() {}
 	const char *what() const throw() {
 		return "constructor paramer is not bipartite";

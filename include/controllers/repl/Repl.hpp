@@ -21,25 +21,25 @@ void run(int, int);
 }
 
 class REPLException : public exception {
-   public:
+  public:
 	REPLException() {}
 	const char *what() const throw() { return "REPL Exception"; }
 };
 
 class REPLInvalidCommandException : public REPLException {
-   public:
+  public:
 	REPLInvalidCommandException() {}
 	const char *what() const throw() { return "invalid syntax"; }
 };
 
 class REPLVertexNotFoundException : public REPLException {
-   public:
+  public:
 	REPLVertexNotFoundException(string v) {
 		msg = "coudn't find vertex with label: " + v;
 	}
 	const char *what() const throw() { return msg.c_str(); }
 
-   private:
+  private:
 	string msg;
 };
 

@@ -15,7 +15,7 @@
 using namespace std;
 
 class Graph : public GraphGen {
-   public:
+  public:
 	Graph();
 	Graph(int);
 	Graph(int, vector<string> &);
@@ -29,24 +29,24 @@ class Graph : public GraphGen {
 };
 
 class GraphVertexOutOfBoundsException : public GraphException {
-   public:
+  public:
 	GraphVertexOutOfBoundsException(int n) {
 		msg = "vertex out of bounds: " + to_string(n);
 	}
 	const char *what() const throw() { return msg.c_str(); }
 
-   private:
+  private:
 	string msg;
 };
 
 class GraphSelfLoopException : public GraphException {
-   public:
+  public:
 	GraphSelfLoopException(int n) {
 		msg = "self loop not allowed (at vertex " + to_string(n) + ")";
 	}
 	const char *what() const throw() { return msg.c_str(); }
 
-   private:
+  private:
 	string msg;
 };
 

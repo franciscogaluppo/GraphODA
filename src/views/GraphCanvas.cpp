@@ -307,11 +307,11 @@ bool GraphCanvas::handleClique() {
 	// (nao arranjei forma melhor)
 	static bool clique = 0, cliqueD = 0;
 	static Vector ini, dif;
-	static int vertice, aresta;  // vertice clicado
+	static int vertice, aresta; // vertice clicado
 	static int lastVertice = -1, lastAresta = -1;
 	static bool crieiVertice = 0;
 	static sf::Clock clock;
-	static sf::Time lastTime = clock.getElapsedTime();  // ultima vez que clicou
+	static sf::Time lastTime = clock.getElapsedTime(); // ultima vez que clicou
 
 	bool mudou = false;
 
@@ -353,7 +353,7 @@ bool GraphCanvas::handleClique() {
 		if (vertice > -1)
 			GD.pos[vertice] =
 				GD.deixaDentro(positionV + dif, GD.trava[vertice]);
-	} else if (clique) {  // soltei
+	} else if (clique) { // soltei
 		clique = 0;
 		lastAresta = aresta;
 		aresta = GD.achaAresta(positionV);
@@ -377,10 +377,10 @@ bool GraphCanvas::handleClique() {
 			}
 
 			if (vertice > -1) {
-				if (!GD.draw) {  // trava
+				if (!GD.draw) { // trava
 					GD.trava[vertice] = !GD.trava[vertice];
 					GD.para[vertice] = 0;
-				} else {  // desenha aresta
+				} else { // desenha aresta
 					if (lastVertice == -1 and !crieiVertice)
 						lastVertice = vertice;
 					else {
@@ -395,7 +395,7 @@ bool GraphCanvas::handleClique() {
 			} else
 				lastVertice = -1;
 		} else if (vertice > -1)
-			GD.para[vertice] = 0;  // solta vertice
+			GD.para[vertice] = 0; // solta vertice
 
 		crieiVertice = 0;
 	}

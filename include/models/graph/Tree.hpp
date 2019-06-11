@@ -4,14 +4,14 @@
 #include "Chordal.hpp"
 
 class Tree : public Chordal {
-   public:
+  public:
 	Tree();
 	Tree(int);
 	Tree(GraphGen &);
 };
 
 class TreeConstructorException : public GraphException {
-   public:
+  public:
 	TreeConstructorException() {}
 	const char *what() const throw() {
 		return "constructor parameter is not a tree";

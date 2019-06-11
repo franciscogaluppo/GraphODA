@@ -13,4 +13,4 @@ using namespace std;
 const string get_theme_path();
 const string get_font_path();
 
-#endif  // GRAPHODA_ASSETS_HPP
+#endif // GRAPHODA_ASSETS_HPP

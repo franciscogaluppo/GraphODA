@@ -6,7 +6,7 @@
 using namespace std;
 
 class Vector {
-   public:
+  public:
 	float x, y;
 
 	Vector();
@@ -21,8 +21,8 @@ class Vector {
 Vector operator+(const Vector &, const Vector &);
 Vector operator-(const Vector &, const Vector &);
 Vector operator*(const Vector &, const float);
-float operator*(const Vector &, const Vector &);  // dot product
-float operator%(const Vector &, const Vector &);  // cross product
-float operator^(const Vector &, const Vector &);  // distance
+float operator*(const Vector &, const Vector &); // dot product
+float operator%(const Vector &, const Vector &); // cross product
+float operator^(const Vector &, const Vector &); // distance
 
 #endif

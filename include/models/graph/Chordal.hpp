@@ -7,7 +7,7 @@
 ///
 /// Classe para grafos cordais.
 class Chordal : public GraphGen {
-   public:
+  public:
 	Chordal();
 	Chordal(int);
 	Chordal(GraphGen &);
@@ -31,7 +31,7 @@ class Chordal : public GraphGen {
 };
 
 class ChordalConstructorException : public GraphException {
-   public:
+  public:
 	ChordalConstructorException() {}
 	const char *what() const throw() {
 		return "constructor parameter is not chordal";

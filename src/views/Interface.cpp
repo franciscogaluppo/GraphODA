@@ -10,7 +10,7 @@ void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC,
 	}
 	GC->setGraph(i);
 	if (GC->GD.G.isTree())
-		*tipoGrafo = 4;  // tem que ser primeiro pq herda das outras
+		*tipoGrafo = 4; // tem que ser primeiro pq herda das outras
 	else if (GC->GD.G.isBipartite())
 		*tipoGrafo = 1;
 	else if (GC->GD.G.isChordal())
@@ -97,7 +97,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	janela.draw(menu);
 
 	// Menu inferior
-	sf::RectangleShape inferior(sf::Vector2f(800.f, 100.f));  // larg x alt
+	sf::RectangleShape inferior(sf::Vector2f(800.f, 100.f)); // larg x alt
 	inferior.setFillColor(sf::Color(0, 0, 0));
 	inferior.setPosition(0.f, 600.f);
 	janela.draw(inferior);
@@ -176,7 +176,7 @@ void greedyColoring(GraphCanvas *GC) {
 	auto coloracao = GC->GD.G.greedyColoring();
 	GC->GD.color = coloracao;
 }
-}  // namespace functions
+} // namespace functions
 
 namespace buttons {
 void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
@@ -222,7 +222,7 @@ void inicializa(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 void atualiza(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes,
 			  GraphCanvas &GC, int &tipoGrafo) {
 	if (GC.GD.G.isTree())
-		tipoGrafo = 4;  // tem que ser primeiro pq herda das outras
+		tipoGrafo = 4; // tem que ser primeiro pq herda das outras
 	else if (GC.GD.G.isBipartite())
 		tipoGrafo = 1;
 	else if (GC.GD.G.isChordal())
@@ -239,7 +239,7 @@ void atualiza(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes,
 	if (GC.GD.G.isDag()) dag(gui, botoes);
 	if (GC.GD.G.isTree()) tree(gui, botoes);
 }
-}  // namespace buttons
+} // namespace buttons
 
 Graph displayTeste(int X, int Y, Graph G) {
 	// Carrega a fonte Consola Bold (Gosto dela)
@@ -414,7 +414,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 					edit->setFocused(true);
 				}
 			}
-		} else if (GC.handleClique() or tipoGrafo != lastTipoGrafo) {  // mudou
+		} else if (GC.handleClique() or tipoGrafo != lastTipoGrafo) { // mudou
 			buttons::atualiza(gui, botoes, GC, tipoGrafo);
 		}
 
