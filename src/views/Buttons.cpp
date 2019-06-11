@@ -17,11 +17,17 @@ void greedyColoring(GraphCanvas *GC) {
 	auto coloracao = GC->GD.G.greedyColoring();
 	GC->GD.color = coloracao;
 }
-} // functions
+
+void artPoints(GraphCanvas *GC) {
+	auto art = GC->GD.G.artPoints();
+	for (int i = 0; i < GC->GD.G.getN(); i++)
+		if (art[i]) GC->GD.color[i] = 1;
+}
+} // namespace functions
 
 namespace buttons {
 void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-	vector<int> op = {1, 2};
+	vector<int> op = {1, 2, 3};
 	for (int i : op) gui.add(v[i]);
 }
 
@@ -58,10 +64,16 @@ void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	guloso->setSize(115.f, 20.f);
 	guloso->setPosition(980.f, 600.f);
 	guloso->connect("pressed", functions::greedyColoring, &GC);
+
+	auto artPoints = tgui::Button::create("Pontos de art");
+	v.push_back(artPoints);
+	artPoints->setSize(115.f, 20.f);
+	artPoints->setPosition(860.f, 600.f);
+	artPoints->connect("pressed", functions::artPoints, &GC);
 }
 
-void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes,
-			  GraphCanvas &GC, int &tipoGrafo) {
+void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC,
+			int &tipoGrafo) {
 	if (GC.GD.G.isTree())
 		tipoGrafo = 4; // tem que ser primeiro pq herda das outras
 	else if (GC.GD.G.isBipartite())
@@ -80,4 +92,4 @@ void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes,
 	if (GC.GD.G.isDag()) dag(gui, botoes);
 	if (GC.GD.G.isTree()) tree(gui, botoes);
 }
-} // buttons
+} // namespace buttons

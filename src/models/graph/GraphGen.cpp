@@ -406,5 +406,37 @@ vector<int> GraphGen::greedyColoring() {
 	return greedyColoring(ordem);
 }
 
+void GraphGen::dfsArt(vector<bool> &vis, vector<int> &in, vector<int> &low, vector<int> &parent, vector<bool> &isArt, int v, int p, int &d) {
+	parent[v] = p;
+	low[v] = in[v] = d++;
+	isArt[v] = false;
+	for (auto j : simAdj[v]) {
+		if (j.first == p) continue;
+		if (in[j.first] == -1) {
+			dfsArt(vis, in, low, parent, isArt, j.first, v, d);
+			if (low[j.first] >= in[v]) isArt[v] = true;
+			low[v] = min(low[v], low[j.first]);
+		} else low[v] = min(low[v], in[j.first]);
+	}
+	if (p == -1) {
+		isArt[v] = false;
+		int k = 0;
+		for (auto j : simAdj[v]) if (!vis[j.first]) {
+			vis[j.first] = true;
+			k += (parent[j.first] == v);
+		}
+		if (k > 1) isArt[v] = true;
+	}
+}
+
+vector<bool> GraphGen::artPoints() {
+	vector<bool> isArt(n), vis(n, false);
+	vector<int> in(n, -1), low(n), parent(n);
+	int d = -1;
+	for (int i = 0; i < n; i++) if (in[i] == -1)
+		dfsArt(vis, in, low, parent, isArt, i, -1, ++d);
+	return isArt;
+}
+
 // TODO
 vector<int> GraphGen::coloring() { return vector<int>(); }

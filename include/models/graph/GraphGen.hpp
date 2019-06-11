@@ -113,6 +113,11 @@ class GraphGen {
 	/// Complexidade: O(n + m)
 	vector<int> greedyColoring(vector<int>);
 
+	/// Retorna um vetor de booleanos que informa se cada vértice é um ponto de articulação
+	///
+	/// Complexidade: O(n + m)
+	vector<bool> artPoints();
+
   protected:
 	int n, m;
 	vector<vector<pair<int, int>>> adj;
@@ -141,6 +146,7 @@ class GraphGen {
 	bool dfsCheckDag(int, vector<int> &);
 	bool dfsCheckTree(int, int, vector<int> &);
 	int dfsScc(vector<int> &, vector<int> &, vector<int> &, int &, int &, int);
+	void dfsArt(vector<bool>&, vector<int>&, vector<int>&, vector<int>&, vector<bool>&, int, int, int&);
 
 	// algoritmos
 	long long shortestPathBFS(int, int);

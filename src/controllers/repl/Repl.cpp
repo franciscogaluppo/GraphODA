@@ -17,7 +17,7 @@ vector<TYPE> graphs;
 map<string, int> vars;
 stringstream ss;
 string var;
-int at;
+int at, lastVar;
 
 // aux
 
@@ -29,20 +29,32 @@ string getType(int i) {
 	if (i == 4) return "Tree";
 }
 
-Graph getGraph() {
+Graph getGraphVar(string var2) {
 	Graph G;
-	if (graphs[at].type == 0) G = Graph(graphs[at].G);
-	if (graphs[at].type == 1) G = Graph(graphs[at].B);
-	if (graphs[at].type == 2) G = Graph(graphs[at].C);
-	if (graphs[at].type == 3) G = Graph(graphs[at].D);
-	if (graphs[at].type == 4) G = Graph(graphs[at].T);
+	int att = vars[var2];
+	if (graphs[att].type == 0) G = Graph(graphs[att].G);
+	if (graphs[att].type == 1) G = Graph(graphs[att].B);
+	if (graphs[att].type == 2) G = Graph(graphs[att].C);
+	if (graphs[att].type == 3) G = Graph(graphs[att].D);
+	if (graphs[att].type == 4) G = Graph(graphs[att].T);
 	return G;
+}
+
+Graph getGraph() {
+	return getGraphVar(var);
 }
 
 int getVertex(Graph &G, string s) {
 	for (int i = 0; i < G.getN(); i++)
 		if (G.label[i] == s) return i;
 	throw REPLVertexNotFoundException(s);
+}
+
+void undoDeclaration() {
+	if (lastVar == -1) {
+		vars.erase(var);
+		graphs.pop_back();
+	}
 }
 
 // errors
@@ -59,6 +71,12 @@ void wrongTypeError(string var, int exp) {
 	cout << "ERROR: " << var << " has type '" << getType(graphs[vars[var]].type)
 		 << "'" << endl;
 	cout << "\texpected '" << getType(exp) << "'" << endl;
+}
+
+void graphIsNotError(string var, int exp) {
+	string expS = getType(exp);
+	expS[0] += 'a'-'A';
+	cout << "ERROR: " << var << " is not " << expS << endl;
 }
 
 void vertexNotFoundError(string v) {
@@ -83,6 +101,7 @@ void import() {
 		j = lerGrafoArquivo(file);
 	} catch (FileNotFoundException &e) {
 		fileNotFoundError(file);
+		undoDeclaration();
 		return;
 	}
 	if (j.getN()) {
@@ -96,13 +115,100 @@ void mst() {
 	if (!(ss >> var2)) throw REPLInvalidCommandException();
 	if (!vars.count(var2)) {
 		undefinedVariableError(var2);
+		undoDeclaration();
 		return;
 	}
 	if (graphs[vars[var2]].type != 0) {
 		wrongTypeError(var2, 0);
+		undoDeclaration();
 		return;
 	}
 	graphs[at].T = graphs[vars[var2]].G.mst();
+	graphs[at].type = 4;
+}
+
+void graphCast() {
+	string var2;
+	if (!(ss >> var2)) throw REPLInvalidCommandException();
+	if (!vars.count(var2)) {
+		undefinedVariableError(var2);
+		undoDeclaration();
+		return;
+	}
+	Graph G = getGraphVar(var2);
+	graphs[at].G = G;
+	graphs[at].type = 0;
+}
+
+void bipartiteCast() {
+	string var2;
+	if (!(ss >> var2)) throw REPLInvalidCommandException();
+	if (!vars.count(var2)) {
+		undefinedVariableError(var2);
+		undoDeclaration();
+		return;
+	}
+	Graph G = getGraphVar(var2);
+	if (!G.isBipartite()) {
+		graphIsNotError(var2, 1);
+		undoDeclaration();
+		return;
+	}
+	graphs[at].B = Bipartite(G);
+	graphs[at].type = 1;
+}
+
+void chordalCast() {
+	string var2;
+	if (!(ss >> var2)) throw REPLInvalidCommandException();
+	if (!vars.count(var2)) {
+		undefinedVariableError(var2);
+		undoDeclaration();
+		return;
+	}
+	Graph G = getGraphVar(var2);
+	if (!G.isChordal()) {
+		graphIsNotError(var2, 2);
+		undoDeclaration();
+		return;
+	}
+	graphs[at].C = Chordal(G);
+	graphs[at].type = 2;
+}
+
+void dagCast() {
+	string var2;
+	if (!(ss >> var2)) throw REPLInvalidCommandException();
+	if (!vars.count(var2)) {
+		undefinedVariableError(var2);
+		undoDeclaration();
+		return;
+	}
+	Graph G = getGraphVar(var2);
+	if (!G.isDag()) {
+		graphIsNotError(var2, 3);
+		undoDeclaration();
+		return;
+	}
+	graphs[at].D = Dag(G);
+	graphs[at].type = 3;
+}
+
+void treeCast() {
+	string var2;
+	if (!(ss >> var2)) throw REPLInvalidCommandException();
+	if (!vars.count(var2)) {
+		undefinedVariableError(var2);
+		undoDeclaration();
+		return;
+	}
+	Graph G = getGraphVar(var2);
+	if (!G.isTree()) {
+		graphIsNotError(var2, 4);
+		undoDeclaration();
+		return;
+	}
+	graphs[at].T = Tree(G);
 	graphs[at].type = 4;
 }
 
@@ -255,6 +361,14 @@ void maxClique() {
 	cout << "Maximum clique size: " << G.maxClique() << endl;
 }
 
+void artPoints() {
+	Graph G = getGraph();
+	auto art = G.artPoints();
+	cout << "Articulation points:" << endl;
+	for (int i = 0; i < G.getN(); i++) if (art[i]) cout << G.label[i] << " ";
+	cout << endl;
+}
+
 void run(int X, int Y) {
 	cout << "GraphODA" << endl;
 
@@ -296,12 +410,14 @@ void run(int X, int Y) {
 				undefinedVariableError(var);
 				continue;
 			}
+			lastVar = -1;
+
 			vars[var] = graphs.size();
 			TYPE new_;
 			new_.G = Graph();
 			new_.type = 0;
 			graphs.push_back(new_);
-		}
+		} else lastVar = vars[var];
 
 		at = vars[var];
 		try {
@@ -313,12 +429,23 @@ void run(int X, int Y) {
 					import();
 				else if (com == "mst")
 					mst();
+				else if (com == "(bipartite)") bipartiteCast();
+				else if (com == "(chordal)") chordalCast();
+				else if (com == "(dag)") dagCast();
+				else if (com == "(graph)") graphCast();
+				else if (com == "(tree)") treeCast();
 				else {
 					// a = b
 					if (!vars.count(com)) {
 						undefinedVariableError(com);
+						undoDeclaration();
 						continue;
 					}
+					if (var == com) {
+						undoDeclaration();
+						continue;
+					}
+
 					graphs[at].type = graphs[vars[com]].type;
 					if (graphs[at].type == 0)
 						graphs[at].G = graphs[vars[com]].G;
@@ -349,15 +476,18 @@ void run(int X, int Y) {
 					shortestPath();
 				else if (com == "coloring")
 					coloring();
-				else if (com == "chromatic_number")
+				else if (com == "chromaticNumber")
 					chromaticNumber();
-				else if (com == "greedy_coloring")
+				else if (com == "greedyColoring")
 					greedyColoring();
-				else if (com == "maximum_clique")
+				else if (com == "maximumClique")
 					maxClique();
+				else if (com == "artPoints")
+					artPoints();
 			}
 		} catch (REPLInvalidCommandException &e) {
 			cout << "ERROR: invalid command" << endl;
+			if (atribuicao) undoDeclaration();
 		}
 	}
 }
