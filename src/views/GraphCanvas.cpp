@@ -36,6 +36,10 @@ sf::Color GraphCanvas::getColor(int x) {
 	if (x == 4) return sf::Color::Yellow;
 	if (x == 5) return sf::Color::Magenta;
 	if (x == 6) return sf::Color::Cyan;
+	if (x == 7) return sf::Color(153, 216, 201);
+	if (x == 8) return sf::Color(217, 95, 14);
+	if (x == 9) return sf::Color(197, 27, 138);
+	if (x == 10) return sf::Color(117, 107, 177);
 	return sf::Color::Black;
 }
 
