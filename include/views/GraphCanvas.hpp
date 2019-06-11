@@ -19,71 +19,71 @@
 ///
 /// Classe para o canvas.
 class GraphCanvas {
-	public:
-		///
-		/// Display do canvas.
-		GraphDisplay GD;
+  public:
+	///
+	/// Display do canvas.
+	GraphDisplay GD;
 
-		///
-		/// TODO
-		/// Objeto RenderWindow para trabalhar no canvas.
-		sf::RenderWindow *janela;
-		
-		///
-		/// Fonte para textos da interface.
-		sf::Font fonte;
+	///
+	/// TODO
+	/// Objeto RenderWindow para trabalhar no canvas.
+	sf::RenderWindow *janela;
 
-		///
-		/// TODO
-		int editLabel;
-		
-		///
-		/// TODO
-		int editWeight;
+	///
+	/// Fonte para textos da interface.
+	sf::Font fonte;
 
-		///
-		/// Construtor da classe.
-		GraphCanvas(sf::RenderWindow &, sf::Font &, int, int, int);
+	///
+	/// TODO
+	int editLabel;
 
-		///
-		/// Define o grafo a ser representado.
-		void setGraph(Graph);
+	///
+	/// TODO
+	int editWeight;
 
-		///
-		/// TODO
-		bool handleClique();
-		
-		///
-		/// TODO
-		void display();
+	///
+	/// Construtor da classe.
+	GraphCanvas(sf::RenderWindow &, sf::Font &, int, int, int);
 
-	private:
-		///
-		/// Retorna uma cor correspondente ao número.
-		sf::Color getColor(int);
-		
-		///
-		/// TODO
-		/// Encontra o tamanho apropriado da fonte. 
-		int findFontSize(int, int);
+	///
+	/// Define o grafo a ser representado.
+	void setGraph(Graph);
 
-		///
-		/// Mostra os pesos das arestas no canvas.
-		void printPesos();
+	///
+	/// TODO
+	bool handleClique();
 
-		///
-		/// TODO
-		/// Mostra as arestas do grafo.
-		void printAresta(Vector, int);
-		
-		///
-		/// TODO
-		/// Mostra o grafo no canvas.
-		void printGrafo();
+	///
+	/// TODO
+	void display();
 
-		///
-		/// Mostra as setas nas arestas direcionadas.
-		void printSetas();
+  private:
+	///
+	/// Retorna uma cor correspondente ao número.
+	sf::Color getColor(int);
+
+	///
+	/// TODO
+	/// Encontra o tamanho apropriado da fonte.
+	int findFontSize(int, int);
+
+	///
+	/// Mostra os pesos das arestas no canvas.
+	void printPesos();
+
+	///
+	/// TODO
+	/// Mostra as arestas do grafo.
+	void printAresta(Vector, int);
+
+	///
+	/// TODO
+	/// Mostra o grafo no canvas.
+	void printGrafo();
+
+	///
+	/// Mostra as setas nas arestas direcionadas.
+	void printSetas();
 };
 
 ///
@@ -94,9 +94,8 @@ Graph lerGrafoArquivo(string);
 /// Classe de exceções para leitura de grafos inexistentes.
 class FileNotFoundException : public exception {
   public:
-
 	///
-	/// Construtor da exceção. 
+	/// Construtor da exceção.
 	FileNotFoundException(string f) { msg = "coudn't read file: " + f; }
 
 	///

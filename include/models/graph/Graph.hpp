@@ -21,7 +21,6 @@ using namespace std;
 /// Classe para grafos.
 class Graph : public GraphGen {
   public:
-	
 	///
 	/// Construtor do grafo.
 	Graph();

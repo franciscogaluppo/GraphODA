@@ -40,9 +40,7 @@ Graph getGraphVar(string var2) {
 	return G;
 }
 
-Graph getGraph() {
-	return getGraphVar(var);
-}
+Graph getGraph() { return getGraphVar(var); }
 
 int getVertex(Graph &G, string s) {
 	for (int i = 0; i < G.getN(); i++)
@@ -75,7 +73,7 @@ void wrongTypeError(string var, int exp) {
 
 void graphIsNotError(string var, int exp) {
 	string expS = getType(exp);
-	expS[0] += 'a'-'A';
+	expS[0] += 'a' - 'A';
 	cout << "ERROR: " << var << " is not " << expS << endl;
 }
 
@@ -318,31 +316,27 @@ void shortestPath() {
 }
 
 void coloring() {
-	try
-	{
+	try {
 		Graph H = getGraph();
 		Chordal G(H);
-		
+
 		cout << "Coloring" << endl << endl;
 		vector<int> cores = G.coloring();
 		for (int i = 0; i < G.getN(); i++)
 			cout << G.label[i] << ": " << cores[i] << endl;
 
-	} catch(ChordalConstructorException &e)
-	{
+	} catch (ChordalConstructorException &e) {
 		wrongTypeError(var, 2);
 	}
 }
 
 void chromaticNumber() {
-	try
-	{
+	try {
 		Graph H = getGraph();
 		Chordal G(H);
 		cout << "Chromatic number: " << G.chromaticNumber() << endl;
-	} catch(ChordalConstructorException &e)
-	{
-		wrongTypeError(var, 2);
+	} catch (ChordalConstructorException &e) {
+		graphIsNotError(var, 2);
 	}
 }
 
@@ -355,14 +349,12 @@ void greedyColoring() {
 }
 
 void maxClique() {
-	try
-	{
+	try {
 		Graph H = getGraph();
 		Chordal G(H);
 		cout << "Maximum clique size: " << G.maxClique() << endl;
-	} catch(ChordalConstructorException &e)
-	{
-		wrongTypeError(var, 2);
+	} catch (ChordalConstructorException &e) {
+		graphIsNotError(var, 2);
 	}
 }
 
@@ -370,7 +362,8 @@ void artPoints() {
 	Graph G = getGraph();
 	auto art = G.artPoints();
 	cout << "Articulation points:" << endl;
-	for (int i = 0; i < G.getN(); i++) if (art[i]) cout << G.label[i] << " ";
+	for (int i = 0; i < G.getN(); i++)
+		if (art[i]) cout << G.label[i] << " ";
 	cout << endl;
 }
 
@@ -378,7 +371,22 @@ void bridges() {
 	Graph G = getGraph();
 	auto bridge = G.bridges();
 	cout << "Bridges: " << endl;
-	for (auto i : bridge) cout << "(" << G.label[i.first] << ", " << G.label[i.second] << ")" << endl;
+	for (auto i : bridge)
+		cout << "(" << G.label[i.first] << ", " << G.label[i.second] << ")"
+			 << endl;
+}
+
+void topoSort() {
+	try {
+		Graph H = getGraph();
+		Dag G(H);
+		vector<int> topo = G.topoSort();
+		cout << "Topological ordering:" << endl;
+		for (int i : topo) cout << G.label[i] << " ";
+		cout << endl;
+	} catch (DagConstructorException &e) {
+		graphIsNotError(var, 3);
+	}
 }
 
 void run(int X, int Y) {
@@ -429,7 +437,8 @@ void run(int X, int Y) {
 			new_.G = Graph();
 			new_.type = 0;
 			graphs.push_back(new_);
-		} else lastVar = vars[var];
+		} else
+			lastVar = vars[var];
 
 		at = vars[var];
 		try {
@@ -441,11 +450,16 @@ void run(int X, int Y) {
 					import();
 				else if (com == "mst")
 					mst();
-				else if (com == "(bipartite)") bipartiteCast();
-				else if (com == "(chordal)") chordalCast();
-				else if (com == "(dag)") dagCast();
-				else if (com == "(graph)") graphCast();
-				else if (com == "(tree)") treeCast();
+				else if (com == "(bipartite)")
+					bipartiteCast();
+				else if (com == "(chordal)")
+					chordalCast();
+				else if (com == "(dag)")
+					dagCast();
+				else if (com == "(graph)")
+					graphCast();
+				else if (com == "(tree)")
+					treeCast();
 				else {
 					// a = b
 					if (!vars.count(com)) {
@@ -498,6 +512,8 @@ void run(int X, int Y) {
 					artPoints();
 				else if (com == "bridges")
 					bridges();
+				else if (com == "topoSort")
+					topoSort();
 			}
 		} catch (REPLInvalidCommandException &e) {
 			cout << "ERROR: invalid command" << endl;

@@ -406,7 +406,9 @@ vector<int> GraphGen::greedyColoring() {
 	return greedyColoring(ordem);
 }
 
-void GraphGen::dfsArt(vector<bool> &vis, vector<int> &in, vector<int> &low, vector<int> &parent, vector<bool> &isArt, vector<pair<int, int> > &bridge, int v, int p, int &d) {
+void GraphGen::dfsArt(vector<bool>& vis, vector<int>& in, vector<int>& low,
+					  vector<int>& parent, vector<bool>& isArt,
+					  vector<pair<int, int>>& bridge, int v, int p, int& d) {
 	parent[v] = p;
 	low[v] = in[v] = d++;
 	isArt[v] = false;
@@ -417,15 +419,17 @@ void GraphGen::dfsArt(vector<bool> &vis, vector<int> &in, vector<int> &low, vect
 			if (low[j.first] >= in[v]) isArt[v] = true;
 			if (low[j.first] > in[v]) bridge.push_back({v, j.first});
 			low[v] = min(low[v], low[j.first]);
-		} else low[v] = min(low[v], in[j.first]);
+		} else
+			low[v] = min(low[v], in[j.first]);
 	}
 	if (p == -1) {
 		isArt[v] = false;
 		int k = 0;
-		for (auto j : simAdj[v]) if (!vis[j.first]) {
-			vis[j.first] = true;
-			k += (parent[j.first] == v);
-		}
+		for (auto j : simAdj[v])
+			if (!vis[j.first]) {
+				vis[j.first] = true;
+				k += (parent[j.first] == v);
+			}
 		if (k > 1) isArt[v] = true;
 	}
 }
@@ -433,20 +437,22 @@ void GraphGen::dfsArt(vector<bool> &vis, vector<int> &in, vector<int> &low, vect
 vector<bool> GraphGen::artPoints() {
 	vector<bool> isArt(n), vis(n, false);
 	vector<int> in(n, -1), low(n), parent(n);
-	vector<pair<int, int> > bridge;
+	vector<pair<int, int>> bridge;
 	int d = -1;
-	for (int i = 0; i < n; i++) if (in[i] == -1)
-		dfsArt(vis, in, low, parent, isArt, bridge, i, -1, ++d);
+	for (int i = 0; i < n; i++)
+		if (in[i] == -1)
+			dfsArt(vis, in, low, parent, isArt, bridge, i, -1, ++d);
 	return isArt;
 }
 
-vector<pair<int, int> > GraphGen::bridges() {
+vector<pair<int, int>> GraphGen::bridges() {
 	vector<bool> isArt(n), vis(n, false);
 	vector<int> in(n, -1), low(n), parent(n);
-	vector<pair<int, int> > bridge;
+	vector<pair<int, int>> bridge;
 	int d = -1;
-	for (int i = 0; i < n; i++) if (in[i] == -1)
-		dfsArt(vis, in, low, parent, isArt, bridge, i, -1, ++d);
+	for (int i = 0; i < n; i++)
+		if (in[i] == -1)
+			dfsArt(vis, in, low, parent, isArt, bridge, i, -1, ++d);
 	return bridge;
 }
 

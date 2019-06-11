@@ -23,7 +23,7 @@ class GraphGen {
 	vector<string> label;
 
 	///
-	/// Construtor para o grafo vazio. 
+	/// Construtor para o grafo vazio.
 	GraphGen();
 
 	///
@@ -127,7 +127,8 @@ class GraphGen {
 	/// Complexidade: O(n + m)
 	vector<int> greedyColoring(vector<int>);
 
-	/// Retorna um vetor de booleanos que informa se cada vértice é um ponto de articulação
+	/// Retorna um vetor de booleanos que informa se cada vértice é um ponto de
+	/// articulação
 	///
 	/// Complexidade: O(n + m)
 	vector<bool> artPoints();
@@ -135,13 +136,13 @@ class GraphGen {
 	/// Retorna um vetor de booleanos que informa se cada aresta é uma ponte
 	///
 	/// Complexidade: O(n + m)
-	vector<pair<int, int> > bridges();
+	vector<pair<int, int>> bridges();
 
   protected:
 	///
 	/// Número de vértices do grafo.
 	int n;
-	
+
 	///
 	/// Número de arestas do grafo.
 	int m;
@@ -174,56 +175,57 @@ class GraphGen {
 	// auxiliares
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	bool dfsReaches(vector<bool> &, int, int);
-	
+
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	bool dfsCheckBipartite(int, int, vector<int> &);
-	
+
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	bool dfsCheckDag(int, vector<int> &);
-	
+
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	bool dfsCheckTree(int, int, vector<int> &);
-	
+
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	int dfsScc(vector<int> &, vector<int> &, vector<int> &, int &, int &, int);
-	
+
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
-	void dfsArt(vector<bool>&, vector<int>&, vector<int>&, vector<int>&, vector<bool>&, vector<pair<int, int> >&, int, int, int&);
+	void dfsArt(vector<bool> &, vector<int> &, vector<int> &, vector<int> &,
+				vector<bool> &, vector<pair<int, int>> &, int, int, int &);
 
 	// algoritmos
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	long long shortestPathBFS(int, int);
-	
+
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	long long dijkstra(int, int);
-	
+
 	// TODO
 	/// .
-	/// 
+	///
 	/// Complexidade: O()
 	long long bellmanFord(int, int);
 };
@@ -243,7 +245,6 @@ class GraphException : public exception {
 /// Classe de exceções de ausência de caminho entre dois vértices.
 class GraphNoPathException : public GraphException {
   public:
-
 	/// Construtor para a exceção de
 	/// ausência de caminho entre dois vértices
 	GraphNoPathException(int a, int b) {

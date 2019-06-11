@@ -20,19 +20,17 @@ void greedyColoring(GraphCanvas *GC) {
 
 void artPoints(GraphCanvas *GC) {
 	auto art = GC->GD.G.artPoints();
-	for (int i = 0; i < GC->GD.G.getN(); i++)
-		GC->GD.color[i] = art[i];
+	for (int i = 0; i < GC->GD.G.getN(); i++) GC->GD.color[i] = art[i];
 }
 
 void pontes(GraphCanvas *GC) {
 	auto pont = GC->GD.G.bridges();
-	for (int i = 0; i < GC->GD.G.getM(); i++)
-		GC->GD.colorAresta[i] = 100;
+	for (int i = 0; i < GC->GD.G.getM(); i++) GC->GD.colorAresta[i] = 100;
 	map<pair<int, int>, int> id;
 	auto adj = GC->GD.G.getAdj();
 	int count = 0;
-	for (int i = 0; i < GC->GD.G.getN(); i++) for (auto j : adj[i])
-		id[make_pair(i, j.first)] = count++;
+	for (int i = 0; i < GC->GD.G.getN(); i++)
+		for (auto j : adj[i]) id[make_pair(i, j.first)] = count++;
 	for (auto i : pont) {
 		GC->GD.colorAresta[id[i]] = 1;
 		pair<int, int> j = make_pair(i.second, i.first);

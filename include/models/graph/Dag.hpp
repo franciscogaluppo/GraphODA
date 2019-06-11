@@ -10,32 +10,38 @@
 /// Classe para grafos direcionados acíclicos.
 class Dag : public GraphGen {
   public:
+	///
+	/// Construtor de DAGs vazios.
+	Dag();
 
-		///
-		/// Construtor de DAGs vazios.
-		Dag();
+	///
+	/// Construtor de DAGs por número de vértices.
+	Dag(int);
 
-		///
-		/// Construtor de DAGs por número de vértices.
-		Dag(int);
+	///
+	/// Construtor de DAGs por por GraphGen.
+	Dag(GraphGen &);
 
-		///
-		/// Construtor de DAGs por por GraphGen.
-		Dag(GraphGen &);
+	///
+	/// Computa ordenacao topologica
+	vector<int> topoSort();
+
+  private:
+	void topoSortDfs(vector<bool> &, vector<int> &, int);
 };
 
 ///
 /// Classe de exceção de construção de DAGs.
 class DagConstructorException : public GraphException {
   public:
-		///
-		/// Construtor da exceção.
-		DagConstructorException() {}
+	///
+	/// Construtor da exceção.
+	DagConstructorException() {}
 
-		///
-		/// Retorna a mensagem de erro da exceção.
-		const char *what() const throw() {
-			return "construcor parameter is not a dag";
+	///
+	/// Retorna a mensagem de erro da exceção.
+	const char *what() const throw() {
+		return "construcor parameter is not a dag";
 	}
 };
 
