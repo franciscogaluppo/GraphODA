@@ -1,6 +1,7 @@
 #ifndef INTERFACEH
 #define INTERFACEH
 
+#include "Buttons.hpp"
 #include "Graph.hpp"
 #include "GraphCanvas.hpp"
 #include "Vector.hpp"

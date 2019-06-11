@@ -30,6 +30,7 @@ endif()
 find_package(TGUI 0.8 REQUIRED)
 
 set(SRC_FILES
+        "${PROJECT_SOURCE_DIR}/src/views/Buttons.cpp"
         "${PROJECT_SOURCE_DIR}/src/views/GraphDisplay.cpp"
         "${PROJECT_SOURCE_DIR}/src/views/GraphCanvas.cpp"
         "${PROJECT_SOURCE_DIR}/src/views/Interface.cpp"
