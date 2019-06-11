@@ -103,11 +103,13 @@ class GraphGen {
 	/// Complexidade: O(n + m)
 	vector<int> scc();
 
+	// TODO
 	/// Retorna o menor caminho entre dois vértices.
 	///
 	/// Complexidade: O()
 	long long shortestPath(int, int);
 
+	// TODO
 	/// Retorna uma lista com a cor de cada vértice em uma coloração mínima.
 	///
 	/// Complexidade: O()
@@ -165,47 +167,56 @@ class GraphGen {
 
   private:
 	// auxiliares
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	bool dfsReaches(vector<bool> &, int, int);
 	
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	bool dfsCheckBipartite(int, int, vector<int> &);
 	
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	bool dfsCheckDag(int, vector<int> &);
 	
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	bool dfsCheckTree(int, int, vector<int> &);
 	
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	int dfsScc(vector<int> &, vector<int> &, vector<int> &, int &, int &, int);
 	
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	void dfsArt(vector<bool>&, vector<int>&, vector<int>&, vector<int>&, vector<bool>&, int, int, int&);
 
 	// algoritmos
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	long long shortestPathBFS(int, int);
 	
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
 	long long dijkstra(int, int);
 	
+	// TODO
 	/// .
 	/// 
 	/// Complexidade: O()
