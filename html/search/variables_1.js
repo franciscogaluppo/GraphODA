@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['editlabel',['editLabel',['../classGraphCanvas.html#a65406a215bd30e44358031c5b8a2cc2b',1,'GraphCanvas']]],
-  ['editweight',['editWeight',['../classGraphCanvas.html#a3b81b5c942b2fe3d94952d7ce664d3ed',1,'GraphCanvas']]]
+  ['centr',['centr',['../structGraphDisplay.html#a15611d65df010f7ec38c07d1a7db525e',1,'GraphDisplay']]],
+  ['color',['color',['../structGraphDisplay.html#a4b1af3eec6797feb7cde718c3f02ce13',1,'GraphDisplay']]],
+  ['coloraresta',['colorAresta',['../structGraphDisplay.html#a22bf3aa9a0f25ea37c663667dfb79a9a',1,'GraphDisplay']]]
 ];

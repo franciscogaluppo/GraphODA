@@ -44,8 +44,7 @@ void center(GraphCanvas *GC) {
 	GC->GD.color[T.center()] = 1;
 }
 
-void clearGraph(GraphCanvas *GC)
-{
+void clearGraph(GraphCanvas *GC) {
 	GC->GD.color = vector<int>(GC->GD.G.getN(), 0);
 	GC->GD.colorAresta = vector<int>(GC->GD.G.getM(), 100);
 }
@@ -120,20 +119,8 @@ void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	clear->connect("pressed", functions::clearGraph, &GC);
 }
 
-void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC,
-			int &tipoGrafo) {
-	if (GC.GD.G.isTree())
-		tipoGrafo = 4; // tem que ser primeiro pq herda das outras
-	else if (GC.GD.G.isBipartite())
-		tipoGrafo = 1;
-	else if (GC.GD.G.isChordal())
-		tipoGrafo = 2;
-	else if (GC.GD.G.isDag())
-		tipoGrafo = 3;
-	else
-		tipoGrafo = 0;
-
-	clear(gui, botoes);
+void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC) {
+	for (int i = 0; i < 10; i++) clear(gui, botoes);
 	if (GC.GD.G.getN()) {
 		general(gui, botoes);
 		if (GC.GD.G.isBipartite()) bipartite(gui, botoes);

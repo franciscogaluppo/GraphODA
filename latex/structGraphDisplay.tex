@@ -1,124 +1,164 @@
 \hypertarget{structGraphDisplay}{}\doxysection{Referência à estrutura Graph\+Display}
 \label{structGraphDisplay}\index{GraphDisplay@{GraphDisplay}}
+
+
+Classe para display do grafo.  
+
+
+
+
+{\ttfamily \#include $<$Graph\+Display.\+hpp$>$}
+
 \doxysubsection*{Membros públicos}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{structGraphDisplay_adea7ab840d8aa0646eab49709569143f}\label{structGraphDisplay_adea7ab840d8aa0646eab49709569143f}} 
-{\bfseries Graph\+Display} (\mbox{\hyperlink{classGraph}{Graph}}, int, int, int)
+\mbox{\Hypertarget{structGraphDisplay_ac208e50545ccedbca810822743040f48}\label{structGraphDisplay_ac208e50545ccedbca810822743040f48}} 
+\mbox{\hyperlink{structGraphDisplay_ac208e50545ccedbca810822743040f48}{Graph\+Display}} ()
+\begin{DoxyCompactList}\small\item\em Construtor de \mbox{\hyperlink{structGraphDisplay}{Graph\+Display}} vazio. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structGraphDisplay_adea7ab840d8aa0646eab49709569143f}{Graph\+Display}} (\mbox{\hyperlink{classGraph}{Graph}}, int, int, int)
 \item 
 \mbox{\Hypertarget{structGraphDisplay_a496ee74caea737ce5f93f9d23474eb6d}\label{structGraphDisplay_a496ee74caea737ce5f93f9d23474eb6d}} 
-void {\bfseries set\+Graph} (\mbox{\hyperlink{classGraph}{Graph}} \&)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a496ee74caea737ce5f93f9d23474eb6d}{set\+Graph}} (\mbox{\hyperlink{classGraph}{Graph}} \&)
+\begin{DoxyCompactList}\small\item\em Seta um grafo no display. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_ab90cdfe3694a8a34767dc50268cf5a50}\label{structGraphDisplay_ab90cdfe3694a8a34767dc50268cf5a50}} 
-void {\bfseries set\+Graph\+Continue} (\mbox{\hyperlink{classGraph}{Graph}} \&)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_ab90cdfe3694a8a34767dc50268cf5a50}{set\+Graph\+Continue}} (\mbox{\hyperlink{classGraph}{Graph}} \&)
+\begin{DoxyCompactList}\small\item\em Seta um grafo no display, mantendo as confugurações do grafo anterior. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a9d55e916fea8b749eaee51def8d004d3}\label{structGraphDisplay_a9d55e916fea8b749eaee51def8d004d3}} 
-void {\bfseries fdp\+Peso} (int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a9d55e916fea8b749eaee51def8d004d3}{fdp\+Peso}} (int)
+\begin{DoxyCompactList}\small\item\em Algoritmo de display para os pesos. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a694d361743f700a6250d578978aefab1}\label{structGraphDisplay_a694d361743f700a6250d578978aefab1}} 
-\mbox{\hyperlink{classVector}{Vector}} {\bfseries deixa\+Dentro} (\mbox{\hyperlink{classVector}{Vector}}, bool)
-\item 
+\mbox{\hyperlink{classVector}{Vector}} \mbox{\hyperlink{structGraphDisplay_a694d361743f700a6250d578978aefab1}{deixa\+Dentro}} (\mbox{\hyperlink{classVector}{Vector}}, bool)
+\begin{DoxyCompactList}\small\item\em Garante que um vértice está dentro do canvas. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a6d822244f05f8a0dd1e40a40d13294bf}\label{structGraphDisplay_a6d822244f05f8a0dd1e40a40d13294bf}} 
-bool {\bfseries ta\+Dentro} (\mbox{\hyperlink{classVector}{Vector}})
-\item 
+bool \mbox{\hyperlink{structGraphDisplay_a6d822244f05f8a0dd1e40a40d13294bf}{ta\+Dentro}} (\mbox{\hyperlink{classVector}{Vector}})
+\begin{DoxyCompactList}\small\item\em Verifica se uma posição está dentrod do canvas. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_af709c8e4e8c0e270dbe5edcab2c8e350}\label{structGraphDisplay_af709c8e4e8c0e270dbe5edcab2c8e350}} 
-void {\bfseries fdp\+Eades} (int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_af709c8e4e8c0e270dbe5edcab2c8e350}{fdp\+Eades}} (int)
+\begin{DoxyCompactList}\small\item\em A\+Lgoritmo de display de Eades. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a982c8bb3e300720840a6e1fbd877f5ba}\label{structGraphDisplay_a982c8bb3e300720840a6e1fbd877f5ba}} 
-void {\bfseries fdp\+Eades\+Acc} (int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a982c8bb3e300720840a6e1fbd877f5ba}{fdp\+Eades\+Acc}} (int)
+\begin{DoxyCompactList}\small\item\em Algoritmo de display de Eades usando aceleração. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_aaf2ed129c6647b38b0170133ae4f0823}\label{structGraphDisplay_aaf2ed129c6647b38b0170133ae4f0823}} 
-void {\bfseries fdp\+Fruchterman} (int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_aaf2ed129c6647b38b0170133ae4f0823}{fdp\+Fruchterman}} (int)
+\begin{DoxyCompactList}\small\item\em Algoritmo de display de Fruchterman. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_aa9300be5d20b62596cf709223a3dd67d}\label{structGraphDisplay_aa9300be5d20b62596cf709223a3dd67d}} 
-int {\bfseries inter} ()
-\item 
+int \mbox{\hyperlink{structGraphDisplay_aa9300be5d20b62596cf709223a3dd67d}{inter}} ()
+\begin{DoxyCompactList}\small\item\em Computa número de interseções de arestas no display atual. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a3dda94c25e4e6190700f2fa248cabca7}\label{structGraphDisplay_a3dda94c25e4e6190700f2fa248cabca7}} 
-void {\bfseries poligono} ()
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a3dda94c25e4e6190700f2fa248cabca7}{poligono}} ()
+\begin{DoxyCompactList}\small\item\em Algoritmo display polígono. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a914629b25bf3322736df48bc4f9771a5}\label{structGraphDisplay_a914629b25bf3322736df48bc4f9771a5}} 
-void {\bfseries random} ()
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a914629b25bf3322736df48bc4f9771a5}{random}} ()
+\begin{DoxyCompactList}\small\item\em Display aleatório. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a27d6e383e51648eff72a3ac43abc5c0c}\label{structGraphDisplay_a27d6e383e51648eff72a3ac43abc5c0c}} 
-void {\bfseries good} (int, int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a27d6e383e51648eff72a3ac43abc5c0c}{good}} (int, int)
+\begin{DoxyCompactList}\small\item\em Tenta encontrar um display visualmente agradável. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a8a07eca019e47afd54a207dc66195b3f}\label{structGraphDisplay_a8a07eca019e47afd54a207dc66195b3f}} 
-int {\bfseries acha\+Vertice} (\mbox{\hyperlink{classVector}{Vector}})
-\item 
+int \mbox{\hyperlink{structGraphDisplay_a8a07eca019e47afd54a207dc66195b3f}{acha\+Vertice}} (\mbox{\hyperlink{classVector}{Vector}})
+\begin{DoxyCompactList}\small\item\em Encontra vértice em dada posição. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_ad14587ecf7f118cf8d071231de2e5809}\label{structGraphDisplay_ad14587ecf7f118cf8d071231de2e5809}} 
-int {\bfseries acha\+Aresta} (\mbox{\hyperlink{classVector}{Vector}})
-\item 
-\mbox{\Hypertarget{structGraphDisplay_a18b71196037d35fae42a8253c1efd102}\label{structGraphDisplay_a18b71196037d35fae42a8253c1efd102}} 
-void {\bfseries centraliza} ()
-\item 
+int \mbox{\hyperlink{structGraphDisplay_ad14587ecf7f118cf8d071231de2e5809}{acha\+Aresta}} (\mbox{\hyperlink{classVector}{Vector}})
+\begin{DoxyCompactList}\small\item\em Encontra aresta em dada posição. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a1c6b7b9966a82c8b62983221f5b43dfa}\label{structGraphDisplay_a1c6b7b9966a82c8b62983221f5b43dfa}} 
-void {\bfseries reset\+Colors} ()
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a1c6b7b9966a82c8b62983221f5b43dfa}{reset\+Colors}} ()
+\begin{DoxyCompactList}\small\item\em Reseta as cores dos vértices e arestas. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_aaa444bf8a296fb97a054c48e8e4a826f}\label{structGraphDisplay_aaa444bf8a296fb97a054c48e8e4a826f}} 
-void {\bfseries add\+Vertex} (\mbox{\hyperlink{classVector}{Vector}})
-\item 
+void \mbox{\hyperlink{structGraphDisplay_aaa444bf8a296fb97a054c48e8e4a826f}{add\+Vertex}} (\mbox{\hyperlink{classVector}{Vector}})
+\begin{DoxyCompactList}\small\item\em Adiciona um vértice em dada posição. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_adc84fa190931d2a2f73463ed211e0b71}\label{structGraphDisplay_adc84fa190931d2a2f73463ed211e0b71}} 
-void {\bfseries remove\+Vertex} (int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_adc84fa190931d2a2f73463ed211e0b71}{remove\+Vertex}} (int)
+\begin{DoxyCompactList}\small\item\em Remove um dado vértice. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a77ab2c4ae2c7facff5034e140e43ed73}\label{structGraphDisplay_a77ab2c4ae2c7facff5034e140e43ed73}} 
-void {\bfseries add\+Edge} (int, int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_a77ab2c4ae2c7facff5034e140e43ed73}{add\+Edge}} (int, int)
+\begin{DoxyCompactList}\small\item\em Adiciona uma aresta entre dois vértices. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_adb5477315cf0e2435556c999a7c0cb8c}\label{structGraphDisplay_adb5477315cf0e2435556c999a7c0cb8c}} 
-void {\bfseries remove\+Edge} (int)
-\item 
+void \mbox{\hyperlink{structGraphDisplay_adb5477315cf0e2435556c999a7c0cb8c}{remove\+Edge}} (int)
+\begin{DoxyCompactList}\small\item\em Reomove uma dada aresta. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a977dc7ae1425c60e7c87de6cabe9e29f}\label{structGraphDisplay_a977dc7ae1425c60e7c87de6cabe9e29f}} 
-void {\bfseries itera} ()
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{structGraphDisplay_a977dc7ae1425c60e7c87de6cabe9e29f}{itera}} ()
+\begin{DoxyCompactList}\small\item\em Itera a animação do display. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Atributos Públicos}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{structGraphDisplay_acfb839eaef7974c684794a3d5d69c79a}\label{structGraphDisplay_acfb839eaef7974c684794a3d5d69c79a}} 
-\mbox{\hyperlink{classGraph}{Graph}} {\bfseries G}
-\item 
-\mbox{\Hypertarget{structGraphDisplay_a9d9f390d193fda9a5503b7629fd50bf3}\label{structGraphDisplay_a9d9f390d193fda9a5503b7629fd50bf3}} 
-bool {\bfseries tem\+Dir}
+\mbox{\hyperlink{classGraph}{Graph}} \mbox{\hyperlink{structGraphDisplay_acfb839eaef7974c684794a3d5d69c79a}{G}}
+\begin{DoxyCompactList}\small\item\em Grafo que está sendo representado. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structGraphDisplay_a9d9f390d193fda9a5503b7629fd50bf3}{tem\+Dir}}
 \item 
 \mbox{\Hypertarget{structGraphDisplay_a15611d65df010f7ec38c07d1a7db525e}\label{structGraphDisplay_a15611d65df010f7ec38c07d1a7db525e}} 
-bool {\bfseries centr}
-\item 
+bool \mbox{\hyperlink{structGraphDisplay_a15611d65df010f7ec38c07d1a7db525e}{centr}}
+\begin{DoxyCompactList}\small\item\em Variável que indica se está no modo \textquotesingle{}centralizar\textquotesingle{}. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_ae3f92d7ff79660d81ac0edf3c04365b1}\label{structGraphDisplay_ae3f92d7ff79660d81ac0edf3c04365b1}} 
-bool {\bfseries draw}
-\item 
+bool \mbox{\hyperlink{structGraphDisplay_ae3f92d7ff79660d81ac0edf3c04365b1}{draw}}
+\begin{DoxyCompactList}\small\item\em Variável que indica se o display está no modo \textquotesingle{}draw\textquotesingle{}. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_acb515993d45bb40131c1057a21151310}\label{structGraphDisplay_acb515993d45bb40131c1057a21151310}} 
-int {\bfseries raio}
-\item 
+int \mbox{\hyperlink{structGraphDisplay_acb515993d45bb40131c1057a21151310}{raio}}
+\begin{DoxyCompactList}\small\item\em Tamanho do raio da representação de cada vértice. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_abcaa65d083c953adc21017aa1df335ce}\label{structGraphDisplay_abcaa65d083c953adc21017aa1df335ce}} 
-int {\bfseries X}
-\item 
+int \mbox{\hyperlink{structGraphDisplay_abcaa65d083c953adc21017aa1df335ce}{X}}
+\begin{DoxyCompactList}\small\item\em Tamanho do eixo horizontal do canvas. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a25ae3eec2c8103a827aefcd5a44be825}\label{structGraphDisplay_a25ae3eec2c8103a827aefcd5a44be825}} 
-int {\bfseries Y}
-\item 
-\mbox{\Hypertarget{structGraphDisplay_aa9c12d024cc689f6be699e2028e60d83}\label{structGraphDisplay_aa9c12d024cc689f6be699e2028e60d83}} 
-vector$<$ bool $>$ {\bfseries para}
+int \mbox{\hyperlink{structGraphDisplay_a25ae3eec2c8103a827aefcd5a44be825}{Y}}
+\begin{DoxyCompactList}\small\item\em Tamanho do eixo vertical do canvas. \end{DoxyCompactList}\item 
+vector$<$ bool $>$ \mbox{\hyperlink{structGraphDisplay_aa9c12d024cc689f6be699e2028e60d83}{para}}
 \item 
 \mbox{\Hypertarget{structGraphDisplay_a7311fa3063d875c6835829f001967b39}\label{structGraphDisplay_a7311fa3063d875c6835829f001967b39}} 
-vector$<$ bool $>$ {\bfseries trava}
-\item 
+vector$<$ bool $>$ \mbox{\hyperlink{structGraphDisplay_a7311fa3063d875c6835829f001967b39}{trava}}
+\begin{DoxyCompactList}\small\item\em Lista que indica se cada vértice está travado. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_ae82258bda174a54431d584c41a7a0056}\label{structGraphDisplay_ae82258bda174a54431d584c41a7a0056}} 
-vector$<$ \mbox{\hyperlink{classVector}{Vector}} $>$ {\bfseries pos}
-\item 
+vector$<$ \mbox{\hyperlink{classVector}{Vector}} $>$ \mbox{\hyperlink{structGraphDisplay_ae82258bda174a54431d584c41a7a0056}{pos}}
+\begin{DoxyCompactList}\small\item\em Lista contendo a posição de cada vértice. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_adba96d8bb8a10d61aa8cff8de4148bd4}\label{structGraphDisplay_adba96d8bb8a10d61aa8cff8de4148bd4}} 
-vector$<$ \mbox{\hyperlink{classVector}{Vector}} $>$ {\bfseries vel}
-\item 
-\mbox{\Hypertarget{structGraphDisplay_a5e623e031f43e01713d991c29848cd96}\label{structGraphDisplay_a5e623e031f43e01713d991c29848cd96}} 
-vector$<$ float $>$ {\bfseries pos\+Peso}
+vector$<$ \mbox{\hyperlink{classVector}{Vector}} $>$ \mbox{\hyperlink{structGraphDisplay_adba96d8bb8a10d61aa8cff8de4148bd4}{vel}}
+\begin{DoxyCompactList}\small\item\em Lista contendo a velocidade de cada vértice. \end{DoxyCompactList}\item 
+vector$<$ float $>$ \mbox{\hyperlink{structGraphDisplay_a5e623e031f43e01713d991c29848cd96}{pos\+Peso}}
 \item 
 \mbox{\Hypertarget{structGraphDisplay_a4b1af3eec6797feb7cde718c3f02ce13}\label{structGraphDisplay_a4b1af3eec6797feb7cde718c3f02ce13}} 
-vector$<$ int $>$ {\bfseries color}
-\item 
+vector$<$ int $>$ \mbox{\hyperlink{structGraphDisplay_a4b1af3eec6797feb7cde718c3f02ce13}{color}}
+\begin{DoxyCompactList}\small\item\em Lista contendo a cor de cada vértice. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_a22bf3aa9a0f25ea37c663667dfb79a9a}\label{structGraphDisplay_a22bf3aa9a0f25ea37c663667dfb79a9a}} 
-vector$<$ int $>$ {\bfseries color\+Aresta}
-\item 
+vector$<$ int $>$ \mbox{\hyperlink{structGraphDisplay_a22bf3aa9a0f25ea37c663667dfb79a9a}{color\+Aresta}}
+\begin{DoxyCompactList}\small\item\em Lista contendo a cor de cada aresta. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structGraphDisplay_aca8982540186f3ba9add586f3057528c}\label{structGraphDisplay_aca8982540186f3ba9add586f3057528c}} 
-vector$<$ bool $>$ {\bfseries is\+Paral}
-\end{DoxyCompactItemize}
+vector$<$ bool $>$ \mbox{\hyperlink{structGraphDisplay_aca8982540186f3ba9add586f3057528c}{is\+Paral}}
+\begin{DoxyCompactList}\small\item\em Lista que indica se cada aresta é \textquotesingle{}paralela\textquotesingle{} ou não. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Descrição detalhada}
+Classe para display do grafo. 
+
+\doxysubsection{Documentação dos Construtores \& Destrutor}
+\mbox{\Hypertarget{structGraphDisplay_adea7ab840d8aa0646eab49709569143f}\label{structGraphDisplay_adea7ab840d8aa0646eab49709569143f}} 
+\index{GraphDisplay@{GraphDisplay}!GraphDisplay@{GraphDisplay}}
+\index{GraphDisplay@{GraphDisplay}!GraphDisplay@{GraphDisplay}}
+\doxysubsubsection{\texorpdfstring{GraphDisplay()}{GraphDisplay()}}
+{\footnotesize\ttfamily Graph\+Display\+::\+Graph\+Display (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}}}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+Construtor de \mbox{\hyperlink{structGraphDisplay}{Graph\+Display}} com base no seu grafo, nas dimensões do canvas e no tamanho do raio do vértice. 
+
+\doxysubsection{Documentação dos dados membro}
+\mbox{\Hypertarget{structGraphDisplay_aa9c12d024cc689f6be699e2028e60d83}\label{structGraphDisplay_aa9c12d024cc689f6be699e2028e60d83}} 
+\index{GraphDisplay@{GraphDisplay}!para@{para}}
+\index{para@{para}!GraphDisplay@{GraphDisplay}}
+\doxysubsubsection{\texorpdfstring{para}{para}}
+{\footnotesize\ttfamily vector$<$bool$>$ Graph\+Display\+::para}
+
+Lista que indica se cada vértice deve ser parado (quando o usuário clica nele). \mbox{\Hypertarget{structGraphDisplay_a5e623e031f43e01713d991c29848cd96}\label{structGraphDisplay_a5e623e031f43e01713d991c29848cd96}} 
+\index{GraphDisplay@{GraphDisplay}!posPeso@{posPeso}}
+\index{posPeso@{posPeso}!GraphDisplay@{GraphDisplay}}
+\doxysubsubsection{\texorpdfstring{posPeso}{posPeso}}
+{\footnotesize\ttfamily vector$<$float$>$ Graph\+Display\+::pos\+Peso}
+
+Lista contendo a posição de cada peso em relação à sua aresta.
+
+Valores vão de 0 a 1, de forma que 0.\+5 indica que o peso está no meio da aresta. \mbox{\Hypertarget{structGraphDisplay_a9d9f390d193fda9a5503b7629fd50bf3}\label{structGraphDisplay_a9d9f390d193fda9a5503b7629fd50bf3}} 
+\index{GraphDisplay@{GraphDisplay}!temDir@{temDir}}
+\index{temDir@{temDir}!GraphDisplay@{GraphDisplay}}
+\doxysubsubsection{\texorpdfstring{temDir}{temDir}}
+{\footnotesize\ttfamily bool Graph\+Display\+::tem\+Dir}
+
+Variável que indica se o grafo deve ser representado de forma direcionada. 
 
 A documentação para esta estrutura foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
 \item 
-include/views/Graph\+Display.\+hpp\end{DoxyCompactItemize}
+include/views/\mbox{\hyperlink{GraphDisplay_8hpp}{Graph\+Display.\+hpp}}\end{DoxyCompactItemize}

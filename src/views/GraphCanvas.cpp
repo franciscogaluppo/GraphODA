@@ -301,8 +301,10 @@ Graph lerGrafoArquivo(string arq) {
 
 void GraphCanvas::setGraph(Graph G) {
 	bool temDir = GD.temDir;
+	bool draw = GD.draw;
 	GD.setGraph(G);
 	GD.temDir = temDir;
+	GD.draw = draw;
 	GD.good(max(10, 100 - GD.G.getN()), max(10, 100 - GD.G.getM()));
 }
 

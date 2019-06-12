@@ -12,7 +12,7 @@ using namespace std;
 
 namespace buttons {
 void init(vector<tgui::Button::Ptr>&, GraphCanvas&);
-void update(tgui::Gui&, vector<tgui::Button::Ptr>&, GraphCanvas&, int&);
+void update(tgui::Gui&, vector<tgui::Button::Ptr>&, GraphCanvas&);
 } // namespace buttons
 
 #endif

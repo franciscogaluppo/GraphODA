@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['label',['label',['../classGraphGen.html#a59a950a3a5b8d5f3bda7b544a83248ed',1,'GraphGen']]],
-  ['lergrafoarquivo',['lerGrafoArquivo',['../GraphCanvas_8hpp.html#ab31acecc6d9911bb6c200924d00b5476',1,'GraphCanvas.hpp']]]
+  ['g',['G',['../structGraphDisplay.html#acfb839eaef7974c684794a3d5d69c79a',1,'GraphDisplay']]],
+  ['gd',['GD',['../classGraphCanvas.html#a7e2f16ce3638db53fb73061fe1c93f15',1,'GraphCanvas']]]
 ];

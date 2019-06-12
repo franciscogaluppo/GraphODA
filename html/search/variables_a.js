@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y',['y',['../classVector.html#a81be9102fca6d9beea3efef522c4c09d',1,'Vector']]]
+  ['n',['n',['../classGraphGen.html#af0087a36d5f72076ae87b0f9022c0033',1,'GraphGen']]]
 ];
