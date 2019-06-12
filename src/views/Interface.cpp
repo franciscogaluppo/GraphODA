@@ -88,17 +88,17 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, int *tipoGrafo) {
 
 void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	// Limpa tela e coloca branco
-	janela.clear(sf::Color::White);
+	janela.clear(sf::Color(251,251,251));
 
 	// menu lateral
 	sf::RectangleShape menu(sf::Vector2f(400.f, 700.f));
-	menu.setFillColor(sf::Color(254,253,254));
+	menu.setFillColor(sf::Color(34,38,41));
 	menu.setPosition(800.f, 0.f);
 	janela.draw(menu);
 
 	// Menu inferior
 	sf::RectangleShape inferior(sf::Vector2f(800.f, 100.f)); // larg x alt
-	inferior.setFillColor(sf::Color(254,253,254));
+	inferior.setFillColor(sf::Color(34,38,41));
 	inferior.setPosition(0.f, 600.f);
 	janela.draw(inferior);
 
@@ -106,39 +106,39 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	// Contornos
 		//lateral e canvas
 	sf::Vertex linha0[] = {
-		sf::Vertex(sf::Vector2f(0, 600), sf::Color(245,49,75)),
+		sf::Vertex(sf::Vector2f(1, 600), sf::Color(71,75,79)),
 
-		sf::Vertex(sf::Vector2f(800, 600), sf::Color(245,49,75))};
+		sf::Vertex(sf::Vector2f(800, 600), sf::Color(71,75,79))};
 	janela.draw(linha0, 10, sf::Lines);
 		//superior e lateral
 	sf::Vertex linha1[] = {
-		sf::Vertex(sf::Vector2f(800, 0), sf::Color(245,49,75)),
+		sf::Vertex(sf::Vector2f(800, 0), sf::Color(71,75,79)),
 
-		sf::Vertex(sf::Vector2f(1200, 0), sf::Color(245,49,75))};
+		sf::Vertex(sf::Vector2f(1200, 0), sf::Color(71,75,79))};
 	janela.draw(linha1, 10, sf::Lines);	
 		//borda inferior
 	sf::Vertex linha2[] = {
-		sf::Vertex(sf::Vector2f(0, 699), sf::Color(245,49,75)),
+		sf::Vertex(sf::Vector2f(0, 699), sf::Color(71,75,79)),
 
-		sf::Vertex(sf::Vector2f(1200, 699), sf::Color(245,49,75))};
+		sf::Vertex(sf::Vector2f(1200, 699), sf::Color(71,75,79))};
 	janela.draw(linha2, 10, sf::Lines);
 		//borda lateral esq
 	sf::Vertex linha3[] = {
-		sf::Vertex(sf::Vector2f(0, 600), sf::Color(245,49,75)),
+		sf::Vertex(sf::Vector2f(0, 600), sf::Color(71,75,79)),
 
-		sf::Vertex(sf::Vector2f(0, 700), sf::Color(245,49,75))};
+		sf::Vertex(sf::Vector2f(0, 700), sf::Color(71,75,79))};
 	janela.draw(linha3, 10, sf::Lines);
 		//borda lateral dir
 	sf::Vertex linha4[] = {
-		sf::Vertex(sf::Vector2f(1199, 0), sf::Color(245,49,75)),
+		sf::Vertex(sf::Vector2f(1199, 0), sf::Color(71,75,79)),
 
-		sf::Vertex(sf::Vector2f(1199, 700), sf::Color(245,49,75))};
+		sf::Vertex(sf::Vector2f(1199, 700), sf::Color(71,75,79))};
 	janela.draw(linha4, 10, sf::Lines);
 		// Divisão entre o canvas e o menu
 	sf::Vertex linha7[] = {
-		sf::Vertex(sf::Vector2f(800, 0), sf::Color(245,49,75)),
+		sf::Vertex(sf::Vector2f(800, 0), sf::Color(71,75,79)),
 
-		sf::Vertex(sf::Vector2f(800, 700), sf::Color(245,49,75))};
+		sf::Vertex(sf::Vector2f(800, 700), sf::Color(71,75,79))};
 	janela.draw(linha7, 10, sf::Lines);
 
 	/*
@@ -147,7 +147,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	instr.setFont(fonte);
 	instr.setString(L"Instruções:");
 	instr.setCharacterSize(32);
-	instr.setFillColor(sf::Color::Black);
+	instr.setFillColor(sf::Color(134,194,50);
 	instr.setPosition(830, 5);
 	janela.draw(instr);
 
@@ -157,6 +157,18 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	instr.setFillColor(sf::Color(130, 130, 130));
 	instr.setPosition(820, 55);
 	janela.draw(instr);
+
+
+
+
+	97,137,47 - verde escuro 61892F
+134,194,50 - verde claro 86c232
+34,38,41 - black 222629
+71,75,79 - grey 474b4f
+107,110,112 - light gray 6b6e70
+251,251,251 - snow FBFBFB
+
+	
 */
 }
 
@@ -165,7 +177,7 @@ void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
 	draw.setFont(fonte);
 	draw.setString("D");
 	draw.setCharacterSize(32);
-	draw.setFillColor(sf::Color::Red);
+	draw.setFillColor(sf::Color(134,194,50));
 	draw.setPosition(X - 32, 0);
 	janela.draw(draw);
 }

@@ -30,16 +30,17 @@ int GraphCanvas::findFontSize(int n, int fontSize) {
 
 sf::Color GraphCanvas::getColor(int x) {
 	if (x == 0) return sf::Color::White;
-	if (x == 1) return sf::Color::Red;
-	if (x == 2) return sf::Color::Green;
-	if (x == 3) return sf::Color::Blue;
-	if (x == 4) return sf::Color::Yellow;
-	if (x == 5) return sf::Color::Magenta;
-	if (x == 6) return sf::Color::Cyan;
-	if (x == 7) return sf::Color(153, 216, 201);
-	if (x == 8) return sf::Color(217, 95, 14);
-	if (x == 9) return sf::Color(197, 27, 138);
-	if (x == 10) return sf::Color(117, 107, 177);
+	if (x == 1) return sf::Color(134,194,50); //green
+	if (x == 2) return sf::Color(255,34,12);	//red
+	if (x == 3) return sf::Color(136,217,230);	//blue
+	if (x == 4) return sf::Color(254,215,102);	//yeallow
+	if (x == 5) return sf::Color(244,96,54);//orange
+	if (x == 6) return sf::Color(160,108,213);//purple
+	if (x == 7) return sf::Color(235,186,185);//light pink
+	if (x == 8) return sf::Color(231,226,71);	//light green
+	if (x == 9) return sf::Color(60,145,230);	//mid blue
+	if (x == 10) return sf::Color(168,118,62);	//beje
+	if (x == 11) return sf::Color(50,84,115);	//dark blue
 	return sf::Color::Black;
 }
 
