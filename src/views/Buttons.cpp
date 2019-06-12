@@ -73,37 +73,37 @@ void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	auto color = tgui::Button::create("Colore");
 	v.push_back(color);
 	color->setSize(75.f, 20.f);
-	color->setPosition(1000.f, 650.f);
+	color->setPosition(810.f, 260.f);
 	color->connect("pressed", functions::coloreChordal, &GC);
 
 	auto mst = tgui::Button::create("mst");
 	v.push_back(mst);
 	mst->setSize(75.f, 20.f);
-	mst->setPosition(1000.f, 630.f);
+	mst->setPosition(810.f, 70.f);
 	mst->connect("pressed", functions::mst, &GC);
 
 	auto guloso = tgui::Button::create("Colore (guloso)");
 	v.push_back(guloso);
 	guloso->setSize(115.f, 20.f);
-	guloso->setPosition(980.f, 600.f);
+	guloso->setPosition(810.f, 210.f);
 	guloso->connect("pressed", functions::greedyColoring, &GC);
 
 	auto artPoints = tgui::Button::create("Pontos de art");
 	v.push_back(artPoints);
 	artPoints->setSize(115.f, 20.f);
-	artPoints->setPosition(860.f, 600.f);
+	artPoints->setPosition(810.f, 110.f);
 	artPoints->connect("pressed", functions::artPoints, &GC);
 
 	auto pontes = tgui::Button::create("Pontes");
 	v.push_back(pontes);
 	pontes->setSize(75.f, 20.f);
-	pontes->setPosition(780.f, 600.f);
+	pontes->setPosition(810.f, 160.f);
 	pontes->connect("pressed", functions::pontes, &GC);
 
 	auto center = tgui::Button::create("Centro");
 	v.push_back(center);
 	center->setSize(75.f, 20.f);
-	center->setPosition(780.f, 630.f);
+	center->setPosition(810.f, 310.f);
 	center->connect("pressed", functions::center, &GC);
 }
 

@@ -90,47 +90,58 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	// Limpa tela e coloca branco
 	janela.clear(sf::Color::White);
 
-	// Parte cinza
+	// menu lateral
 	sf::RectangleShape menu(sf::Vector2f(400.f, 700.f));
-	menu.setFillColor(sf::Color(192, 192, 192));
+	menu.setFillColor(sf::Color(254,253,254));
 	menu.setPosition(800.f, 0.f);
 	janela.draw(menu);
 
 	// Menu inferior
 	sf::RectangleShape inferior(sf::Vector2f(800.f, 100.f)); // larg x alt
-	inferior.setFillColor(sf::Color(0, 0, 0));
+	inferior.setFillColor(sf::Color(254,253,254));
 	inferior.setPosition(0.f, 600.f);
 	janela.draw(inferior);
 
-	// Divisão entre o canvas e o inferior
+	
+	// Contornos
+		//lateral e canvas
 	sf::Vertex linha0[] = {
-		sf::Vertex(sf::Vector2f(0, 600), sf::Color(130, 130, 130)),
+		sf::Vertex(sf::Vector2f(0, 600), sf::Color(245,49,75)),
 
-		sf::Vertex(sf::Vector2f(800, 600), sf::Color(130, 130, 130))};
-	janela.draw(linha0, 2, sf::Lines);
-
-	// Divisão entre o canvas e o menu
+		sf::Vertex(sf::Vector2f(800, 600), sf::Color(245,49,75))};
+	janela.draw(linha0, 10, sf::Lines);
+		//superior e lateral
 	sf::Vertex linha1[] = {
-		sf::Vertex(sf::Vector2f(800, 0), sf::Color::Black),
+		sf::Vertex(sf::Vector2f(800, 0), sf::Color(245,49,75)),
 
-		sf::Vertex(sf::Vector2f(800, 700), sf::Color::Black)};
-	janela.draw(linha1, 2, sf::Lines);
+		sf::Vertex(sf::Vector2f(1200, 0), sf::Color(245,49,75))};
+	janela.draw(linha1, 10, sf::Lines);	
+		//borda inferior
+	sf::Vertex linha2[] = {
+		sf::Vertex(sf::Vector2f(0, 699), sf::Color(245,49,75)),
+
+		sf::Vertex(sf::Vector2f(1200, 699), sf::Color(245,49,75))};
+	janela.draw(linha2, 10, sf::Lines);
+		//borda lateral esq
+	sf::Vertex linha3[] = {
+		sf::Vertex(sf::Vector2f(0, 600), sf::Color(245,49,75)),
+
+		sf::Vertex(sf::Vector2f(0, 700), sf::Color(245,49,75))};
+	janela.draw(linha3, 10, sf::Lines);
+		//borda lateral dir
+	sf::Vertex linha4[] = {
+		sf::Vertex(sf::Vector2f(1199, 0), sf::Color(245,49,75)),
+
+		sf::Vertex(sf::Vector2f(1199, 700), sf::Color(245,49,75))};
+	janela.draw(linha4, 10, sf::Lines);
+		// Divisão entre o canvas e o menu
+	sf::Vertex linha7[] = {
+		sf::Vertex(sf::Vector2f(800, 0), sf::Color(245,49,75)),
+
+		sf::Vertex(sf::Vector2f(800, 700), sf::Color(245,49,75))};
+	janela.draw(linha7, 10, sf::Lines);
 
 	/*
-	// Divisão entre instruções e import
-	sf::Vertex linha2[] = {
-		sf::Vertex(sf::Vector2f(830, 170), sf::Color(130, 130, 130)),
-
-		sf::Vertex(sf::Vector2f(1170, 170), sf::Color(130, 130, 130))};
-	janela.draw(linha2, 2, sf::Lines);
-
-	// Divisão entre import e algoritmos
-	sf::Vertex linha3[] = {
-		sf::Vertex(sf::Vector2f(830, 285), sf::Color(130, 130, 130)),
-
-		sf::Vertex(sf::Vector2f(1170, 285), sf::Color(130, 130, 130))};
-	janela.draw(linha3, 2, sf::Lines);
-
 	// Instruções
 	sf::Text instr;
 	instr.setFont(fonte);
