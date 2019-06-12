@@ -43,11 +43,18 @@ void center(GraphCanvas *GC) {
 	Tree T(GC->GD.G);
 	GC->GD.color[T.center()] = 1;
 }
+
+void clearGraph(GraphCanvas *GC)
+{
+	GC->GD.color = vector<int>(GC->GD.G.getN(), 0);
+	GC->GD.colorAresta = vector<int>(GC->GD.G.getM(), 100);
+}
+
 } // namespace functions
 
 namespace buttons {
 void general(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-	vector<int> op = {1, 2, 3, 4};
+	vector<int> op = {1, 2, 3, 4, 6};
 	for (int i : op) gui.add(v[i]);
 }
 
@@ -58,7 +65,7 @@ void clear(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
 void bipartite(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {}
 
 void chordal(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
-	vector<int> op = {0};
+	vector<int> op = {0, 6};
 	for (int i : op) gui.add(v[i]);
 }
 
@@ -105,6 +112,12 @@ void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	center->setSize(75.f, 20.f);
 	center->setPosition(810.f, 310.f);
 	center->connect("pressed", functions::center, &GC);
+
+	auto clear = tgui::Button::create("Limpa");
+	v.push_back(clear);
+	clear->setSize(75.f, 20.f);
+	clear->setPosition(810.f, 360.f);
+	clear->connect("pressed", functions::clearGraph, &GC);
 }
 
 void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC,
