@@ -71,6 +71,11 @@ $(function() {
 <div class="title">Referência à classe GraphGen</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Classe para grafos gerais.  
+ <a href="classGraphGen.html#details">Mais...</a></p>
+
+<p><code>#include &lt;<a class="el" href="GraphGen_8hpp_source.html">GraphGen.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Diagrama de heranças da classe GraphGen</div>
 <div class="dyncontent">
@@ -143,6 +148,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphGen.html#a4fba74f3a12a3153843f550569981b0b">reaches</a> (int, int)</td></tr>
 <tr class="memdesc:a4fba74f3a12a3153843f550569981b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna se dois vértices se alcançam. <br /></td></tr>
 <tr class="separator:a4fba74f3a12a3153843f550569981b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc27f1b1daa452bb0943c867b550906"><td class="memItemLeft" align="right" valign="top"><a id="addc27f1b1daa452bb0943c867b550906"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphGen.html#addc27f1b1daa452bb0943c867b550906">isConnected</a> ()</td></tr>
+<tr class="memdesc:addc27f1b1daa452bb0943c867b550906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna se o grafo é conexo. <br /></td></tr>
+<tr class="separator:addc27f1b1daa452bb0943c867b550906"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41afdf97face9260e82749c4c770b2e7"><td class="memItemLeft" align="right" valign="top"><a id="a41afdf97face9260e82749c4c770b2e7"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphGen.html#a41afdf97face9260e82749c4c770b2e7">isBipartite</a> ()</td></tr>
 <tr class="memdesc:a41afdf97face9260e82749c4c770b2e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna se o grafo é bipartido. <br /></td></tr>
@@ -171,6 +180,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a0690c98ce5c9dd544074f690fb79a8c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfc9e2946585f5ea7e2948cd724d37e8"><td class="memItemLeft" align="right" valign="top">vector&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphGen.html#abfc9e2946585f5ea7e2948cd724d37e8">artPoints</a> ()</td></tr>
 <tr class="separator:abfc9e2946585f5ea7e2948cd724d37e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac80b65f7234db5bc163c7736aa0f561a"><td class="memItemLeft" align="right" valign="top">vector&lt; pair&lt; int, int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGraphGen.html#ac80b65f7234db5bc163c7736aa0f561a">bridges</a> ()</td></tr>
+<tr class="separator:ac80b65f7234db5bc163c7736aa0f561a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Atributos Públicos</h2></td></tr>
@@ -209,7 +220,9 @@ vector&lt; vector&lt; pair&lt; int, int &gt; &gt; &gt;&#160;</td><td class="memI
 <tr class="memdesc:a6bfecbfc2aca704e5107dd667a23a1c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lista de adjacência não direcionada. <br /></td></tr>
 <tr class="separator:a6bfecbfc2aca704e5107dd667a23a1c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Documentação dos métodos</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
+<div class="textblock"><p>Classe para grafos gerais. </p>
+</div><h2 class="groupheader">Documentação dos métodos</h2>
 <a id="abfc9e2946585f5ea7e2948cd724d37e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abfc9e2946585f5ea7e2948cd724d37e8">&#9670;&nbsp;</a></span>artPoints()</h2>
 
@@ -225,6 +238,25 @@ vector&lt; vector&lt; pair&lt; int, int &gt; &gt; &gt;&#160;</td><td class="memI
       </table>
 </div><div class="memdoc">
 <p>Retorna um vetor de booleanos que informa se cada vértice é um ponto de articulação</p>
+<p>Complexidade: O(n + m) </p>
+
+</div>
+</div>
+<a id="ac80b65f7234db5bc163c7736aa0f561a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac80b65f7234db5bc163c7736aa0f561a">&#9670;&nbsp;</a></span>bridges()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;pair&lt;int, int&gt; &gt; GraphGen::bridges </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retorna um vetor de booleanos que informa se cada aresta é uma ponte</p>
 <p>Complexidade: O(n + m) </p>
 
 </div>

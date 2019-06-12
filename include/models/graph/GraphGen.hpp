@@ -13,7 +13,9 @@
 
 using namespace std;
 
+///
 /// @file
+
 ///
 /// Classe para grafos gerais.
 class GraphGen {

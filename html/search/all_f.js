@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['reaches',['reaches',['../classGraphGen.html#a4fba74f3a12a3153843f550569981b0b',1,'GraphGen']]],
-  ['replexception',['REPLException',['../classREPLException.html',1,'']]],
-  ['replinvalidcommandexception',['REPLInvalidCommandException',['../classREPLInvalidCommandException.html',1,'']]],
-  ['replvertexnotfoundexception',['REPLVertexNotFoundException',['../classREPLVertexNotFoundException.html',1,'']]]
+  ['perfecteliminationordering',['perfectEliminationOrdering',['../classChordal.html#a45b66b1ee19a628646d83613d337d94a',1,'Chordal']]],
+  ['project',['project',['../classVector.html#a7f187d9dc1da47c2d3754e8260a4c0e7',1,'Vector']]]
 ];

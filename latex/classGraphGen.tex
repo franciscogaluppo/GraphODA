@@ -1,5 +1,14 @@
 \hypertarget{classGraphGen}{}\doxysection{Referência à classe Graph\+Gen}
 \label{classGraphGen}\index{GraphGen@{GraphGen}}
+
+
+Classe para grafos gerais.  
+
+
+
+
+{\ttfamily \#include $<$Graph\+Gen.\+hpp$>$}
+
 Diagrama de heranças da classe Graph\+Gen\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -51,6 +60,9 @@ bool \mbox{\hyperlink{classGraphGen_a904cd0ab02e4c837ebd85226996fb4b2}{has\+Nega
 \mbox{\Hypertarget{classGraphGen_a4fba74f3a12a3153843f550569981b0b}\label{classGraphGen_a4fba74f3a12a3153843f550569981b0b}} 
 bool \mbox{\hyperlink{classGraphGen_a4fba74f3a12a3153843f550569981b0b}{reaches}} (int, int)
 \begin{DoxyCompactList}\small\item\em Retorna se dois vértices se alcançam. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphGen_addc27f1b1daa452bb0943c867b550906}\label{classGraphGen_addc27f1b1daa452bb0943c867b550906}} 
+bool \mbox{\hyperlink{classGraphGen_addc27f1b1daa452bb0943c867b550906}{is\+Connected}} ()
+\begin{DoxyCompactList}\small\item\em Retorna se o grafo é conexo. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classGraphGen_a41afdf97face9260e82749c4c770b2e7}\label{classGraphGen_a41afdf97face9260e82749c4c770b2e7}} 
 bool \mbox{\hyperlink{classGraphGen_a41afdf97face9260e82749c4c770b2e7}{is\+Bipartite}} ()
 \begin{DoxyCompactList}\small\item\em Retorna se o grafo é bipartido. \end{DoxyCompactList}\item 
@@ -74,6 +86,8 @@ vector$<$ int $>$ \mbox{\hyperlink{classGraphGen_a8505ba4cbaa0685f43e52a4c4f296d
 vector$<$ int $>$ \mbox{\hyperlink{classGraphGen_a0690c98ce5c9dd544074f690fb79a8c6}{greedy\+Coloring}} (vector$<$ int $>$)
 \item 
 vector$<$ bool $>$ \mbox{\hyperlink{classGraphGen_abfc9e2946585f5ea7e2948cd724d37e8}{art\+Points}} ()
+\item 
+vector$<$ pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classGraphGen_ac80b65f7234db5bc163c7736aa0f561a}{bridges}} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Atributos Públicos}
 \begin{DoxyCompactItemize}
@@ -108,6 +122,9 @@ vector$<$ vector$<$ pair$<$ int, int $>$ $>$ $>$ \mbox{\hyperlink{classGraphGen_
 \begin{DoxyCompactList}\small\item\em Lista de adjacência não direcionada. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\doxysubsection{Descrição detalhada}
+Classe para grafos gerais. 
+
 \doxysubsection{Documentação dos métodos}
 \mbox{\Hypertarget{classGraphGen_abfc9e2946585f5ea7e2948cd724d37e8}\label{classGraphGen_abfc9e2946585f5ea7e2948cd724d37e8}} 
 \index{GraphGen@{GraphGen}!artPoints@{artPoints}}
@@ -116,6 +133,14 @@ vector$<$ vector$<$ pair$<$ int, int $>$ $>$ $>$ \mbox{\hyperlink{classGraphGen_
 {\footnotesize\ttfamily vector$<$bool$>$ Graph\+Gen\+::art\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 Retorna um vetor de booleanos que informa se cada vértice é um ponto de articulação
+
+Complexidade\+: O(n + m) \mbox{\Hypertarget{classGraphGen_ac80b65f7234db5bc163c7736aa0f561a}\label{classGraphGen_ac80b65f7234db5bc163c7736aa0f561a}} 
+\index{GraphGen@{GraphGen}!bridges@{bridges}}
+\index{bridges@{bridges}!GraphGen@{GraphGen}}
+\doxysubsubsection{\texorpdfstring{bridges()}{bridges()}}
+{\footnotesize\ttfamily vector$<$pair$<$int, int$>$ $>$ Graph\+Gen\+::bridges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna um vetor de booleanos que informa se cada aresta é uma ponte
 
 Complexidade\+: O(n + m) \mbox{\Hypertarget{classGraphGen_ad44c80646f694460fafa3e3657beb4d0}\label{classGraphGen_ad44c80646f694460fafa3e3657beb4d0}} 
 \index{GraphGen@{GraphGen}!coloring@{coloring}}

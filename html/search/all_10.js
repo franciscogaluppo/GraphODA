@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['scc',['scc',['../classGraphGen.html#a875733956a1f667d68afb420f53ecc86',1,'GraphGen']]],
-  ['setgraph',['setGraph',['../classGraphCanvas.html#a1f402e85859d1eb3b6f1965de3def1af',1,'GraphCanvas']]],
-  ['shortestpath',['shortestPath',['../classGraphGen.html#ad42fcde82e163baadcfaa02293242db5',1,'GraphGen']]],
-  ['simadj',['simAdj',['../classGraphGen.html#a6bfecbfc2aca704e5107dd667a23a1c0',1,'GraphGen']]]
+  ['reaches',['reaches',['../classGraphGen.html#a4fba74f3a12a3153843f550569981b0b',1,'GraphGen']]],
+  ['replexception',['REPLException',['../classREPLException.html',1,'']]],
+  ['replinvalidcommandexception',['REPLInvalidCommandException',['../classREPLInvalidCommandException.html',1,'']]],
+  ['replvertexnotfoundexception',['REPLVertexNotFoundException',['../classREPLVertexNotFoundException.html',1,'']]],
+  ['rotate',['rotate',['../classVector.html#ac2e3094ce0134c3509ce4ef7df78245a',1,'Vector']]]
 ];

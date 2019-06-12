@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['scc',['scc',['../classGraphGen.html#a875733956a1f667d68afb420f53ecc86',1,'GraphGen']]],
-  ['setgraph',['setGraph',['../classGraphCanvas.html#a1f402e85859d1eb3b6f1965de3def1af',1,'GraphCanvas']]],
-  ['shortestpath',['shortestPath',['../classGraphGen.html#ad42fcde82e163baadcfaa02293242db5',1,'GraphGen']]]
+  ['perfecteliminationordering',['perfectEliminationOrdering',['../classChordal.html#a45b66b1ee19a628646d83613d337d94a',1,'Chordal']]],
+  ['project',['project',['../classVector.html#a7f187d9dc1da47c2d3754e8260a4c0e7',1,'Vector']]]
 ];
