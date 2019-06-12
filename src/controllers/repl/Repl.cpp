@@ -540,6 +540,7 @@ void run(int X, int Y) {
 					center();
 				else if (com == "diameter")
 					diameter();
+				else throw REPLInvalidCommandException();
 			}
 		} catch (REPLInvalidCommandException &e) {
 			cout << "ERROR: invalid command" << endl;
