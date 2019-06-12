@@ -11,6 +11,48 @@ void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC, bool *mudou) {
 	*mudou = true;
 }
 
+void SaveScreen(tgui::Gui *gui, tgui::ChildWindow::Ptr jan, tgui::EditBox::Ptr arq, sf::RenderWindow *janela, GraphCanvas *GC) {
+	gui->remove(jan);
+	janela->clear(sf::Color(251,251,251));
+	GC->display();
+	gui->draw();
+	janela->display();
+
+	sf::Vector2u windowSize = janela->getSize();
+	sf::Texture texture;
+	texture.create(windowSize.x, windowSize.y);
+	texture.update(*janela);
+	sf::Image screenshot = texture.copyToImage();
+
+	//recortando só a parte necessária
+	sf::Texture t;
+	sf::IntRect r1(0, 0, 800, 600);
+	t.create(800,600);
+	t.loadFromImage	(screenshot, r1);
+	sf::Image nova = t.copyToImage();
+	bool ok = nova.saveToFile(arq->getText().toAnsiString()+".png");
+}
+
+void Save2File(tgui::Gui *gui, sf::RenderWindow *janela, GraphCanvas *GC) {
+
+	auto jan = tgui::ChildWindow::create("Salvar");
+	jan->setPosition(100.f, 100.f);
+	jan->setSize(250.f, 50.f);
+	auto texto = tgui::EditBox::create();
+	texto->setDefaultText("Nome do arquivo");
+	texto->setSize(200.f, 20.f);
+	texto->setPosition(10.f, 10.f);
+	jan->add(texto);
+
+	auto botao = tgui::Button::create("Ok");
+	botao->setPosition(220.f, 10.f);
+	botao->setSize(20.f, 20.f);
+	botao->connect("pressed", SaveScreen, gui, jan, texto, janela, GC);
+	jan->add(botao);
+
+	gui->add(jan);
+}
+
 void mudaDir(GraphCanvas *GC) { (GC->GD.temDir) ^= 1; }
 
 void centraliza(GraphCanvas *GC) { (GC->GD.centr) ^= 1; }
@@ -22,7 +64,7 @@ void reseta(GraphCanvas *GC, bool* mudou) {
 	*mudou = true;
 }
 
-void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, bool *mudou) {
+void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, bool *mudou, sf::RenderWindow *janela) {
 	// tgui::Theme tema{"assets/TransparentGrey.txt"};
 	// tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 
@@ -67,6 +109,8 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, bool *mudou) {
 	auto botaoCenter = tgui::Button::create("Centralizar");
 	botaoCenter->setSize(75.f, 20.f);
 	botaoCenter->setPosition(245.f, 640.f);
+	//auto oi = tgui::Label::create("oi");
+	//botaoCenter->setToolTip(oi);
 	gui.add(botaoCenter);
 
 	// botao pra resetar o grafo
@@ -83,8 +127,20 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, bool *mudou) {
 	checkDraw->connect("checked", toggleDraw, GC);
 	checkDraw->connect("unchecked", toggleDraw, GC);
 	
+	botaoSave->connect("pressed", Save2File, &gui, janela, GC);
 	botaoCenter->connect("pressed", centraliza, GC);
 	reset->connect("pressed", reseta, GC, mudou);
+
+	// teste
+	return;
+	auto vai = tgui::ChildWindow::create("vai");
+	auto cuzao = tgui::Button::create("bunda");
+	cuzao->setSize(20.f, 20.f);
+	cuzao->setPosition(10.f, 10.f);
+	vai->add(cuzao);
+	gui.add(vai);
+
+
 }
 
 void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
@@ -92,7 +148,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 	janela.clear(sf::Color(251,251,251));
 
 	// menu lateral
-	sf::RectangleShape menu(sf::Vector2f(400.f, 700.f));
+	sf::RectangleShape menu(sf::Vector2f(200.f, 700.f));
 	menu.setFillColor(sf::Color(34,38,41));
 	menu.setPosition(800.f, 0.f);
 	janela.draw(menu);
@@ -145,7 +201,7 @@ void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
 void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
 	sf::Text draw;
 	draw.setFont(fonte);
-	draw.setString("D");
+	draw.setString("E");
 	draw.setCharacterSize(32);
 	draw.setFillColor(sf::Color(134,194,50));
 	draw.setPosition(X - 32, 0);
@@ -173,7 +229,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 	tgui::Theme::setDefault(&tema);
 
 	// GraphCanvas
-	GraphCanvas GC(janela, fonte, X * 2 / 3, Y * 6 / 7, 15);
+	GraphCanvas GC(janela, fonte, X * 4 / 5, Y * 6 / 7, 15);
 	GC.setGraph(G);
 	bool editing;
 	tgui::EditBox::Ptr edit;
@@ -182,7 +238,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &GC, &mudou);
+		loadWidgets(gui, &GC, &mudou, &janela);
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return G;
@@ -298,7 +354,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 		251,251,251 - snow FBFBFB
 		*/
 
-		if (GC.GD.draw) drawDrawMode(janela, fonte, X * 2 / 3);
+		if (GC.GD.draw) drawDrawMode(janela, fonte, X * 4 / 5);
 
 		// olha se ta editando os pesos/labels
 		if (GC.editLabel > -1 or GC.editWeight > -1) {
