@@ -25,7 +25,6 @@ class GraphCanvas {
 	GraphDisplay GD;
 
 	///
-	/// TODO
 	/// Objeto RenderWindow para trabalhar no canvas.
 	sf::RenderWindow *janela;
 
@@ -34,11 +33,11 @@ class GraphCanvas {
 	sf::Font fonte;
 
 	///
-	/// TODO
+	/// Vértice que o usuário está editando.
 	int editLabel;
 
 	///
-	/// TODO
+	/// Aresta que o usuário está editando.
 	int editWeight;
 
 	///
@@ -50,11 +49,11 @@ class GraphCanvas {
 	void setGraph(Graph);
 
 	///
-	/// TODO
+	/// Trata o clique do usuário, descobrindo se ele clicou num vértice, aresta, etc.
 	bool handleClique();
 
 	///
-	/// TODO
+	/// Exibe o grafo.
 	void display();
 
   private:

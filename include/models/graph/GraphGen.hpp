@@ -109,10 +109,9 @@ class GraphGen {
 	/// Complexidade: O(n + m)
 	vector<int> scc();
 
-	// TODO
 	/// Retorna o menor caminho entre dois vértices.
 	///
-	/// Complexidade: O()
+	/// Complexidade: se todos os pesos forem 1, linear. Se não houver peso negativo, O(m log(n)). Caso contrário, O(n*m).
 	long long shortestPath(int, int);
 
 	// TODO
@@ -179,66 +178,56 @@ class GraphGen {
 
   private:
 	// auxiliares
-	// TODO
-	/// .
+	/// Usado para computar se um vértice alcança outro.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	bool dfsReaches(vector<bool> &, int, int);
 
-	// TODO
-	/// .
+	/// Usado para computar se o grafo é conexo.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	void dfsCheckConnected(vector<bool> &, int);
 
-	// TODO
-	/// .
+	/// Usado para computar se um grafo é bipartido.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	bool dfsCheckBipartite(int, int, vector<int> &);
 
-	// TODO
-	/// .
+	/// Usado para computar se um grafo é um dag.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	bool dfsCheckDag(int, vector<int> &);
 
-	// TODO
-	/// .
+	/// Usado para computar se um grafo é uma árvore.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	bool dfsCheckTree(int, int, vector<int> &);
 
-	// TODO
-	/// .
+	/// Usado para computar as componentes fortemente conexas do grafo.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	int dfsScc(vector<int> &, vector<int> &, vector<int> &, int &, int &, int);
 
-	// TODO
-	/// .
+	/// Usado para computar as pontes e pontos de articulação do grafo.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	void dfsArt(vector<bool> &, vector<int> &, vector<int> &, vector<int> &,
 				vector<bool> &, vector<pair<int, int>> &, int, int, int &);
 
 	// algoritmos
-	// TODO
-	/// .
+	/// BFS para computar caminho mínimo no caso de todos os pesos serem unitários.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n+m)
 	long long shortestPathBFS(int, int);
 
-	// TODO
-	/// .
+	/// Algoritmo de Dijkstra para caminho mínimo.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(m log(n))
 	long long dijkstra(int, int);
 
-	// TODO
-	/// .
+	/// Algoritmo de Bellmand-Ford para caminho mínimo.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(n*m)
 	long long bellmanFord(int, int);
 };
 
