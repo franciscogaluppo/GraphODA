@@ -41,6 +41,10 @@ class GraphCanvas {
 	int editWeight;
 
 	///
+	/// Construtor vazio
+	GraphCanvas() {}
+
+	///
 	/// Construtor da classe.
 	GraphCanvas(sf::RenderWindow &, sf::Font &, int, int, int);
 
@@ -49,7 +53,8 @@ class GraphCanvas {
 	void setGraph(Graph);
 
 	///
-	/// Trata o clique do usuário, descobrindo se ele clicou num vértice, aresta, etc.
+	/// Trata o clique do usuário, descobrindo se ele clicou num vértice,
+	/// aresta, etc.
 	bool handleClique();
 
 	///

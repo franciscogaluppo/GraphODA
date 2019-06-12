@@ -119,7 +119,8 @@ void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	clear->connect("pressed", functions::clearGraph, &GC);
 }
 
-void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC) {
+void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes,
+			GraphCanvas &GC) {
 	for (int i = 0; i < 10; i++) clear(gui, botoes);
 	if (GC.GD.G.getN()) {
 		general(gui, botoes);

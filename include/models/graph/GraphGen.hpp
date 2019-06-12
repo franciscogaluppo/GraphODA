@@ -111,7 +111,8 @@ class GraphGen {
 
 	/// Retorna o menor caminho entre dois vértices.
 	///
-	/// Complexidade: se todos os pesos forem 1, linear. Se não houver peso negativo, O(m log(n)). Caso contrário, O(n*m).
+	/// Complexidade: se todos os pesos forem 1, linear. Se não houver peso
+	/// negativo, O(m log(n)). Caso contrário, O(n*m).
 	long long shortestPath(int, int);
 
 	// TODO
@@ -215,7 +216,8 @@ class GraphGen {
 				vector<bool> &, vector<pair<int, int>> &, int, int, int &);
 
 	// algoritmos
-	/// BFS para computar caminho mínimo no caso de todos os pesos serem unitários.
+	/// BFS para computar caminho mínimo no caso de todos os pesos serem
+	/// unitários.
 	///
 	/// Complexidade: O(n+m)
 	long long shortestPathBFS(int, int);

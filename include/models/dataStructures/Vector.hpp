@@ -12,7 +12,6 @@ using namespace std;
 /// Classe para operações vetoriais no espaço real de duas dimensões.
 class Vector {
   public:
-
 	///
 	/// Coordenada x do vetor.
 	float x;
@@ -38,7 +37,7 @@ class Vector {
 	float norm();
 
 	///
-	/// Calcula o ângulo do vetor com o eixo x. 
+	/// Calcula o ângulo do vetor com o eixo x.
 	float angle();
 
 	///

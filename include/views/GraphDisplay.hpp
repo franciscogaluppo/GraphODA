@@ -80,14 +80,13 @@ struct GraphDisplay {
 	/// Lista que indica se cada aresta é 'paralela' ou não.
 	vector<bool> isParal;
 
-	
 	///
 	/// Construtor de GraphDisplay vazio.
 	GraphDisplay() {}
 
 	///
-	/// Construtor de GraphDisplay com base no seu grafo, nas dimensões do canvas
-	/// e no tamanho do raio do vértice.
+	/// Construtor de GraphDisplay com base no seu grafo, nas dimensões do
+	/// canvas e no tamanho do raio do vértice.
 	GraphDisplay(Graph, int, int, int);
 
 	///

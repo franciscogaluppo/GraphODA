@@ -51,7 +51,7 @@ class REPLInvalidCommandException : public REPLException {
 /// Classe de exceções de vértice não encontrado.
 class REPLVertexNotFoundException : public REPLException {
   public:
-  	///
+	///
 	/// Construtor de exceções de vértice não encontrado.
 	REPLVertexNotFoundException(string v) {
 		msg = "coudn't find vertex with label: " + v;

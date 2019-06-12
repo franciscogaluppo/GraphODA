@@ -43,7 +43,7 @@ class DSU {
 /// Classe de exceções de DSU.
 class DSUException : public exception {
   public:
-	/// 
+	///
 	DSUException() {}
 	///
 	/// Retorna a mensagem de erro da exceção.

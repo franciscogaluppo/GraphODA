@@ -210,10 +210,10 @@ void treeCast() {
 	graphs[at].type = 4;
 }
 
-void show(int X, int Y) { displayTeste(X, Y, getGraph()); }
+void show(int X, int Y) { interface::display(X, Y, getGraph()); }
 
 void edit(int X, int Y) {
-	graphs[at].G = displayTeste(X, Y, getGraph());
+	graphs[at].G = interface::display(X, Y, getGraph());
 	graphs[at].type = 0;
 }
 

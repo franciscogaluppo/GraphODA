@@ -1,40 +1,47 @@
 #include "Interface.hpp"
 
-void lerGrafoArquivoAux(tgui::EditBox::Ptr arq, GraphCanvas *GC, bool *mudou) {
+namespace interface {
+
+sf::RenderWindow janela;
+tgui::Gui gui;
+GraphCanvas GC;
+sf::Font fonte;
+bool mudou;
+
+void lerGrafoArquivoAux(tgui::EditBox::Ptr arq) {
 	Graph i;
 	try {
 		i = lerGrafoArquivo(arq->getText().toAnsiString());
 	} catch (...) {
 		return;
 	}
-	GC->setGraph(i);
-	*mudou = true;
+	GC.setGraph(i);
+	mudou = true;
 }
 
-void SaveScreen(tgui::Gui *gui, tgui::ChildWindow::Ptr jan, tgui::EditBox::Ptr arq, sf::RenderWindow *janela, GraphCanvas *GC) {
-	gui->remove(jan);
-	janela->clear(sf::Color(251,251,251));
-	GC->display();
-	gui->draw();
-	janela->display();
+void SaveScreen(tgui::ChildWindow::Ptr jan, tgui::EditBox::Ptr arq) {
+	gui.remove(jan);
+	janela.clear(sf::Color(251, 251, 251));
+	GC.display();
+	gui.draw();
+	janela.display();
 
-	sf::Vector2u windowSize = janela->getSize();
+	sf::Vector2u windowSize = janela.getSize();
 	sf::Texture texture;
 	texture.create(windowSize.x, windowSize.y);
-	texture.update(*janela);
+	texture.update(janela);
 	sf::Image screenshot = texture.copyToImage();
 
-	//recortando só a parte necessária
+	// recortando só a parte necessária
 	sf::Texture t;
 	sf::IntRect r1(0, 0, 800, 600);
-	t.create(800,600);
-	t.loadFromImage	(screenshot, r1);
+	t.create(800, 600);
+	t.loadFromImage(screenshot, r1);
 	sf::Image nova = t.copyToImage();
-	bool ok = nova.saveToFile(arq->getText().toAnsiString()+".png");
+	bool ok = nova.saveToFile(arq->getText().toAnsiString() + ".png");
 }
 
-void Save2File(tgui::Gui *gui, sf::RenderWindow *janela, GraphCanvas *GC) {
-
+void Save2File() {
 	auto jan = tgui::ChildWindow::create("Salvar");
 	jan->setPosition(100.f, 100.f);
 	jan->setSize(250.f, 50.f);
@@ -44,27 +51,35 @@ void Save2File(tgui::Gui *gui, sf::RenderWindow *janela, GraphCanvas *GC) {
 	texto->setPosition(10.f, 10.f);
 	jan->add(texto);
 
+	// TODO: ERRO SE O TEXTO FOR VAZIO
 	auto botao = tgui::Button::create("Ok");
 	botao->setPosition(220.f, 10.f);
 	botao->setSize(20.f, 20.f);
-	botao->connect("pressed", SaveScreen, gui, jan, texto, janela, GC);
+	botao->connect("pressed", SaveScreen, jan, texto);
 	jan->add(botao);
 
-	gui->add(jan);
+	gui.add(jan);
 }
 
-void mudaDir(GraphCanvas *GC) { (GC->GD.temDir) ^= 1; }
-
-void centraliza(GraphCanvas *GC) { (GC->GD.centr) ^= 1; }
-
-void toggleDraw(GraphCanvas *GC) { (GC->GD.draw ^= 1); }
-
-void reseta(GraphCanvas *GC, bool* mudou) {
-	GC->setGraph(Graph());
-	*mudou = true;
+void Help() {
+	auto jan = tgui::ChildWindow::create("Ajuda");
+	jan->setPosition(100.f, 100.f);
+	jan->setSize(250.f, 50.f);
+	gui.add(jan);
 }
 
-void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, bool *mudou, sf::RenderWindow *janela) {
+void mudaDir() { (GC.GD.temDir) ^= 1; }
+
+void centraliza() { (GC.GD.centr) ^= 1; }
+
+void toggleDraw() { (GC.GD.draw ^= 1); }
+
+void reseta() {
+	GC.setGraph(Graph());
+	mudou = true;
+}
+
+void loadWidgets() {
 	// tgui::Theme tema{"assets/TransparentGrey.txt"};
 	// tgui::ButtonRenderer(tema.getRenderer("button")).setBackgroundColor(sf::Color::Blue);
 
@@ -109,8 +124,8 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, bool *mudou, sf::RenderWindow 
 	auto botaoCenter = tgui::Button::create("Centralizar");
 	botaoCenter->setSize(75.f, 20.f);
 	botaoCenter->setPosition(245.f, 640.f);
-	//auto oi = tgui::Label::create("oi");
-	//botaoCenter->setToolTip(oi);
+	// auto oi = tgui::Label::create("oi");
+	// botaoCenter->setToolTip(oi);
 	gui.add(botaoCenter);
 
 	// botao pra resetar o grafo
@@ -120,97 +135,86 @@ void loadWidgets(tgui::Gui &gui, GraphCanvas *GC, bool *mudou, sf::RenderWindow 
 	gui.add(reset);
 
 	// Chama a função de importar arquivo
-	botaoArquivo->connect("pressed", lerGrafoArquivoAux, textoArquivo, GC, mudou);
-	check->connect("checked", mudaDir, GC);
-	check->connect("unchecked", mudaDir, GC);
+	botaoArquivo->connect("pressed", lerGrafoArquivoAux, textoArquivo);
+	check->connect("checked", mudaDir);
+	check->connect("unchecked", mudaDir);
 
-	checkDraw->connect("checked", toggleDraw, GC);
-	checkDraw->connect("unchecked", toggleDraw, GC);
-	
-	botaoSave->connect("pressed", Save2File, &gui, janela, GC);
-	botaoCenter->connect("pressed", centraliza, GC);
-	reset->connect("pressed", reseta, GC, mudou);
+	checkDraw->connect("checked", toggleDraw);
+	checkDraw->connect("unchecked", toggleDraw);
 
-	// teste
-	return;
-	auto vai = tgui::ChildWindow::create("vai");
-	auto cuzao = tgui::Button::create("bunda");
-	cuzao->setSize(20.f, 20.f);
-	cuzao->setPosition(10.f, 10.f);
-	vai->add(cuzao);
-	gui.add(vai);
-
-
+	botaoHelp->connect("pressed", Help);
+	botaoSave->connect("pressed", Save2File);
+	botaoCenter->connect("pressed", centraliza);
+	reset->connect("pressed", reseta);
 }
 
-void drawStuff(sf::RenderWindow &janela, sf::Font &fonte) {
+void drawStuff() {
 	// Limpa tela e coloca branco
-	janela.clear(sf::Color(251,251,251));
+	janela.clear(sf::Color(251, 251, 251));
 
 	// menu lateral
 	sf::RectangleShape menu(sf::Vector2f(200.f, 700.f));
-	menu.setFillColor(sf::Color(34,38,41));
+	menu.setFillColor(sf::Color(34, 38, 41));
 	menu.setPosition(800.f, 0.f);
 	janela.draw(menu);
 
 	// Menu inferior
 	sf::RectangleShape inferior(sf::Vector2f(800.f, 100.f)); // larg x alt
-	inferior.setFillColor(sf::Color(34,38,41));
+	inferior.setFillColor(sf::Color(34, 38, 41));
 	inferior.setPosition(0.f, 600.f);
 	janela.draw(inferior);
-	
+
 	// Contornos
-		//lateral e canvas
+	// lateral e canvas
 	sf::Vertex linha0[] = {
-		sf::Vertex(sf::Vector2f(1, 600), sf::Color(71,75,79)),
+		sf::Vertex(sf::Vector2f(1, 600), sf::Color(71, 75, 79)),
 
-		sf::Vertex(sf::Vector2f(800, 600), sf::Color(71,75,79))};
+		sf::Vertex(sf::Vector2f(800, 600), sf::Color(71, 75, 79))};
 	janela.draw(linha0, 10, sf::Lines);
-		//superior e lateral
+	// superior e lateral
 	sf::Vertex linha1[] = {
-		sf::Vertex(sf::Vector2f(800, 0), sf::Color(71,75,79)),
+		sf::Vertex(sf::Vector2f(800, 0), sf::Color(71, 75, 79)),
 
-		sf::Vertex(sf::Vector2f(1200, 0), sf::Color(71,75,79))};
-	janela.draw(linha1, 10, sf::Lines);	
-		//borda inferior
+		sf::Vertex(sf::Vector2f(1200, 0), sf::Color(71, 75, 79))};
+	janela.draw(linha1, 10, sf::Lines);
+	// borda inferior
 	sf::Vertex linha2[] = {
-		sf::Vertex(sf::Vector2f(0, 699), sf::Color(71,75,79)),
+		sf::Vertex(sf::Vector2f(0, 699), sf::Color(71, 75, 79)),
 
-		sf::Vertex(sf::Vector2f(1200, 699), sf::Color(71,75,79))};
+		sf::Vertex(sf::Vector2f(1200, 699), sf::Color(71, 75, 79))};
 	janela.draw(linha2, 10, sf::Lines);
-		//borda lateral esq
+	// borda lateral esq
 	sf::Vertex linha3[] = {
-		sf::Vertex(sf::Vector2f(0, 600), sf::Color(71,75,79)),
+		sf::Vertex(sf::Vector2f(0, 600), sf::Color(71, 75, 79)),
 
-		sf::Vertex(sf::Vector2f(0, 700), sf::Color(71,75,79))};
+		sf::Vertex(sf::Vector2f(0, 700), sf::Color(71, 75, 79))};
 	janela.draw(linha3, 10, sf::Lines);
-		//borda lateral dir
+	// borda lateral dir
 	sf::Vertex linha4[] = {
-		sf::Vertex(sf::Vector2f(1199, 0), sf::Color(71,75,79)),
+		sf::Vertex(sf::Vector2f(1199, 0), sf::Color(71, 75, 79)),
 
-		sf::Vertex(sf::Vector2f(1199, 700), sf::Color(71,75,79))};
+		sf::Vertex(sf::Vector2f(1199, 700), sf::Color(71, 75, 79))};
 	janela.draw(linha4, 10, sf::Lines);
-		// Divisão entre o canvas e o menu
+	// Divisão entre o canvas e o menu
 	sf::Vertex linha7[] = {
-		sf::Vertex(sf::Vector2f(800, 0), sf::Color(71,75,79)),
+		sf::Vertex(sf::Vector2f(800, 0), sf::Color(71, 75, 79)),
 
-		sf::Vertex(sf::Vector2f(800, 700), sf::Color(71,75,79))};
+		sf::Vertex(sf::Vector2f(800, 700), sf::Color(71, 75, 79))};
 	janela.draw(linha7, 10, sf::Lines);
 }
 
-void drawDrawMode(sf::RenderWindow &janela, sf::Font &fonte, int X) {
+void drawDrawMode(int X) {
 	sf::Text draw;
 	draw.setFont(fonte);
 	draw.setString("E");
 	draw.setCharacterSize(32);
-	draw.setFillColor(sf::Color(134,194,50));
+	draw.setFillColor(sf::Color(134, 194, 50));
 	draw.setPosition(X - 32, 0);
 	janela.draw(draw);
 }
 
-Graph displayTeste(int X, int Y, Graph G) {
+Graph display(int X, int Y, Graph G) {
 	// Carrega a fonte Consola Bold (Gosto dela)
-	sf::Font fonte;
 	if (!fonte.loadFromFile("assets/CONSOLAB.TTF")) {
 		// TODO: Erro direito
 		return G;
@@ -221,24 +225,25 @@ Graph displayTeste(int X, int Y, Graph G) {
 	settings.antialiasingLevel = 4;
 
 	// Cria a janela
-	sf::RenderWindow janela(sf::VideoMode(X, Y), "graphODA", sf::Style::Close,
-							settings);
-	janela.setKeyRepeatEnabled(false);
-	tgui::Gui gui(janela);
+
+	janela.create(sf::VideoMode(X, Y), "graphODA", sf::Style::Close, settings);
+	// janela = &janela2;
+
+	// janela.setKeyRepeatEnabled(false);
+	// gui = tgui::Gui(*janela);
+	gui.setTarget(janela);
 	tgui::Theme tema{"assets/Botoes.txt"};
 	tgui::Theme::setDefault(&tema);
 
 	// GraphCanvas
-	GraphCanvas GC(janela, fonte, X * 4 / 5, Y * 6 / 7, 15);
+	GC = GraphCanvas(janela, fonte, X * 4 / 5, Y * 6 / 7, 15);
 	GC.setGraph(G);
 	bool editing;
 	tgui::EditBox::Ptr edit;
 
-	bool mudou = true;
-
 	// Tenta importar os widgets da gui
 	try {
-		loadWidgets(gui, &GC, &mudou, &janela);
+		loadWidgets();
 	} catch (const tgui::Exception &e) {
 		// TODO: mensagem de erro
 		return G;
@@ -268,7 +273,8 @@ Graph displayTeste(int X, int Y, Graph G) {
 			// apertou alguma coisa no teclado
 			if (evento.type == sf::Event::KeyPressed) {
 				// ctrl -> toggle draw mode
-				if (0 and evento.key.code == sf::Keyboard::LControl and !editing)
+				if (0 and evento.key.code == sf::Keyboard::LControl and
+					!editing)
 					GC.GD.draw ^= 1;
 
 				// esc -> sai da edicao dos pesos/labels
@@ -326,13 +332,13 @@ Graph displayTeste(int X, int Y, Graph G) {
 			}
 		}
 
-		drawStuff(janela, fonte);
-		
+		drawStuff();
+
 		// Tipo do grafo
 		sf::Text tipo;
 		tipo.setFont(fonte);
 		tipo.setCharacterSize(18);
-		tipo.setFillColor(sf::Color(134,194,50));
+		tipo.setFillColor(sf::Color(134, 194, 50));
 		tipo.setPosition(810, 605);
 
 		string msg = "";
@@ -340,11 +346,11 @@ Graph displayTeste(int X, int Y, Graph G) {
 		if (GC.GD.G.isChordal()) msg += "Cordal\n";
 		if (GC.GD.G.isDag()) msg += "DAG\n";
 		if (GC.GD.G.isTree()) msg += "Arvore\n";
-		if(!GC.GD.G.getN()) msg = "";
+		if (!GC.GD.G.getN()) msg = "";
 		tipo.setString(msg);
 
 		janela.draw(tipo);
-		
+
 		/*
 		97,137,47 - verde escuro 61892F
 		134,194,50 - verde claro 86c232
@@ -354,7 +360,7 @@ Graph displayTeste(int X, int Y, Graph G) {
 		251,251,251 - snow FBFBFB
 		*/
 
-		if (GC.GD.draw) drawDrawMode(janela, fonte, X * 4 / 5);
+		if (GC.GD.draw) drawDrawMode(X * 4 / 5);
 
 		// olha se ta editando os pesos/labels
 		if (GC.editLabel > -1 or GC.editWeight > -1) {
@@ -423,3 +429,4 @@ Graph displayTeste(int X, int Y, Graph G) {
 
 	return GC.GD.G;
 }
+} // namespace interface

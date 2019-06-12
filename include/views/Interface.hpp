@@ -12,6 +12,8 @@
 #include <string>
 using namespace std;
 
-Graph displayTeste(int, int, Graph = Graph());
+namespace interface {
+Graph display(int, int, Graph = Graph());
+}
 
 #endif
