@@ -389,6 +389,28 @@ void topoSort() {
 	}
 }
 
+void center() {
+	try {
+		Graph H = getGraph();
+		Tree G(H);
+		int c = G.center();
+		cout << G.label[c] << endl;
+	} catch (TreeConstructorException &e) {
+		graphIsNotError(var, 4);
+	}
+}
+
+void diameter() {
+	try {
+		Graph H = getGraph();
+		Tree G(H);
+		int diam = G.diameter();
+		cout << diam << endl;
+	} catch (TreeConstructorException &e) {
+		graphIsNotError(var, 4);
+	}
+}
+
 void run(int X, int Y) {
 	cout << "GraphODA" << endl;
 
@@ -514,6 +536,10 @@ void run(int X, int Y) {
 					bridges();
 				else if (com == "topoSort")
 					topoSort();
+				else if (com == "center")
+					center();
+				else if (com == "diameter")
+					diameter();
 			}
 		} catch (REPLInvalidCommandException &e) {
 			cout << "ERROR: invalid command" << endl;

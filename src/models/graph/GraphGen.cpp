@@ -93,6 +93,20 @@ bool GraphGen::reaches(int a, int b) {
 	return dfsReaches(vis, a, b);
 }
 
+void GraphGen::dfsCheckConnected(vector<bool>& vis, int v) {
+	vis[v] = true;
+	for (auto i : simAdj[v])
+		if (!vis[i.first]) dfsCheckConnected(vis, i.first);
+}
+
+bool GraphGen::isConnected() {
+	vector<bool> vis(n, false);
+	if (n) dfsCheckConnected(vis, 0);
+	for (int i = 0; i < n; i++)
+		if (!vis[i]) return false;
+	return true;
+}
+
 bool GraphGen::dfsCheckBipartite(int i, int c, vector<int>& cor) {
 	cor[i] = c;
 	for (auto j : simAdj[i]) {
@@ -241,6 +255,7 @@ bool GraphGen::dfsCheckTree(int i, int last, vector<int>& vis) {
 
 // O(n+m)
 bool GraphGen::isTree() {
+	if (!isConnected()) return false;
 	vector<int> vis(n, 0);
 	for (int i = 0; i < n; i++)
 		if (!vis[i] and !dfsCheckTree(i, i, vis)) return false;

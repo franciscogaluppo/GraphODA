@@ -80,6 +80,10 @@ class GraphGen {
 	/// Retorna se dois vértices se alcançam.
 	bool reaches(int, int);
 
+	///
+	/// Retorna se o grafo é conexo
+	bool isConnected();
+
 	// reconhecedores
 	///
 	/// Retorna se o grafo é bipartido.
@@ -178,6 +182,12 @@ class GraphGen {
 	///
 	/// Complexidade: O()
 	bool dfsReaches(vector<bool> &, int, int);
+
+	// TODO
+	/// .
+	///
+	/// Complexidade: O()
+	void dfsCheckConnected(vector<bool> &, int);
 
 	// TODO
 	/// .

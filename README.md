@@ -115,3 +115,21 @@ Encontra os vértices cujas remoções aumentam o número de componentes conexas
 >>> var > bridges
 ```
 Encontra as arestas cujas remoções aumentam o número de componentes conexas do grafo.
+
+#### topoSort
+```
+>>> var > topoSort
+```
+Encontra uma ordenação topológica dos vértices do grafo.
+
+#### center
+```
+>>> var > center
+```
+Computa o centro da árvore *var*.
+
+#### diameter
+```
+>>> var > diameter
+```
+computa o diâmetro da árvore *var*.

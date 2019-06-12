@@ -21,6 +21,21 @@ class Tree : public Chordal {
 	///
 	/// Construtor de árvores por GraphGen.
 	Tree(GraphGen &);
+
+	///
+	/// Computa centro da árvore.
+	int center();
+
+	///
+	/// Computa diâmetro da árvore.
+	int diameter();
+
+	///
+	/// Computa centroid da árvore.
+	int centroid();
+
+  private:
+	pair<int, vector<int> > bfsCenter(int);
 };
 
 ///

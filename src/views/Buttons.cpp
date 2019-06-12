@@ -37,6 +37,12 @@ void pontes(GraphCanvas *GC) {
 		if (id.count(j)) GC->GD.colorAresta[id[j]] = 1;
 	}
 }
+
+void center(GraphCanvas *GC) {
+	for (int i = 0; i < GC->GD.G.getN(); i++) GC->GD.color[i] = 0;
+	Tree T(GC->GD.G);
+	GC->GD.color[T.center()] = 1;
+}
 } // namespace functions
 
 namespace buttons {
@@ -58,7 +64,10 @@ void chordal(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
 
 void dag(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {}
 
-void tree(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {}
+void tree(tgui::Gui &gui, vector<tgui::Button::Ptr> &v) {
+	vector<int> op = {5};
+	for (int i : op) gui.add(v[i]);
+}
 
 void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	auto color = tgui::Button::create("Colore");
@@ -90,6 +99,12 @@ void init(vector<tgui::Button::Ptr> &v, GraphCanvas &GC) {
 	pontes->setSize(75.f, 20.f);
 	pontes->setPosition(780.f, 600.f);
 	pontes->connect("pressed", functions::pontes, &GC);
+
+	auto center = tgui::Button::create("Centro");
+	v.push_back(center);
+	center->setSize(75.f, 20.f);
+	center->setPosition(780.f, 630.f);
+	center->connect("pressed", functions::center, &GC);
 }
 
 void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC,
@@ -106,10 +121,12 @@ void update(tgui::Gui &gui, vector<tgui::Button::Ptr> &botoes, GraphCanvas &GC,
 		tipoGrafo = 0;
 
 	clear(gui, botoes);
-	general(gui, botoes);
-	if (GC.GD.G.isBipartite()) bipartite(gui, botoes);
-	if (GC.GD.G.isChordal()) chordal(gui, botoes);
-	if (GC.GD.G.isDag()) dag(gui, botoes);
-	if (GC.GD.G.isTree()) tree(gui, botoes);
+	if (GC.GD.G.getN()) {
+		general(gui, botoes);
+		if (GC.GD.G.isBipartite()) bipartite(gui, botoes);
+		if (GC.GD.G.isChordal()) chordal(gui, botoes);
+		if (GC.GD.G.isDag()) dag(gui, botoes);
+		if (GC.GD.G.isTree()) tree(gui, botoes);
+	}
 }
 } // namespace buttons
