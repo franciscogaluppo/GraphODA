@@ -54,3 +54,5 @@ cmake-build-debug
 *.cbp
 
 build
+coverage
+docs/doxygen
