@@ -30,118 +30,150 @@ class GraphGen {
 
 	///
 	/// Construtor para o grafo por número de vértices.
+	/// @param Número de vértices.
 	GraphGen(int);
 
 	///
 	/// Construtor para o grafo por número de vértices e seus rótulos.
+	/// @param Número de vértices.
+	/// @param Lista de rótulos.
 	GraphGen(int, vector<string> &);
 
 	// gets
 	///
 	/// Retorna o número de vértices
+	/// @return Número de vértices do grafo.
 	int getN();
 
 	///
 	/// Retorn o número de arestas.
+	/// @return Número de arestas do grafo.
 	int getM();
 
 	///
 	/// Retorna a lista de adjacência direcionada.
+	/// @return Lista de adjacência direcionada do grafo.
 	vector<vector<pair<int, int>>> getAdj();
 
 	///
 	/// Retorn a lista de adjacência não direcionada.
+	/// @return Lista de adjacêncai não direcionada do grafo.
 	vector<vector<pair<int, int>>> getSimAdj();
 
 	///
 	/// Retorna a lista das arestas.
+	/// @return Lista com as arestas do grafo.
 	vector<pair<int, int>> getEdges();
 
 	///
 	/// Retorna a lista de pesos das arestas.
+	/// @return lista com os pesos do grafo.
 	vector<int> getPesos();
 
 	///
-	/// Retorna .
+	/// Retorna a matriz de adjacência.
+	/// @return Matriz de adjacência do grafo.
 	vector<vector<int>> getMatrix();
 
 	///
-	/// Retorna .
+	/// Retorna a matriz de adjacência simétrica.
+	/// @return Matriz de adjacência simétrica.
 	vector<vector<int>> getSimMatrix();
 
 	// auxiliares
 	///
 	/// Retorna se o grafo possui arestas com pesos.
+	/// @return bool informando se o grafo possui peso nas arestas.
 	bool isWeighted();
 
 	///
 	/// Retorna se o grafo possui arestas com pesos negativos.
+	/// @return bool informando se o grafo possui peso negativo.
 	bool hasNegativeWeight();
 
 	///
 	/// Retorna se dois vértices se alcançam.
+	/// @param Vértice a.
+	/// @param Vértice b.
+	/// @return bool informando se o vértice 'a' alcança o vértice 'b'.
 	bool reaches(int, int);
 
 	///
-	/// Retorna se o grafo é conexo
+	/// Retorna se o grafo é conexo.
+	/// @return bool informando se o grafo é conexo.
 	bool isConnected();
 
 	// reconhecedores
 	///
 	/// Retorna se o grafo é bipartido.
+	/// @return bool informando se o grafo é bipartido.
 	bool isBipartite();
 
 	///
 	/// Retorna se o grafo é cordal.
+	/// @return bool informando se o grafo é cordal.
 	bool isChordal();
 
 	///
 	/// Retorna se o grafo é direcionado acíclico.
+	/// @return bool informando se o grafo é DAG.
 	bool isDag();
 
 	///
 	/// Retorna se o grafo é uma árvore.
+	/// @return bool informando se o grafo é uma árvore.
 	bool isTree();
 
 	// algoritmos
-	/// Retorna uma lista com a componente fortemente conexa de cada vértices.
+	/// Retorna uma lista com a componente fortemente conexa de cada vértice.
 	///
 	/// Complexidade: O(n + m)
+	/// @return Lista tal que na posição 'i', possui o índice da componente
+	/// fortemente conexa do vértice 'i'.
 	vector<int> scc();
 
 	/// Retorna o menor caminho entre dois vértices.
 	///
 	/// Complexidade: se todos os pesos forem 1, linear. Se não houver peso
 	/// negativo, O(m log(n)). Caso contrário, O(n*m).
+	/// @param Vértice 'a'.
+	/// @param Vértice 'b'.
+	/// @return Comprimento do camínho mínimo de 'a' até 'b'.
 	long long shortestPath(int, int);
 
 	// TODO
 	/// Retorna uma lista com a cor de cada vértice em uma coloração mínima.
 	///
-	/// Complexidade: O()
+	/// Complexidade: O(nlog(n) + m) quando cordal
+	/// @return Lista com a cor de cada vértice.
 	virtual vector<int> coloring();
 
 	/// Retorna uma lista com a cor de cada vértice em uma coloração gulosa na
 	/// ordem dos vértices.
 	///
 	/// Complexidade: O(n + m)
+	/// @return Lista com a cor de cada vértice.
 	vector<int> greedyColoring();
 
 	/// Retorna uma lista com a cor de cada vértice em uma coloração gulosa para
 	/// uma dada ordem dos vértices.
 	///
 	/// Complexidade: O(n + m)
+	/// @param Ordem para avaliação do algoritmo guloso.
+	/// @return Lista com a cor de cada vértice.
 	vector<int> greedyColoring(vector<int>);
 
 	/// Retorna um vetor de booleanos que informa se cada vértice é um ponto de
 	/// articulação
 	///
 	/// Complexidade: O(n + m)
+	/// @return Lista informando se cada vértice é ponto de articulação ou não.
 	vector<bool> artPoints();
 
 	/// Retorna um vetor de booleanos que informa se cada aresta é uma ponte
 	///
 	/// Complexidade: O(n + m)
+	/// @return Lista com as arestas que são pontes no grafo.
 	vector<pair<int, int>> bridges();
 
   protected:
@@ -237,10 +269,13 @@ class GraphGen {
 /// Classe de exceções de grafos.
 class GraphException : public exception {
   public:
+	///
+	/// Construtor de exceções de grafos.
 	GraphException() {}
 
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return Mensagem de erro.
 	const char *what() const throw() { return "Graph Exception"; }
 };
 
@@ -250,12 +285,14 @@ class GraphNoPathException : public GraphException {
   public:
 	/// Construtor para a exceção de
 	/// ausência de caminho entre dois vértices
+	/// @param Vértices que não se alcançam.
 	GraphNoPathException(int a, int b) {
 		msg = "no path from " + to_string(a) + " to " + to_string(b);
 	}
 
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return Mensagem de erro.
 	const char *what() const throw() { return msg.c_str(); }
 
   private:
@@ -266,10 +303,13 @@ class GraphNoPathException : public GraphException {
 /// Classe de exceções para ciclos negativos em caminhos mínimos.
 class GraphNegativeCycleException : public GraphException {
   public:
+	///
+	/// Construtor para exceção de ciclos negativos.
 	GraphNegativeCycleException() {}
 
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return Mensagem de erro.
 	const char *what() const throw() {
 		return "negative cycle found; shortest path is undefined";
 	}
@@ -279,10 +319,13 @@ class GraphNegativeCycleException : public GraphException {
 /// Classe de exceções para ordenações de vértices fora do domínio.
 class GraphOrderingException : public GraphException {
   public:
+	///
+	/// Construtor para exceção de ordenação inválida.
 	GraphOrderingException() {}
 
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return Mensagem de erro.
 	const char *what() const throw() { return "not a valid vertex ordering"; }
 };
 

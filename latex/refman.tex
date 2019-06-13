@@ -1,9 +1,10 @@
-\let\mypdfximage\pdfximage\def\pdfximage{\immediate\mypdfximage}\documentclass[twoside]{book}
+\documentclass[twoside]{book}
 
 % Packages required by doxygen
 \usepackage{fixltx2e}
 \usepackage{calc}
 \usepackage{doxygen}
+\usepackage[export]{adjustbox} % also loads graphicx
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage{makeidx}
@@ -13,11 +14,9 @@
 \usepackage{textcomp}
 \usepackage[nointegrals]{wasysym}
 \usepackage[table]{xcolor}
-\usepackage{ifpdf,ifxetex}
 
 % NLS support packages
-\usepackage[portuges]{babel}
-
+Portuguese
 % Font selection
 \usepackage[T1]{fontenc}
 \usepackage[scaled=.90]{helvet}
@@ -35,13 +34,6 @@
 }
 \newcommand{\+}{\discretionary{\mbox{\scriptsize$\hookleftarrow$}}{}{}}
 
-% Arguments of doxygenemoji:
-% 1) ':<text>:' form of the emoji, already "LaTeX"-escaped
-% 2) file with the name of the emoji without the .png extension
-% in case image exist use this otherwise use the ':<text>:' form
-\newcommand{\doxygenemoji}[2]{%
-  \IfFileExists{./#2.png}{\raisebox{-0.1em}{\includegraphics[height=0.9em]{./#2.png}}}{#1}%
-}
 % Page & text layout
 \usepackage{geometry}
 \geometry{%
@@ -56,9 +48,7 @@
 \hbadness=750
 \setlength{\emergencystretch}{15pt}
 \setlength{\parindent}{0cm}
-\newcommand{\doxynormalparskip}{\setlength{\parskip}{3ex plus 2ex minus 2ex}}
-\newcommand{\doxytocparskip}{\setlength{\parskip}{1ex plus 0ex minus 0ex}}
-\doxynormalparskip
+\setlength{\parskip}{3ex plus 2ex minus 2ex}
 \makeatletter
 \renewcommand{\paragraph}{%
   \@startsection{paragraph}{4}{0ex}{-1.0ex}{1.0ex}{%
@@ -102,22 +92,13 @@
 \setcounter{secnumdepth}{5}
 \makeindex
 
-\usepackage{newunicodechar}
-  \newunicodechar{⁻}{${}^{-}$}% Superscript minus
-  \newunicodechar{²}{${}^{2}$}% Superscript two
-  \newunicodechar{³}{${}^{3}$}% Superscript three
-
 % Hyperlinks (required, but should be loaded last)
+\usepackage{ifpdf}
 \ifpdf
   \usepackage[pdftex,pagebackref=true]{hyperref}
 \else
-  \ifxetex
-    \usepackage[pagebackref=true]{hyperref}
-  \else
-    \usepackage[ps2pdf,pagebackref=true]{hyperref}
-  \fi
+  \usepackage[ps2pdf,pagebackref=true]{hyperref}
 \fi
-
 \hypersetup{%
   colorlinks=true,%
   linkcolor=blue,%
@@ -133,9 +114,6 @@
 \usepackage{caption}
 \captionsetup{labelsep=space,justification=centering,font={bf},singlelinecheck=off,skip=4pt,position=top}
 
-\usepackage{etoc}
-\etocsettocstyle{\doxytocparskip}{\doxynormalparskip}
-\renewcommand{\numberline}[1]{#1~}
 %===== C O N T E N T S =====
 
 \begin{document}
@@ -151,7 +129,7 @@
 \begin{center}%
 {\Large Graph\+O\+DA }\\
 \vspace*{1cm}
-{\large Gerado por Doxygen 1.8.16}\\
+{\large Gerado por Doxygen 1.8.13}\\
 \end{center}
 \end{titlepage}
 \clearemptydoublepage
@@ -217,7 +195,7 @@
 \newpage
 \phantomsection
 \clearemptydoublepage
-\addcontentsline{toc}{chapter}{\indexname}
+\addcontentsline{toc}{chapter}{Índice}
 \printindex
 
 \end{document}

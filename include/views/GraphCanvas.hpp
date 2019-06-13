@@ -46,15 +46,21 @@ class GraphCanvas {
 
 	///
 	/// Construtor da classe.
+	/// @param Janela.
+	/// @param Fonte.
+	/// @param X e Y que delimitam o canvas.
+	/// @param raio do vértice.
 	GraphCanvas(sf::RenderWindow &, sf::Font &, int, int, int);
 
 	///
 	/// Define o grafo a ser representado.
+	/// @param Grafo a ser representado.
 	void setGraph(Graph);
 
 	///
 	/// Trata o clique do usuário, descobrindo se ele clicou num vértice,
 	/// aresta, etc.
+	/// @return bool que informa se algo foi alterado no canvas.
 	bool handleClique();
 
 	///
@@ -100,10 +106,12 @@ class FileNotFoundException : public exception {
   public:
 	///
 	/// Construtor da exceção.
+	/// @param Nome do arquivo.
 	FileNotFoundException(string f) { msg = "coudn't read file: " + f; }
 
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return Mensagem de erro.
 	const char *what() const throw() { return msg.c_str(); }
 
   private:

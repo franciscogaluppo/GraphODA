@@ -16,14 +16,17 @@ class Dag : public GraphGen {
 
 	///
 	/// Construtor de DAGs por número de vértices.
+	/// @param Número de vértices.
 	Dag(int);
 
 	///
 	/// Construtor de DAGs por por GraphGen.
+	/// @param Grafo a ser convertido em DAG.
 	Dag(GraphGen &);
 
 	///
-	/// Computa ordenacao topologica
+	/// Computa ordenação topológica.
+	/// @return Ordenação topológica dos vértices.
 	vector<int> topoSort();
 
   private:
@@ -40,6 +43,7 @@ class DagConstructorException : public GraphException {
 
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return Mensagem de erro.
 	const char *what() const throw() {
 		return "construcor parameter is not a dag";
 	}

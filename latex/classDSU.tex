@@ -1,49 +1,79 @@
-\hypertarget{classDSU}{}\doxysection{Referência à classe D\+SU}
-\label{classDSU}\index{DSU@{DSU}}
+\hypertarget{classDSU}{}\section{Referência à classe D\+SU}
+\label{classDSU}\index{D\+SU@{D\+SU}}
 
 
-Classe para Disjoint Set Union (\mbox{\hyperlink{classDSU}{D\+SU}}).  
+Classe para Disjoint Set Union (\hyperlink{classDSU}{D\+SU}).  
 
 
 
 
 {\ttfamily \#include $<$D\+S\+U.\+hpp$>$}
 
-\doxysubsection*{Membros públicos}
+\subsection*{Membros públicos}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classDSU_a537ec9947d526dd1ac2acc3bfe1bf8b3}\label{classDSU_a537ec9947d526dd1ac2acc3bfe1bf8b3}} 
-\mbox{\hyperlink{classDSU_a537ec9947d526dd1ac2acc3bfe1bf8b3}{D\+SU}} ()
-\begin{DoxyCompactList}\small\item\em Construtor para \mbox{\hyperlink{classDSU}{D\+SU}} vazio. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classDSU_ab4ea0f237eac81455e80443b3c060b40}\label{classDSU_ab4ea0f237eac81455e80443b3c060b40}} 
-\mbox{\hyperlink{classDSU_ab4ea0f237eac81455e80443b3c060b40}{D\+SU}} (int)
-\begin{DoxyCompactList}\small\item\em Construtor para \mbox{\hyperlink{classDSU}{D\+SU}} pelo número de elementos. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{classDSU_a3915dd627bd9cd0abc6f83e154944961}{find}} (int)
+\hyperlink{classDSU_a537ec9947d526dd1ac2acc3bfe1bf8b3}{D\+SU} ()
+\begin{DoxyCompactList}\small\item\em Construtor para \hyperlink{classDSU}{D\+SU} vazio. \end{DoxyCompactList}\item 
+\hyperlink{classDSU_ab4ea0f237eac81455e80443b3c060b40}{D\+SU} (int)
 \item 
-void \mbox{\hyperlink{classDSU_a69728d8ed8c2262f76320ca7238e2f1f}{une}} (int, int)
+int \hyperlink{classDSU_a3915dd627bd9cd0abc6f83e154944961}{find} (int)
+\item 
+void \hyperlink{classDSU_a69728d8ed8c2262f76320ca7238e2f1f}{une} (int, int)
 \end{DoxyCompactItemize}
 
 
-\doxysubsection{Descrição detalhada}
-Classe para Disjoint Set Union (\mbox{\hyperlink{classDSU}{D\+SU}}). 
+\subsection{Descrição detalhada}
+Classe para Disjoint Set Union (\hyperlink{classDSU}{D\+SU}). 
 
-\doxysubsection{Documentação dos métodos}
+\subsection{Documentação dos Construtores \& Destrutor}
+\mbox{\Hypertarget{classDSU_ab4ea0f237eac81455e80443b3c060b40}\label{classDSU_ab4ea0f237eac81455e80443b3c060b40}} 
+\index{D\+SU@{D\+SU}!D\+SU@{D\+SU}}
+\index{D\+SU@{D\+SU}!D\+SU@{D\+SU}}
+\subsubsection{\texorpdfstring{D\+S\+U()}{DSU()}}
+{\footnotesize\ttfamily D\+S\+U\+::\+D\+SU (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
+
+Construtor para \hyperlink{classDSU}{D\+SU} pelo número de elementos. 
+\begin{DoxyParams}{Parâmetros}
+{\em Número} & de elementos \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentação dos métodos}
 \mbox{\Hypertarget{classDSU_a3915dd627bd9cd0abc6f83e154944961}\label{classDSU_a3915dd627bd9cd0abc6f83e154944961}} 
-\index{DSU@{DSU}!find@{find}}
-\index{find@{find}!DSU@{DSU}}
-\doxysubsubsection{\texorpdfstring{find()}{find()}}
+\index{D\+SU@{D\+SU}!find@{find}}
+\index{find@{find}!D\+SU@{D\+SU}}
+\subsubsection{\texorpdfstring{find()}{find()}}
 {\footnotesize\ttfamily int D\+S\+U\+::find (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
 
-Encontra representante do conjunto ao qual um elemento pretence. Complexidade\+: O(inv\+Ackermann(n)) param inteiro que representa um elemento \mbox{\Hypertarget{classDSU_a69728d8ed8c2262f76320ca7238e2f1f}\label{classDSU_a69728d8ed8c2262f76320ca7238e2f1f}} 
-\index{DSU@{DSU}!une@{une}}
-\index{une@{une}!DSU@{DSU}}
-\doxysubsubsection{\texorpdfstring{une()}{une()}}
+Encontra representante do conjunto ao qual um elemento pretence.
+
+Complexidade\+: O(inv\+Ackermann(n)) 
+\begin{DoxyParams}{Parâmetros}
+{\em Elemento.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Representante do conjunto. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classDSU_a69728d8ed8c2262f76320ca7238e2f1f}\label{classDSU_a69728d8ed8c2262f76320ca7238e2f1f}} 
+\index{D\+SU@{D\+SU}!une@{une}}
+\index{une@{une}!D\+SU@{D\+SU}}
+\subsubsection{\texorpdfstring{une()}{une()}}
 {\footnotesize\ttfamily void D\+S\+U\+::une (\begin{DoxyParamCaption}\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
 
 Une dois conjuntos a partir de elementos dos mesmos.
 
 Complexidade\+: O(inv\+Ackermann(n)) 
+\begin{DoxyParams}{Parâmetros}
+{\em Elemento} & 1 \\
+\hline
+{\em Elemento} & 2 \\
+\hline
+\end{DoxyParams}
+
 
 A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
 \item 
-include/models/data\+Structures/\mbox{\hyperlink{DSU_8hpp}{D\+S\+U.\+hpp}}\end{DoxyCompactItemize}
+include/models/data\+Structures/\hyperlink{DSU_8hpp}{D\+S\+U.\+hpp}\end{DoxyCompactItemize}

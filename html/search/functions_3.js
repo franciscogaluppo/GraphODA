@@ -6,6 +6,7 @@ var searchData=
   ['diameter',['diameter',['../classTree.html#a8a296a740609d29e4ff991549b7f8f92',1,'Tree']]],
   ['display',['display',['../classGraphCanvas.html#a236523bfec7a55f8ea70c09fdb3590c3',1,'GraphCanvas']]],
   ['dsu',['DSU',['../classDSU.html#a537ec9947d526dd1ac2acc3bfe1bf8b3',1,'DSU::DSU()'],['../classDSU.html#ab4ea0f237eac81455e80443b3c060b40',1,'DSU::DSU(int)']]],
+  ['dsuexception',['DSUException',['../classDSUException.html#a7b5b0014b41c73335cdb76b5a48be47a',1,'DSUException']]],
   ['dsunegativeconstructorparameterexception',['DSUNegativeConstructorParameterException',['../classDSUNegativeConstructorParameterException.html#a4d71581d8012d2d39ded7b6e240bc7e5',1,'DSUNegativeConstructorParameterException']]],
   ['dsuvalueoutofboundsexception',['DSUValueOutOfBoundsException',['../classDSUValueOutOfBoundsException.html#ace15ec35fac30116b21fe713f59f2943',1,'DSUValueOutOfBoundsException']]]
 ];

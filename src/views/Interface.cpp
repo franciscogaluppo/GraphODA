@@ -68,10 +68,9 @@ void Help() {
 	auto texto = tgui::MessageBox::create();
 	sf::String tipo("ajuda");
 	texto->setText(tipo);
-	
+
 	jan->add(texto);
 	gui.add(jan);
-
 }
 
 void mudaDir() { (GC.GD.temDir) ^= 1; }

@@ -1,0 +1,75 @@
+\hypertarget{classDag}{}\section{Referência à classe Dag}
+\label{classDag}\index{Dag@{Dag}}
+
+
+Classe para grafos direcionados acíclicos.  
+
+
+
+
+{\ttfamily \#include $<$Dag.\+hpp$>$}
+
+Diagrama de heranças da classe Dag\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classDag}
+\end{center}
+\end{figure}
+\subsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classDag_a9389de85348f50a4cad1681d5d573e12}\label{classDag_a9389de85348f50a4cad1681d5d573e12}} 
+\hyperlink{classDag_a9389de85348f50a4cad1681d5d573e12}{Dag} ()
+\begin{DoxyCompactList}\small\item\em Construtor de D\+A\+Gs vazios. \end{DoxyCompactList}\item 
+\hyperlink{classDag_a60039050421d45ed24d5fff16dd0b4d9}{Dag} (int)
+\item 
+\hyperlink{classDag_a7ac03b3c8b13d4a85956eec57a1b8cd3}{Dag} (\hyperlink{classGraphGen}{Graph\+Gen} \&)
+\item 
+vector$<$ int $>$ \hyperlink{classDag_ac2f36e91443cfeea16640a81865110d2}{topo\+Sort} ()
+\end{DoxyCompactItemize}
+\subsection*{Outros membros herdados}
+
+
+\subsection{Descrição detalhada}
+Classe para grafos direcionados acíclicos. 
+
+\subsection{Documentação dos Construtores \& Destrutor}
+\mbox{\Hypertarget{classDag_a60039050421d45ed24d5fff16dd0b4d9}\label{classDag_a60039050421d45ed24d5fff16dd0b4d9}} 
+\index{Dag@{Dag}!Dag@{Dag}}
+\index{Dag@{Dag}!Dag@{Dag}}
+\subsubsection{\texorpdfstring{Dag()}{Dag()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Dag\+::\+Dag (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
+
+Construtor de D\+A\+Gs por número de vértices. 
+\begin{DoxyParams}{Parâmetros}
+{\em Número} & de vértices. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classDag_a7ac03b3c8b13d4a85956eec57a1b8cd3}\label{classDag_a7ac03b3c8b13d4a85956eec57a1b8cd3}} 
+\index{Dag@{Dag}!Dag@{Dag}}
+\index{Dag@{Dag}!Dag@{Dag}}
+\subsubsection{\texorpdfstring{Dag()}{Dag()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Dag\+::\+Dag (\begin{DoxyParamCaption}\item[{\hyperlink{classGraphGen}{Graph\+Gen} \&}]{ }\end{DoxyParamCaption})}
+
+Construtor de D\+A\+Gs por por \hyperlink{classGraphGen}{Graph\+Gen}. 
+\begin{DoxyParams}{Parâmetros}
+{\em Grafo} & a ser convertido em D\+AG. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentação dos métodos}
+\mbox{\Hypertarget{classDag_ac2f36e91443cfeea16640a81865110d2}\label{classDag_ac2f36e91443cfeea16640a81865110d2}} 
+\index{Dag@{Dag}!topo\+Sort@{topo\+Sort}}
+\index{topo\+Sort@{topo\+Sort}!Dag@{Dag}}
+\subsubsection{\texorpdfstring{topo\+Sort()}{topoSort()}}
+{\footnotesize\ttfamily vector$<$int$>$ Dag\+::topo\+Sort (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Computa ordenação topológica. \begin{DoxyReturn}{Retorna}
+Ordenação topológica dos vértices. 
+\end{DoxyReturn}
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+include/models/graph/\hyperlink{Dag_8hpp}{Dag.\+hpp}\end{DoxyCompactItemize}
