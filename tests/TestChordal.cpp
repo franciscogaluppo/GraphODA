@@ -28,7 +28,7 @@ TEST_CASE("Teste Cordal - Número cromático #4") {
 }
 
 TEST_CASE("Teste Cordal - Número cromático #5") {
-	Graph g = lerGrafoArquivo("../grafos/grafo10");
+	Graph g = lerGrafoArquivo("../grafos/grafo10.txt");
 	Chordal G(g);
 	CHECK(G.chromaticNumber() == 3);
 }
@@ -45,6 +45,13 @@ TEST_CASE("Teste Cordal - Número cromático #7") {
 	CHECK(G.chromaticNumber() == 5);
 }
 
+TEST_CASE("Teste Cordal - Construtor numérico")
+{
+	Chordal G(10);
+	CHECK(G.getN() == 10);
+}
+
+/*
 TEST_CASE("Teste Cordal - Construtor #1") {
 	GraphGen G = lerGrafoArquivo("../grafos/grafo2.txt");
 	CHECK_THROWS_AS(Chordal(G), ChordalConstructorException);
@@ -84,3 +91,4 @@ TEST_CASE("Teste Cordal - Construtor #8") {
 	GraphGen G = lerGrafoArquivo("../grafos/grafo15.txt");
 	CHECK_THROWS_AS(Chordal(G), ChordalConstructorException);
 }
+*/

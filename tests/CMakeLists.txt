@@ -5,7 +5,14 @@ add_library(doctest INTERFACE)
 target_include_directories(doctest INTERFACE "${TESTS_FOLDER}/doctest.h")
 
 set(TEST_FILES
-        "${TESTS_FOLDER}/TestChordal.cpp")
+	"${TESTS_FOLDER}/TestChordal.cpp"
+	"${TESTS_FOLDER}/TestGraph.cpp"
+	"${TESTS_FOLDER}/TestGraphGen.cpp"
+	"${TESTS_FOLDER}/TestDag.cpp"
+	"${TESTS_FOLDER}/TestBipartite.cpp"
+	"${TESTS_FOLDER}/TestInterface.cpp"
+	"${TESTS_FOLDER}/TestVector.cpp"
+    "${TESTS_FOLDER}/TestTree.cpp")
 
 # Make test executable
 add_executable(tests $<TARGET_OBJECTS:common> ${TEST_FILES} "${TESTS_FOLDER}/main.cpp")

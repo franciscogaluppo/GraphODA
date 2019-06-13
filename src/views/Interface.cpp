@@ -429,6 +429,11 @@ Graph display(int X, int Y, Graph G) {
 
 		gui.draw();
 
+		// Checa se a tela não tem tamanho zero
+		if(X==1 and Y==1)
+			janela.close();
+
+
 		// Termina iteração e atualiza janela
 		janela.display();
 	}
