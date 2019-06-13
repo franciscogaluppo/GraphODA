@@ -16,10 +16,12 @@ class Bipartite : public GraphGen {
 
 	///
 	/// Construtor para o grafo bipartido por número de vértices.
+	/// @param Número de vértices.
 	Bipartite(int);
 
 	///
 	/// Construtor para o grafo bipartido por GraphGen.
+	/// @param Grafo a ser convertido em Bipartite.
 	Bipartite(GraphGen &);
 };
 
@@ -33,6 +35,7 @@ class BipartiteConstructorException : public GraphException {
 
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return Mensagem de erro.
 	const char *what() const throw() {
 		return "constructor paramer is not bipartite";
 	}

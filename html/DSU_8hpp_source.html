@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GraphODA: Código-Fonte de include/models/dataStructures/DSU.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GraphODA
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_828b612f8450ccb3091aade92090c8e3.html">models</a></li><li class="navelem"><a class="el" href="dir_d7e4c84f164ce93e2900c2bafca5fbf0.html">dataStructures</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">DSU.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="DSU_8hpp.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef DSUH</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define DSUH</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">using namespace </span><a class="code" href="namespacestd.html">std</a>;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classDSU.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDSU.html">DSU</a> {</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classDSU.html">DSU</a>();</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classDSU.html">DSU</a>(<span class="keywordtype">int</span>);</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">int</span> find(<span class="keywordtype">int</span>);</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> une(<span class="keywordtype">int</span>, <span class="keywordtype">int</span>);</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">private</span>:</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">int</span> n;</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    vector&lt;int&gt; v;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    vector&lt;int&gt; sz;</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;};</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div><div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classDSUException.html">   49</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDSUException.html">DSUException</a> : <span class="keyword">public</span> exception {</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classDSUException.html#a7b5b0014b41c73335cdb76b5a48be47a">   53</a></span>&#160;    <a class="code" href="classDSUException.html#a7b5b0014b41c73335cdb76b5a48be47a">DSUException</a>() {}</div><div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classDSUException.html#a997fa79b5a7cd55cc30792da2303ea3a">   57</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classDSUException.html#a997fa79b5a7cd55cc30792da2303ea3a">what</a>() <span class="keyword">const</span> throw() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;DSU Exception&quot;</span>; }</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;};</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div><div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classDSUNegativeConstructorParameterException.html">   62</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDSUNegativeConstructorParameterException.html">DSUNegativeConstructorParameterException</a> : <span class="keyword">public</span> <a class="code" href="classDSUException.html">DSUException</a> {</div><div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classDSUNegativeConstructorParameterException.html#a4d71581d8012d2d39ded7b6e240bc7e5">   67</a></span>&#160;    <a class="code" href="classDSUNegativeConstructorParameterException.html#a4d71581d8012d2d39ded7b6e240bc7e5">DSUNegativeConstructorParameterException</a>(<span class="keywordtype">int</span> n) {</div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        msg = <span class="stringliteral">&quot;constructor parameter cannot be negative; got &quot;</span> + to_string(n);</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    }</div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div><div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classDSUNegativeConstructorParameterException.html#a16a3dcf8c0aeca0c1158ee18dd2a0c0f">   73</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classDSUNegativeConstructorParameterException.html#a16a3dcf8c0aeca0c1158ee18dd2a0c0f">what</a>() <span class="keyword">const</span> throw() { <span class="keywordflow">return</span> msg.c_str(); }</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">private</span>:</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">string</span> msg;</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;};</div><div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div><div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classDSUValueOutOfBoundsException.html">   81</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDSUValueOutOfBoundsException.html">DSUValueOutOfBoundsException</a> : <span class="keyword">public</span> <a class="code" href="classDSUException.html">DSUException</a> {</div><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classDSUValueOutOfBoundsException.html#ace15ec35fac30116b21fe713f59f2943">   86</a></span>&#160;    <a class="code" href="classDSUValueOutOfBoundsException.html#ace15ec35fac30116b21fe713f59f2943">DSUValueOutOfBoundsException</a>(<span class="keywordtype">int</span> n) {</div><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        msg = <span class="stringliteral">&quot;value out of bounds: &quot;</span> + to_string(n);</div><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div><div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="classDSUValueOutOfBoundsException.html#a20697d2be588c4f19046c9f468675bde">   91</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classDSUValueOutOfBoundsException.html#a20697d2be588c4f19046c9f468675bde">what</a>() <span class="keyword">const</span> throw() { <span class="keywordflow">return</span> msg.c_str(); }</div><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div><div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keyword">private</span>:</div><div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">string</span> msg;</div><div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;};</div><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div><div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classDSUNegativeConstructorParameterException_html"><div class="ttname"><a href="classDSUNegativeConstructorParameterException.html">DSUNegativeConstructorParameterException</a></div><div class="ttdoc">Classe de exceções de parâmetro negativo no construtor. </div><div class="ttdef"><b>Definition:</b> DSU.hpp:62</div></div>
+<div class="ttc" id="classDSUValueOutOfBoundsException_html_ace15ec35fac30116b21fe713f59f2943"><div class="ttname"><a href="classDSUValueOutOfBoundsException.html#ace15ec35fac30116b21fe713f59f2943">DSUValueOutOfBoundsException::DSUValueOutOfBoundsException</a></div><div class="ttdeci">DSUValueOutOfBoundsException(int n)</div><div class="ttdef"><b>Definition:</b> DSU.hpp:86</div></div>
+<div class="ttc" id="namespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
+<div class="ttc" id="classDSUNegativeConstructorParameterException_html_a4d71581d8012d2d39ded7b6e240bc7e5"><div class="ttname"><a href="classDSUNegativeConstructorParameterException.html#a4d71581d8012d2d39ded7b6e240bc7e5">DSUNegativeConstructorParameterException::DSUNegativeConstructorParameterException</a></div><div class="ttdeci">DSUNegativeConstructorParameterException(int n)</div><div class="ttdef"><b>Definition:</b> DSU.hpp:67</div></div>
+<div class="ttc" id="classDSUValueOutOfBoundsException_html"><div class="ttname"><a href="classDSUValueOutOfBoundsException.html">DSUValueOutOfBoundsException</a></div><div class="ttdoc">Classe de exceções de valor fora do range válido. </div><div class="ttdef"><b>Definition:</b> DSU.hpp:81</div></div>
+<div class="ttc" id="classDSUNegativeConstructorParameterException_html_a16a3dcf8c0aeca0c1158ee18dd2a0c0f"><div class="ttname"><a href="classDSUNegativeConstructorParameterException.html#a16a3dcf8c0aeca0c1158ee18dd2a0c0f">DSUNegativeConstructorParameterException::what</a></div><div class="ttdeci">const char * what() const</div><div class="ttdef"><b>Definition:</b> DSU.hpp:73</div></div>
+<div class="ttc" id="classDSUException_html_a7b5b0014b41c73335cdb76b5a48be47a"><div class="ttname"><a href="classDSUException.html#a7b5b0014b41c73335cdb76b5a48be47a">DSUException::DSUException</a></div><div class="ttdeci">DSUException()</div><div class="ttdoc">Construtor para exceção do DSU. </div><div class="ttdef"><b>Definition:</b> DSU.hpp:53</div></div>
+<div class="ttc" id="classDSU_html"><div class="ttname"><a href="classDSU.html">DSU</a></div><div class="ttdoc">Classe para Disjoint Set Union (DSU). </div><div class="ttdef"><b>Definition:</b> DSU.hpp:14</div></div>
+<div class="ttc" id="classDSUException_html"><div class="ttname"><a href="classDSUException.html">DSUException</a></div><div class="ttdoc">Classe de exceções de DSU. </div><div class="ttdef"><b>Definition:</b> DSU.hpp:49</div></div>
+<div class="ttc" id="classDSUValueOutOfBoundsException_html_a20697d2be588c4f19046c9f468675bde"><div class="ttname"><a href="classDSUValueOutOfBoundsException.html#a20697d2be588c4f19046c9f468675bde">DSUValueOutOfBoundsException::what</a></div><div class="ttdeci">const char * what() const</div><div class="ttdef"><b>Definition:</b> DSU.hpp:91</div></div>
+<div class="ttc" id="classDSUException_html_a997fa79b5a7cd55cc30792da2303ea3a"><div class="ttname"><a href="classDSUException.html#a997fa79b5a7cd55cc30792da2303ea3a">DSUException::what</a></div><div class="ttdeci">const char * what() const</div><div class="ttdef"><b>Definition:</b> DSU.hpp:57</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GraphODA: Código-Fonte de include/models/graph/Dag.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GraphODA
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_828b612f8450ccb3091aade92090c8e3.html">models</a></li><li class="navelem"><a class="el" href="dir_022cd8acf27fee666b244c28c704a576.html">graph</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Dag.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Dag_8hpp.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef DAGH</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define DAGH</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="GraphGen_8hpp.html">GraphGen.hpp</a>&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classDag.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDag.html">Dag</a> : <span class="keyword">public</span> <a class="code" href="classGraphGen.html">GraphGen</a> {</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="classDag.html#a9389de85348f50a4cad1681d5d573e12">Dag</a>();</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classDag.html#a9389de85348f50a4cad1681d5d573e12">Dag</a>(<span class="keywordtype">int</span>);</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classDag.html#a9389de85348f50a4cad1681d5d573e12">Dag</a>(<a class="code" href="classGraphGen.html">GraphGen</a> &amp;);</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    vector&lt;int&gt; <a class="code" href="classDag.html#ac2f36e91443cfeea16640a81865110d2">topoSort</a>();</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keyword">private</span>:</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> topoSortDfs(vector&lt;bool&gt; &amp;, vector&lt;int&gt; &amp;, <span class="keywordtype">int</span>);</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;};</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div><div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classDagConstructorException.html">   38</a></span>&#160;<span class="keyword">class </span><a class="code" href="classDagConstructorException.html">DagConstructorException</a> : <span class="keyword">public</span> <a class="code" href="classGraphException.html">GraphException</a> {</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classDagConstructorException.html#a0c6e8ae8788ed7b42f73f4f1bfb0198f">   42</a></span>&#160;    <a class="code" href="classDagConstructorException.html#a0c6e8ae8788ed7b42f73f4f1bfb0198f">DagConstructorException</a>() {}</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div><div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classDagConstructorException.html#a3ad88177747ce6ef7273d1196258c7ba">   47</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classDagConstructorException.html#a3ad88177747ce6ef7273d1196258c7ba">what</a>() <span class="keyword">const</span> throw() {</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;construcor parameter is not a dag&quot;</span>;</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;};</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classDagConstructorException_html"><div class="ttname"><a href="classDagConstructorException.html">DagConstructorException</a></div><div class="ttdoc">Classe de exceção de construção de DAGs. </div><div class="ttdef"><b>Definition:</b> Dag.hpp:38</div></div>
+<div class="ttc" id="classDagConstructorException_html_a0c6e8ae8788ed7b42f73f4f1bfb0198f"><div class="ttname"><a href="classDagConstructorException.html#a0c6e8ae8788ed7b42f73f4f1bfb0198f">DagConstructorException::DagConstructorException</a></div><div class="ttdeci">DagConstructorException()</div><div class="ttdoc">Construtor da exceção. </div><div class="ttdef"><b>Definition:</b> Dag.hpp:42</div></div>
+<div class="ttc" id="classDag_html"><div class="ttname"><a href="classDag.html">Dag</a></div><div class="ttdoc">Classe para grafos direcionados acíclicos. </div><div class="ttdef"><b>Definition:</b> Dag.hpp:11</div></div>
+<div class="ttc" id="classGraphException_html"><div class="ttname"><a href="classGraphException.html">GraphException</a></div><div class="ttdoc">Classe de exceções de grafos. </div><div class="ttdef"><b>Definition:</b> GraphGen.hpp:270</div></div>
+<div class="ttc" id="classDagConstructorException_html_a3ad88177747ce6ef7273d1196258c7ba"><div class="ttname"><a href="classDagConstructorException.html#a3ad88177747ce6ef7273d1196258c7ba">DagConstructorException::what</a></div><div class="ttdeci">const char * what() const</div><div class="ttdef"><b>Definition:</b> Dag.hpp:47</div></div>
+<div class="ttc" id="classGraphGen_html"><div class="ttname"><a href="classGraphGen.html">GraphGen</a></div><div class="ttdoc">Classe para grafos gerais. </div><div class="ttdef"><b>Definition:</b> GraphGen.hpp:21</div></div>
+<div class="ttc" id="classDag_html_a9389de85348f50a4cad1681d5d573e12"><div class="ttname"><a href="classDag.html#a9389de85348f50a4cad1681d5d573e12">Dag::Dag</a></div><div class="ttdeci">Dag()</div><div class="ttdoc">Construtor de DAGs vazios. </div></div>
+<div class="ttc" id="GraphGen_8hpp_html"><div class="ttname"><a href="GraphGen_8hpp.html">GraphGen.hpp</a></div></div>
+<div class="ttc" id="classDag_html_ac2f36e91443cfeea16640a81865110d2"><div class="ttname"><a href="classDag.html#ac2f36e91443cfeea16640a81865110d2">Dag::topoSort</a></div><div class="ttdeci">vector&lt; int &gt; topoSort()</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GraphODA: Código-Fonte de include/models/graph/Tree.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GraphODA
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_828b612f8450ccb3091aade92090c8e3.html">models</a></li><li class="navelem"><a class="el" href="dir_022cd8acf27fee666b244c28c704a576.html">graph</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Tree.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Tree_8hpp.html">Ir para a documentação deste ficheiro.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef TREEH</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define TREEH</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Chordal_8hpp.html">Chordal.hpp</a>&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classTree.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTree.html">Tree</a> : <span class="keyword">public</span> <a class="code" href="classChordal.html">Chordal</a> {</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="classTree.html#ad376a7c639d857312f5de2ef47482f68">Tree</a>();</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classTree.html#ad376a7c639d857312f5de2ef47482f68">Tree</a>(<span class="keywordtype">int</span>);</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classTree.html#ad376a7c639d857312f5de2ef47482f68">Tree</a>(<a class="code" href="classGraphGen.html">GraphGen</a> &amp;);</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classTree.html#af13c3d7650185d8703c5483d3b24a5e5">center</a>();</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classTree.html#a8a296a740609d29e4ff991549b7f8f92">diameter</a>();</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classTree.html#a568a379c4a528faf192b2a97ac3a20bb">centroid</a>();</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">private</span>:</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    pair&lt;int, vector&lt;int&gt; &gt; bfsCenter(<span class="keywordtype">int</span>);</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classTreeConstructorException.html">   48</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTreeConstructorException.html">TreeConstructorException</a> : <span class="keyword">public</span> <a class="code" href="classGraphException.html">GraphException</a> {</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keyword">public</span>:</div><div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classTreeConstructorException.html#a2ecb31ba568ce3480ef9db767468f310">   52</a></span>&#160;    <a class="code" href="classTreeConstructorException.html#a2ecb31ba568ce3480ef9db767468f310">TreeConstructorException</a>() {}</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div><div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classTreeConstructorException.html#acc8b569a2ad401614e1d8a9f6b0bd5d8">   57</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classTreeConstructorException.html#acc8b569a2ad401614e1d8a9f6b0bd5d8">what</a>() <span class="keyword">const</span> throw() {</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordflow">return</span> <span class="stringliteral">&quot;constructor parameter is not a tree&quot;</span>;</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="classChordal_html"><div class="ttname"><a href="classChordal.html">Chordal</a></div><div class="ttdoc">Classe para grafos cordais. </div><div class="ttdef"><b>Definition:</b> Chordal.hpp:11</div></div>
+<div class="ttc" id="Chordal_8hpp_html"><div class="ttname"><a href="Chordal_8hpp.html">Chordal.hpp</a></div></div>
+<div class="ttc" id="classTree_html_a568a379c4a528faf192b2a97ac3a20bb"><div class="ttname"><a href="classTree.html#a568a379c4a528faf192b2a97ac3a20bb">Tree::centroid</a></div><div class="ttdeci">int centroid()</div></div>
+<div class="ttc" id="classGraphException_html"><div class="ttname"><a href="classGraphException.html">GraphException</a></div><div class="ttdoc">Classe de exceções de grafos. </div><div class="ttdef"><b>Definition:</b> GraphGen.hpp:270</div></div>
+<div class="ttc" id="classTree_html"><div class="ttname"><a href="classTree.html">Tree</a></div><div class="ttdoc">Classe para árvores. </div><div class="ttdef"><b>Definition:</b> Tree.hpp:11</div></div>
+<div class="ttc" id="classTreeConstructorException_html"><div class="ttname"><a href="classTreeConstructorException.html">TreeConstructorException</a></div><div class="ttdoc">Classe de exceções de construção de árvores. </div><div class="ttdef"><b>Definition:</b> Tree.hpp:48</div></div>
+<div class="ttc" id="classTree_html_ad376a7c639d857312f5de2ef47482f68"><div class="ttname"><a href="classTree.html#ad376a7c639d857312f5de2ef47482f68">Tree::Tree</a></div><div class="ttdeci">Tree()</div><div class="ttdoc">Construtor de árvores vazias. </div></div>
+<div class="ttc" id="classTreeConstructorException_html_a2ecb31ba568ce3480ef9db767468f310"><div class="ttname"><a href="classTreeConstructorException.html#a2ecb31ba568ce3480ef9db767468f310">TreeConstructorException::TreeConstructorException</a></div><div class="ttdeci">TreeConstructorException()</div><div class="ttdoc">Construtor da exceção. </div><div class="ttdef"><b>Definition:</b> Tree.hpp:52</div></div>
+<div class="ttc" id="classTree_html_a8a296a740609d29e4ff991549b7f8f92"><div class="ttname"><a href="classTree.html#a8a296a740609d29e4ff991549b7f8f92">Tree::diameter</a></div><div class="ttdeci">int diameter()</div></div>
+<div class="ttc" id="classGraphGen_html"><div class="ttname"><a href="classGraphGen.html">GraphGen</a></div><div class="ttdoc">Classe para grafos gerais. </div><div class="ttdef"><b>Definition:</b> GraphGen.hpp:21</div></div>
+<div class="ttc" id="classTreeConstructorException_html_acc8b569a2ad401614e1d8a9f6b0bd5d8"><div class="ttname"><a href="classTreeConstructorException.html#acc8b569a2ad401614e1d8a9f6b0bd5d8">TreeConstructorException::what</a></div><div class="ttdeci">const char * what() const</div><div class="ttdef"><b>Definition:</b> Tree.hpp:57</div></div>
+<div class="ttc" id="classTree_html_af13c3d7650185d8703c5483d3b24a5e5"><div class="ttname"><a href="classTree.html#af13c3d7650185d8703c5483d3b24a5e5">Tree::center</a></div><div class="ttdeci">int center()</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>
