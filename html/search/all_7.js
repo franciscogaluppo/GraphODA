@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['g',['G',['../structGraphDisplay.html#acfb839eaef7974c684794a3d5d69c79a',1,'GraphDisplay']]],
+  ['g',['G',['../classGraphDisplay.html#acfb839eaef7974c684794a3d5d69c79a',1,'GraphDisplay']]],
   ['gd',['GD',['../classGraphCanvas.html#a7e2f16ce3638db53fb73061fe1c93f15',1,'GraphCanvas']]],
   ['getadj',['getAdj',['../classGraphGen.html#a36741424a266249c915f29fbab96175c',1,'GraphGen']]],
   ['getedges',['getEdges',['../classGraphGen.html#af140b74e5bbb7171a0b76f73d10c14ae',1,'GraphGen']]],
@@ -10,12 +10,12 @@ var searchData=
   ['getpesos',['getPesos',['../classGraphGen.html#a56cb589bfd48135fe224d172dbed3155',1,'GraphGen']]],
   ['getsimadj',['getSimAdj',['../classGraphGen.html#ab37943d4526c45711622796c84e983ac',1,'GraphGen']]],
   ['getsimmatrix',['getSimMatrix',['../classGraphGen.html#ab2f8872fc9fab4268ad999dd89e1d4fa',1,'GraphGen']]],
-  ['good',['good',['../structGraphDisplay.html#a27d6e383e51648eff72a3ac43abc5c0c',1,'GraphDisplay']]],
+  ['good',['good',['../classGraphDisplay.html#a27d6e383e51648eff72a3ac43abc5c0c',1,'GraphDisplay']]],
   ['graph',['Graph',['../classGraph.html',1,'Graph'],['../classGraph.html#ae4c72b8ac4d693c49800a4c7e273654f',1,'Graph::Graph()'],['../classGraph.html#a6381663d9f8215c377123a3a8107011c',1,'Graph::Graph(int)'],['../classGraph.html#a0cb28a8601b14d0cb4291e5f60882ffc',1,'Graph::Graph(int, vector&lt; string &gt; &amp;)'],['../classGraph.html#a0cd2695bebb326da026ed7391542aba6',1,'Graph::Graph(GraphGen &amp;)']]],
   ['graph_2ehpp',['Graph.hpp',['../Graph_8hpp.html',1,'']]],
-  ['graphcanvas',['GraphCanvas',['../classGraphCanvas.html',1,'GraphCanvas'],['../classGraphCanvas.html#a7852754f721735c6d8672673a50401cc',1,'GraphCanvas::GraphCanvas()']]],
+  ['graphcanvas',['GraphCanvas',['../classGraphCanvas.html',1,'GraphCanvas'],['../classGraphCanvas.html#a0868eb47bb561e5037b24dc06fad52c7',1,'GraphCanvas::GraphCanvas()'],['../classGraphCanvas.html#a7852754f721735c6d8672673a50401cc',1,'GraphCanvas::GraphCanvas(sf::RenderWindow &amp;, sf::Font &amp;, int, int, int)']]],
   ['graphcanvas_2ehpp',['GraphCanvas.hpp',['../GraphCanvas_8hpp.html',1,'']]],
-  ['graphdisplay',['GraphDisplay',['../structGraphDisplay.html',1,'GraphDisplay'],['../structGraphDisplay.html#ac208e50545ccedbca810822743040f48',1,'GraphDisplay::GraphDisplay()'],['../structGraphDisplay.html#adea7ab840d8aa0646eab49709569143f',1,'GraphDisplay::GraphDisplay(Graph, int, int, int)']]],
+  ['graphdisplay',['GraphDisplay',['../classGraphDisplay.html',1,'GraphDisplay'],['../classGraphDisplay.html#ac208e50545ccedbca810822743040f48',1,'GraphDisplay::GraphDisplay()'],['../classGraphDisplay.html#adea7ab840d8aa0646eab49709569143f',1,'GraphDisplay::GraphDisplay(Graph, int, int, int)']]],
   ['graphdisplay_2ehpp',['GraphDisplay.hpp',['../GraphDisplay_8hpp.html',1,'']]],
   ['graphexception',['GraphException',['../classGraphException.html',1,'']]],
   ['graphgen',['GraphGen',['../classGraphGen.html',1,'GraphGen'],['../classGraphGen.html#a71eb825043c2518df1be9a0ccef36bcb',1,'GraphGen::GraphGen()'],['../classGraphGen.html#aec08708894158ba3098873e7a1da6b60',1,'GraphGen::GraphGen(int)'],['../classGraphGen.html#abdb70c362c414ff5a18ab3796126a1a9',1,'GraphGen::GraphGen(int, vector&lt; string &gt; &amp;)']]],

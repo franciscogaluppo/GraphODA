@@ -32,6 +32,8 @@ class REPLException : public exception {
 	REPLException() {}
 	///
 	/// Retorna mensagem de erro da exceção.
+	/// @param
+	/// @return uma exceção
 	const char *what() const throw() { return "REPL Exception"; }
 };
 
@@ -44,6 +46,7 @@ class REPLInvalidCommandException : public REPLException {
 	REPLInvalidCommandException() {}
 	///
 	/// Retorna a mensagem de erro da exceção.
+	/// @return exceção de sintaxe inválida
 	const char *what() const throw() { return "invalid syntax"; }
 };
 
@@ -53,6 +56,8 @@ class REPLVertexNotFoundException : public REPLException {
   public:
 	///
 	/// Construtor de exceções de vértice não encontrado.
+	/// @param string v que é o label de um vértice
+	/// @return mensagem de erro da exceção
 	REPLVertexNotFoundException(string v) {
 		msg = "coudn't find vertex with label: " + v;
 	}

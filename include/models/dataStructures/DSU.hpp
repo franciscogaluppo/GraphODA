@@ -19,18 +19,22 @@ class DSU {
 
 	///
 	/// Construtor para DSU pelo número de elementos.
+	// param número de elementos
 	DSU(int);
 
 	///
 	/// Encontra representante do conjunto ao qual um elemento pretence.
-	///
 	/// Complexidade: O(invAckermann(n))
+	/// param inteiro que representa um elemento
+	// return inteiro que indica o representante do conjunto
 	int find(int);
 
 	///
 	/// Une dois conjuntos a partir de elementos dos mesmos.
 	///
 	/// Complexidade: O(invAckermann(n))
+	// param elemento 1
+	// param elemento 2
 	void une(int, int);
 
   private:
