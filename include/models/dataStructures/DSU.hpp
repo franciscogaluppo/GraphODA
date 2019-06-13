@@ -19,22 +19,22 @@ class DSU {
 
 	///
 	/// Construtor para DSU pelo número de elementos.
-	// param número de elementos
+	/// @param número de elementos
 	DSU(int);
 
 	///
 	/// Encontra representante do conjunto ao qual um elemento pretence.
 	/// Complexidade: O(invAckermann(n))
-	/// param inteiro que representa um elemento
-	// return inteiro que indica o representante do conjunto
+	/// @param inteiro que representa um elemento
+	/// @return inteiro que indica o representante do conjunto
 	int find(int);
 
 	///
 	/// Une dois conjuntos a partir de elementos dos mesmos.
 	///
 	/// Complexidade: O(invAckermann(n))
-	// param elemento 1
-	// param elemento 2
+	/// @param elemento 1
+	/// @param elemento 2
 	void une(int, int);
 
   private:
@@ -50,7 +50,7 @@ class DSUException : public exception {
 	///
 	DSUException() {}
 	///
-	/// Retorna a mensagem de erro da exceção.
+	/// @return a mensagem de erro da exceção.
 	const char *what() const throw() { return "DSU Exception"; }
 };
 
@@ -64,8 +64,8 @@ class DSUNegativeConstructorParameterException : public DSUException {
 		msg = "constructor parameter cannot be negative; got " + to_string(n);
 	}
 
-	///
-	/// Retorna a mensagem de erro da exceção.
+	/// @param inteiro negativo que corresponde ao número de elementos
+	/// @return a mensagem de erro da exceção.
 	const char *what() const throw() { return msg.c_str(); }
 
   private:
@@ -81,8 +81,8 @@ class DSUValueOutOfBoundsException : public DSUException {
 	DSUValueOutOfBoundsException(int n) {
 		msg = "value out of bounds: " + to_string(n);
 	}
-	///
-	/// Retorna mensagem de erro da exceção.
+	/// @param inteiro n fora do range
+	/// @return mensagem de erro da exceção.
 	const char *what() const throw() { return msg.c_str(); }
 
   private:
