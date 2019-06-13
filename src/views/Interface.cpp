@@ -64,8 +64,14 @@ void Save2File() {
 void Help() {
 	auto jan = tgui::ChildWindow::create("Ajuda");
 	jan->setPosition(100.f, 100.f);
-	jan->setSize(250.f, 50.f);
+	jan->setSize(250.f, 250.f);
+	auto texto = tgui::MessageBox::create();
+	sf::String tipo("ajuda");
+	texto->setText(tipo);
+	
+	jan->add(texto);
 	gui.add(jan);
+
 }
 
 void mudaDir() { (GC.GD.temDir) ^= 1; }
