@@ -17,6 +17,8 @@
 	// "postCreateCommand": "gcc -v",
 
 	"extensions": [
-		"ms-vscode.cpptools"
+		"ms-vscode.cpptools",
+		"vector-of-bool.cmake-tools",
+		"twxs.cmake"
 	]
 }
