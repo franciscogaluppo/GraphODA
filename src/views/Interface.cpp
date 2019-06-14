@@ -65,8 +65,10 @@ void Help() {
 	auto jan = tgui::ChildWindow::create("Ajuda");
 	jan->setPosition(100.f, 100.f);
 	jan->setSize(250.f, 250.f);
-	auto texto = tgui::MessageBox::create();
-	sf::String tipo("ajuda");
+	auto texto = tgui::MessageBox::create("Texto");
+	texto->setPosition(0.f, 0.f);
+	texto->setSize(10.f, 10.f);
+	sf::String tipo("Para carregar um grafo, \nutilize o botao \"importar\"\n\nMais ajudas coming soon :p");
 	texto->setText(tipo);
 
 	jan->add(texto);
