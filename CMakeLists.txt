@@ -53,8 +53,15 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 add_executable(graphODA $<TARGET_OBJECTS:common> "${PROJECT_SOURCE_DIR}/src/main.cpp")
 target_link_libraries(graphODA tgui sfml-graphics sfml-window sfml-system)
 
-add_custom_target(run EXCLUDE_FROM_ALL
+add_custom_target(run
 	DEPENDS graphODA
     COMMAND "${CMAKE_CURRENT_BINARY_DIR}/graphODA"
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+# Gera toda a documentação do projeto
+add_custom_target(docs
+	DEPENDS tests
+    COMMAND "./build_docs.sh"
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )

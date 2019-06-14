@@ -26,6 +26,8 @@ cmake ..
 make
 # Testar
 make tests
+# Gerar documentação em /docs
+make docs
 # Executar
 make run
 ```

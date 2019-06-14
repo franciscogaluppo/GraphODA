@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
+# Gera documentação do código
+doxygen Doxyfile
+
+# Gera relatório de cobertura de testes
 mkdir -p docs/coverage build
 cd build
 cmake .. -DCMAKE_CXX_FLAGS="--coverage"
