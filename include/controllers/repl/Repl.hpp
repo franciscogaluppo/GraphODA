@@ -20,8 +20,67 @@ using namespace std;
 /// @file
 
 namespace repl {
+class TYPE {
+  public:
+	Graph G;
+	Bipartite B;
+	Chordal C;
+	Dag D;
+	Tree T;
+
+	int type;
+};
+
+extern vector<TYPE>
+	graphs;
+extern map<string, int> vars;
+extern stringstream ss;
+extern string var;
+extern int at;
+extern int lastVar;
+
+// aux
+string getType(int);
+Graph getGraphVar(string);
+Graph getGraph();
+int getVertex(Graph &, string);
+void undoDeclaration();
+
+// errors
+void fileNotFoundError(string);
+void undefinedVariableError(string);
+void wrongTypeError(string, int);
+void graphIsNotError(string, int);
+void vertexNotFoundError(string);
+void noPathError(string, string);
+void negativeCycleError();
+
+// commands
+void import();
+void mst();
+void graphCast();
+void bipartiteCast();
+void chordalCast();
+void dagCast();
+void treeCast();
+void show(int, int);
+void edit(int, int);
+void describe();
+void reaches();
+void scc();
+void shortestPath();
+void coloring();
+void chromaticNumber();
+void greedyColoring();
+void maxClique();
+void artPoints();
+void bridges();
+void topoSort();
+void center();
+void diameter();
+
 void run(int, int);
-}
+} // namespace repl
 
 ///
 /// Classe para exceções do REPL.
