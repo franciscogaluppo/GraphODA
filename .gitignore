@@ -53,7 +53,10 @@ cmake-build-debug
 
 *.cbp
 
+# Generated files and docs
+html
+latex
 build
-coverage
+docs/coverage
 docs/doxygen
 tests/tests
