@@ -31,8 +31,7 @@ class TYPE {
 	int type;
 };
 
-extern vector<TYPE>
-	graphs;
+extern vector<TYPE> graphs;
 extern map<string, int> vars;
 extern stringstream ss;
 extern string var;
