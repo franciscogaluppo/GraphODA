@@ -1,4 +1,6 @@
-# set -e
+#!/usr/bin/env bash
+set -e
+
 mkdir -p docs/coverage build
 cd build
 cmake .. -DCMAKE_CXX_FLAGS="--coverage"

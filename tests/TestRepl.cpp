@@ -2,7 +2,7 @@
 #include "doctest.h"
 
 void coloca() {
-	Graph G = lerGrafoArquivo("../grafos/grafo1.txt");
+	Graph G = lerGrafoArquivo("./grafos/grafo1.txt");
 	repl::vars["g"] = 0;
 	repl::var = "g";
 	repl::TYPE new_;
@@ -13,7 +13,7 @@ void coloca() {
 }
 
 void coloca2() {
-	Graph G = lerGrafoArquivo("../grafos/grafo5.txt");
+	Graph G = lerGrafoArquivo("./grafos/grafo5.txt");
 	repl::vars["g"] = 0;
 	repl::var = "g";
 	repl::TYPE new_;
@@ -94,7 +94,7 @@ TEST_CASE("Teste REPL - Error #7") {
 TEST_CASE("Teste REPL - import") {
 	limpa();
 	coloca();
-	string l = "../grafos/grafo2.txt";
+	string l = "./grafos/grafo2.txt";
 	repl::ss = stringstream(l);
 	repl::import();
 	CHECK(repl::graphs[0].G.getN() == 12);
