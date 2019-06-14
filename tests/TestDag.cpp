@@ -4,7 +4,7 @@
 #include "doctest.h"
 
 TEST_CASE("Teste Dag - toposort") {
-	Graph G = lerGrafoArquivo("../grafos/grafo5.txt");
+	Graph G = lerGrafoArquivo("./grafos/grafo5.txt");
 	Dag H(G);
 	CHECK(H.topoSort().size() == H.getN());
 }

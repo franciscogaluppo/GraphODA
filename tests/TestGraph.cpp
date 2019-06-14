@@ -4,12 +4,12 @@
 #include "doctest.h"
 
 TEST_CASE("Teste Graph - MST #1") {
-	Graph G = lerGrafoArquivo("../grafos/grafo1.txt");
+	Graph G = lerGrafoArquivo("./grafos/grafo1.txt");
 	CHECK(G.mst().isTree());
 }
 
 TEST_CASE("Teste Graph - MST #2") {
-	Graph G = lerGrafoArquivo("../grafos/grafo1.txt");
+	Graph G = lerGrafoArquivo("./grafos/grafo1.txt");
 	GraphGen H(G);
 	Graph I(H);
 	CHECK(I.mst().isTree());

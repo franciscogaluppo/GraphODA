@@ -4,7 +4,7 @@
 #include "doctest.h"
 
 TEST_CASE("Teste Dag - bipartite") {
-	Graph G = lerGrafoArquivo("../grafos/grafo5.txt");
+	Graph G = lerGrafoArquivo("./grafos/grafo5.txt");
 	Bipartite H(G);
 	CHECK(H.getN() == 12);
 }

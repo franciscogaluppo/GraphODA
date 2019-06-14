@@ -1,23 +1,36 @@
 # 2019-1-grupo19
 [![Build Status](https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19.svg?token=Mnxg5DUtyLmLApyc8NAT&branch=master)](https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19)
 
-## Como instalar as dependências?
+## Dependências para compilação
+- CMake 2.6+
+- gcc & g++ 5.5+
+- SFML 2.4+ (headers)
+- TGUI 0.8 (headers)
+
+### Como instalar as dependências?
 Um script simples para Ubuntu 18.04+
 ```bash
 sudo add-apt-repository ppa:texus/tgui-0.8
 sudo apt-get update
 sudo apt-get install libsfml-dev libtgui-dev
 ```
+Ou utilizando o Dockerfile provido no repositório (preferencial).
 
 ## Como desenvolver localmente?
 ```bash
-# Gere os scripts de compilação para sua plataforma
-cmake CMakeLists.txt
-# Compile
+# Boas práticas
+mkdir build && cd build
+# Gere os scripts de compilação de teste para sua plataforma
+cmake ..
+# Compilar
 make
-# Execute
-./graphODA
+# Testar
+make tests
+# Executar
+make run
 ```
+
+## Gerando a documentação
 
 ## Como usar o REPL
 O REPL possui dois tipos de comando: atribuição e operação.
