@@ -15,6 +15,16 @@ set(TEST_FILES
     "${TESTS_FOLDER}/TestTree.cpp")
 
 # Make test executable
-add_executable(tests $<TARGET_OBJECTS:common> ${TEST_FILES} "${TESTS_FOLDER}/main.cpp")
+add_executable(tests EXCLUDE_FROM_ALL 
+	$<TARGET_OBJECTS:common>
+	${TEST_FILES}
+	"${TESTS_FOLDER}/main.cpp")
 target_link_libraries(tests doctest tgui sfml-graphics sfml-window sfml-system)
-add_test(NAME Unit_Tests COMMAND tests)
+
+# Actually run the tests
+add_custom_command(TARGET tests POST_BUILD
+	COMMAND "${CMAKE_CURRENT_BINARY_DIR}/tests"
+	COMMENT "Executando testes com o doctest.h ..."
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+

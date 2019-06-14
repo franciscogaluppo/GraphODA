@@ -5,7 +5,7 @@ RUN apt-get update \
     && apt-get -y --no-install-recommends install wget unzip software-properties-common
 # Instalar ferramentas para desenvolvimento C/C++
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && apt-get update
-RUN apt-get install -y dpkg-dev libc-dev make gdb valgrind lcov cmake clang-format clang-tidy gcc-8 g++-8
+RUN apt-get install -y make gcc-8 g++-8 gdb cmake valgrind gcovr clang-format clang-tidy
 ENV CC=gcc-8 CXX=g++-8
 
 # Instalar dependências do projeto
@@ -42,8 +42,3 @@ RUN wget --no-check-certificate https://github.com/texus/TGUI/archive/v0.8.5.zip
     && ldconfig
 
 WORKDIR /
-
-# Clean up
-RUN rm -rf /tmp/lib \
-    && apt-get clean -y \
-    && apt-get autoremove -y

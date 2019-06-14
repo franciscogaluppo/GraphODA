@@ -20,13 +20,11 @@ include_directories(include/controllers/repl)
 include_directories(include/models/dataStructures)
 
 ## Dependências
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
-else()
-# Se estamos rodando localmente para desenvolvimento, relaxamos as dependências
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+    # Se estamos rodando localmente para desenvolvimento, relaxamos as dependências
     set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_debug_packages" ${CMAKE_MODULE_PATH})
-    find_package(SFML 2 COMPONENTS graphics window system REQUIRED)
 endif()
+find_package(SFML 2.4 COMPONENTS graphics window system REQUIRED)
 find_package(TGUI 0.8 REQUIRED)
 
 set(SRC_FILES
@@ -40,33 +38,23 @@ set(SRC_FILES
         "${PROJECT_SOURCE_DIR}/src/models/graph/Chordal.cpp"
         "${PROJECT_SOURCE_DIR}/src/models/graph/Dag.cpp"
         "${PROJECT_SOURCE_DIR}/src/models/graph/Tree.cpp"
-        "${PROJECT_SOURCE_DIR}/src/utils/Assets.cpp"
         "${PROJECT_SOURCE_DIR}/src/controllers/repl/Repl.cpp"
         "${PROJECT_SOURCE_DIR}/src/models/dataStructures/Vector.cpp"
         "${PROJECT_SOURCE_DIR}/src/models/dataStructures/DSU.cpp")
-set(ASSET_FILES
-        "${PROJECT_SOURCE_DIR}/assets/TransparentGrey.txt"
-        "${PROJECT_SOURCE_DIR}/assets/CONSOLAB.TTF")
-set(DESKTOP_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.desktop")
-set(ICON_FILE "${PROJECT_SOURCE_DIR}/assets/graphODA.png")
 
+# Objetos comuns a todos os targets
 add_library(common OBJECT ${SRC_FILES})
+
+## Configuração dos testes
+add_subdirectory (tests)
 
 ## Configuração para compilação do executável final
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 add_executable(graphODA $<TARGET_OBJECTS:common> "${PROJECT_SOURCE_DIR}/src/main.cpp")
 target_link_libraries(graphODA tgui sfml-graphics sfml-window sfml-system)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    install(TARGETS graphODA DESTINATION "bin")
-    install(FILES ${DESKTOP_FILE} DESTINATION "share/applications")
-    install(FILES ${ICON_FILE} DESTINATION "share/icons/hicolor/256x256/apps")
-    install(FILES ${ASSET_FILES} DESTINATION "share/graphODA/assets")
-else()
-   install(TARGETS graphODA DESTINATION "./")
-   install(FILES ${ASSET_FILES} DESTINATION "assets")
-endif()
-
-## Configuração dos testes
-enable_testing ()
-add_subdirectory (tests)
+add_custom_target(run EXCLUDE_FROM_ALL
+	DEPENDS graphODA
+    COMMAND "${CMAKE_CURRENT_BINARY_DIR}/graphODA"
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
