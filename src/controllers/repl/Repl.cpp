@@ -2,17 +2,6 @@
 
 namespace repl {
 
-class TYPE {
-  public:
-	Graph G;
-	Bipartite B;
-	Chordal C;
-	Dag D;
-	Tree T;
-
-	int type;
-};
-
 vector<TYPE> graphs;
 map<string, int> vars;
 stringstream ss;

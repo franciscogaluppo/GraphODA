@@ -12,7 +12,8 @@ set(TEST_FILES
 	"${TESTS_FOLDER}/TestBipartite.cpp"
 	"${TESTS_FOLDER}/TestInterface.cpp"
 	"${TESTS_FOLDER}/TestVector.cpp"
-    "${TESTS_FOLDER}/TestTree.cpp")
+    "${TESTS_FOLDER}/TestTree.cpp"
+    "${TESTS_FOLDER}/TestRepl.cpp")
 
 # Make test executable
 add_executable(tests $<TARGET_OBJECTS:common> ${TEST_FILES} "${TESTS_FOLDER}/main.cpp")

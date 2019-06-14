@@ -1,6 +1,16 @@
 #include "Vector.hpp"
 #include "doctest.h"
 
+TEST_CASE("Teste vector - construtor #1") {
+	Vector v(1, 1);
+	CHECK(v.x == 1.0);
+}
+
+TEST_CASE("Teste vector - construtor #2") {
+	Vector v(make_pair(1, 1));
+	CHECK(v.x == 1.0);
+}
+
 TEST_CASE("Teste vector - soma") {
 	Vector v(1, 1), u(-1, 1), r = v+u;
 	CHECK(r.norm() == 2.0);
@@ -19,6 +29,16 @@ TEST_CASE("Teste vector - mult") {
 TEST_CASE("Teste vector - dot") {
 	Vector v(1, 1), u(-1, 1);
 	CHECK(v*u == 0);
+}
+
+TEST_CASE("Teste vector - vetorial") {
+	Vector v(1, 1), u(-1, 1);
+	CHECK((v%u) == 2.0);
+}
+
+TEST_CASE("Teste vector - distancia") {
+	Vector v(1, 1), u(-3, 1);
+	CHECK((v^u) == 4.0);
 }
 
 TEST_CASE("Teste vector - angle") {
