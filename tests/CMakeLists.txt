@@ -10,7 +10,6 @@ set(TEST_FILES
 	"${TESTS_FOLDER}/TestGraphGen.cpp"
 	"${TESTS_FOLDER}/TestDag.cpp"
 	"${TESTS_FOLDER}/TestBipartite.cpp"
-	"${TESTS_FOLDER}/TestInterface.cpp"
 	"${TESTS_FOLDER}/TestVector.cpp"
     "${TESTS_FOLDER}/TestTree.cpp"
     "${TESTS_FOLDER}/TestRepl.cpp")
