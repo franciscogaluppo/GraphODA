@@ -47,11 +47,11 @@ int getVertex(Graph &, string);
 void undoDeclaration();
 
 // errors
-void fileNotFountError(string);
+void fileNotFoundError(string);
 void undefinedVariableError(string);
 void wrongTypeError(string, int);
 void graphIsNotError(string, int);
-void vectorNotFoundError(string);
+void vertexNotFoundError(string);
 void noPathError(string, string);
 void negativeCycleError();
 

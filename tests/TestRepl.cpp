@@ -63,6 +63,34 @@ TEST_CASE("Teste REPL - undoDeclaration") {
 	CHECK(repl::vars.size() == 0);
 }
 
+TEST_CASE("Teste REPL - Error #1") {
+	CHECK_NOTHROW(repl::fileNotFoundError("oi"));
+}
+
+TEST_CASE("Teste REPL - Error #2") {
+	CHECK_NOTHROW(repl::undefinedVariableError("oi"));
+}
+
+TEST_CASE("Teste REPL - Error #3") {
+	CHECK_NOTHROW(repl::wrongTypeError("g", 1));
+}
+
+TEST_CASE("Teste REPL - Error #4") {
+	CHECK_NOTHROW(repl::graphIsNotError("oi", 1));
+}
+
+TEST_CASE("Teste REPL - Error #5") {
+	CHECK_NOTHROW(repl::vertexNotFoundError("oi"));
+}
+
+TEST_CASE("Teste REPL - Error #6") {
+	CHECK_NOTHROW(repl::noPathError("oi", "ola"));
+}
+
+TEST_CASE("Teste REPL - Error #7") {
+	CHECK_NOTHROW(repl::negativeCycleError());
+}
+
 TEST_CASE("Teste REPL - import") {
 	limpa();
 	coloca();
@@ -126,18 +154,84 @@ TEST_CASE("Teste REPL - treeCast") {
 	CHECK(repl::graphs[0].T.getN() == 12);
 }
 
+TEST_CASE("Teste REPL - describe") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::describe());
+}
+
 TEST_CASE("Teste REPL - reaches") {
 	limpa();
 	coloca();
-	string l = "a";
+	string l = "1 3";
 	repl::ss = stringstream(l);
-	CHECK_THROWS_AS(repl::reaches(), REPLInvalidCommandException);
+	CHECK_NOTHROW(repl::reaches());
+}
+
+TEST_CASE("Teste REPL - scc") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::scc());
 }
 
 TEST_CASE("Teste REPL - shortestPath") {
 	limpa();
 	coloca();
-	string l = "a";
+	string l = "1 3";
 	repl::ss = stringstream(l);
-	CHECK_THROWS_AS(repl::shortestPath(), REPLInvalidCommandException);
+	CHECK_NOTHROW(repl::shortestPath());
+}
+
+TEST_CASE("Teste REPL - coloring") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::coloring());
+}
+
+TEST_CASE("Teste REPL - chromaticNumber") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::chromaticNumber());
+}
+
+TEST_CASE("Teste REPL - greedyColoring") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::greedyColoring());
+}
+
+TEST_CASE("Teste REPL - maxClique") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::maxClique());
+}
+
+TEST_CASE("Teste REPL - artPoints") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::artPoints());
+}
+
+TEST_CASE("Teste REPL - bridges") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::bridges());
+}
+
+TEST_CASE("Teste REPL - topoSort") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::topoSort());
+}
+
+TEST_CASE("Teste REPL - center") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::center());
+}
+
+TEST_CASE("Teste REPL - diameter") {
+	limpa();
+	coloca();
+	CHECK_NOTHROW(repl::diameter());
 }
