@@ -1,0 +1,153 @@
+\hypertarget{Repl_8hpp}{}\section{Referência ao ficheiro include/controllers/repl/\+Repl.hpp}
+\label{Repl_8hpp}\index{include/controllers/repl/Repl.hpp@{include/controllers/repl/Repl.hpp}}
+{\ttfamily \#include \char`\"{}Bipartite.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Chordal.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Dag.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Graph.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Graph\+Canvas.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Interface.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Tree.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+\subsection*{Componentes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classrepl_1_1TYPE}{repl\+::\+T\+Y\+PE}}
+\item 
+class \mbox{\hyperlink{classREPLException}{R\+E\+P\+L\+Exception}}
+\begin{DoxyCompactList}\small\item\em Classe para exceções do R\+E\+PL. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classREPLInvalidCommandException}{R\+E\+P\+L\+Invalid\+Command\+Exception}}
+\begin{DoxyCompactList}\small\item\em Classe de exceções de comando inválido. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classREPLVertexNotFoundException}{R\+E\+P\+L\+Vertex\+Not\+Found\+Exception}}
+\begin{DoxyCompactList}\small\item\em Classe de exceções de vértice não encontrado. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a6870cc9e70892d0673231619f2dd4d9b}\label{Repl_8hpp_a6870cc9e70892d0673231619f2dd4d9b}} 
+string {\bfseries repl\+::get\+Type} (int)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a1c737d593a4f56e9f8e04f3637ee8e2c}\label{Repl_8hpp_a1c737d593a4f56e9f8e04f3637ee8e2c}} 
+\mbox{\hyperlink{classGraph}{Graph}} {\bfseries repl\+::get\+Graph} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_af30960c4dbb7338624e5c52afd24be0e}\label{Repl_8hpp_af30960c4dbb7338624e5c52afd24be0e}} 
+int {\bfseries repl\+::get\+Vertex} (\mbox{\hyperlink{classGraph}{Graph}} \&, string)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_aadd666575ad4751b6b5b820c74078db5}\label{Repl_8hpp_aadd666575ad4751b6b5b820c74078db5}} 
+void {\bfseries repl\+::undo\+Declaration} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ab98d25a1cfc4f8b5020665c89c7f1d7f}\label{Repl_8hpp_ab98d25a1cfc4f8b5020665c89c7f1d7f}} 
+void {\bfseries repl\+::file\+Not\+Found\+Error} (string)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ac0da95be721207a985c33064b59e58b3}\label{Repl_8hpp_ac0da95be721207a985c33064b59e58b3}} 
+void {\bfseries repl\+::undefined\+Variable\+Error} (string)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a3587a91f2fdccf3cd55c4350e1e706d8}\label{Repl_8hpp_a3587a91f2fdccf3cd55c4350e1e706d8}} 
+void {\bfseries repl\+::wrong\+Type\+Error} (string, int)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ae8c6a6b3589701fa3f259701d5bd6651}\label{Repl_8hpp_ae8c6a6b3589701fa3f259701d5bd6651}} 
+void {\bfseries repl\+::graph\+Is\+Not\+Error} (string, int)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a6a71a04606964e8cc043862e0093c254}\label{Repl_8hpp_a6a71a04606964e8cc043862e0093c254}} 
+void {\bfseries repl\+::vertex\+Not\+Found\+Error} (string)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a60e98d8f8dca443d5c07c4b59850f57a}\label{Repl_8hpp_a60e98d8f8dca443d5c07c4b59850f57a}} 
+void {\bfseries repl\+::no\+Path\+Error} (string, string)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a8b1219ddcc0e4cdbfe23700210d40b53}\label{Repl_8hpp_a8b1219ddcc0e4cdbfe23700210d40b53}} 
+void {\bfseries repl\+::negative\+Cycle\+Error} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a2d8ec27c4d32df695a20242c7772f2a2}\label{Repl_8hpp_a2d8ec27c4d32df695a20242c7772f2a2}} 
+void {\bfseries repl\+::import} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_aa73131fa62f425f75ff10833444f926d}\label{Repl_8hpp_aa73131fa62f425f75ff10833444f926d}} 
+void {\bfseries repl\+::mst} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a02774250f8c5f43402034196114d21ba}\label{Repl_8hpp_a02774250f8c5f43402034196114d21ba}} 
+void {\bfseries repl\+::graph\+Cast} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a725c460ab6315a48b22bb686096e5332}\label{Repl_8hpp_a725c460ab6315a48b22bb686096e5332}} 
+void {\bfseries repl\+::bipartite\+Cast} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a621b75b2e54ff172a67a6b62b380cedd}\label{Repl_8hpp_a621b75b2e54ff172a67a6b62b380cedd}} 
+void {\bfseries repl\+::chordal\+Cast} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a15c53adf1f8f8032d32cd24a5e5c0f98}\label{Repl_8hpp_a15c53adf1f8f8032d32cd24a5e5c0f98}} 
+void {\bfseries repl\+::dag\+Cast} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a841855f6fce3bd5f4c6ffd437c0486e5}\label{Repl_8hpp_a841855f6fce3bd5f4c6ffd437c0486e5}} 
+void {\bfseries repl\+::tree\+Cast} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_aa7123ded041fecb3b8289a832e9e98bb}\label{Repl_8hpp_aa7123ded041fecb3b8289a832e9e98bb}} 
+void {\bfseries repl\+::show} (int, int)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a29b73ef587f93088ea28449f80535fb8}\label{Repl_8hpp_a29b73ef587f93088ea28449f80535fb8}} 
+void {\bfseries repl\+::edit} (int, int)
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ad3a831d0cefcb354cda48670df81a2fa}\label{Repl_8hpp_ad3a831d0cefcb354cda48670df81a2fa}} 
+void {\bfseries repl\+::describe} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a17009d4994ee12bbdba5da37848593fb}\label{Repl_8hpp_a17009d4994ee12bbdba5da37848593fb}} 
+void {\bfseries repl\+::reaches} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a95aa63ae201c5733ff48d58cd78f7300}\label{Repl_8hpp_a95aa63ae201c5733ff48d58cd78f7300}} 
+void {\bfseries repl\+::scc} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ada329af7e3a4ad4e1a8787139945eb2e}\label{Repl_8hpp_ada329af7e3a4ad4e1a8787139945eb2e}} 
+void {\bfseries repl\+::shortest\+Path} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ab7cafb8b33489289fd529ffec7a41076}\label{Repl_8hpp_ab7cafb8b33489289fd529ffec7a41076}} 
+void {\bfseries repl\+::coloring} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a83d0069d354c568bae3f5bfa42cbc585}\label{Repl_8hpp_a83d0069d354c568bae3f5bfa42cbc585}} 
+void {\bfseries repl\+::chromatic\+Number} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a99be7e612a022f0d4b540095ecf347df}\label{Repl_8hpp_a99be7e612a022f0d4b540095ecf347df}} 
+void {\bfseries repl\+::greedy\+Coloring} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a76bf9b63eee9f5381651efb29f1eef87}\label{Repl_8hpp_a76bf9b63eee9f5381651efb29f1eef87}} 
+void {\bfseries repl\+::max\+Clique} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_af6d4754b3cd6081d121cc8e49c722564}\label{Repl_8hpp_af6d4754b3cd6081d121cc8e49c722564}} 
+void {\bfseries repl\+::art\+Points} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a6134168ec22488bed690b7bd4ce1f45b}\label{Repl_8hpp_a6134168ec22488bed690b7bd4ce1f45b}} 
+void {\bfseries repl\+::bridges} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a037387916e1734a441627ae1a3ac0c39}\label{Repl_8hpp_a037387916e1734a441627ae1a3ac0c39}} 
+void {\bfseries repl\+::topo\+Sort} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_adc2d63c2c80f3842dd27ff92d0a3e2c7}\label{Repl_8hpp_adc2d63c2c80f3842dd27ff92d0a3e2c7}} 
+void {\bfseries repl\+::center} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_aa569e36dee0b2b3ad615fa483e77ebe9}\label{Repl_8hpp_aa569e36dee0b2b3ad615fa483e77ebe9}} 
+void {\bfseries repl\+::diameter} ()
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a0719f91c310a88684005cfbdaf2d22a6}\label{Repl_8hpp_a0719f91c310a88684005cfbdaf2d22a6}} 
+void {\bfseries repl\+::run} (int, int)
+\end{DoxyCompactItemize}
+\subsection*{Variáveis}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a5a810ea1c9b246589faf9565c967bdf9}\label{Repl_8hpp_a5a810ea1c9b246589faf9565c967bdf9}} 
+vector$<$ T\+Y\+PE $>$ {\bfseries repl\+::graphs}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a266841b1f804551728dc35538e493052}\label{Repl_8hpp_a266841b1f804551728dc35538e493052}} 
+map$<$ string, int $>$ {\bfseries repl\+::vars}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_aa0343b69a4e5723b5dc28135916c76b1}\label{Repl_8hpp_aa0343b69a4e5723b5dc28135916c76b1}} 
+stringstream {\bfseries repl\+::ss}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_a9f6e98cb709ad06b78f8f7e9dde845c3}\label{Repl_8hpp_a9f6e98cb709ad06b78f8f7e9dde845c3}} 
+string {\bfseries repl\+::var}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ada61d11d04d35e6d4c5ddca1d0223f75}\label{Repl_8hpp_ada61d11d04d35e6d4c5ddca1d0223f75}} 
+int {\bfseries repl\+::at}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_ad5477fedfa992f37caf0aa115c3c54c5}\label{Repl_8hpp_ad5477fedfa992f37caf0aa115c3c54c5}} 
+int {\bfseries repl\+::last\+Var}
+\item 
+\mbox{\Hypertarget{Repl_8hpp_aac7fbd0bc964ee3131f6cc4be1fa4005}\label{Repl_8hpp_aac7fbd0bc964ee3131f6cc4be1fa4005}} 
+\mbox{\hyperlink{classGraph}{Graph}} {\bfseries repl\+::get\+Graph\+Var} (string)
+\end{DoxyCompactItemize}

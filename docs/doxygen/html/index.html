@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.15"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GraphODA: 2019-1-grupo19</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GraphODA
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.15 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">2019-1-grupo19 </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a href="https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19"><img src="https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19.svg?token=Mnxg5DUtyLmLApyc8NAT&branch=master" alt="Build Status" class="inline"/>
+</a></p>
+<ul>
+<li>CMake 2.6+</li>
+<li>gcc &amp; g++ 5.5+</li>
+<li>SFML 2.4+ (headers)</li>
+<li>TGUI 0.8 (headers)</li>
+</ul>
+<p>Um script simples para Ubuntu 18.04+ </p><div class="fragment"><div class="line">sudo add-apt-repository ppa:texus/tgui-0.8</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install libsfml-dev libtgui-dev</div></div><!-- fragment --><p> Ou utilizando o Dockerfile provido no repositório (preferencial).</p>
+<p>## Como desenvolver localmente? </p><div class="fragment"><div class="line"># Boas práticas</div><div class="line">mkdir build &amp;&amp; cd build</div><div class="line"># Gere os scripts de compilação de teste para sua plataforma</div><div class="line">cmake ..</div><div class="line"># Compilar</div><div class="line">make</div><div class="line"># Testar</div><div class="line">make tests</div><div class="line"># Gerar documentação em /docs</div><div class="line">make docs</div><div class="line"># Executar</div><div class="line">make run</div></div><!-- fragment --><p>O REPL possui dois tipos de comando: atribuição e operação.</p>
+<p>#### Atribuição de variável </p><div class="fragment"><div class="line">&gt;&gt;&gt; var1 = var2</div></div><!-- fragment --><p> A variável <em>var1</em> passa a representar o grafo representado por <em>var2</em>.</p>
+<p>#### import </p><div class="fragment"><div class="line">&gt;&gt;&gt; var = import file_name</div></div><!-- fragment --><p> A variável <em>var</em> passa a representar o grafo armazenado em <em>file_name</em>. Se a leitura do arquivo falhar, <em>var</em> passa a representar um grafo vazio.</p>
+<p>#### mst </p><div class="fragment"><div class="line">&gt;&gt;&gt; var1 = mst var2</div></div><!-- fragment --><p> A variável <em>var1</em> passa a representar a <b>árvore geradora mínima</b> do grafo representado por <em>var2</em>.</p>
+<p>#### describe </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; describe</div></div><!-- fragment --><p> Exibe informações sobre o grafo representado por <em>var</em>.</p>
+<p>#### show </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; show</div></div><!-- fragment --><p> Exibe o grafo representado por <em>var</em>.</p>
+<p>#### edit </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; edit</div></div><!-- fragment --><p> Exibe o grafo representado por <em>var</em>, salvando as modificações efetuadas.</p>
+<p>#### reaches </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; reaches a b</div></div><!-- fragment --><p> Verifica se o vértice <em>a</em> alcança o vértice <em>b</em> no grafo representado por <em>var</em>.</p>
+<p>#### scc </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; scc</div></div><!-- fragment --><p> Exibe as componentes fortemente conexas do grafo representado por <em>var</em>.</p>
+<p>#### shortestPath </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; shortestPath a b</div></div><!-- fragment --><p> Computa o peso do caminho mínimo do vértice <em>a</em> para o vértice <em>b</em> no grafo representado por <em>var</em>.</p>
+<p>#### coloring </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; coloring</div></div><!-- fragment --><p> Computa uma coloração mínima para <em>var</em>. O algoritmo é polinomial quando <em>var</em> é cordal e <b>TODO</b> quando não é.</p>
+<p>#### chromaticNumber </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; chromaticNumber</div></div><!-- fragment --><p> Computa o número cromático, i.e. o menor número de cores necessárias para se colorir o grafo. O algoritmo é polinomial quando <em>var</em> é cordal e <b>TODO</b> quando não é.</p>
+<p>#### greedyColoring </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; greedyColoring</div></div><!-- fragment --><p> Computa uma coloração usando um algoritmo guloso na ordem dos vértices. Linear no tamanho do grafo.</p>
+<p>#### maximumCliqueSize </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; maximumCliqueSize</div></div><!-- fragment --><p> Computa o tamanho da clique máxima. Disponível apenas para grafos cordais.</p>
+<p>#### artPoints </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; artPoints</div></div><!-- fragment --><p> Encontra os vértices cujas remoções aumentam o número de componentes conexas do grafo.</p>
+<p>#### bridges </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; bridges</div></div><!-- fragment --><p> Encontra as arestas cujas remoções aumentam o número de componentes conexas do grafo.</p>
+<p>#### topoSort </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; topoSort</div></div><!-- fragment --><p> Encontra uma ordenação topológica dos vértices do grafo.</p>
+<p>#### center </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; center</div></div><!-- fragment --><p> Computa o centro da árvore <em>var</em>.</p>
+<p>#### diameter </p><div class="fragment"><div class="line">&gt;&gt;&gt; var &gt; diameter</div></div><!-- fragment --><p> computa o diâmetro da árvore <em>var</em>. </p>
+</div></div><!-- PageDoc -->
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.15
+</small></address>
+</body>
+</html>

@@ -1,0 +1,144 @@
+\href{https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19}{\texttt{ }}
+
+
+\begin{DoxyItemize}
+\item C\+Make 2.\+6+
+\item gcc \& g++ 5.\+5+
+\item S\+F\+ML 2.\+4+ (headers)
+\item T\+G\+UI 0.\+8 (headers)
+\end{DoxyItemize}
+
+Um script simples para Ubuntu 18.\+04+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo add-apt-repository ppa:texus/tgui-0.8}
+\DoxyCodeLine{sudo apt-get update}
+\DoxyCodeLine{sudo apt-get install libsfml-dev libtgui-dev}
+\end{DoxyCode}
+ Ou utilizando o Dockerfile provido no repositório (preferencial).
+
+\#\# Como desenvolver localmente? 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\# Boas práticas}
+\DoxyCodeLine{mkdir build \&\& cd build}
+\DoxyCodeLine{\# Gere os scripts de compilação de teste para sua plataforma}
+\DoxyCodeLine{cmake ..}
+\DoxyCodeLine{\# Compilar}
+\DoxyCodeLine{make}
+\DoxyCodeLine{\# Testar}
+\DoxyCodeLine{make tests}
+\DoxyCodeLine{\# Gerar documentação em /docs}
+\DoxyCodeLine{make docs}
+\DoxyCodeLine{\# Executar}
+\DoxyCodeLine{make run}
+\end{DoxyCode}
+
+
+O R\+E\+PL possui dois tipos de comando\+: atribuição e operação.
+
+\#\#\#\# Atribuição de variável 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var1 = var2}
+\end{DoxyCode}
+ A variável {\itshape var1} passa a representar o grafo representado por {\itshape var2}.
+
+\#\#\#\# import 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var = import file\_name}
+\end{DoxyCode}
+ A variável {\itshape var} passa a representar o grafo armazenado em {\itshape file\+\_\+name}. Se a leitura do arquivo falhar, {\itshape var} passa a representar um grafo vazio.
+
+\#\#\#\# mst 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var1 = mst var2}
+\end{DoxyCode}
+ A variável {\itshape var1} passa a representar a {\bfseries{árvore geradora mínima}} do grafo representado por {\itshape var2}.
+
+\#\#\#\# describe 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > describe}
+\end{DoxyCode}
+ Exibe informações sobre o grafo representado por {\itshape var}.
+
+\#\#\#\# show 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > show}
+\end{DoxyCode}
+ Exibe o grafo representado por {\itshape var}.
+
+\#\#\#\# edit 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > edit}
+\end{DoxyCode}
+ Exibe o grafo representado por {\itshape var}, salvando as modificações efetuadas.
+
+\#\#\#\# reaches 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > reaches a b}
+\end{DoxyCode}
+ Verifica se o vértice {\itshape a} alcança o vértice {\itshape b} no grafo representado por {\itshape var}.
+
+\#\#\#\# scc 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > scc}
+\end{DoxyCode}
+ Exibe as componentes fortemente conexas do grafo representado por {\itshape var}.
+
+\#\#\#\# shortest\+Path 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > shortestPath a b}
+\end{DoxyCode}
+ Computa o peso do caminho mínimo do vértice {\itshape a} para o vértice {\itshape b} no grafo representado por {\itshape var}.
+
+\#\#\#\# coloring 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > coloring}
+\end{DoxyCode}
+ Computa uma coloração mínima para {\itshape var}. O algoritmo é polinomial quando {\itshape var} é cordal e {\bfseries{T\+O\+DO}} quando não é.
+
+\#\#\#\# chromatic\+Number 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > chromaticNumber}
+\end{DoxyCode}
+ Computa o número cromático, i.\+e. o menor número de cores necessárias para se colorir o grafo. O algoritmo é polinomial quando {\itshape var} é cordal e {\bfseries{T\+O\+DO}} quando não é.
+
+\#\#\#\# greedy\+Coloring 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > greedyColoring}
+\end{DoxyCode}
+ Computa uma coloração usando um algoritmo guloso na ordem dos vértices. Linear no tamanho do grafo.
+
+\#\#\#\# maximum\+Clique\+Size 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > maximumCliqueSize}
+\end{DoxyCode}
+ Computa o tamanho da clique máxima. Disponível apenas para grafos cordais.
+
+\#\#\#\# art\+Points 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > artPoints}
+\end{DoxyCode}
+ Encontra os vértices cujas remoções aumentam o número de componentes conexas do grafo.
+
+\#\#\#\# bridges 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > bridges}
+\end{DoxyCode}
+ Encontra as arestas cujas remoções aumentam o número de componentes conexas do grafo.
+
+\#\#\#\# topo\+Sort 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > topoSort}
+\end{DoxyCode}
+ Encontra uma ordenação topológica dos vértices do grafo.
+
+\#\#\#\# center 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > center}
+\end{DoxyCode}
+ Computa o centro da árvore {\itshape var}.
+
+\#\#\#\# diameter 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>>> var > diameter}
+\end{DoxyCode}
+ computa o diâmetro da árvore {\itshape var}. 

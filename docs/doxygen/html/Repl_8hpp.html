@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.15"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>GraphODA: Referência ao ficheiro include/controllers/repl/Repl.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">GraphODA
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.15 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Localizar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Localizar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_dea71a51519bb9f37f984497651ee8e6.html">controllers</a></li><li class="navelem"><a class="el" href="dir_c43ba3e892c06ab5d5f5b23c624a38fa.html">repl</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Componentes</a> &#124;
+<a href="#func-members">Funções</a> &#124;
+<a href="#var-members">Variáveis</a>  </div>
+  <div class="headertitle">
+<div class="title">Referência ao ficheiro Repl.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="Bipartite_8hpp_source.html">Bipartite.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Chordal_8hpp_source.html">Chordal.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Dag_8hpp_source.html">Dag.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Graph_8hpp_source.html">Graph.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="GraphCanvas_8hpp_source.html">GraphCanvas.hpp</a>&quot;</code><br />
+<code>#include &quot;Interface.hpp&quot;</code><br />
+<code>#include &quot;<a class="el" href="Tree_8hpp_source.html">Tree.hpp</a>&quot;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+</div>
+<p><a href="Repl_8hpp_source.html">Ir para o código fonte deste ficheiro.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Componentes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrepl_1_1TYPE.html">repl::TYPE</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classREPLException.html">REPLException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe para exceções do REPL.  <a href="classREPLException.html#details">Mais...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classREPLInvalidCommandException.html">REPLInvalidCommandException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe de exceções de comando inválido.  <a href="classREPLInvalidCommandException.html#details">Mais...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classREPLVertexNotFoundException.html">REPLVertexNotFoundException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classe de exceções de vértice não encontrado.  <a href="classREPLVertexNotFoundException.html#details">Mais...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funções</h2></td></tr>
+<tr class="memitem:a6870cc9e70892d0673231619f2dd4d9b"><td class="memItemLeft" align="right" valign="top"><a id="a6870cc9e70892d0673231619f2dd4d9b"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>repl::getType</b> (int)</td></tr>
+<tr class="separator:a6870cc9e70892d0673231619f2dd4d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c737d593a4f56e9f8e04f3637ee8e2c"><td class="memItemLeft" align="right" valign="top"><a id="a1c737d593a4f56e9f8e04f3637ee8e2c"></a>
+<a class="el" href="classGraph.html">Graph</a>&#160;</td><td class="memItemRight" valign="bottom"><b>repl::getGraph</b> ()</td></tr>
+<tr class="separator:a1c737d593a4f56e9f8e04f3637ee8e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af30960c4dbb7338624e5c52afd24be0e"><td class="memItemLeft" align="right" valign="top"><a id="af30960c4dbb7338624e5c52afd24be0e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>repl::getVertex</b> (<a class="el" href="classGraph.html">Graph</a> &amp;, string)</td></tr>
+<tr class="separator:af30960c4dbb7338624e5c52afd24be0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd666575ad4751b6b5b820c74078db5"><td class="memItemLeft" align="right" valign="top"><a id="aadd666575ad4751b6b5b820c74078db5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::undoDeclaration</b> ()</td></tr>
+<tr class="separator:aadd666575ad4751b6b5b820c74078db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab98d25a1cfc4f8b5020665c89c7f1d7f"><td class="memItemLeft" align="right" valign="top"><a id="ab98d25a1cfc4f8b5020665c89c7f1d7f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::fileNotFoundError</b> (string)</td></tr>
+<tr class="separator:ab98d25a1cfc4f8b5020665c89c7f1d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0da95be721207a985c33064b59e58b3"><td class="memItemLeft" align="right" valign="top"><a id="ac0da95be721207a985c33064b59e58b3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::undefinedVariableError</b> (string)</td></tr>
+<tr class="separator:ac0da95be721207a985c33064b59e58b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3587a91f2fdccf3cd55c4350e1e706d8"><td class="memItemLeft" align="right" valign="top"><a id="a3587a91f2fdccf3cd55c4350e1e706d8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::wrongTypeError</b> (string, int)</td></tr>
+<tr class="separator:a3587a91f2fdccf3cd55c4350e1e706d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8c6a6b3589701fa3f259701d5bd6651"><td class="memItemLeft" align="right" valign="top"><a id="ae8c6a6b3589701fa3f259701d5bd6651"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::graphIsNotError</b> (string, int)</td></tr>
+<tr class="separator:ae8c6a6b3589701fa3f259701d5bd6651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a71a04606964e8cc043862e0093c254"><td class="memItemLeft" align="right" valign="top"><a id="a6a71a04606964e8cc043862e0093c254"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::vertexNotFoundError</b> (string)</td></tr>
+<tr class="separator:a6a71a04606964e8cc043862e0093c254"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60e98d8f8dca443d5c07c4b59850f57a"><td class="memItemLeft" align="right" valign="top"><a id="a60e98d8f8dca443d5c07c4b59850f57a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::noPathError</b> (string, string)</td></tr>
+<tr class="separator:a60e98d8f8dca443d5c07c4b59850f57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b1219ddcc0e4cdbfe23700210d40b53"><td class="memItemLeft" align="right" valign="top"><a id="a8b1219ddcc0e4cdbfe23700210d40b53"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::negativeCycleError</b> ()</td></tr>
+<tr class="separator:a8b1219ddcc0e4cdbfe23700210d40b53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d8ec27c4d32df695a20242c7772f2a2"><td class="memItemLeft" align="right" valign="top"><a id="a2d8ec27c4d32df695a20242c7772f2a2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::import</b> ()</td></tr>
+<tr class="separator:a2d8ec27c4d32df695a20242c7772f2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa73131fa62f425f75ff10833444f926d"><td class="memItemLeft" align="right" valign="top"><a id="aa73131fa62f425f75ff10833444f926d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::mst</b> ()</td></tr>
+<tr class="separator:aa73131fa62f425f75ff10833444f926d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02774250f8c5f43402034196114d21ba"><td class="memItemLeft" align="right" valign="top"><a id="a02774250f8c5f43402034196114d21ba"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::graphCast</b> ()</td></tr>
+<tr class="separator:a02774250f8c5f43402034196114d21ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a725c460ab6315a48b22bb686096e5332"><td class="memItemLeft" align="right" valign="top"><a id="a725c460ab6315a48b22bb686096e5332"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::bipartiteCast</b> ()</td></tr>
+<tr class="separator:a725c460ab6315a48b22bb686096e5332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a621b75b2e54ff172a67a6b62b380cedd"><td class="memItemLeft" align="right" valign="top"><a id="a621b75b2e54ff172a67a6b62b380cedd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::chordalCast</b> ()</td></tr>
+<tr class="separator:a621b75b2e54ff172a67a6b62b380cedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15c53adf1f8f8032d32cd24a5e5c0f98"><td class="memItemLeft" align="right" valign="top"><a id="a15c53adf1f8f8032d32cd24a5e5c0f98"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::dagCast</b> ()</td></tr>
+<tr class="separator:a15c53adf1f8f8032d32cd24a5e5c0f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a841855f6fce3bd5f4c6ffd437c0486e5"><td class="memItemLeft" align="right" valign="top"><a id="a841855f6fce3bd5f4c6ffd437c0486e5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::treeCast</b> ()</td></tr>
+<tr class="separator:a841855f6fce3bd5f4c6ffd437c0486e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7123ded041fecb3b8289a832e9e98bb"><td class="memItemLeft" align="right" valign="top"><a id="aa7123ded041fecb3b8289a832e9e98bb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::show</b> (int, int)</td></tr>
+<tr class="separator:aa7123ded041fecb3b8289a832e9e98bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29b73ef587f93088ea28449f80535fb8"><td class="memItemLeft" align="right" valign="top"><a id="a29b73ef587f93088ea28449f80535fb8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::edit</b> (int, int)</td></tr>
+<tr class="separator:a29b73ef587f93088ea28449f80535fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3a831d0cefcb354cda48670df81a2fa"><td class="memItemLeft" align="right" valign="top"><a id="ad3a831d0cefcb354cda48670df81a2fa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::describe</b> ()</td></tr>
+<tr class="separator:ad3a831d0cefcb354cda48670df81a2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17009d4994ee12bbdba5da37848593fb"><td class="memItemLeft" align="right" valign="top"><a id="a17009d4994ee12bbdba5da37848593fb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::reaches</b> ()</td></tr>
+<tr class="separator:a17009d4994ee12bbdba5da37848593fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95aa63ae201c5733ff48d58cd78f7300"><td class="memItemLeft" align="right" valign="top"><a id="a95aa63ae201c5733ff48d58cd78f7300"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::scc</b> ()</td></tr>
+<tr class="separator:a95aa63ae201c5733ff48d58cd78f7300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada329af7e3a4ad4e1a8787139945eb2e"><td class="memItemLeft" align="right" valign="top"><a id="ada329af7e3a4ad4e1a8787139945eb2e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::shortestPath</b> ()</td></tr>
+<tr class="separator:ada329af7e3a4ad4e1a8787139945eb2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7cafb8b33489289fd529ffec7a41076"><td class="memItemLeft" align="right" valign="top"><a id="ab7cafb8b33489289fd529ffec7a41076"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::coloring</b> ()</td></tr>
+<tr class="separator:ab7cafb8b33489289fd529ffec7a41076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83d0069d354c568bae3f5bfa42cbc585"><td class="memItemLeft" align="right" valign="top"><a id="a83d0069d354c568bae3f5bfa42cbc585"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::chromaticNumber</b> ()</td></tr>
+<tr class="separator:a83d0069d354c568bae3f5bfa42cbc585"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99be7e612a022f0d4b540095ecf347df"><td class="memItemLeft" align="right" valign="top"><a id="a99be7e612a022f0d4b540095ecf347df"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::greedyColoring</b> ()</td></tr>
+<tr class="separator:a99be7e612a022f0d4b540095ecf347df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76bf9b63eee9f5381651efb29f1eef87"><td class="memItemLeft" align="right" valign="top"><a id="a76bf9b63eee9f5381651efb29f1eef87"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::maxClique</b> ()</td></tr>
+<tr class="separator:a76bf9b63eee9f5381651efb29f1eef87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d4754b3cd6081d121cc8e49c722564"><td class="memItemLeft" align="right" valign="top"><a id="af6d4754b3cd6081d121cc8e49c722564"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::artPoints</b> ()</td></tr>
+<tr class="separator:af6d4754b3cd6081d121cc8e49c722564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6134168ec22488bed690b7bd4ce1f45b"><td class="memItemLeft" align="right" valign="top"><a id="a6134168ec22488bed690b7bd4ce1f45b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::bridges</b> ()</td></tr>
+<tr class="separator:a6134168ec22488bed690b7bd4ce1f45b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a037387916e1734a441627ae1a3ac0c39"><td class="memItemLeft" align="right" valign="top"><a id="a037387916e1734a441627ae1a3ac0c39"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::topoSort</b> ()</td></tr>
+<tr class="separator:a037387916e1734a441627ae1a3ac0c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc2d63c2c80f3842dd27ff92d0a3e2c7"><td class="memItemLeft" align="right" valign="top"><a id="adc2d63c2c80f3842dd27ff92d0a3e2c7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::center</b> ()</td></tr>
+<tr class="separator:adc2d63c2c80f3842dd27ff92d0a3e2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa569e36dee0b2b3ad615fa483e77ebe9"><td class="memItemLeft" align="right" valign="top"><a id="aa569e36dee0b2b3ad615fa483e77ebe9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::diameter</b> ()</td></tr>
+<tr class="separator:aa569e36dee0b2b3ad615fa483e77ebe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0719f91c310a88684005cfbdaf2d22a6"><td class="memItemLeft" align="right" valign="top"><a id="a0719f91c310a88684005cfbdaf2d22a6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>repl::run</b> (int, int)</td></tr>
+<tr class="separator:a0719f91c310a88684005cfbdaf2d22a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variáveis</h2></td></tr>
+<tr class="memitem:a5a810ea1c9b246589faf9565c967bdf9"><td class="memItemLeft" align="right" valign="top"><a id="a5a810ea1c9b246589faf9565c967bdf9"></a>
+vector&lt; TYPE &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>repl::graphs</b></td></tr>
+<tr class="separator:a5a810ea1c9b246589faf9565c967bdf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a266841b1f804551728dc35538e493052"><td class="memItemLeft" align="right" valign="top"><a id="a266841b1f804551728dc35538e493052"></a>
+map&lt; string, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>repl::vars</b></td></tr>
+<tr class="separator:a266841b1f804551728dc35538e493052"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0343b69a4e5723b5dc28135916c76b1"><td class="memItemLeft" align="right" valign="top"><a id="aa0343b69a4e5723b5dc28135916c76b1"></a>
+stringstream&#160;</td><td class="memItemRight" valign="bottom"><b>repl::ss</b></td></tr>
+<tr class="separator:aa0343b69a4e5723b5dc28135916c76b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f6e98cb709ad06b78f8f7e9dde845c3"><td class="memItemLeft" align="right" valign="top"><a id="a9f6e98cb709ad06b78f8f7e9dde845c3"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>repl::var</b></td></tr>
+<tr class="separator:a9f6e98cb709ad06b78f8f7e9dde845c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada61d11d04d35e6d4c5ddca1d0223f75"><td class="memItemLeft" align="right" valign="top"><a id="ada61d11d04d35e6d4c5ddca1d0223f75"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>repl::at</b></td></tr>
+<tr class="separator:ada61d11d04d35e6d4c5ddca1d0223f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5477fedfa992f37caf0aa115c3c54c5"><td class="memItemLeft" align="right" valign="top"><a id="ad5477fedfa992f37caf0aa115c3c54c5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>repl::lastVar</b></td></tr>
+<tr class="separator:ad5477fedfa992f37caf0aa115c3c54c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac7fbd0bc964ee3131f6cc4be1fa4005"><td class="memItemLeft" align="right" valign="top"><a id="aac7fbd0bc964ee3131f6cc4be1fa4005"></a>
+<a class="el" href="classGraph.html">Graph</a>&#160;</td><td class="memItemRight" valign="bottom"><b>repl::getGraphVar</b> (string)</td></tr>
+<tr class="separator:aac7fbd0bc964ee3131f6cc4be1fa4005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.15
+</small></address>
+</body>
+</html>

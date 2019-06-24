@@ -1,0 +1,402 @@
+\hypertarget{classGraphGen}{}\section{Referência à classe Graph\+Gen}
+\label{classGraphGen}\index{GraphGen@{GraphGen}}
+
+
+Classe para grafos gerais.  
+
+
+
+
+{\ttfamily \#include $<$Graph\+Gen.\+hpp$>$}
+
+Diagrama de heranças da classe Graph\+Gen\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classGraphGen}
+\end{center}
+\end{figure}
+\subsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGraphGen_a71eb825043c2518df1be9a0ccef36bcb}\label{classGraphGen_a71eb825043c2518df1be9a0ccef36bcb}} 
+\mbox{\hyperlink{classGraphGen_a71eb825043c2518df1be9a0ccef36bcb}{Graph\+Gen}} ()
+\begin{DoxyCompactList}\small\item\em Construtor para o grafo vazio. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGraphGen_aec08708894158ba3098873e7a1da6b60}{Graph\+Gen}} (int)
+\item 
+\mbox{\hyperlink{classGraphGen_abdb70c362c414ff5a18ab3796126a1a9}{Graph\+Gen}} (int, vector$<$ string $>$ \&)
+\item 
+int \mbox{\hyperlink{classGraphGen_a7447dc2fdc4cd3f86579811febfff1ad}{getN}} ()
+\item 
+int \mbox{\hyperlink{classGraphGen_aad12bcf774a0fa97150b01126d3a3e90}{getM}} ()
+\item 
+vector$<$ vector$<$ pair$<$ int, int $>$ $>$ $>$ \mbox{\hyperlink{classGraphGen_a36741424a266249c915f29fbab96175c}{get\+Adj}} ()
+\item 
+vector$<$ vector$<$ pair$<$ int, int $>$ $>$ $>$ \mbox{\hyperlink{classGraphGen_ab37943d4526c45711622796c84e983ac}{get\+Sim\+Adj}} ()
+\item 
+vector$<$ pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classGraphGen_af140b74e5bbb7171a0b76f73d10c14ae}{get\+Edges}} ()
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classGraphGen_a56cb589bfd48135fe224d172dbed3155}{get\+Pesos}} ()
+\item 
+vector$<$ vector$<$ int $>$ $>$ \mbox{\hyperlink{classGraphGen_a32029b7e5e2c379bdc5412f0e954e121}{get\+Matrix}} ()
+\item 
+vector$<$ vector$<$ int $>$ $>$ \mbox{\hyperlink{classGraphGen_ab2f8872fc9fab4268ad999dd89e1d4fa}{get\+Sim\+Matrix}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_aa0069b56cfa3e2d7d596bda9ba4ccc2b}{is\+Weighted}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_a904cd0ab02e4c837ebd85226996fb4b2}{has\+Negative\+Weight}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_a4fba74f3a12a3153843f550569981b0b}{reaches}} (int, int)
+\item 
+bool \mbox{\hyperlink{classGraphGen_addc27f1b1daa452bb0943c867b550906}{is\+Connected}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_a41afdf97face9260e82749c4c770b2e7}{is\+Bipartite}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_aac3e93061f340c6855aa54ed73922f47}{is\+Chordal}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_ab4923b690b5fe013f35377b849bb6609}{is\+Dag}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_adffd99540a68b2c158cc1b089ccfd550}{is\+Tree}} ()
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classGraphGen_a875733956a1f667d68afb420f53ecc86}{scc}} ()
+\item 
+long long \mbox{\hyperlink{classGraphGen_ad42fcde82e163baadcfaa02293242db5}{shortest\+Path}} (int, int)
+\item 
+virtual vector$<$ int $>$ \mbox{\hyperlink{classGraphGen_ad44c80646f694460fafa3e3657beb4d0}{coloring}} ()
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classGraphGen_a8505ba4cbaa0685f43e52a4c4f296dc1}{greedy\+Coloring}} ()
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classGraphGen_a0690c98ce5c9dd544074f690fb79a8c6}{greedy\+Coloring}} (vector$<$ int $>$)
+\item 
+vector$<$ bool $>$ \mbox{\hyperlink{classGraphGen_abfc9e2946585f5ea7e2948cd724d37e8}{art\+Points}} ()
+\item 
+vector$<$ pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classGraphGen_ac80b65f7234db5bc163c7736aa0f561a}{bridges}} ()
+\end{DoxyCompactItemize}
+\subsection*{Atributos Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGraphGen_a59a950a3a5b8d5f3bda7b544a83248ed}\label{classGraphGen_a59a950a3a5b8d5f3bda7b544a83248ed}} 
+vector$<$ string $>$ \mbox{\hyperlink{classGraphGen_a59a950a3a5b8d5f3bda7b544a83248ed}{label}}
+\begin{DoxyCompactList}\small\item\em Lista de rótulos dos vértices. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Membros protegidos}
+\begin{DoxyCompactItemize}
+\item 
+pair$<$ vector$<$ int $>$, vector$<$ int $>$ $>$ \mbox{\hyperlink{classGraphGen_a7811947062c0aa0fd1c56af0442dc9ad}{maximum\+Cardinality\+Search}} ()
+\item 
+bool \mbox{\hyperlink{classGraphGen_ad22d4dd7a1006663e1ba653c16b26e1a}{zero\+Fill\+In}} (pair$<$ vector$<$ int $>$, vector$<$ int $>$$>$)
+\item 
+\mbox{\Hypertarget{classGraphGen_ac4ae31e7a52c9b2227ab8deb47d091a5}\label{classGraphGen_ac4ae31e7a52c9b2227ab8deb47d091a5}} 
+bool \mbox{\hyperlink{classGraphGen_ac4ae31e7a52c9b2227ab8deb47d091a5}{check\+Ordering}} (vector$<$ int $>$)
+\begin{DoxyCompactList}\small\item\em Verifica se uma ordenação atende às exigências de uma ordenação. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Atributos Protegidos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGraphGen_af0087a36d5f72076ae87b0f9022c0033}\label{classGraphGen_af0087a36d5f72076ae87b0f9022c0033}} 
+int \mbox{\hyperlink{classGraphGen_af0087a36d5f72076ae87b0f9022c0033}{n}}
+\begin{DoxyCompactList}\small\item\em Número de vértices do grafo. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphGen_aa313851fc05ee0f7a2ce768ba296e944}\label{classGraphGen_aa313851fc05ee0f7a2ce768ba296e944}} 
+int \mbox{\hyperlink{classGraphGen_aa313851fc05ee0f7a2ce768ba296e944}{m}}
+\begin{DoxyCompactList}\small\item\em Número de arestas do grafo. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphGen_ae1cc2cf59230c1cdff45fa6848f1bf1f}\label{classGraphGen_ae1cc2cf59230c1cdff45fa6848f1bf1f}} 
+vector$<$ vector$<$ pair$<$ int, int $>$ $>$ $>$ \mbox{\hyperlink{classGraphGen_ae1cc2cf59230c1cdff45fa6848f1bf1f}{adj}}
+\begin{DoxyCompactList}\small\item\em Lista de adjacência direcionada. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphGen_a6bfecbfc2aca704e5107dd667a23a1c0}\label{classGraphGen_a6bfecbfc2aca704e5107dd667a23a1c0}} 
+vector$<$ vector$<$ pair$<$ int, int $>$ $>$ $>$ \mbox{\hyperlink{classGraphGen_a6bfecbfc2aca704e5107dd667a23a1c0}{sim\+Adj}}
+\begin{DoxyCompactList}\small\item\em Lista de adjacência não direcionada. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Descrição detalhada}
+Classe para grafos gerais. 
+
+\subsection{Documentação dos Construtores \& Destrutor}
+\mbox{\Hypertarget{classGraphGen_aec08708894158ba3098873e7a1da6b60}\label{classGraphGen_aec08708894158ba3098873e7a1da6b60}} 
+\index{GraphGen@{GraphGen}!GraphGen@{GraphGen}}
+\index{GraphGen@{GraphGen}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{GraphGen()}{GraphGen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Graph\+Gen\+::\+Graph\+Gen (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
+
+Construtor para o grafo por número de vértices. 
+\begin{DoxyParams}{Parâmetros}
+{\em Número} & de vértices. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGraphGen_abdb70c362c414ff5a18ab3796126a1a9}\label{classGraphGen_abdb70c362c414ff5a18ab3796126a1a9}} 
+\index{GraphGen@{GraphGen}!GraphGen@{GraphGen}}
+\index{GraphGen@{GraphGen}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{GraphGen()}{GraphGen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Graph\+Gen\+::\+Graph\+Gen (\begin{DoxyParamCaption}\item[{int}]{,  }\item[{vector$<$ string $>$ \&}]{ }\end{DoxyParamCaption})}
+
+Construtor para o grafo por número de vértices e seus rótulos. 
+\begin{DoxyParams}{Parâmetros}
+{\em Número} & de vértices. \\
+\hline
+{\em Lista} & de rótulos. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentação dos métodos}
+\mbox{\Hypertarget{classGraphGen_abfc9e2946585f5ea7e2948cd724d37e8}\label{classGraphGen_abfc9e2946585f5ea7e2948cd724d37e8}} 
+\index{GraphGen@{GraphGen}!artPoints@{artPoints}}
+\index{artPoints@{artPoints}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{artPoints()}{artPoints()}}
+{\footnotesize\ttfamily vector$<$bool$>$ Graph\+Gen\+::art\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna um vetor de booleanos que informa se cada vértice é um ponto de articulação
+
+Complexidade\+: O(n + m) \begin{DoxyReturn}{Retorna}
+Lista informando se cada vértice é ponto de articulação ou não. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_ac80b65f7234db5bc163c7736aa0f561a}\label{classGraphGen_ac80b65f7234db5bc163c7736aa0f561a}} 
+\index{GraphGen@{GraphGen}!bridges@{bridges}}
+\index{bridges@{bridges}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{bridges()}{bridges()}}
+{\footnotesize\ttfamily vector$<$pair$<$int, int$>$ $>$ Graph\+Gen\+::bridges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna um vetor de booleanos que informa se cada aresta é uma ponte
+
+Complexidade\+: O(n + m) \begin{DoxyReturn}{Retorna}
+Lista com as arestas que são pontes no grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_ad44c80646f694460fafa3e3657beb4d0}\label{classGraphGen_ad44c80646f694460fafa3e3657beb4d0}} 
+\index{GraphGen@{GraphGen}!coloring@{coloring}}
+\index{coloring@{coloring}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{coloring()}{coloring()}}
+{\footnotesize\ttfamily virtual vector$<$int$>$ Graph\+Gen\+::coloring (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Retorna uma lista com a cor de cada vértice em uma coloração mínima.
+
+Complexidade\+: O(nlog(n) + m) quando cordal \begin{DoxyReturn}{Retorna}
+Lista com a cor de cada vértice. 
+\end{DoxyReturn}
+
+
+Reimplementado em \mbox{\hyperlink{classChordal_acac4822a1eb3376c29f3d193baaec91f}{Chordal}}.
+
+\mbox{\Hypertarget{classGraphGen_a36741424a266249c915f29fbab96175c}\label{classGraphGen_a36741424a266249c915f29fbab96175c}} 
+\index{GraphGen@{GraphGen}!getAdj@{getAdj}}
+\index{getAdj@{getAdj}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getAdj()}{getAdj()}}
+{\footnotesize\ttfamily vector$<$vector$<$pair$<$int, int$>$ $>$ $>$ Graph\+Gen\+::get\+Adj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna a lista de adjacência direcionada. \begin{DoxyReturn}{Retorna}
+Lista de adjacência direcionada do grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_af140b74e5bbb7171a0b76f73d10c14ae}\label{classGraphGen_af140b74e5bbb7171a0b76f73d10c14ae}} 
+\index{GraphGen@{GraphGen}!getEdges@{getEdges}}
+\index{getEdges@{getEdges}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getEdges()}{getEdges()}}
+{\footnotesize\ttfamily vector$<$pair$<$int, int$>$ $>$ Graph\+Gen\+::get\+Edges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna a lista das arestas. \begin{DoxyReturn}{Retorna}
+Lista com as arestas do grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_aad12bcf774a0fa97150b01126d3a3e90}\label{classGraphGen_aad12bcf774a0fa97150b01126d3a3e90}} 
+\index{GraphGen@{GraphGen}!getM@{getM}}
+\index{getM@{getM}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getM()}{getM()}}
+{\footnotesize\ttfamily int Graph\+Gen\+::getM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorn o número de arestas. \begin{DoxyReturn}{Retorna}
+Número de arestas do grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a32029b7e5e2c379bdc5412f0e954e121}\label{classGraphGen_a32029b7e5e2c379bdc5412f0e954e121}} 
+\index{GraphGen@{GraphGen}!getMatrix@{getMatrix}}
+\index{getMatrix@{getMatrix}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getMatrix()}{getMatrix()}}
+{\footnotesize\ttfamily vector$<$vector$<$int$>$ $>$ Graph\+Gen\+::get\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna a matriz de adjacência. \begin{DoxyReturn}{Retorna}
+Matriz de adjacência do grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a7447dc2fdc4cd3f86579811febfff1ad}\label{classGraphGen_a7447dc2fdc4cd3f86579811febfff1ad}} 
+\index{GraphGen@{GraphGen}!getN@{getN}}
+\index{getN@{getN}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getN()}{getN()}}
+{\footnotesize\ttfamily int Graph\+Gen\+::getN (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna o número de vértices \begin{DoxyReturn}{Retorna}
+Número de vértices do grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a56cb589bfd48135fe224d172dbed3155}\label{classGraphGen_a56cb589bfd48135fe224d172dbed3155}} 
+\index{GraphGen@{GraphGen}!getPesos@{getPesos}}
+\index{getPesos@{getPesos}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getPesos()}{getPesos()}}
+{\footnotesize\ttfamily vector$<$int$>$ Graph\+Gen\+::get\+Pesos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna a lista de pesos das arestas. \begin{DoxyReturn}{Retorna}
+lista com os pesos do grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_ab37943d4526c45711622796c84e983ac}\label{classGraphGen_ab37943d4526c45711622796c84e983ac}} 
+\index{GraphGen@{GraphGen}!getSimAdj@{getSimAdj}}
+\index{getSimAdj@{getSimAdj}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getSimAdj()}{getSimAdj()}}
+{\footnotesize\ttfamily vector$<$vector$<$pair$<$int, int$>$ $>$ $>$ Graph\+Gen\+::get\+Sim\+Adj (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorn a lista de adjacência não direcionada. \begin{DoxyReturn}{Retorna}
+Lista de adjacêncai não direcionada do grafo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_ab2f8872fc9fab4268ad999dd89e1d4fa}\label{classGraphGen_ab2f8872fc9fab4268ad999dd89e1d4fa}} 
+\index{GraphGen@{GraphGen}!getSimMatrix@{getSimMatrix}}
+\index{getSimMatrix@{getSimMatrix}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{getSimMatrix()}{getSimMatrix()}}
+{\footnotesize\ttfamily vector$<$vector$<$int$>$ $>$ Graph\+Gen\+::get\+Sim\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna a matriz de adjacência simétrica. \begin{DoxyReturn}{Retorna}
+Matriz de adjacência simétrica. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a8505ba4cbaa0685f43e52a4c4f296dc1}\label{classGraphGen_a8505ba4cbaa0685f43e52a4c4f296dc1}} 
+\index{GraphGen@{GraphGen}!greedyColoring@{greedyColoring}}
+\index{greedyColoring@{greedyColoring}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{greedyColoring()}{greedyColoring()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily vector$<$int$>$ Graph\+Gen\+::greedy\+Coloring (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna uma lista com a cor de cada vértice em uma coloração gulosa na ordem dos vértices.
+
+Complexidade\+: O(n + m) \begin{DoxyReturn}{Retorna}
+Lista com a cor de cada vértice. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a0690c98ce5c9dd544074f690fb79a8c6}\label{classGraphGen_a0690c98ce5c9dd544074f690fb79a8c6}} 
+\index{GraphGen@{GraphGen}!greedyColoring@{greedyColoring}}
+\index{greedyColoring@{greedyColoring}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{greedyColoring()}{greedyColoring()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily vector$<$int$>$ Graph\+Gen\+::greedy\+Coloring (\begin{DoxyParamCaption}\item[{vector$<$ int $>$}]{ }\end{DoxyParamCaption})}
+
+Retorna uma lista com a cor de cada vértice em uma coloração gulosa para uma dada ordem dos vértices.
+
+Complexidade\+: O(n + m) 
+\begin{DoxyParams}{Parâmetros}
+{\em Ordem} & para avaliação do algoritmo guloso. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Lista com a cor de cada vértice. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a904cd0ab02e4c837ebd85226996fb4b2}\label{classGraphGen_a904cd0ab02e4c837ebd85226996fb4b2}} 
+\index{GraphGen@{GraphGen}!hasNegativeWeight@{hasNegativeWeight}}
+\index{hasNegativeWeight@{hasNegativeWeight}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{hasNegativeWeight()}{hasNegativeWeight()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::has\+Negative\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna se o grafo possui arestas com pesos negativos. \begin{DoxyReturn}{Retorna}
+bool informando se o grafo possui peso negativo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a41afdf97face9260e82749c4c770b2e7}\label{classGraphGen_a41afdf97face9260e82749c4c770b2e7}} 
+\index{GraphGen@{GraphGen}!isBipartite@{isBipartite}}
+\index{isBipartite@{isBipartite}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{isBipartite()}{isBipartite()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::is\+Bipartite (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna se o grafo é bipartido. \begin{DoxyReturn}{Retorna}
+bool informando se o grafo é bipartido. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_aac3e93061f340c6855aa54ed73922f47}\label{classGraphGen_aac3e93061f340c6855aa54ed73922f47}} 
+\index{GraphGen@{GraphGen}!isChordal@{isChordal}}
+\index{isChordal@{isChordal}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{isChordal()}{isChordal()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::is\+Chordal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna se o grafo é cordal. \begin{DoxyReturn}{Retorna}
+bool informando se o grafo é cordal. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_addc27f1b1daa452bb0943c867b550906}\label{classGraphGen_addc27f1b1daa452bb0943c867b550906}} 
+\index{GraphGen@{GraphGen}!isConnected@{isConnected}}
+\index{isConnected@{isConnected}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{isConnected()}{isConnected()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::is\+Connected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna se o grafo é conexo. \begin{DoxyReturn}{Retorna}
+bool informando se o grafo é conexo. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_ab4923b690b5fe013f35377b849bb6609}\label{classGraphGen_ab4923b690b5fe013f35377b849bb6609}} 
+\index{GraphGen@{GraphGen}!isDag@{isDag}}
+\index{isDag@{isDag}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{isDag()}{isDag()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::is\+Dag (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna se o grafo é direcionado acíclico. \begin{DoxyReturn}{Retorna}
+bool informando se o grafo é D\+AG. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_adffd99540a68b2c158cc1b089ccfd550}\label{classGraphGen_adffd99540a68b2c158cc1b089ccfd550}} 
+\index{GraphGen@{GraphGen}!isTree@{isTree}}
+\index{isTree@{isTree}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{isTree()}{isTree()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::is\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna se o grafo é uma árvore. \begin{DoxyReturn}{Retorna}
+bool informando se o grafo é uma árvore. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_aa0069b56cfa3e2d7d596bda9ba4ccc2b}\label{classGraphGen_aa0069b56cfa3e2d7d596bda9ba4ccc2b}} 
+\index{GraphGen@{GraphGen}!isWeighted@{isWeighted}}
+\index{isWeighted@{isWeighted}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{isWeighted()}{isWeighted()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::is\+Weighted (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna se o grafo possui arestas com pesos. \begin{DoxyReturn}{Retorna}
+bool informando se o grafo possui peso nas arestas. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a7811947062c0aa0fd1c56af0442dc9ad}\label{classGraphGen_a7811947062c0aa0fd1c56af0442dc9ad}} 
+\index{GraphGen@{GraphGen}!maximumCardinalitySearch@{maximumCardinalitySearch}}
+\index{maximumCardinalitySearch@{maximumCardinalitySearch}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{maximumCardinalitySearch()}{maximumCardinalitySearch()}}
+{\footnotesize\ttfamily pair$<$vector$<$int$>$, vector$<$int$>$ $>$ Graph\+Gen\+::maximum\+Cardinality\+Search (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Retorna uma ordenação dos vértices, e sua ordenação inversa, de máxima caridinalidade (uma ordenação simplicial se e somente se o grafo for cordal).
+
+Complexidade\+: O(nlog(n) + m) \mbox{\Hypertarget{classGraphGen_a4fba74f3a12a3153843f550569981b0b}\label{classGraphGen_a4fba74f3a12a3153843f550569981b0b}} 
+\index{GraphGen@{GraphGen}!reaches@{reaches}}
+\index{reaches@{reaches}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{reaches()}{reaches()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::reaches (\begin{DoxyParamCaption}\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+Retorna se dois vértices se alcançam. 
+\begin{DoxyParams}{Parâmetros}
+{\em Vértice} & a. \\
+\hline
+{\em Vértice} & b. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+bool informando se o vértice \textquotesingle{}a\textquotesingle{} alcança o vértice \textquotesingle{}b\textquotesingle{}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_a875733956a1f667d68afb420f53ecc86}\label{classGraphGen_a875733956a1f667d68afb420f53ecc86}} 
+\index{GraphGen@{GraphGen}!scc@{scc}}
+\index{scc@{scc}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{scc()}{scc()}}
+{\footnotesize\ttfamily vector$<$int$>$ Graph\+Gen\+::scc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retorna uma lista com a componente fortemente conexa de cada vértice.
+
+Complexidade\+: O(n + m) \begin{DoxyReturn}{Retorna}
+Lista tal que na posição \textquotesingle{}i\textquotesingle{}, possui o índice da componente fortemente conexa do vértice \textquotesingle{}i\textquotesingle{}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_ad42fcde82e163baadcfaa02293242db5}\label{classGraphGen_ad42fcde82e163baadcfaa02293242db5}} 
+\index{GraphGen@{GraphGen}!shortestPath@{shortestPath}}
+\index{shortestPath@{shortestPath}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{shortestPath()}{shortestPath()}}
+{\footnotesize\ttfamily long long Graph\+Gen\+::shortest\+Path (\begin{DoxyParamCaption}\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+Retorna o menor caminho entre dois vértices.
+
+Complexidade\+: se todos os pesos forem 1, linear. Se não houver peso negativo, O(m log(n)). Caso contrário, O(n$\ast$m). 
+\begin{DoxyParams}{Parâmetros}
+{\em Vértice} & \textquotesingle{}a\textquotesingle{}. \\
+\hline
+{\em Vértice} & \textquotesingle{}b\textquotesingle{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Comprimento do camínho mínimo de \textquotesingle{}a\textquotesingle{} até \textquotesingle{}b\textquotesingle{}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphGen_ad22d4dd7a1006663e1ba653c16b26e1a}\label{classGraphGen_ad22d4dd7a1006663e1ba653c16b26e1a}} 
+\index{GraphGen@{GraphGen}!zeroFillIn@{zeroFillIn}}
+\index{zeroFillIn@{zeroFillIn}!GraphGen@{GraphGen}}
+\subsubsection{\texorpdfstring{zeroFillIn()}{zeroFillIn()}}
+{\footnotesize\ttfamily bool Graph\+Gen\+::zero\+Fill\+In (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Verifica se uma ordenação dos vértices (e sua ordenação inversa) possui as propriedades de de Zero-\/\+Fill-\/\+In (i.\+e., se o grafo é cordal).
+
+Complexidade\+: O(n + m) 
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+include/models/graph/\mbox{\hyperlink{GraphGen_8hpp}{Graph\+Gen.\+hpp}}\end{DoxyCompactItemize}

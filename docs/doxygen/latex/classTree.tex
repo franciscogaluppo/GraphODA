@@ -1,0 +1,97 @@
+\hypertarget{classTree}{}\section{Referência à classe Tree}
+\label{classTree}\index{Tree@{Tree}}
+
+
+Classe para árvores.  
+
+
+
+
+{\ttfamily \#include $<$Tree.\+hpp$>$}
+
+Diagrama de heranças da classe Tree\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classTree}
+\end{center}
+\end{figure}
+\subsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classTree_ad376a7c639d857312f5de2ef47482f68}\label{classTree_ad376a7c639d857312f5de2ef47482f68}} 
+\mbox{\hyperlink{classTree_ad376a7c639d857312f5de2ef47482f68}{Tree}} ()
+\begin{DoxyCompactList}\small\item\em Construtor de árvores vazias. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTree_a25977c120f94e833fdd7739daa9b8d89}{Tree}} (int)
+\item 
+\mbox{\hyperlink{classTree_a9f7d6a13c19b6525ee504079a5ffbd8e}{Tree}} (\mbox{\hyperlink{classGraphGen}{Graph\+Gen}} \&)
+\item 
+int \mbox{\hyperlink{classTree_af13c3d7650185d8703c5483d3b24a5e5}{center}} ()
+\item 
+int \mbox{\hyperlink{classTree_a8a296a740609d29e4ff991549b7f8f92}{diameter}} ()
+\item 
+int \mbox{\hyperlink{classTree_a568a379c4a528faf192b2a97ac3a20bb}{centroid}} ()
+\end{DoxyCompactItemize}
+\subsection*{Outros membros herdados}
+
+
+\subsection{Descrição detalhada}
+Classe para árvores. 
+
+\subsection{Documentação dos Construtores \& Destrutor}
+\mbox{\Hypertarget{classTree_a25977c120f94e833fdd7739daa9b8d89}\label{classTree_a25977c120f94e833fdd7739daa9b8d89}} 
+\index{Tree@{Tree}!Tree@{Tree}}
+\index{Tree@{Tree}!Tree@{Tree}}
+\subsubsection{\texorpdfstring{Tree()}{Tree()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Tree\+::\+Tree (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
+
+Construtor de árvores por número de vértices. 
+\begin{DoxyParams}{Parâmetros}
+{\em Número} & de vértices. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classTree_a9f7d6a13c19b6525ee504079a5ffbd8e}\label{classTree_a9f7d6a13c19b6525ee504079a5ffbd8e}} 
+\index{Tree@{Tree}!Tree@{Tree}}
+\index{Tree@{Tree}!Tree@{Tree}}
+\subsubsection{\texorpdfstring{Tree()}{Tree()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Tree\+::\+Tree (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraphGen}{Graph\+Gen}} \&}]{ }\end{DoxyParamCaption})}
+
+Construtor de árvores por \mbox{\hyperlink{classGraphGen}{Graph\+Gen}}. 
+\begin{DoxyParams}{Parâmetros}
+{\em Grafo} & a ser convertido em \mbox{\hyperlink{classTree}{Tree}}. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentação dos métodos}
+\mbox{\Hypertarget{classTree_af13c3d7650185d8703c5483d3b24a5e5}\label{classTree_af13c3d7650185d8703c5483d3b24a5e5}} 
+\index{Tree@{Tree}!center@{center}}
+\index{center@{center}!Tree@{Tree}}
+\subsubsection{\texorpdfstring{center()}{center()}}
+{\footnotesize\ttfamily int Tree\+::center (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Computa centro da árvore. \begin{DoxyReturn}{Retorna}
+Vértice centro da árvore. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTree_a568a379c4a528faf192b2a97ac3a20bb}\label{classTree_a568a379c4a528faf192b2a97ac3a20bb}} 
+\index{Tree@{Tree}!centroid@{centroid}}
+\index{centroid@{centroid}!Tree@{Tree}}
+\subsubsection{\texorpdfstring{centroid()}{centroid()}}
+{\footnotesize\ttfamily int Tree\+::centroid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Computa centroid da árvore. \begin{DoxyReturn}{Retorna}
+Centroid da árvore. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classTree_a8a296a740609d29e4ff991549b7f8f92}\label{classTree_a8a296a740609d29e4ff991549b7f8f92}} 
+\index{Tree@{Tree}!diameter@{diameter}}
+\index{diameter@{diameter}!Tree@{Tree}}
+\subsubsection{\texorpdfstring{diameter()}{diameter()}}
+{\footnotesize\ttfamily int Tree\+::diameter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Computa diâmetro da árvore. \begin{DoxyReturn}{Retorna}
+Diâmetro da árvore. 
+\end{DoxyReturn}
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+include/models/graph/\mbox{\hyperlink{Tree_8hpp}{Tree.\+hpp}}\end{DoxyCompactItemize}

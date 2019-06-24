@@ -1,0 +1,95 @@
+\hypertarget{classGraphCanvas}{}\section{Referência à classe Graph\+Canvas}
+\label{classGraphCanvas}\index{GraphCanvas@{GraphCanvas}}
+
+
+Classe para o canvas.  
+
+
+
+
+{\ttfamily \#include $<$Graph\+Canvas.\+hpp$>$}
+
+\subsection*{Membros públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGraphCanvas_a0868eb47bb561e5037b24dc06fad52c7}\label{classGraphCanvas_a0868eb47bb561e5037b24dc06fad52c7}} 
+\mbox{\hyperlink{classGraphCanvas_a0868eb47bb561e5037b24dc06fad52c7}{Graph\+Canvas}} ()
+\begin{DoxyCompactList}\small\item\em Construtor vazio. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGraphCanvas_a7852754f721735c6d8672673a50401cc}{Graph\+Canvas}} (sf\+::\+Render\+Window \&, sf\+::\+Font \&, int, int, int)
+\item 
+void \mbox{\hyperlink{classGraphCanvas_a1f402e85859d1eb3b6f1965de3def1af}{set\+Graph}} (\mbox{\hyperlink{classGraph}{Graph}})
+\item 
+bool \mbox{\hyperlink{classGraphCanvas_a4115aea20f2f1352b674ef9cfb6579a4}{handle\+Clique}} ()
+\item 
+\mbox{\Hypertarget{classGraphCanvas_a236523bfec7a55f8ea70c09fdb3590c3}\label{classGraphCanvas_a236523bfec7a55f8ea70c09fdb3590c3}} 
+void \mbox{\hyperlink{classGraphCanvas_a236523bfec7a55f8ea70c09fdb3590c3}{display}} ()
+\begin{DoxyCompactList}\small\item\em Exibe o grafo. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Atributos Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGraphCanvas_a7e2f16ce3638db53fb73061fe1c93f15}\label{classGraphCanvas_a7e2f16ce3638db53fb73061fe1c93f15}} 
+\mbox{\hyperlink{classGraphDisplay}{Graph\+Display}} \mbox{\hyperlink{classGraphCanvas_a7e2f16ce3638db53fb73061fe1c93f15}{GD}}
+\begin{DoxyCompactList}\small\item\em Display do canvas. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphCanvas_acbae5a92eb6cdc7cd7714093295f5412}\label{classGraphCanvas_acbae5a92eb6cdc7cd7714093295f5412}} 
+sf\+::\+Render\+Window $\ast$ \mbox{\hyperlink{classGraphCanvas_acbae5a92eb6cdc7cd7714093295f5412}{janela}}
+\begin{DoxyCompactList}\small\item\em Objeto Render\+Window para trabalhar no canvas. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphCanvas_a74e79b17a3bbfa10dfa1bbe9f1aeb47d}\label{classGraphCanvas_a74e79b17a3bbfa10dfa1bbe9f1aeb47d}} 
+sf\+::\+Font \mbox{\hyperlink{classGraphCanvas_a74e79b17a3bbfa10dfa1bbe9f1aeb47d}{fonte}}
+\begin{DoxyCompactList}\small\item\em Fonte para textos da interface. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphCanvas_a65406a215bd30e44358031c5b8a2cc2b}\label{classGraphCanvas_a65406a215bd30e44358031c5b8a2cc2b}} 
+int \mbox{\hyperlink{classGraphCanvas_a65406a215bd30e44358031c5b8a2cc2b}{edit\+Label}}
+\begin{DoxyCompactList}\small\item\em Vértice que o usuário está editando. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGraphCanvas_a3b81b5c942b2fe3d94952d7ce664d3ed}\label{classGraphCanvas_a3b81b5c942b2fe3d94952d7ce664d3ed}} 
+int \mbox{\hyperlink{classGraphCanvas_a3b81b5c942b2fe3d94952d7ce664d3ed}{edit\+Weight}}
+\begin{DoxyCompactList}\small\item\em Aresta que o usuário está editando. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Descrição detalhada}
+Classe para o canvas. 
+
+\subsection{Documentação dos Construtores \& Destrutor}
+\mbox{\Hypertarget{classGraphCanvas_a7852754f721735c6d8672673a50401cc}\label{classGraphCanvas_a7852754f721735c6d8672673a50401cc}} 
+\index{GraphCanvas@{GraphCanvas}!GraphCanvas@{GraphCanvas}}
+\index{GraphCanvas@{GraphCanvas}!GraphCanvas@{GraphCanvas}}
+\subsubsection{\texorpdfstring{GraphCanvas()}{GraphCanvas()}}
+{\footnotesize\ttfamily Graph\+Canvas\+::\+Graph\+Canvas (\begin{DoxyParamCaption}\item[{sf\+::\+Render\+Window \&}]{,  }\item[{sf\+::\+Font \&}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+Construtor da classe. 
+\begin{DoxyParams}{Parâmetros}
+{\em Janela.} & \\
+\hline
+{\em Fonte.} & \\
+\hline
+{\em X} & e Y que delimitam o canvas. \\
+\hline
+{\em raio} & do vértice. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Documentação dos métodos}
+\mbox{\Hypertarget{classGraphCanvas_a4115aea20f2f1352b674ef9cfb6579a4}\label{classGraphCanvas_a4115aea20f2f1352b674ef9cfb6579a4}} 
+\index{GraphCanvas@{GraphCanvas}!handleClique@{handleClique}}
+\index{handleClique@{handleClique}!GraphCanvas@{GraphCanvas}}
+\subsubsection{\texorpdfstring{handleClique()}{handleClique()}}
+{\footnotesize\ttfamily bool Graph\+Canvas\+::handle\+Clique (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Trata o clique do usuário, descobrindo se ele clicou num vértice, aresta, etc. \begin{DoxyReturn}{Retorna}
+bool que informa se algo foi alterado no canvas. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGraphCanvas_a1f402e85859d1eb3b6f1965de3def1af}\label{classGraphCanvas_a1f402e85859d1eb3b6f1965de3def1af}} 
+\index{GraphCanvas@{GraphCanvas}!setGraph@{setGraph}}
+\index{setGraph@{setGraph}!GraphCanvas@{GraphCanvas}}
+\subsubsection{\texorpdfstring{setGraph()}{setGraph()}}
+{\footnotesize\ttfamily void Graph\+Canvas\+::set\+Graph (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classGraph}{Graph}}}]{ }\end{DoxyParamCaption})}
+
+Define o grafo a ser representado. 
+\begin{DoxyParams}{Parâmetros}
+{\em Grafo} & a ser representado. \\
+\hline
+\end{DoxyParams}
+
+
+A documentação para esta classe foi gerada a partir do seguinte ficheiro\+:\begin{DoxyCompactItemize}
+\item 
+include/views/\mbox{\hyperlink{GraphCanvas_8hpp}{Graph\+Canvas.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,113 @@
+\hypertarget{Vector_8hpp}{}\section{Referência ao ficheiro include/models/data\+Structures/\+Vector.hpp}
+\label{Vector_8hpp}\index{include/models/dataStructures/Vector.hpp@{include/models/dataStructures/Vector.hpp}}
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+\subsection*{Componentes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classVector}{Vector}}
+\begin{DoxyCompactList}\small\item\em Classe para operações vetoriais no espaço real de duas dimensões. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Funções}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVector}{Vector}} \mbox{\hyperlink{Vector_8hpp_af3fdd2b7487c71d4b20a74e30a95891d}{operator+}} (const \mbox{\hyperlink{classVector}{Vector}} \&, const \mbox{\hyperlink{classVector}{Vector}} \&)
+\item 
+\mbox{\hyperlink{classVector}{Vector}} \mbox{\hyperlink{Vector_8hpp_ac4505f13a01e5d3312660626ae4ddebb}{operator-\/}} (const \mbox{\hyperlink{classVector}{Vector}} \&, const \mbox{\hyperlink{classVector}{Vector}} \&)
+\item 
+\mbox{\hyperlink{classVector}{Vector}} \mbox{\hyperlink{Vector_8hpp_aa5ef2bdf4be5b94bbeafa5798bca75f2}{operator$\ast$}} (const \mbox{\hyperlink{classVector}{Vector}} \&, const float)
+\item 
+float \mbox{\hyperlink{Vector_8hpp_a66cbb2d65533e33ab585e24924e9b698}{operator$\ast$}} (const \mbox{\hyperlink{classVector}{Vector}} \&, const \mbox{\hyperlink{classVector}{Vector}} \&)
+\item 
+float \mbox{\hyperlink{Vector_8hpp_a77c45342e920b482a7974f0baa52613b}{operator\%}} (const \mbox{\hyperlink{classVector}{Vector}} \&, const \mbox{\hyperlink{classVector}{Vector}} \&)
+\item 
+float \mbox{\hyperlink{Vector_8hpp_ad0936cb11a42495f130f83abbfad19b1}{operator$^\wedge$}} (const \mbox{\hyperlink{classVector}{Vector}} \&, const \mbox{\hyperlink{classVector}{Vector}} \&)
+\end{DoxyCompactItemize}
+
+
+\subsection{Documentação das funções}
+\mbox{\Hypertarget{Vector_8hpp_a77c45342e920b482a7974f0baa52613b}\label{Vector_8hpp_a77c45342e920b482a7974f0baa52613b}} 
+\index{Vector.hpp@{Vector.hpp}!operator\%@{operator\%}}
+\index{operator\%@{operator\%}!Vector.hpp@{Vector.hpp}}
+\subsubsection{\texorpdfstring{operator\%()}{operator\%()}}
+{\footnotesize\ttfamily float operator\% (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{,  }\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{ }\end{DoxyParamCaption})}
+
+Produto vetorial entre vetores. 
+\begin{DoxyParams}{Parâmetros}
+{\em Vetores} & a serem multiplicados. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+\mbox{\hyperlink{classVector}{Vector}} resultante. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Vector_8hpp_aa5ef2bdf4be5b94bbeafa5798bca75f2}\label{Vector_8hpp_aa5ef2bdf4be5b94bbeafa5798bca75f2}} 
+\index{Vector.hpp@{Vector.hpp}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Vector.hpp@{Vector.hpp}}
+\subsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector}{Vector}} operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{,  }\item[{const float}]{ }\end{DoxyParamCaption})}
+
+Multiplicação de um vetor por um escalar. 
+\begin{DoxyParams}{Parâmetros}
+{\em \mbox{\hyperlink{classVector}{Vector}}} & a ser multiplicado. \\
+\hline
+{\em Escalar} & a se multiplicar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+\mbox{\hyperlink{classVector}{Vector}} resultante. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Vector_8hpp_a66cbb2d65533e33ab585e24924e9b698}\label{Vector_8hpp_a66cbb2d65533e33ab585e24924e9b698}} 
+\index{Vector.hpp@{Vector.hpp}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Vector.hpp@{Vector.hpp}}
+\subsubsection{\texorpdfstring{operator$\ast$()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{,  }\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{ }\end{DoxyParamCaption})}
+
+Produto escalar entre vetores. 
+\begin{DoxyParams}{Parâmetros}
+{\em Vetores} & a serem multiplicados. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+\mbox{\hyperlink{classVector}{Vector}} resultante. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Vector_8hpp_af3fdd2b7487c71d4b20a74e30a95891d}\label{Vector_8hpp_af3fdd2b7487c71d4b20a74e30a95891d}} 
+\index{Vector.hpp@{Vector.hpp}!operator+@{operator+}}
+\index{operator+@{operator+}!Vector.hpp@{Vector.hpp}}
+\subsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector}{Vector}} operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{,  }\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{ }\end{DoxyParamCaption})}
+
+Soma de vetores. 
+\begin{DoxyParams}{Parâmetros}
+{\em Vetores} & a serem somados. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+\mbox{\hyperlink{classVector}{Vector}} resultante. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Vector_8hpp_ac4505f13a01e5d3312660626ae4ddebb}\label{Vector_8hpp_ac4505f13a01e5d3312660626ae4ddebb}} 
+\index{Vector.hpp@{Vector.hpp}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Vector.hpp@{Vector.hpp}}
+\subsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector}{Vector}} operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{,  }\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{ }\end{DoxyParamCaption})}
+
+Subtração de vetores. 
+\begin{DoxyParams}{Parâmetros}
+{\em Vetores} & a serem subtraídos. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+\mbox{\hyperlink{classVector}{Vector}} resultante. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Vector_8hpp_ad0936cb11a42495f130f83abbfad19b1}\label{Vector_8hpp_ad0936cb11a42495f130f83abbfad19b1}} 
+\index{Vector.hpp@{Vector.hpp}!operator$^\wedge$@{operator$^\wedge$}}
+\index{operator$^\wedge$@{operator$^\wedge$}!Vector.hpp@{Vector.hpp}}
+\subsubsection{\texorpdfstring{operator$^\wedge$()}{operator^()}}
+{\footnotesize\ttfamily float operator$^\wedge$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{,  }\item[{const \mbox{\hyperlink{classVector}{Vector}} \&}]{ }\end{DoxyParamCaption})}
+
+Distância normalizada entre vetores. 
+\begin{DoxyParams}{Parâmetros}
+{\em Vetores} & a se calcular a distância. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Retorna}
+Distância entre eles. 
+\end{DoxyReturn}
