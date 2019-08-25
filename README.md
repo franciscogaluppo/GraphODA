@@ -1,150 +1,164 @@
-# 2019-1-grupo19
+# Graph OpenSource Display and Algorithms
 [![Build Status](https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19.svg?token=Mnxg5DUtyLmLApyc8NAT&branch=master)](https://travis-ci.com/pds2-dcc-ufmg/2019-1-grupo19)
 
-## Dependências para compilação
+## Introduction
+
+This project is a open source app for graphs, with an integrated display,  a REPL for rapid analysis and a variety of graph algorithms. Feedback is welcomed :)  
+
+For examples, check our video: [Portuguese](https://www.youtube.com/watch?v=MY5hHPIj3cg)
+
+![](Example.gif)
+
+## Creators
+All of the creators are undergrad students at Universidade Federal de Minas Gerais (UFMG), Brazil.
+
+- Ariel Santos - ariel.santos@dcc.ufmg.br
+- Bruno Monteiro 
+- Francisco Galuppo - franciscogaluppo@dcc.ufmg.br
+- Luiza Campos - luiza.chagas@dcc.ufmg.br
+
+## Dependencies to compile
 - CMake 2.6+
 - gcc & g++ 5.5+
 - SFML 2.4+ (headers)
 - TGUI 0.8 (headers)
 
-### Como instalar as dependências?
-Um script simples para Ubuntu 18.04+
+### How to install the dependencies:
+A simple script for Ubuntu 18.04+
 ```bash
 sudo add-apt-repository ppa:texus/tgui-0.8
 sudo apt-get update
 sudo apt-get install libsfml-dev libtgui-dev
 ```
-Ou utilizando o Dockerfile provido no repositório (preferencial).
+Or use the Dockerfile.
 
-## Como desenvolver localmente?
+## How to develop locally:
 ```bash
-# Boas práticas
+# Good practices
 mkdir build && cd build
-# Gere os scripts de compilação de teste para sua plataforma
+# Compilation scripts for your plataform
 cmake ..
-# Compilar
+# Compile
 make
-# Testar
+# Testing
 make tests
-# Gerar documentação em /docs
+# Create a documentation in /docs
 make docs
-# Executar
+# Execute
 make run
 ```
 
-## Gerando a documentação
+## Using the REPL
+Our REPL have two types of commands: assignment and operation.
 
-## Como usar o REPL
-O REPL possui dois tipos de comando: atribuição e operação.
+### Assignment
 
-### Atribuição
-
-#### Atribuição de variável
+#### Variable assignment
 ```
 >>> var1 = var2
 ```
-A variável *var1* passa a representar o grafo representado por *var2*.
+Variable *var1* represents the same graph as *var2*.
 
 #### import
 ```
 >>> var = import file_name
 ```
-A variável *var* passa a representar o grafo armazenado em *file_name*. Se a leitura do arquivo falhar, *var* passa a representar um grafo vazio.
+Variable *var* represents the graph in *file_name*. If this fails, *var* is a empty graph.
 
 #### mst
 ```
 >>> var1 = mst var2
 ```
-A variável *var1* passa a representar a **árvore geradora mínima** do grafo representado por *var2*.
+Variable *var1* is the **Maximum Spanning Tree** of *var2*'s graph'.
 
-### Operação
+### Operation
 
 #### describe
 ```
 >>> var > describe
 ```
-Exibe informações sobre o grafo representado por *var*.
+A summary of  *var*.
 
 #### show
 ```
 >>> var > show
 ```
-Exibe o grafo representado por *var*.
+Shows the graph in *var*.
 
 #### edit
 ```
 >>> var > edit
 ```
-Exibe o grafo representado por *var*, salvando as modificações efetuadas.
+Shows the graph in *var*, saving changes.
 
 #### reaches
 ```
 >>> var > reaches a b
 ```
-Verifica se o vértice *a* alcança o vértice *b* no grafo representado por *var*.
+Verifies if *a* reaches vertice *b* in *var*.
 
 #### scc
 ```
 >>> var > scc
 ```
-Exibe as componentes fortemente conexas do grafo representado por *var*.
+Strong connected components of *var*.
 
 #### shortestPath
 ```
 >>> var > shortestPath a b
 ```
-Computa o peso do caminho mínimo do vértice *a* para o vértice *b* no grafo representado por *var*.
+Shortest path length from *a* to vertice *b* in *var*.
 
 #### coloring
 ```
 >>> var > coloring
 ```
-Computa uma coloração mínima para *var*. O algoritmo é polinomial quando *var* é cordal e **TODO** quando não é.
+Computes a minimum coloring for *var*, if *var* is a chordal graph (polynomial time).
 
 #### chromaticNumber
 ```
 >>> var > chromaticNumber
 ```
-Computa o número cromático, i.e. o menor número de cores necessárias para se colorir o grafo. O algoritmo é polinomial quando *var* é cordal e **TODO** quando não é.
+Computes the chromatic number of *var*, if *var* is a chordal graph (polynomial time).
 
 #### greedyColoring
 ```
 >>> var > greedyColoring
 ```
-Computa uma coloração usando um algoritmo guloso na ordem dos vértices. Linear no tamanho do grafo.
+Computes a coloring using a greedy algorithm on the vertex ordering. Linear time.
 
 #### maximumCliqueSize
 ```
 >>> var > maximumCliqueSize
 ```
-Computa o tamanho da clique máxima. Disponível apenas para grafos cordais.
+Computes the size of the largest clique of *var*, if *var* is a chordal graph (polynomial time).
 
 #### artPoints
 ```
 >>> var > artPoints
 ```
-Encontra os vértices cujas remoções aumentam o número de componentes conexas do grafo.
+Vertices whose removals increases the number of connected components of *var*
 
 #### bridges
 ```
 >>> var > bridges
 ```
-Encontra as arestas cujas remoções aumentam o número de componentes conexas do grafo.
+Edges whose removals increases the number of connected components of *var*
 
 #### topoSort
 ```
 >>> var > topoSort
 ```
-Encontra uma ordenação topológica dos vértices do grafo.
+Create a topological ordering of the vertices.
 
 #### center
 ```
 >>> var > center
 ```
-Computa o centro da árvore *var*.
+Computes the center of the tree *var*.
 
 #### diameter
 ```
 >>> var > diameter
 ```
-computa o diâmetro da árvore *var*.
+Computes the diameter of the tree *var*.
