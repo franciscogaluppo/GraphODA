@@ -13,7 +13,7 @@ For examples, check our video: [Portuguese](https://www.youtube.com/watch?v=MY5h
 All of the creators are undergrad students at Universidade Federal de Minas Gerais (UFMG), Brazil.
 
 - Ariel Santos - ariel.santos@dcc.ufmg.br
-- Bruno Monteiro 
+- Bruno Monteiro - monteirobruno@dcc.ufmg.br
 - Francisco Galuppo - franciscogaluppo@dcc.ufmg.br
 - Luiza Campos - luiza.chagas@dcc.ufmg.br
 
