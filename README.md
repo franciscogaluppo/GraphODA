@@ -49,7 +49,7 @@ make run
 ```
 
 ## Using the REPL
-Our REPL have two types of commands: assignment and operation.
+Our REPL has two types of commands: assignment and operation.
 
 ### Assignment
 
